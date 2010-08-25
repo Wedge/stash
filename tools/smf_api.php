@@ -185,7 +185,7 @@ if ($maintenance != 2)
 		SELECT variable, value
 		FROM {db_prefix}settings', array());
 	$smf_settings = array();
-	while ($row = @$smcFunc['db_fech_row']($request))
+	while ($row = $smcFunc['db_fetch_row']($request))
 		$smf_settings[$row[0]] = $row[1];
 	$smcFunc['db_free_result']($request);
 }
