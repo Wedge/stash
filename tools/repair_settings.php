@@ -70,8 +70,6 @@ $txt['db_persist'] = 'Connection type';
 $txt['db_persist0'] = 'Standard (recommended)';
 $txt['db_persist1'] = 'Persistent (might cause problems)';
 $txt['db_mysql'] = 'MySQL';
-$txt['db_postgresql'] = 'PostgreSQL';
-$txt['db_sqlite'] = 'SQLite';
 
 $txt['path_url_settings'] = 'Paths &amp; URLs';
 $txt['path_url_settings_info'] = 'These are the paths and URLs to your SMF installation, and can cause big problems when they are wrong.  Sorry, there are a lot of them.';
@@ -366,10 +364,10 @@ function show_settings()
 		'database_settings' => array(
 			'db_server' => array('flat', 'string', 'localhost'),
 			'db_name' => array('flat', 'string'),
-			'db_user' => array($db_type == 'sqlite' ? 'hidden' : 'flat', 'string'),
-			'db_passwd' => array($db_type == 'sqlite' ? 'hidden' : 'flat', 'string'),
-			'ssi_db_user' => array($db_type == 'sqlite' ? 'hidden' : 'flat', 'string'),
-			'ssi_db_passwd' => array($db_type == 'sqlite' ? 'hidden' : 'flat', 'string'),
+			'db_user' => array('flat', 'string'),
+			'db_passwd' => array('flat', 'string'),
+			'ssi_db_user' => array('flat', 'string'),
+			'ssi_db_passwd' => array('flat', 'string'),
 			'db_prefix' => array('flat', 'string'),
 			'db_persist' => array('flat', 'int', 1),
 		),

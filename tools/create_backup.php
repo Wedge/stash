@@ -85,19 +85,11 @@ function step1($error_message = '')
 	echo '
 				<div class="panel">
 					<form action="', $_SERVER['PHP_SELF'], '?step=2" method="post">
+						<input type="hidden" name="db_type" value="mysql" />
 						<h2>MySQL connection details</h2>
 						<h3>Please enter your database details below to create the backup.</h3>
 
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
-							<tr>
-								<td width="20%" valign="top" class="textbox"><label for="db_server">Database Type:</label></td>
-								<td>
-									<select name="db_type" id="db_type">
-										<option value="mysql"', $db_type == 'mysql' ? ' selected="selected"' : '', '>MySQL</option>
-										<option value="postgresql"', $db_type == 'postgresql' ? ' selected="selected"' : '', '>PostgreSQL</option>
-										<option value="sqlite"', $db_type == 'sqlite' ? ' selected="selected"' : '', '>SQLite</option>
-									</select>
-								</td>
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="db_server">Database server name:</label></td>
 								<td>

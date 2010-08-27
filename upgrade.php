@@ -39,18 +39,6 @@ $databases = array(
 		'utf8_version_check' => 'return mysql_get_server_info();',
 		'alter_support' => true,
 	),
-	'postgresql' => array(
-		'name' => 'PostgreSQL',
-		'version' => '7.4.10',
-		'version_check' => '$version = pg_version(); return $version[\'client\'];',
-		'always_has_db' => true,
-	),
-	'sqlite' => array(
-		'name' => 'SQLite',
-		'version' => '1',
-		'version_check' => 'return 1;',
-		'always_has_db' => true,
-	),
 );
 
 // General options for the script.
@@ -2911,9 +2899,6 @@ function upgrade_query($string, $unbuffered = false)
 		{
 			if (strpos($db_error_message, 'exist') !== false)
 				return true;
-			// SQLite
-			if (strpos($db_error_message, 'missing') !== false)
-				return true;
 		}
 		elseif (strpos(trim($string), 'INSERT ') !== false)
 		{
@@ -4144,7 +4129,7 @@ function template_upgrade_options()
 				<table cellpadding="1" cellspacing="0">
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="backup" id="backup" value="1"', $db_type != 'mysql' && $db_type != 'postgresql' ? ' disabled="disabled"' : '', ' class="input_check" />
+							<input type="checkbox" name="backup" id="backup" value="1" class="input_check" />
 						</td>
 						<td width="100%">
 							<label for="backup">Backup tables in your database with the prefix &quot;backup_' . $db_prefix . '&quot;.</label>', isset($modSettings['smfVersion']) ? '' : ' (recommended!)', '
