@@ -958,10 +958,9 @@ function DatabasePopulation()
 	// If doing UTF8, select it.
 	if (!empty($db_character_set) && $db_character_set == 'utf8' && !empty($databases[$db_type]['utf8_support']))
 		$smcFunc['db_query']('', '
-			SET NAMES {raw:utf8}',
+			SET NAMES utf8',
 			array(
 				'db_error_skip' => true,
-				'utf8' => 'utf8',
 			)
 		);
 
@@ -1220,8 +1219,6 @@ function AdminAccount()
 	$incontext['username'] = htmlspecialchars(stripslashes($_POST['username']));
 	$incontext['email'] = htmlspecialchars(stripslashes($_POST['email']));
 
-	$incontext['require_db_confirm'] = true;
-
 	// Only allow skipping if we think they already have an account setup.
 	$request = $smcFunc['db_query']('', '
 		SELECT id_member
@@ -1241,7 +1238,7 @@ function AdminAccount()
 	if (isset($_POST['password1']) && !empty($_POST['contbutt']))
 	{
 		// Wrong password?
-		if ($incontext['require_db_confirm'] && $_POST['password3'] != $db_passwd)
+		if ($_POST['password3'] != $db_passwd)
 		{
 			$incontext['error'] = $txt['error_db_connect'];
 			return false;
@@ -2447,10 +2444,8 @@ function template_admin_account()
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['user_settings_email_info'], '</div>
 				</td>
 			</tr>
-		</table>';
+		</table>
 
-	if ($incontext['require_db_confirm'])
-		echo '
 		<h2>', $txt['user_settings_database'], '</h2>
 		<p>', $txt['user_settings_database_info'], '</p>
 
