@@ -423,11 +423,11 @@ function show_system_info()
 
 	echo '
 			<script type="text/javascript">
-				var tabPane1 = new WebFXTabPane( document.getElementById( "smfinfo" ), 1 );
+				var tabPane1 = new WebFXTabPane(document.getElementById("smfinfo"), 1);
 			</script>
 
 			<div class="tab-page" id="main"><h2 class="tab">', $txt['maininfo'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "main" ) );</script>
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("main"));</script>
 				<table border="0" width="100%" cellpadding="2" cellspacing="2">
 					<tr>
 						<td width="25%"><strong>', $txt['smf_version'], '</strong></td>
@@ -509,7 +509,7 @@ function show_php_info()
 
 	echo '
 			<div class="tab-page" id="phpinfo"><h2 class="tab">', $txt['phpinfo'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "phpinfo" ) );</script>';
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("phpinfo"));</script>';
 
 	// Get the PHP Info
 	ob_start();
@@ -535,7 +535,7 @@ function show_detailed_file()
 
 	echo '
 			<div class="tab-page" id="detailedinfo"><h2 class="tab">', $txt['detailedinfo'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "detailedinfo" ) );</script>';
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("detailedinfo"));</script>';
 
 	get_file_versions();
 
@@ -629,16 +629,13 @@ function show_detailed_file()
 
 function show_detailed_db()
 {
-	global $txt, $context, $db_type;
+	global $txt, $context;
 
-	if (empty($db_type) || (!empty($db_type) && $db_type == 'mysql'))
-		get_database_info();
+	get_database_info();
 
 	echo '
 			<div class="tab-page" id="detailedinfo_db"><h2 class="tab">', $txt['detailedinfo_db'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "detailedinfo_db" ) );</script>';
-
-	echo '
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("detailedinfo_db"));</script>
 				<table border="0" width="100%" cellpadding="2" cellspacing="2">
 					<tr>
 						<td width="25%"><strong>', $txt['database_version'], '</strong></td>
@@ -752,7 +749,7 @@ function show_mods()
 
 	echo '
 			<div class="tab-page" id="mods_installed"><h2 class="tab">', $txt['mods_installed'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "mods_installed" ) );</script>
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("mods_installed"));</script>
 				<table border="0" width="50%" align="center">
 					<tr>
 						<td width="200px"><strong>', $txt['package_name'], '</strong></td>
@@ -783,7 +780,7 @@ function show_error_log()
 
 	echo '
 			<div class="tab-page" id="error_log"><h2 class="tab">', $txt['error_log'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "error_log" ) );</script>
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("error_log"));</script>
 				<table border="0" width="100%" cellpadding="2" cellspacing="2">
 					<tr>
 						<td width="25%"><strong>', $txt['error_log_count'], '</strong></td>
@@ -837,19 +834,18 @@ function show_error_log()
 
 function show_status()
 {
-	global $context, $command_line, $txt, $db_type;
+	global $context, $command_line, $txt;
 
 	if (strpos(strtolower(PHP_OS), 'win') === 0)
 		get_windows_data();
 	else
 		get_linux_data();
 
-	if (empty($db_type) || (!empty($db_type) && $db_type == 'mysql'))
-		get_mysql_data();
+	get_mysql_data();
 
 	echo '
 			<div class="tab-page" id="status"><h2 class="tab">', $txt['status'], '</h2>
-				<script type="text/javascript">tabPane1.addTabPage( document.getElementById( "status" ) );</script>';
+				<script type="text/javascript">tabPane1.addTabPage(document.getElementById("status"));</script>';
 
 	if ($command_line)
 	{
@@ -1352,33 +1348,31 @@ function initialize()
 
 function get_database_version()
 {
-	global $db_type, $smcFunc, $context, $db_name;
+	global $smcFunc, $context, $db_name;
 
-	if (empty($db_type) || (!empty($db_type) && $db_type == 'mysql'))
-	{
-		// I learned some of this from phpMyAdmin...
-		$match = explode('.', mysql_get_server_info());
-		$mysql_int_version = (int) sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2]));
+	// Learned some of this from phpMyAdmin...
+	$match = explode('.', mysql_get_server_info());
+	$mysql_int_version = (int) sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2]));
 
-		if ( $mysql_int_version >= 50006 )
-			$query = 'SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = \'' . $db_name . '\' LIMIT 1;';
-		elseif ( $mysql_int_version >= 40101 )
-			$query = 'SHOW VARIABLES LIKE \'collation_database\';';
-		else
-			$query = 'SHOW VARIABLES LIKE \'collation_server\';';
-		$request = mysql_query($query);
-		$row = @mysql_fetch_row($request);
-		$collation = !empty($row[1]) ? $row[1] : $row[0];
+	if ($mysql_int_version >= 50006)
+		$query = 'SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = \'' . $db_name . '\' LIMIT 1;';
+	elseif ($mysql_int_version >= 40101)
+		$query = 'SHOW VARIABLES LIKE \'collation_database\';';
+	else
+		$query = 'SHOW VARIABLES LIKE \'collation_server\';';
+	$request = mysql_query($query);
+	$row = @mysql_fetch_row($request);
+	$collation = !empty($row[1]) ? $row[1] : $row[0];
 
-		if (!empty($collation))
-			$context['character_set'] = $collation;
-	}
+	if (!empty($collation))
+		$context['character_set'] = $collation;
 
 	if (empty($smcFunc))
 		$context['database_version'] = 'MySQL ' . mysql_get_server_info();
-	else {
+	else
+	{
 		db_extend();
-		$context['database_version'] = $smcFunc['db_title'] . ' ' . $smcFunc['db_get_version']();
+		$context['database_version'] = 'MySQL ' . $smcFunc['db_get_version']();
 	}
 }
 

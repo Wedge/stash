@@ -169,16 +169,14 @@ if ($maintenance != 2)
 	if (empty($smcFunc))
 		$smcFunc = array();
 
-	// Default the database type to MySQL.
-	if (empty($db_type) || !file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
-		$db_type = 'mysql';
+	$db_type = 'mysql';
 
 	require_once($sourcedir . '/Errors.php');
 	require_once($sourcedir . '/Subs.php');
 	require_once($sourcedir . '/Load.php');
 	require_once($sourcedir . '/Security.php');
 	require_once($sourcedir . '/Subs-Auth.php');
-	require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+	require_once($sourcedir . '/Subs-Db-mysql.php');
 	$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 
 	$request = $smcFunc['db_query']('', '

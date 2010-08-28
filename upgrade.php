@@ -796,11 +796,10 @@ function loadEssentialData()
 	initialize_inputs();
 
 	// Get the database going!
-	if (empty($db_type))
-		$db_type = 'mysql';
-	if (file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
+	$db_type = 'mysql';
+	if (file_exists($sourcedir . '/Subs-Db-mysql.php'))
 	{
-		require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+		require_once($sourcedir . '/Subs-Db-mysql.php');
 
 		// Make the connection...
 		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
@@ -809,7 +808,7 @@ function loadEssentialData()
 		if ($db_connection === null)
 			die('Unable to connect to database - please check username and password are correct in Settings.php');
 
-		if ($db_type == 'mysql' && isset($db_character_set) && preg_match('~^\w+$~', $db_character_set) === 1)
+		if (isset($db_character_set) && preg_match('~^\w+$~', $db_character_set) === 1)
 			$smcFunc['db_query']('', '
 			SET NAMES ' . $db_character_set,
 			array(
@@ -832,7 +831,7 @@ function loadEssentialData()
 	}
 	else
 	{
-		return throw_error('Cannot find ' . $sourcedir . '/Subs-Db-' . $db_type . '.php' . '. Please check you have uploaded all source files and have the correct paths set.');
+		return throw_error('Cannot find ' . $sourcedir . '/Subs-Db-mysql.php' . '. Please check you have uploaded all source files and have the correct paths set.');
 	}
 
 	// If they don't have the file, they're going to get a warning anyway so we won't need to clean request vars.
@@ -848,7 +847,7 @@ function loadEssentialData()
 
 function initialize_inputs()
 {
-	global $sourcedir, $start_time, $upcontext, $db_type;
+	global $sourcedir, $start_time, $upcontext;
 
 	$start_time = time();
 
@@ -931,8 +930,8 @@ function WelcomeLogin()
 	// Check for some key files - one template, one language, and a new and an old source file.
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
 		&& @file_exists($sourcedir . '/QueryString.php')
-		&& @file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php')
-		&& @file_exists(dirname(__FILE__) . '/upgrade_2-0_' . $db_type . '.sql');
+		&& @file_exists($sourcedir . '/Subs-Db-mysql.php')
+		&& @file_exists(dirname(__FILE__) . '/upgrade_2-0_mysql.sql');
 
 	// Need legacy scripts?
 	if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] < 2.0)
@@ -1039,21 +1038,18 @@ function checkLogin()
 
 		// Before 2.0 these column names were different!
 		$oldDB = false;
-		if (empty($db_type) || $db_type == 'mysql')
-		{
-			$request = $smcFunc['db_query']('', '
-				SHOW COLUMNS
-				FROM {db_prefix}members
-				LIKE {string:member_name}',
-				array(
-					'member_name' => 'memberName',
-					'db_error_skip' => true,
-				)
-			);
-			if ($smcFunc['db_num_rows']($request) != 0)
-				$oldDB = true;
-			$smcFunc['db_free_result']($request);
-		}
+		$request = $smcFunc['db_query']('', '
+			SHOW COLUMNS
+			FROM {db_prefix}members
+			LIKE {string:member_name}',
+			array(
+				'member_name' => 'memberName',
+				'db_error_skip' => true,
+			)
+		);
+		if ($smcFunc['db_num_rows']($request) != 0)
+			$oldDB = true;
+		$smcFunc['db_free_result']($request);
 
 		// Get what we believe to be their details.
 		if (!$disable_security)
@@ -1430,7 +1426,7 @@ function backupTable($table)
 function DatabaseChanges()
 {
 	global $db_prefix, $modSettings, $command_line, $smcFunc;
-	global $language, $boardurl, $sourcedir, $boarddir, $upcontext, $support_js, $db_type;
+	global $language, $boardurl, $sourcedir, $boarddir, $upcontext, $support_js;
 
 	// Have we just completed this?
 	if (!empty($_POST['database_done']))
@@ -1444,7 +1440,7 @@ function DatabaseChanges()
 	$files = array(
 		array('upgrade_1-0.sql', '1.1', '1.1 RC0'),
 		array('upgrade_1-1.sql', '2.0', '2.0 a'),
-		array('upgrade_2-0_' . $db_type . '.sql', '3.0', SMF_VERSION),
+		array('upgrade_2-0_mysql.sql', '3.0', SMF_VERSION),
 	);
 
 	// How many files are there in total?
@@ -2225,7 +2221,7 @@ function DeleteUpgrade()
 
 	// Save the current database version.
 	$server_version = $smcFunc['db_server_info']();
-	if ($db_type == 'mysql' && in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
+	if (in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
 		updateSettings(array('db_mysql_group_by_fix' => '1'));
 
 	if ($command_line)
@@ -2629,7 +2625,7 @@ function parse_sql($filename)
 	$last_step = '';
 
 	// MySQL users below v4 can't use engine.
-	if ($db_type == 'mysql' && version_compare('4', preg_replace('~\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
+	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
 		foreach ($lines as $key => $line)
 			$lines[$key] = strtr($line, array(') ENGINE=' => ') TYPE='));
 
@@ -2838,60 +2834,59 @@ function upgrade_query($string, $unbuffered = false)
 		return $result;
 
 	$db_error_message = $smcFunc['db_error']($db_connection);
-	// If MySQL we do something more clever.
-	if ($db_type == 'mysql')
+
+	// We do something more clever with MySQL.
+	$mysql_errno = mysql_errno($db_connection);
+	$error_query = in_array(substr(trim($string), 0, 11), array('INSERT INTO', 'UPDATE IGNO', 'ALTER TABLE', 'DROP TABLE ', 'ALTER IGNOR'));
+
+	// Error numbers:
+	//    1016: Can't open file '....MYI'
+	//    1050: Table already exists.
+	//    1054: Unknown column name.
+	//    1060: Duplicate column name.
+	//    1061: Duplicate key name.
+	//    1062: Duplicate entry for unique key.
+	//    1068: Multiple primary keys.
+	//    1072: Key column '%s' doesn't exist in table.
+	//    1091: Can't drop key, doesn't exist.
+	//    1146: Table doesn't exist.
+	//    2013: Lost connection to server during query.
+
+	if ($mysql_errno == 1016)
 	{
-		$mysql_errno = mysql_errno($db_connection);
-		$error_query = in_array(substr(trim($string), 0, 11), array('INSERT INTO', 'UPDATE IGNO', 'ALTER TABLE', 'DROP TABLE ', 'ALTER IGNOR'));
+		if (preg_match('~\'([^\.\']+)~', $db_error_message, $match) != 0 && !empty($match[1]))
+			mysql_query( '
+				REPAIR TABLE `' . $match[1] . '`');
 
-		// Error numbers:
-		//    1016: Can't open file '....MYI'
-		//    1050: Table already exists.
-		//    1054: Unknown column name.
-		//    1060: Duplicate column name.
-		//    1061: Duplicate key name.
-		//    1062: Duplicate entry for unique key.
-		//    1068: Multiple primary keys.
-		//    1072: Key column '%s' doesn't exist in table.
-		//    1091: Can't drop key, doesn't exist.
-		//    1146: Table doesn't exist.
-		//    2013: Lost connection to server during query.
+		$result = mysql_query($string);
+		if ($result !== false)
+			return $result;
+	}
+	elseif ($mysql_errno == 2013)
+	{
+		$db_connection = mysql_connect($db_server, $db_user, $db_passwd);
+		mysql_select_db($db_name, $db_connection);
 
-		if ($mysql_errno == 1016)
+		if ($db_connection)
 		{
-			if (preg_match('~\'([^\.\']+)~', $db_error_message, $match) != 0 && !empty($match[1]))
-				mysql_query( '
-					REPAIR TABLE `' . $match[1] . '`');
-
 			$result = mysql_query($string);
+
 			if ($result !== false)
 				return $result;
 		}
-		elseif ($mysql_errno == 2013)
-		{
-			$db_connection = mysql_connect($db_server, $db_user, $db_passwd);
-			mysql_select_db($db_name, $db_connection);
-
-			if ($db_connection)
-			{
-				$result = mysql_query($string);
-
-				if ($result !== false)
-					return $result;
-			}
-		}
-		// Duplicate column name... should be okay ;).
-		elseif (in_array($mysql_errno, array(1060, 1061, 1068, 1091)))
-			return false;
-		// Duplicate insert... make sure it's the proper type of query ;).
-		elseif (in_array($mysql_errno, array(1054, 1062, 1146)) && $error_query)
-			return false;
-		// Creating an index on a non-existent column.
-		elseif ($mysql_errno == 1072)
-			return false;
-		elseif ($mysql_errno == 1050 && substr(trim($string), 0, 12) == 'RENAME TABLE')
-			return false;
 	}
+	// Duplicate column name... should be okay ;).
+	elseif (in_array($mysql_errno, array(1060, 1061, 1068, 1091)))
+		return false;
+	// Duplicate insert... make sure it's the proper type of query ;).
+	elseif (in_array($mysql_errno, array(1054, 1062, 1146)) && $error_query)
+		return false;
+	// Creating an index on a non-existent column.
+	elseif ($mysql_errno == 1072)
+		return false;
+	elseif ($mysql_errno == 1050 && substr(trim($string), 0, 12) == 'RENAME TABLE')
+		return false;
+
 	// If a table already exists don't go potty.
 	else
 	{
@@ -3141,7 +3136,7 @@ function checkChange(&$change)
 	if (empty($database_version))
 	{
 		$database_version = $databases[$db_type]['version_check'];
-		$where_field_support = $db_type == 'mysql' && version_compare('5.0', $database_version) <= 0;
+		$where_field_support = version_compare('5.0', $database_version) <= 0;
 	}
 
 	// Not a column we need to check on?
@@ -4108,7 +4103,7 @@ function template_welcome_message()
 
 function template_upgrade_options()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $mmessage, $mtitle, $db_type;
+	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $mmessage, $mtitle;
 
 	echo '
 			<h3>Before the upgrade gets underway please review the options below - and hit continue when you\'re ready to begin.</h3>

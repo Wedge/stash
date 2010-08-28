@@ -297,7 +297,7 @@ function load_lang_file()
 function load_database()
 {
 	global $db_prefix, $db_connection, $db_character_set, $sourcedir, $language;
-	global $smcFunc, $mbname, $scripturl, $boardurl, $modSettings, $db_type, $db_name, $db_user;
+	global $smcFunc, $mbname, $scripturl, $boardurl, $modSettings, $db_name, $db_user;
 
 	if (empty($sourcedir))
 		$sourcedir = dirname(__FILE__) . '/Sources';
@@ -314,7 +314,7 @@ function load_database()
 	// Connect the database.
 	if (!$db_connection)
 	{
-		require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+		require_once($sourcedir . '/Subs-Db-mysql.php');
 		if (@version_compare(PHP_VERSION, '5') == -1)
 			require_once($sourcedir . '/Subs-Compat.php');
 
@@ -739,9 +739,9 @@ function DatabaseSettings()
 			$sourcedir = dirname(__FILE__) . '/Sources';
 
 		// Better find the database file!
-		if (!file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
+		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
 		{
-			$incontext['error'] = sprintf($txt['error_db_file'], 'Subs-Db-' . $db_type . '.php');
+			$incontext['error'] = sprintf($txt['error_db_file'], 'Subs-Db-mysql.php');
 			return false;
 		}
 
@@ -750,7 +750,7 @@ function DatabaseSettings()
 		$modSettings['disableQueryCheck'] = true;
 		if (empty($smcFunc))
 			$smcFunc = array();
-		require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+		require_once($sourcedir . '/Subs-Db-mysql.php');
 
 		// What - running PHP4? The shame!
 		if (@version_compare(PHP_VERSION, '5') == -1)
@@ -983,15 +983,15 @@ function DatabasePopulation()
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
 	// MySQL users below v4 can't use engine.
-	if ($db_type == 'mysql' && version_compare('4', preg_replace('~\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
+	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
 		$replaces[') ENGINE='] = ') TYPE=';
 	// If the UTF-8 setting was enabled, add it to the table definitions.
 	//!!! Very MySQL specific still
-	if ($db_type == 'mysql' && isset($_POST['utf8']) && !empty($databases[$db_type]['utf8_support']))
+	if (isset($_POST['utf8']) && !empty($databases[$db_type]['utf8_support']))
 		$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
 	// Read in the SQL.  Turn this on and that off... internationalize... etc.
-	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_' . $db_type . '.sql')), $replaces));
+	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql')), $replaces));
 
 	// Execute the SQL.
 	$current_statement = '';
@@ -1025,7 +1025,7 @@ function DatabasePopulation()
 		{
 			// Error 1050: Table already exists!
 			//!!! Needs to be made better!
-			if (($db_type != 'mysql' || mysql_errno($db_connection) === 1050) && preg_match('~^\s*CREATE TABLE ([^\s\n\r]+?)~', $current_statement, $match) == 1)
+			if (mysql_errno($db_connection) === 1050 && preg_match('~^\s*CREATE TABLE ([^\s\n\r]+?)~', $current_statement, $match) == 1)
 			{
 				$exists[] = $match[1];
 				$incontext['sql_results']['table_dups']++;
@@ -1193,7 +1193,7 @@ function DatabasePopulation()
 // Ask for the administrator login information.
 function AdminAccount()
 {
-	global $txt, $db_type, $db_connection, $databases, $smcFunc, $incontext, $db_prefix, $db_passwd, $sourcedir;
+	global $txt, $db_connection, $databases, $smcFunc, $incontext, $db_prefix, $db_passwd, $sourcedir;
 
 	$incontext['sub_template'] = 'admin_account';
 	$incontext['page_title'] = $txt['user_settings'];
@@ -1490,7 +1490,7 @@ function DeleteInstall()
 
 	// Check if we need some stupid MySQL fix.
 	$server_version = $smcFunc['db_server_info']();
-	if ($db_type == 'mysql' && in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
+	if (in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
 		updateSettings(array('db_mysql_group_by_fix' => '1'));
 
 	// Some final context for the template.

@@ -41,22 +41,6 @@ class sphinx_search
 	// Is it supported?
 	public $is_supported = true;
 
-	// What databases support the custom index?
-	protected $supported_databases = array('mysql');
-
-	// Nothing to do...
-	public function __construct()
-	{
-		global $db_type;
-
-		// Is this database supported?
-		if (!in_array($db_type, $this->supported_databases))
-		{
-			$this->is_supported = false;
-			return;
-		}
-	}
-
 	// Check whether the search can be performed by this API.
 	public function supportsMethod($methodName, $query_params = null)
 	{
