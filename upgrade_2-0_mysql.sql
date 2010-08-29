@@ -2649,14 +2649,14 @@ if (empty($modSettings['dont_repeat_buddylists']))
 // And yet, and yet... We might have a small hiccup here...
 if (!empty($modSettings['dont_repeat_buddylists']) && !isset($modSettings['enable_buddylist']))
 {
-	// Correct RC3 adopters setting here...
+	// Correct RC3 adopters setting here... Is this useful in the first place?
 	if (isset($modSettings['enable_buddylists']))
 	{
 		upgrade_query("
 		REPLACE INTO {$db_prefix}settings
 			(variable, value)
 		VALUES
-			('enable_buddylist', '", $modSettings['enable_buddylists'], "')");
+			('enable_buddylist', '" . $modSettings['enable_buddylists'] . "')");
 	}
 	else
 	{

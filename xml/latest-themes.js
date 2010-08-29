@@ -2,7 +2,7 @@
 
 /*	To make this work, we just need to do a few things.
 
-	- check window.smfThemes_writable.  If it's false, they can't install
+	- check window.smfThemes_writable. If it's false, they can't install
 	  anything, just look.
 	- load basic information for several themes, such that they can
 	  "navigate" around to look at them in the panel.
@@ -10,8 +10,8 @@
 	  (white on black, etc.); we've got the element, so we can change it.
 	- the url to install is:
 window.smfForum_scripturl + '?action=theme=sa=install;theme_gz=' + url_to_package + ';sesc=' + window.smfForum_sessionid
-	- only poackages from the .simplemachines.org domain will be accepted.
-	- we've got their langauge in $_GET['language'].
+	- only packages from the .simplemachines.org domain will be accepted.
+	- we've got their language in $_GET['language'].
 
 */
 
@@ -39,7 +39,7 @@ $request = $smcFunc['db_query']('', '
 		'theme_prefix' => $theme_site_db_name . '.' . $theme_site_db_prefix,
 	)
 );
-if ( $smcFunc['db_num_rows']($request) )
+if ($smcFunc['db_num_rows']($request))
 {
 	$row = $smcFunc['db_fetch_assoc']($request);
 	censorText($row['theme_name']);
@@ -197,16 +197,16 @@ for(var i=0; i < smf_latestThemes.length; i++)
 
 window.smfLatestThemes += '\
 			</ul>';
-if ( smf_featured !=0 || smf_random != 0 )
+if (smf_featured !=0 || smf_random != 0)
 {
 
-	if ( smf_featured != 0 )
+	if (smf_featured != 0)
 		window.smfLatestThemes += '\
 				<h4 style="padding: 4px 4px 0 4px; margin: 0;">Featured Theme</h4>\
 				<p style="padding: 0 4px; margin: 0;">\
 					<a href="javascript:smf_themesMoreInfo('+smf_featured+');void(0);">'+smf_themeInfo[smf_featured].name + ' by ' + smf_themeInfo[smf_featured].author+'</a>\
 				</p>';
-	if ( smf_random != 0 )
+	if (smf_random != 0)
 		window.smfLatestThemes += '\
 				<h4 style="padding: 4px 4px 0 4px;margin: 0;">Theme of the Moment</h4>\
 				<p style="padding: 0 4px; margin: 0;">\
