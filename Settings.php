@@ -46,6 +46,7 @@ $ssi_db_passwd = '';
 $db_prefix = 'smf_';
 $db_persist = 0;
 $db_error_send = 1;
+$db_show_debug = false;
 
 ########## Directories/Files ##########
 # Note: These directories do not have to be changed unless you move things.
