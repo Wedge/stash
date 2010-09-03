@@ -395,7 +395,7 @@ function action_spell()
 		<div class="panel">
 			<h2>Unable to continue!</h2>
 
-			<p>The spell checking library required by SMF\'s spell checker has not been compiled into PHP.  Please contact your host and tell them that they need to get Aspell and then compile PHP with <tt>--with-pspell</tt>.</p>
+			<p>The spell checking library required by SMF\'s spell checker has not been compiled into PHP. Please contact your host and tell them that they need to get Aspell and then compile PHP with <tt>--with-pspell</tt>.</p>
 
 			<a href="', $_SERVER['PHP_SELF'], '">Go back</a>
 		</div>';
@@ -417,7 +417,7 @@ function action_spell()
 			<h2>Spell Checker Test</h2>
 			<h4>If you see any error messages from PHP, the spell checker is not properly configured.</h2>
 
-			<p>The spell checker thinks that &quot;mispelin&quot; is spelled ', pspell_check($test, 'mispelin') ? 'correctly' : 'incorrectly', '.  It also thinks that &quot;machines&quot; is spelled ', pspell_check($test, 'machines') ? 'correctly' : 'incorrectly', '.</p>
+			<p>The spell checker thinks that &quot;mispelin&quot; is spelled ', pspell_check($test, 'mispelin') ? 'correctly' : 'incorrectly', '. It also thinks that &quot;machines&quot; is spelled ', pspell_check($test, 'machines') ? 'correctly' : 'incorrectly', '.</p>
 
 			<p>If your host doesn\'t trust this test, you can ask them to use the following code.  If the below does not work as expected, it is not configured properly - the expected output would be "<tt>pass pass</tt>".</p>
 

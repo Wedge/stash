@@ -593,7 +593,7 @@ function smf_is_online($user)
 		SELECT lo.id_member
 		FROM {raw:smf_db_prefix}log_online AS lo' . (!is_integer($user) ? '
 			LEFT JOIN {raw:smf_db_prefix}members AS mem ON (mem.id_member = lo.id_member)' : '') . '
-		WHERE lo.id_member = {int:user}'. (!is_integer($user) ? ' OR mem.member_name = {string:user}' : '') . '
+		WHERE lo.id_member = {int:user}' . (!is_integer($user) ? ' OR mem.member_name = {string:user}' : '') . '
 		LIMIT 1',
 			array(
 				'smf_db_prefix' => $smf_settings['db_prefix'],

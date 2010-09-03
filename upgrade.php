@@ -830,9 +830,7 @@ function loadEssentialData()
 		$smcFunc['db_free_result']($request);
 	}
 	else
-	{
-		return throw_error('Cannot find ' . $sourcedir . '/Subs-Db-mysql.php' . '. Please check you have uploaded all source files and have the correct paths set.');
-	}
+		return throw_error('Cannot find ' . $sourcedir . '/Subs-Db-mysql.php. Please check you have uploaded all source files and have the correct paths set.');
 
 	// If they don't have the file, they're going to get a warning anyway so we won't need to clean request vars.
 	if (file_exists($sourcedir . '/QueryString.php'))
