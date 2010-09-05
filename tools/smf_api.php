@@ -814,10 +814,6 @@ function smf_loadSession()
 		session_start();
 	}
 
-	// While PHP 4.1.x should use $_SESSION, it seems to need this to do it right.
-	if (@version_compare(PHP_VERSION, '4.2.0') == -1)
-		$HTTP_SESSION_VARS['smf_php_412_bugfix'] = true;
-
 	// Set the randomly generated code.
 	if (!isset($_SESSION['rand_code']))
 		$_SESSION['rand_code'] = md5(session_id() . mt_rand());

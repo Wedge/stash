@@ -26,7 +26,7 @@
 define('SMF_VERSION', '2.0 RC3');
 define('SMF_LANG_VERSION', '2.0 RC3');
 
-$GLOBALS['required_php_version'] = '4.1.0';
+$GLOBALS['required_php_version'] = '5.0.0';
 $GLOBALS['required_mysql_version'] = '3.23.28';
 
 $databases = array(
@@ -787,10 +787,6 @@ function loadEssentialData()
 
 	if (empty($smcFunc))
 		$smcFunc = array();
-
-	// Check we don't need some compatibility.
-	if (@version_compare(PHP_VERSION, '5') == -1)
-		require_once($sourcedir . '/Subs-Compat.php');
 
 	// Initialize everything...
 	initialize_inputs();
