@@ -54,8 +54,7 @@ template_ssi_above();
 			<h2>Additional Guides &amp; FAQ</h2>
 			<p>Need more information on using SSI.php? Check out <a href="http://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> or <a href="http://www.simplemachines.org/community/index.php?topic=14906.0">the SSI FAQ</a>.</p>
 
-			<div id="sidenav" class="windowbg">
-				<span class="topslice"><span></span></span>
+			<div id="sidenav" class="windowbg wrc">
 				<div class="content">
 					<h2 id="functionlist">Function List</h2>
 					<h3>Recent Items</h3>
@@ -114,11 +113,9 @@ template_ssi_above();
 						<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', true); return false;">Hide all examples</a></li>
 					</ul>
 				</div>
-				<span class="botslice"><span></span></span>
 			</div>
 
-	<div id="preview" class="windowbg2">
-		<span class="topslice"><span></span></span>
+	<div id="preview" class="windowbg2 wrc">
 		<div class="content">
 
 <!-- RECENT ITEMS -->
@@ -408,7 +405,6 @@ template_ssi_above();
 				<iframe src="?view=home1" width="99%" height="300"></iframe>
 			</div>
 		</div>
-		<span class="botslice"><span></span></span>
 	</div>
 
 <?php
