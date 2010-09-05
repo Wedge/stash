@@ -1345,6 +1345,50 @@ function AdminAccount()
 			}
 
 			$incontext['member_id'] = $smcFunc['db_insert_id']("{$db_prefix}members", 'id_member');
+
+			// If we have a first post that we've inserted ourselves, let's fix that to be our new administrator.
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}messages
+				SET id_member = {int:id_member},
+					poster_name = {string:poster_name},
+					poster_email = {string:poster_email},
+					poster_ip = {string:poster_ip}
+				WHERE id_msg = 1
+					AND id_topic = 1
+					AND id_member = 0
+					AND poster_name = {string:smf}',
+				array(
+					'id_member' => $incontext['member_id'],
+					'poster_name' => stripslashes($_POST['username']),
+					'poster_email' => stripslashes($_POST['email']),
+					'poster_ip' => $ip,
+					'smf' => 'Simple Machines', // this is actually hard coded in the installer SQL
+				)
+			);
+			// If we updated the messages, we should fix the topic too. And user post count.
+			if ($smcFunc['db_affected_rows']() != 0)
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}topics
+					SET id_member_started = {int:id_member},
+						id_member_updated = {int:id_member}
+					WHERE id_topic = 1
+						AND id_member_started = 0
+						AND num_replies = 0',
+					array(
+						'id_member' => $incontext['member_id'],
+					)
+				);
+
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}members
+					SET posts = posts + 1
+					WHERE id_member = {int:id_member}',
+					array(
+						'id_member' => $incontext['member_id'],
+					)
+				);
+			}
 		}
 
 		// If we're here we're good.
@@ -1455,6 +1499,7 @@ function DeleteInstall()
 	updateStats('member');
 	updateStats('message');
 	updateStats('topic');
+	updateStats('postgroups');
 
 	// This function is needed to do the updateStats('subject') call.
 	$smcFunc['strtolower'] = $db_character_set === 'utf8' || $txt['lang_character_set'] === 'UTF-8' ? create_function('$string', '
