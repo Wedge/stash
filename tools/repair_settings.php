@@ -69,7 +69,6 @@ $txt['db_prefix'] = 'Table prefix';
 $txt['db_persist'] = 'Connection type';
 $txt['db_persist0'] = 'Standard (recommended)';
 $txt['db_persist1'] = 'Persistent (might cause problems)';
-$txt['db_mysql'] = 'MySQL';
 
 $txt['path_url_settings'] = 'Paths &amp; URLs';
 $txt['path_url_settings_info'] = 'These are the paths and URLs to your SMF installation, and can cause big problems when they are wrong.  Sorry, there are a lot of them.';
@@ -745,7 +744,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	else
 		$db_connection = @mysql_connect($db_server, $db_user, $db_passwd);
 
-	// Something's wrong, show an error if its fatal (which we assume it is)
+	// Something's wrong, show an error if it's fatal (which we assume it is)
 	if (!$db_connection)
 	{
 		if (!empty($db_options['non_fatal']))

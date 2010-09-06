@@ -50,7 +50,7 @@ class authorize_display
 		return !empty($modSettings['authorize_id']) && !empty($modSettings['authorize_transid']);
 	}
 
-	// Lets set up the fields needed for the transaction.
+	// Let's set up the fields needed for the transaction.
 	public function fetchGatewayFields($unique_id, $sub_data, $value, $period, $return_url)
 	{
 		global $modSettings, $txt, $boardurl, $context;

@@ -1151,7 +1151,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	else
 		$db_connection = @mysql_connect($db_server, $db_user, $db_passwd);
 
-	// Something's wrong, show an error if its fatal (which we assume it is)
+	// Something's wrong, show an error if it's fatal (which we assume it is)
 	if (!$db_connection)
 	{
 		if (!empty($db_options['non_fatal']))
