@@ -94,7 +94,6 @@ $txt['your_version'] = 'Your Version';
 $txt['current_version'] = 'Current Version';
 
 // Database check
-$txt['no_detailed_db'] = 'Detailed database information is only available on MySQL databases';
 $txt['db_size'] = 'Database Size';
 $txt['db_table_name'] = 'Name';
 $txt['db_table_engine'] = 'Engine';
@@ -652,9 +651,7 @@ function show_detailed_db()
 						<td>', $context['database_size'], '</td>
 					</tr>';
 
-	if (!empty($context['database_tables']))
-	{
-		echo '
+	echo '
 					<tr>
 						<td valign="top"><strong>', $txt['db_table_info'], '</strong></td>
 						<td>
@@ -669,10 +666,10 @@ function show_detailed_db()
 									<td><strong>', $txt['db_table_collation'], '</strong></td>
 								</tr>';
 
-		$table_color = 1;
-		foreach ($context['database_tables'] as $table)
-		{
-			echo '
+	$table_color = 1;
+	foreach ($context['database_tables'] as $table)
+	{
+		echo '
 								<tr class="row', $table_color = !$table_color, '">
 									<td>', !empty($table['columns']) ? '<a href="javascript:void(0);" onclick="return swapOption(this, \'' . $table['name'] . '\');">' : '', $table['name'], !empty($table['columns']) ? '</a>' : '', '</td>
 									<td>', isset($table['engine']) ? $table['engine'] : $txt['na'], '</td>
@@ -682,9 +679,9 @@ function show_detailed_db()
 									<td>', isset($table['auto_increment']) ? $table['auto_increment'] : $txt['na'], '</td>
 									<td>', isset($table['collation']) ? $table['collation'] : $txt['na'], '</td>
 								</tr>';
-			if (!empty($table['columns']))
-			{
-				echo '
+		if (!empty($table['columns']))
+		{
+			echo '
 								<tr id="', $table['name'], '">
 									<td colspan="7">
 										<table width="100%" cellpadding="2" cellspacing="2" style="padding-left: 10px;">
@@ -696,9 +693,9 @@ function show_detailed_db()
 												<td><strong>', $txt['db_column_default'], '</strong></td>
 												<td><strong>', $txt['db_column_extra'], '</strong></td>
 											</tr>';
-				$column_color = 1;
-				foreach ($table['columns'] as $column)
-					echo '
+			$column_color = 1;
+			foreach ($table['columns'] as $column)
+				echo '
 											<tr class="row', $column_color = !$column_color, '">
 												<td>', $column['name'], '</td>
 												<td>', isset($column['type']) ? $column['type'] : $txt['na'], '</td>
@@ -707,24 +704,17 @@ function show_detailed_db()
 												<td>', isset($column['default']) ? $column['default'] : $txt['na'], '</td>
 												<td>', isset($column['extra']) ? $column['extra'] : $txt['na'], '</td>
 											</tr>';
-				echo '
+			echo '
 										</table>
 									</td>
 								</tr>';
-			}
 		}
-		echo '
-							</table>
-						</td>
-					</tr>';
 	}
-	else
-		echo '
-					<tr>
-						<td colspan="2"><strong>', $txt['no_detailed_db'], '</strong></td>
-					</tr>';
 
 	echo '
+							</table>
+						</td>
+					</tr>
 				</table>';
 
 	// Setup the javascript stuff here
@@ -1323,7 +1313,7 @@ function initialize()
 	if (empty($smfInfo) || ($context['user']['is_admin'] && isset($_GET['regenerate'])))
 		generate_password();
 
-	// If the user isn't an admin or they don't have a password in the URL, or its incorrect, kick 'em out
+	// If the user isn't an admin or they don't have a password in the URL, or it's incorrect, kick 'em out
 	if (!$context['user']['is_admin'] && !isset($_POST['pass']))
 		redirectexit();
 	elseif (!$context['user']['is_admin'] && strcmp($_POST['pass'], $smfInfo) != 0)

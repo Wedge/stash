@@ -29,16 +29,11 @@ define('SMF_LANG_VERSION', '2.0 RC3');
 $GLOBALS['required_php_version'] = '5.0.0';
 $GLOBALS['required_mysql_version'] = '3.23.28';
 
-$databases = array(
-	'mysql' => array(
-		'name' => 'MySQL',
-		'version' => '3.23.28',
-		'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
-		'utf8_support' => true,
-		'utf8_version' => '4.1.0',
-		'utf8_version_check' => 'return mysql_get_server_info();',
-		'alter_support' => true,
-	),
+$db = array(
+	'version' => '3.23.28',
+	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
+	'utf8_version' => '4.1.0',
+	'utf8_version_check' => 'return mysql_get_server_info();',
 );
 
 // General options for the script.
@@ -914,8 +909,8 @@ function initialize_inputs()
 // Step 0 - Let's welcome them in and ask them to login!
 function WelcomeLogin()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl, $upcontext, $disable_security;
-	global $smcFunc, $databases, $txt;
+	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
+	global $upcontext, $disable_security, $smcFunc, $txt;
 
 	$upcontext['sub_template'] = 'welcome_message';
 
@@ -940,11 +935,11 @@ function WelcomeLogin()
 		return throw_error('Warning!  You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br /><br />Please ask your host to upgrade.');
 
 	if (!db_version_check())
-		return throw_error('Your ' . $databases['mysql']['name'] . ' version does not meet the minimum requirements of SMF.<br /><br />Please ask your host to upgrade.');
+		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br /><br />Please ask your host to upgrade.');
 
 	// Do they have ALTER privileges?
-	if (!empty($databases['mysql']['alter_support']) && $smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
-		return throw_error('The ' . $databases['mysql']['name'] . ' user you have set in Settings.php does not have proper privileges.<br /><br />Please ask your host to give this user the ALTER, CREATE, and DROP privileges.');
+	if ($smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
+		return throw_error('The MySQL user you have set in Settings.php does not have proper privileges.<br /><br />Please ask your host to give this user the ALTER, CREATE, and DROP privileges.');
 
 	// Do a quick version spot check.
 	$temp = substr(@implode('', @file($boarddir . '/index.php')), 0, 4096);
@@ -1018,8 +1013,8 @@ function WelcomeLogin()
 // Step 0.5: Does the login work?
 function checkLogin()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl, $upcontext, $disable_security;
-	global $smcFunc, $databases, $support_js, $txt;
+	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
+	global $upcontext, $disable_security, $smcFunc, $support_js, $txt;
 
 	// Are we trying to login?
 	if (isset($_POST['contbutt']) && (!empty($_POST['user']) || $disable_security))
@@ -1332,8 +1327,8 @@ function BackupDatabase()
 
 	// Get all the table names.
 	$filter = str_replace('_', '\_', preg_match('~^`(.+?)`\.(.+?)$~', $db_prefix, $match) != 0 ? $match[2] : $db_prefix) . '%';
-	$db = preg_match('~^`(.+?)`\.(.+?)$~', $db_prefix, $match) != 0 ? strtr($match[1], array('`' => '')) : false;
-	$tables = $smcFunc['db_list_tables']($db, $filter);
+	$dbn = preg_match('~^`(.+?)`\.(.+?)$~', $db_prefix, $match) != 0 ? strtr($match[1], array('`' => '')) : false;
+	$tables = $smcFunc['db_list_tables']($dbn, $filter);
 
 	$table_names = array();
 	foreach ($tables as $table)
@@ -1679,7 +1674,7 @@ function CleanupMods()
 		foreach ($info as $change)
 		{
 			// Work out two things:
-			// 1) Whether it's installed at the moment - and if so whether its fully installed, and:
+			// 1) Whether it's installed at the moment - and if so whether it's fully installed, and:
 			// 2) Whether it could be installed on the new version.
 			if ($change['type'] == 'modification')
 			{
@@ -2184,7 +2179,7 @@ function DeleteUpgrade()
 	else
 	{
 		require_once($sourcedir . '/ScheduledTasks.php');
-		$forum_version = SMF_VERSION;  // The variable is usually defined in index.php so lets just use the constant to do it for us.
+		$forum_version = SMF_VERSION;  // The variable is usually defined in index.php so let's just use the constant to do it for us.
 		scheduled_fetchSMfiles(); // Now go get those files!
 	}
 
@@ -2460,12 +2455,12 @@ function php_version_check()
 
 function db_version_check()
 {
-	global $databases;
+	global $db;
 
-	$curver = eval($databases['mysql']['version_check']);
+	$curver = eval($db['version_check']);
 	$curver = preg_replace('~\-.+?$~', '', $curver);
 
-	return version_compare($databases['mysql']['version'], $curver) <= 0;
+	return version_compare($db['version'], $curver) <= 0;
 }
 
 function getMemberGroups()
@@ -2517,7 +2512,7 @@ function fixRelativePath($path)
 function parse_sql($filename)
 {
 	global $db_prefix, $db_collation, $boarddir, $boardurl, $command_line, $file_steps, $step_progress, $custom_warning;
-	global $upcontext, $support_js, $is_debug, $smcFunc, $db_connection, $databases, $db_character_set;
+	global $upcontext, $support_js, $is_debug, $smcFunc, $db_connection, $db, $db_character_set;
 
 /*
 	Failure allowed on:
@@ -2564,7 +2559,7 @@ function parse_sql($filename)
 	set_error_handler('sql_error_handler');
 
 	// Let's find out what the members table uses and put it in a global var - to allow upgrade script to match collations!
-	if (!empty($databases['mysql']['utf8_support']) && version_compare($databases['mysql']['utf8_version'], eval($databases['mysql']['utf8_version_check'])) != 1)
+	if (version_compare($db['utf8_version'], eval($db['utf8_version_check'])) != 1)
 	{
 		$request = $smcFunc['db_query']('', '
 			SHOW TABLE STATUS
@@ -2612,7 +2607,7 @@ function parse_sql($filename)
 	$last_step = '';
 
 	// MySQL users below v4 can't use engine.
-	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($databases['mysql']['version_check']))) > 0)
+	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($db['version_check']))) > 0)
 		foreach ($lines as $key => $line)
 			$lines[$key] = strtr($line, array(') ENGINE=' => ') TYPE='));
 
@@ -3023,10 +3018,10 @@ function protected_alter($change, $substep, $is_test = false)
 // Alter a text column definition preserving its character set.
 function textfield_alter($change, $substep)
 {
-	global $db_prefix, $databases, $smcFunc;
+	global $db_prefix, $db, $smcFunc;
 
 	// Versions of MySQL < 4.1 wouldn't benefit from character set detection.
-	if (empty($databases['mysql']['utf8_support']) || version_compare($databases['mysql']['utf8_version'], eval($databases['mysql']['utf8_version_check'])) > 0)
+	if (version_compare($db['utf8_version'], eval($db['utf8_version_check'])) > 0)
 	{
 		$column_fix = true;
 		$null_fix = !$change['null_allowed'];
@@ -3103,13 +3098,13 @@ function textfield_alter($change, $substep)
 // Check if we need to alter this query.
 function checkChange(&$change)
 {
-	global $smcFunc, $databases;
+	global $smcFunc, $db;
 	static $database_version, $where_field_support;
 
 	// Attempt to find a database_version.
 	if (empty($database_version))
 	{
-		$database_version = $databases['mysql']['version_check'];
+		$database_version = $db['version_check'];
 		$where_field_support = version_compare('5.0', $database_version) <= 0;
 	}
 
@@ -3232,7 +3227,7 @@ function nextSubstep($substep)
 
 function cmdStep0()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $start_time, $cachedir, $databases, $smcFunc, $upcontext;
+	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $start_time, $cachedir, $db, $smcFunc, $upcontext;
 	global $language, $is_debug, $txt;
 	$start_time = time();
 
@@ -3275,10 +3270,10 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	if (!php_version_check())
 		print_error('Error: PHP ' . PHP_VERSION . ' does not match version requirements.', true);
 	if (!db_version_check())
-		print_error('Error: ' . $databases['mysql']['name'] . ' ' . $databases['mysql']['version'] . ' does not match minimum requirements.', true);
+		print_error('Error: MySQL ' . $db['version'] . ' does not match minimum requirements.', true);
 
-	if (!empty($databases['mysql']['alter_support']) && $smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
-		print_error('Error: The ' . $databases['mysql']['name'] . ' account in Settings.php does not have sufficient privileges.', true);
+	if ($smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
+		print_error('Error: the MySQL account in Settings.php does not have sufficient privileges.', true);
 
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
 		&& @file_exists($sourcedir . '/QueryString.php')
