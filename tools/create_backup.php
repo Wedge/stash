@@ -50,7 +50,6 @@ function step1($error_message = '')
 	if (!isset($db_server))
 	{
 		// Set up the defaults.
-		$db_type = isset($_POST['db_type']) ? $_POST['db_type'] : 'mysql';
 		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : @ini_get('mysql.default_host') or $db_server = 'localhost';
 		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : @ini_get('mysql.default_user');
 		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : @ini_get('mysql.default_user');
@@ -85,7 +84,6 @@ function step1($error_message = '')
 	echo '
 				<div class="panel">
 					<form action="', $_SERVER['PHP_SELF'], '?step=2" method="post">
-						<input type="hidden" name="db_type" value="mysql" />
 						<h2>MySQL connection details</h2>
 						<h3>Please enter your database details below to create the backup.</h3>
 
@@ -166,7 +164,7 @@ function step2()
 {
 	global $start_time, $table_sizes, $total_size, $before_length, $write_data, $smcFunc;
 
-	$db_connection = smc_compat_database($_POST['db_type'], $_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
+	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 	if (!$db_connection)
 		return step1('Cannot connect to the database server with the supplied data.<br /><br />If you are not sure about what to type in, please contact your host.');
 
@@ -256,7 +254,7 @@ function step2()
 		if ($table < $_GET['table'])
 			continue;
 
-		if ($_POST['db_type'] == 'mysql' && version_compare($database_version, '4.1.8') >= 0)
+		if (version_compare($database_version, '4.1.8') >= 0)
 			$smcFunc['db_query']('', 'START TRANSACTION WITH CONSISTENT SNAPSHOT');
 		else
 			$smcFunc['db_query']('', '/*!32317 BEGIN */');
@@ -693,7 +691,6 @@ function nextRow($row, $table, $max_rows, $max_tables, $fp = null)
 			<p>Data is currently being written at approximately ', round($speed / 1024, 3), ' kilobytes per second.</p>
 
 			<form action="', $_SERVER['PHP_SELF'], $query_string, '" method="post" name="autoSubmit">
-				<input type="hidden" name="db_type" value="', $_POST['db_type'], '" />
 				<input type="hidden" name="db_server" value="', $_POST['db_server'], '" />
 				<input type="hidden" name="db_user" value="', $_POST['db_user'], '" />
 				<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '" />
@@ -1372,7 +1369,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	return $db_connection;
 }
 
-function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_name)
+function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
 	global $smcFunc, $db_connection;
 
@@ -1395,18 +1392,14 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		if (empty($smcFunc))
 			$smcFunc = array();
 
-		// Default the database type to MySQL.
-		if (empty($db_type) || !file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
-			$db_type = 'mysql';
-
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');
 		require_once($sourcedir . '/Load.php');
 		require_once($sourcedir . '/Security.php');
 		require_once($sourcedir . '/Subs-Auth.php');
 
-		// compat mode. Active!
-		if (!file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php') && $db_type == 'mysql')
+		// Compat mode. Active!
+		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
 		{
 			// First try a persistent connection.
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
@@ -1416,7 +1409,7 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		}
 		else
 		{
-			require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+			require_once($sourcedir . '/Subs-Db-mysql.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)

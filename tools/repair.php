@@ -149,7 +149,7 @@ function action_resort()
 {
 	global $db_prefix;
 
-	smc_compat_dtabase();
+	smc_compat_database();
 
 	$tables = array(
 		'topics' => array(
@@ -813,7 +813,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	return $db_connection;
 }
 
-function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_name)
+function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
 	global $smcFunc, $db_connection, $modSettings;
 
@@ -836,18 +836,14 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		if (empty($smcFunc))
 			$smcFunc = array();
 
-		// Default the database type to MySQL.
-		if (empty($db_type) || !file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
-			$db_type = 'mysql';
-
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');
 		require_once($sourcedir . '/Load.php');
 		require_once($sourcedir . '/Security.php');
 		require_once($sourcedir . '/Subs-Auth.php');
 
-		// compat mode. Active!
-		if (!file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php') && $db_type == 'mysql')
+		// Compat mode. Active!
+		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
 		{
 			// First try a persistent connection.
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
@@ -857,7 +853,7 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		}
 		else
 		{
-			require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+			require_once($sourcedir . '/Subs-Db-mysql.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)

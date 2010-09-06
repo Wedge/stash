@@ -169,8 +169,6 @@ if ($maintenance != 2)
 	if (empty($smcFunc))
 		$smcFunc = array();
 
-	$db_type = 'mysql';
-
 	require_once($sourcedir . '/Errors.php');
 	require_once($sourcedir . '/Subs.php');
 	require_once($sourcedir . '/Load.php');

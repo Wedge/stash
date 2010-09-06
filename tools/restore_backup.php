@@ -53,7 +53,6 @@ function step1($error_message = '')
 	if (!isset($db_server))
 	{
 		// Set up the defaults.
-		$db_type = isset($_POST['db_type']) ? $_POST['db_type'] : 'mysql';
 		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : @ini_get('mysql.default_host') or $db_server = 'localhost';
 		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : @ini_get('mysql.default_user');
 		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : @ini_get('mysql.default_user');
@@ -83,7 +82,6 @@ function step1($error_message = '')
 	echo '
 				<div class="panel">
 					<form action="', $_SERVER['PHP_SELF'], '?step=2" method="post">
-						<input type="hidden" name="db_type" value="mysql" />
 						<h2>MySQL connection details</h2>
 						<h3>Please enter your database details below.  Please note that the table prefix name from your previous installation will be used.</h3>
 
@@ -148,7 +146,7 @@ function step2()
 {
 	global $start_time;
 
-	$db_connection = smc_compat_database($_POST['db_type'], $_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
+	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 	if (!$db_connection)
 		return step1('Cannot connect to the database server with the supplied data.<br /><br />If you are not sure about what to type in, please contact your host.');
 
@@ -284,7 +282,7 @@ function step2()
 					// ]]></script>
 					<img src="about:blank" width="0" alt="" id="auto_paths" /><br /><br />';
 
-		$_SESSION['temp_db'] = array($_POST['db_type'], $_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']);
+		$_SESSION['temp_db'] = array($_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']);
 	}
 
 	echo '
@@ -302,10 +300,10 @@ function step3()
 	if (!isset($_SESSION['temp_db']))
 		die;
 
-	list ($_POST['db_type'], $_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']) = $_SESSION['temp_db'];
+	list ($_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']) = $_SESSION['temp_db'];
 	$_SESSION['temp_db'] = '';
 
-	$db_connection = smc_compat_database($_POST['db_type'], $_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
+	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 
 	$request = $smcFunc['db_query']('', "
 		SHOW TABLES LIKE '%log_topics'");
@@ -1009,7 +1007,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	return $db_connection;
 }
 
-function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_name)
+function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
 	global $smcFunc, $db_connection, $modSettings;
 
@@ -1032,10 +1030,6 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		if (empty($smcFunc))
 			$smcFunc = array();
 
-		// Default the database type to MySQL.
-		if (empty($db_type) || !file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
-			$db_type = 'mysql';
-
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');
 		require_once($sourcedir . '/Load.php');
@@ -1043,7 +1037,7 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		require_once($sourcedir . '/Subs-Auth.php');
 
 		// compat mode. Active!
-		if (!file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php') && $db_type == 'mysql')
+		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
 		{
 			// First try a persistent connection.
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
@@ -1053,7 +1047,7 @@ function smc_compat_database($db_type, $db_server, $db_user, $db_passwd, $db_nam
 		}
 		else
 		{
-			require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
+			require_once($sourcedir . '/Subs-Db-mysql.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)

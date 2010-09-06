@@ -190,9 +190,7 @@ function initialize_inputs()
 
 			$ftp->unlink('install.php');
 			$ftp->unlink('webinstall.php');
-
-			foreach ($databases as $key => $dummy)
-				$ftp->unlink('install_' . $GLOBALS['db_script_version'] . '_' . $key . '.sql');
+			$ftp->unlink('install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
 
 			$ftp->close();
 
@@ -202,9 +200,7 @@ function initialize_inputs()
 		{
 			@unlink(__FILE__);
 			@unlink(dirname(__FILE__) . '/webinstall.php');
-
-			foreach ($databases as $key => $dummy)
-				@unlink(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_' . $key . '.sql');
+			@unlink(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
 		}
 
 		// Now just redirect to a blank.gif...
@@ -393,17 +389,14 @@ function Welcome()
 	{
 		if ($db['supported'])
 		{
-			if (!file_exists(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_' . $key . '.sql'))
+			if (!file_exists(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql'))
 			{
 				$databases[$key]['supported'] = false;
 				$notFoundSQLFile = true;
-				$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install_' . $GLOBALS['db_script_version'] . '_' . $key . '.sql');
+				$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
 			}
 			else
-			{
-				$db_type = $key;
 				$incontext['supported_databases'][] = $db;
-			}
 		}
 	}
 
@@ -641,7 +634,6 @@ function DatabaseSettings()
 	$incontext['db']['user'] = '';
 	$incontext['db']['name'] = '';
 	$incontext['db']['pass'] = '';
-	$incontext['db']['type'] = '';
 	$incontext['supported_databases'] = array();
 
 	$foundOne = false;
@@ -666,7 +658,6 @@ function DatabaseSettings()
 				if (isset($db['default_port']))
 					$db_port = @ini_get($db['default_port']);
 
-				$incontext['db']['type'] = $key;
 				$foundOne = true;
 			}
 		}
@@ -683,7 +674,7 @@ function DatabaseSettings()
 	else
 		$incontext['db']['prefix'] = 'smf_';
 
-	// This is just because it makes it easier for people on Lycos/Tripod UK :P.
+	// This is just because it makes it easier for people on Lycos/Tripod UK. :P
 	if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'members.lycos.co.uk' && defined('LOGIN'))
 	{
 		$incontext['db']['user'] = LOGIN;
@@ -695,13 +686,12 @@ function DatabaseSettings()
 		$incontext['db']['server'] .= ':' . $db_port;
 
 	// Are we submitting?
-	if (isset($_POST['db_type']))
+	if (isset($_POST['db_name']))
 	{
 		// What type are they trying?
-		$db_type = preg_replace('~[^A-Za-z0-9]~', '', $_POST['db_type']);
 		$db_prefix = $_POST['db_prefix'];
 		// Validate the prefix.
-		$valid_prefix = $databases[$db_type]['validate_prefix']($db_prefix);
+		$valid_prefix = $databases['mysql']['validate_prefix']($db_prefix);
 
 		if ($valid_prefix !== true)
 		{
@@ -711,7 +701,6 @@ function DatabaseSettings()
 
 		// Take care of these variables...
 		$vars = array(
-			'db_type' => $db_type,
 			'db_name' => $_POST['db_name'],
 			'db_user' => $_POST['db_user'],
 			'db_passwd' => isset($_POST['db_passwd']) ? $_POST['db_passwd'] : '',
@@ -749,7 +738,7 @@ function DatabaseSettings()
 		require_once($sourcedir . '/Subs-Db-mysql.php');
 
 		// Attempt a connection.
-		$needsDB = !empty($databases[$db_type]['always_has_db']);
+		$needsDB = !empty($databases['mysql']['always_has_db']);
 		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => !$needsDB));
 
 		// No dice?  Let's try adding the prefix they specified, just in case they misread the instructions ;)
@@ -774,7 +763,7 @@ function DatabaseSettings()
 
 		// Do they meet the install requirements?
 		// !!! Old client, new server?
-		if (version_compare($databases[$db_type]['version'], preg_replace('~^\D*|\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
+		if (version_compare($databases['mysql']['version'], preg_replace('~^\D*|\-.+?$~', '', eval($databases['mysql']['version_check']))) > 0)
 		{
 			$incontext['error'] = $txt['error_db_too_low'];
 			return false;
@@ -828,20 +817,10 @@ function DatabaseSettings()
 // Let's start with basic forum type settings.
 function ForumSettings()
 {
-	global $txt, $incontext, $databases, $smcFunc, $db_connection, $db_type;
+	global $txt, $incontext, $databases, $smcFunc, $db_connection;
 
 	$incontext['sub_template'] = 'forum_settings';
 	$incontext['page_title'] = $txt['install_settings'];
-
-	// Let's see if we got the database type correct.
-	if (isset($_POST['db_type'], $databases[$_POST['db_type']]))
-		$db_type = $_POST['db_type'];
-
-	// Else we'd better be able to get the connection.
-	else
-		load_database();
-
-	$db_type = isset($_POST['db_type']) ? $_POST['db_type'] : $db_type;
 
 	// What host and port are we on?
 	$host = empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] . (empty($_SERVER['SERVER_PORT']) || $_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT']) : $_SERVER['HTTP_HOST'];
@@ -851,8 +830,8 @@ function ForumSettings()
 
 	// Check if the database sessions will even work.
 	$incontext['test_dbsession'] = @ini_get('session.auto_start') != 1;
-	$incontext['utf8_default'] = $databases[$db_type]['utf8_default'];
-	$incontext['utf8_required'] = $databases[$db_type]['utf8_required'];
+	$incontext['utf8_default'] = $databases['mysql']['utf8_default'];
+	$incontext['utf8_required'] = $databases['mysql']['utf8_required'];
 
 	$incontext['continue'] = 1;
 
@@ -887,11 +866,11 @@ function ForumSettings()
 		require(dirname(__FILE__) . '/Settings.php');
 
 		// UTF-8 requires a setting to override the language charset.
-		if (isset($_POST['utf8']) && !empty($databases[$db_type]['utf8_support']))
+		if (isset($_POST['utf8']) && !empty($databases['mysql']['utf8_support']))
 		{
-			if (version_compare($databases[$db_type]['utf8_version'], preg_replace('~\-.+?$~', '', eval($databases[$db_type]['utf8_version_check']))) > 0)
+			if (version_compare($databases['mysql']['utf8_version'], preg_replace('~\-.+?$~', '', eval($databases['mysql']['utf8_version_check']))) > 0)
 			{
-				$incontext['error'] = sprintf($txt['error_utf8_version'], $databases[$db_type]['utf8_version']);
+				$incontext['error'] = sprintf($txt['error_utf8_version'], $databases['mysql']['utf8_version']);
 				return false;
 			}
 			else
@@ -909,7 +888,7 @@ function ForumSettings()
 // Step one: Do the SQL thang.
 function DatabasePopulation()
 {
-	global $db_character_set, $txt, $db_connection, $smcFunc, $databases, $modSettings, $db_type, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
+	global $db_character_set, $txt, $db_connection, $smcFunc, $databases, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
 
 	$incontext['sub_template'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
@@ -947,7 +926,7 @@ function DatabasePopulation()
 	}
 
 	// If doing UTF8, select it.
-	if (!empty($db_character_set) && $db_character_set == 'utf8' && !empty($databases[$db_type]['utf8_support']))
+	if (!empty($db_character_set) && $db_character_set == 'utf8' && !empty($databases['mysql']['utf8_support']))
 		$smcFunc['db_query']('', '
 			SET NAMES utf8',
 			array(
@@ -974,11 +953,10 @@ function DatabasePopulation()
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
 	// MySQL users below v4 can't use engine.
-	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($databases[$db_type]['version_check']))) > 0)
+	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($databases['mysql']['version_check']))) > 0)
 		$replaces[') ENGINE='] = ') TYPE=';
 	// If the UTF-8 setting was enabled, add it to the table definitions.
-	//!!! Very MySQL specific still
-	if (isset($_POST['utf8']) && !empty($databases[$db_type]['utf8_support']))
+	if (isset($_POST['utf8']) && !empty($databases['mysql']['utf8_support']))
 		$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
 	// Read in the SQL.  Turn this on and that off... internationalize... etc.
@@ -1054,7 +1032,7 @@ function DatabasePopulation()
 	}
 
 	// Make sure UTF will be used globally.
-	if (isset($_POST['utf8']) && !empty($databases[$db_type]['utf8_support']))
+	if (isset($_POST['utf8']) && !empty($databases['mysql']['utf8_support']))
 		$smcFunc['db_insert']('replace',
 			$db_prefix . 'settings',
 			array(
@@ -1166,7 +1144,7 @@ function DatabasePopulation()
 	}
 
 	// Check for the ALTER privilege.
-	if (!empty($databases[$db_type]['alter_support']) && $smcFunc['db_query']('', "ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
+	if (!empty($databases['mysql']['alter_support']) && $smcFunc['db_query']('', "ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
 	{
 		$incontext['error'] = $txt['error_db_alter_priv'];
 		return false;
@@ -1390,7 +1368,7 @@ function DeleteInstall()
 {
 	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
 	global $smcFunc, $db_character_set, $mbname, $context, $scripturl, $boardurl;
-	global $current_smf_version, $databases, $sourcedir, $forum_version, $modSettings, $user_info, $language, $db_type;
+	global $current_smf_version, $databases, $sourcedir, $forum_version, $modSettings, $user_info, $language;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['sub_template'] = 'delete_install';
@@ -1411,7 +1389,7 @@ function DeleteInstall()
 	if (!empty($incontext['account_existed']))
 		$incontext['warning'] = $incontext['account_existed'];
 
-	if (!empty($db_character_set) && !empty($databases[$db_type]['utf8_support']))
+	if (!empty($db_character_set) && !empty($databases['mysql']['utf8_support']))
 		$smcFunc['db_query']('', '
 			SET NAMES {raw:db_character_set}',
 			array(
@@ -2260,38 +2238,7 @@ function template_database_settings()
 	template_warning_divs();
 
 	echo '
-		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 1em 0;">';
-
-	// More than one database type?
-	if (count($incontext['supported_databases']) > 1)
-	{
-		echo '
-			<tr>
-				<td width="20%" valign="top" class="textbox"><label for="db_type_input">', $txt['db_settings_type'], ':</label></td>
-				<td>
-					<select name="db_type" id="db_type_input">';
-
-	foreach ($incontext['supported_databases'] as $key => $db)
-			echo '
-						<option value="', $key, '"', isset($_POST['db_type']) && $_POST['db_type'] == $key ? ' selected="selected"' : '', '>', $db['name'], '</option>';
-
-	echo '
-					</select>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_type_info'], '</div>
-				</td>
-			</tr>';
-	}
-	else
-	{
-		echo '
-			<tr style="display: none;">
-				<td>
-					<input type="hidden" name="db_type" value="', $incontext['db']['type'], '" />
-				</td>
-			</tr>';
-	}
-
-	echo '
+		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 1em 0;">
 			<tr id="db_server_contain">
 				<td width="20%" valign="top" class="textbox"><label for="db_server_input">', $txt['db_settings_server'], ':</label></td>
 				<td>

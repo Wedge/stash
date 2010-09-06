@@ -55,7 +55,7 @@ $txt['databaseSession_enable'] = 'Database driven sessions';
 $txt['databaseSession_enable0'] = 'Off (not recommended)';
 $txt['databaseSession_enable1'] = 'On (recommended)';
 
-$txt['database_settings'] = 'Database Info';
+$txt['database_settings'] = 'MySQL Database Info';
 $txt['database_settings_info'] = 'This is the server, username, password, and database for your server.';
 $txt['db_server'] = 'Server';
 $txt['db_name'] = 'Database name';
@@ -88,10 +88,6 @@ $txt['theme_dir'] = 'Default Theme Directory';
 
 $txt['theme_path_url_settings'] = 'Paths &amp; URLs For Themes';
 $txt['theme_path_url_settings_info'] = 'These are the paths and URLs to your SMF themes.';
-
-// Fix Database title to use $db_type if available
-if (!empty($db_type) && isset($txt['db_' . $db_type]))
-	$txt['database_settings'] = $txt['db_' . $db_type] . ' ' . $txt['database_settings'];
 
 if (isset($_POST['submit']))
 	set_settings();
@@ -213,7 +209,7 @@ echo '
 
 function initialize_inputs()
 {
-	global $smcFunc, $db_connection, $sourcedir, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_type, $context;
+	global $smcFunc, $db_connection, $sourcedir, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $context;
 
 	// Turn off magic quotes runtime and enable error reporting.
 	@set_magic_quotes_runtime(0);
@@ -253,26 +249,22 @@ function initialize_inputs()
 		if (empty($smcFunc))
 			$smcFunc = array();
 
-		// Default the database type to MySQL.
-		if (empty($db_type) || !file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php'))
-			$db_type = 'mysql';
-
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');
 		require_once($sourcedir . '/Load.php');
 		require_once($sourcedir . '/Security.php');
 		require_once($sourcedir . '/Subs-Auth.php');
 
-		// compat mode. Active!
+		// Compat mode. Active!
 		$context['is_legacy'] = true;
-		if (!file_exists($sourcedir . '/Subs-Db-' . $db_type . '.php') && $db_type == 'mysql')
+		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 		else
 		{
 			// Far as I know, this is 2.0.
 			$context['is_legacy'] = false;
-			require_once($sourcedir . '/Subs-Db-' . $db_type . '.php');
-			require_once($sourcedir . '/DbExtra-' . $db_type . '.php');
+			require_once($sourcedir . '/Subs-Db-mysql.php');
+			require_once($sourcedir . '/DbExtra-mysql.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 			db_extra_init();
 		}
@@ -281,7 +273,7 @@ function initialize_inputs()
 
 function show_settings()
 {
-	global $txt, $smcFunc, $db_connection, $db_type, $db_name, $db_prefix, $context;
+	global $txt, $smcFunc, $db_connection, $db_name, $db_prefix, $context;
 
 	// Check to make sure Settings.php exists!
 	if (file_exists(dirname(__FILE__) . '/Settings.php'))
