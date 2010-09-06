@@ -368,10 +368,8 @@ function Welcome()
 		return true;
 
 	// Check the PHP version.
-	if ((!function_exists('version_compare') || version_compare($GLOBALS['required_php_version'], PHP_VERSION) > 0))
-	{
+	if (!function_exists('version_compare') || (version_compare($GLOBALS['required_php_version'], PHP_VERSION) > 0))
 		$incontext['warning'] = $txt['error_php_too_low'];
-	}
 
 	// See if we think they have already installed it?
 	if (is_readable(dirname(__FILE__) . '/Settings.php'))
@@ -852,8 +850,7 @@ function ForumSettings()
 	$incontext['detected_url'] = 'http' . (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 's' : '') . '://' . $host . substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 
 	// Check if the database sessions will even work.
-	$incontext['test_dbsession'] = @ini_get('session.auto_start') != 1 && @version_compare(PHP_VERSION, '4.2.0') != -1;
-	$incontext['utf8_should_work'] = strpos(strtolower(PHP_OS), 'win') === false || @version_compare(PHP_VERSION, '4.2.3') != -1;
+	$incontext['test_dbsession'] = @ini_get('session.auto_start') != 1;
 	$incontext['utf8_default'] = $databases[$db_type]['utf8_default'];
 	$incontext['utf8_required'] = $databases[$db_type]['utf8_required'];
 
@@ -2374,19 +2371,14 @@ function template_forum_settings()
 					<input type="checkbox" name="dbsession" id="dbsession_check" checked="checked" class="input_check" /> <label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label><br />
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
 				</td>
-			</tr>';
-
-	if ($incontext['utf8_should_work'])
-		echo '
+			</tr>
 			<tr>
 				<td valign="top" class="textbox">', $txt['install_settings_utf8'], ':</td>
 				<td>
 					<input type="checkbox" name="utf8" id="utf8_check"', $incontext['utf8_default'] ? ' checked="checked"' : '', ' class="input_check"', $incontext['utf8_required'] ? ' disabled="disabled"' : '', ' /> <label for="utf8_check">', $txt['install_settings_utf8_title'], '</label><br />
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_utf8_info'], '</div>
 				</td>
-			</tr>';
-
-	echo '
+			</tr>
 			<tr>
 				<td valign="top" class="textbox">', $txt['install_settings_stats'], ':</td>
 				<td>
