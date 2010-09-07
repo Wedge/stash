@@ -1037,7 +1037,7 @@ function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 		require_once($sourcedir . '/Subs-Auth.php');
 
 		// compat mode. Active!
-		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
+		if (!file_exists($sourcedir . '/Subs-Database.php'))
 		{
 			// First try a persistent connection.
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
@@ -1047,7 +1047,7 @@ function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 		}
 		else
 		{
-			require_once($sourcedir . '/Subs-Db-mysql.php');
+			require_once($sourcedir . '/Subs-Database.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)

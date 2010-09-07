@@ -304,7 +304,7 @@ function load_database()
 	// Connect the database.
 	if (!$db_connection)
 	{
-		require_once($sourcedir . '/Subs-Db-mysql.php');
+		require_once($sourcedir . '/Subs-Database.php');
 
 		if (!$db_connection)
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
@@ -702,9 +702,9 @@ function DatabaseSettings()
 			$sourcedir = dirname(__FILE__) . '/Sources';
 
 		// Better find the database file!
-		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
+		if (!file_exists($sourcedir . '/Subs-Database.php'))
 		{
-			$incontext['error'] = sprintf($txt['error_db_file'], 'Subs-Db-mysql.php');
+			$incontext['error'] = sprintf($txt['error_db_file'], 'Subs-Database.php');
 			return false;
 		}
 
@@ -713,7 +713,7 @@ function DatabaseSettings()
 		$modSettings['disableQueryCheck'] = true;
 		if (empty($smcFunc))
 			$smcFunc = array();
-		require_once($sourcedir . '/Subs-Db-mysql.php');
+		require_once($sourcedir . '/Subs-Database.php');
 
 		// Attempt a connection.
 		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));

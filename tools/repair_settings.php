@@ -256,14 +256,14 @@ function initialize_inputs()
 
 		// Compat mode. Active!
 		$context['is_legacy'] = true;
-		if (!file_exists($sourcedir . '/Subs-Db-mysql.php'))
+		if (!file_exists($sourcedir . '/Subs-Database.php'))
 			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 		else
 		{
-			// Far as I know, this is 2.0.
+			// Far as we know, this is 2.0.
 			$context['is_legacy'] = false;
-			require_once($sourcedir . '/Subs-Db-mysql.php');
-			require_once($sourcedir . '/DbExtra-mysql.php');
+			require_once($sourcedir . '/Subs-Database.php');
+			require_once($sourcedir . '/DbExtra.php');
 			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 			db_extra_init();
 		}

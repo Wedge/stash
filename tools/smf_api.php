@@ -174,7 +174,7 @@ if ($maintenance != 2)
 	require_once($sourcedir . '/Load.php');
 	require_once($sourcedir . '/Security.php');
 	require_once($sourcedir . '/Subs-Auth.php');
-	require_once($sourcedir . '/Subs-Db-mysql.php');
+	require_once($sourcedir . '/Subs-Database.php');
 	$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 
 	$request = $smcFunc['db_query']('', '
