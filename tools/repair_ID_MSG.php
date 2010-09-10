@@ -64,7 +64,7 @@ if ($_GET['step'] <= 1)
 	{
 		protectTimeOut('step=1;start=' . $start);
 
-		$smcFunc['db_query']('
+		$smcFunc['db_query']('', '
 			INSERT INTO {db_prefix}temp_messages
 			SELECT
 				NULL, id_topic, id_board, poster_time, id_member, id_msg_modified, subject, poster_name, poster_email, poster_ip,

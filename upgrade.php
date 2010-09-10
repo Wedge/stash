@@ -938,7 +938,7 @@ function WelcomeLogin()
 		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br /><br />Please ask your host to upgrade.');
 
 	// Do they have ALTER privileges?
-	if ($smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
+	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
 		return throw_error('The MySQL user you have set in Settings.php does not have proper privileges.<br /><br />Please ask your host to give this user the ALTER, CREATE, and DROP privileges.');
 
 	// Do a quick version spot check.
@@ -1241,7 +1241,7 @@ function UpgradeOptions()
 
 	// Emptying the error log?
 	if (!empty($_POST['empty_error']))
-		$smcFunc['db_query']('truncate_table', '
+		$smcFunc['db_query']('', '
 			TRUNCATE {db_prefix}log_errors',
 			array(
 			)
@@ -2268,7 +2268,7 @@ function cli_scheduled_fetchSMfiles()
 			return throw_error(sprintf('Could not retrieve the file %1$s.', $url));
 
 		// Save the file to the database.
-		$smcFunc['db_query']('substring', '
+		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}admin_info_files
 			SET data = SUBSTRING({string:file_data}, 1, 65534)
 			WHERE id_file = {int:id_file}',
@@ -3272,7 +3272,7 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	if (!db_version_check())
 		print_error('Error: MySQL ' . $db['version'] . ' does not match minimum requirements.', true);
 
-	if ($smcFunc['db_query']('alter_boards', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
+	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
 		print_error('Error: the MySQL account in Settings.php does not have sufficient privileges.', true);
 
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
