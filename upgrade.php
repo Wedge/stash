@@ -3709,13 +3709,13 @@ function template_upgrade_above()
 				if (document.getElementById(\'step_progress\'))
 				{
 					document.getElementById(\'step_progress\').style.width = width + "%";
-					setInnerHTML(document.getElementById(\'step_text\'), width + "%");
+					document.getElementById(\'step_text\').innerHTML = width + "%";
 				}
 				if (overall_weight && document.getElementById(\'overall_progress\'))
 				{
 					overall_width = parseInt(startPercent + width * (overall_weight / 100));
 					document.getElementById(\'overall_progress\').style.width = overall_width + "%";
-					setInnerHTML(document.getElementById(\'overall_text\'), overall_width + "%");
+					document.getElementById(\'overall_text\').innerHTML = overall_width + "%";
 				}
 			}
 		// ]]></script>
@@ -4054,10 +4054,9 @@ function template_welcome_message()
 
 				smfVer = document.getElementById(\'smfVersion\');
 				yourVer = document.getElementById(\'yourVersion\');
+				smfVer.innerHTML = window.smfVersion;
 
-				setInnerHTML(smfVer, window.smfVersion);
-
-				var currentVersion = getInnerHTML(yourVer);
+				var currentVersion = yourVer.innerHTML;
 				if (currentVersion < window.smfVersion)
 					document.getElementById(\'version_warning\').style.display = \'\';
 			}
@@ -4190,14 +4189,14 @@ function template_backup_database()
 			{
 				var sCurrentTableName = "";
 				var iTableNum = 0;
-				var sCompletedTableName = getInnerHTML(document.getElementById(\'current_table\'));
+				var sCompletedTableName = document.getElementById(\'current_table\').innerHTML;
 				for (var i = 0; i < oXMLDoc.getElementsByTagName("table")[0].childNodes.length; i++)
 					sCurrentTableName += oXMLDoc.getElementsByTagName("table")[0].childNodes[i].nodeValue;
 				iTableNum = oXMLDoc.getElementsByTagName("table")[0].getAttribute("num");
 
 				// Update the page.
-				setInnerHTML(document.getElementById(\'tab_done\'), iTableNum);
-				setInnerHTML(document.getElementById(\'current_table\'), sCurrentTableName);
+				document.getElementById(\'tab_done\').innerHTML = iTableNum;
+				document.getElementById(\'current_table\').innerHTML = sCurrentTableName;
 				lastTable = iTableNum;
 				updateStepProgress(iTableNum, ', $upcontext['table_count'], ', ', $upcontext['step_weight'] * ((100 - $upcontext['step_progress']) / 100), ');';
 
@@ -4338,7 +4337,7 @@ function template_database_changes()
 					if (retryCount > 15)
 					{
 						document.getElementById("error_block").style.display = "";
-						setInnerHTML(document.getElementById("error_message"), "Error retrieving information on step: " + (sDebugName == "" ? sLastString : sDebugName));';
+						document.getElementById("error_message").innerHTML = "Error retrieving information on step: " + (sDebugName == "" ? sLastString : sDebugName);';
 
 	if ($is_debug)
 		echo '
@@ -4361,7 +4360,7 @@ function template_database_changes()
 					if (retryCount > 10)
 					{
 						document.getElementById("error_block").style.display = "";
-						setInnerHTML(document.getElementById("error_message"), "Upgrade script appears to be going into a loop - step: " + sDebugName);';
+						document.getElementById("error_message").innerHTML = "Upgrade script appears to be going into a loop - step: " + sDebugName;';
 
 	if ($is_debug)
 		echo '
@@ -4405,8 +4404,8 @@ function template_database_changes()
 					document.getElementById("substep_bar_div").style.display = "";
 					document.getElementById("substep_bar_div2").style.display = "";
 					document.getElementById("substep_progress").style.width = iSubStepProgress + "%";
-					setInnerHTML(document.getElementById("substep_text"), iSubStepProgress + "%");
-					setInnerHTML(document.getElementById("substep_bar_div"), sDebugName.replace(/\./g, "") + ":");
+					document.getElementById("substep_text").innerHTML = iSubStepProgress + "%";
+					document.getElementById("substep_bar_div").innerHTML = sDebugName.replace(/\./g, "") + ":";
 				}
 				else
 				{
@@ -4483,14 +4482,14 @@ function template_database_changes()
 
 		echo '
 				// Update the page.
-				setInnerHTML(document.getElementById(\'item_num\'), iItemNum);
-				setInnerHTML(document.getElementById(\'cur_item_name\'), sItemName);';
+				document.getElementById(\'item_num\').innerHTML = iItemNum;
+				document.getElementById(\'cur_item_name\').innerHTML = sItemName;';
 
 		if ($upcontext['file_count'] > 1)
 		{
 			echo '
-				setInnerHTML(document.getElementById(\'file_done\'), curFile);
-				setInnerHTML(document.getElementById(\'item_count\'), totalItems);';
+				document.getElementById(\'file_done\').innerHTML = curFile;
+				document.getElementById(\'item_count\').innerHTML = totalItems;';
 		}
 
 		echo '
@@ -4501,7 +4500,7 @@ function template_database_changes()
 					for (var i = 0; i < oXMLDoc.getElementsByTagName("error")[0].childNodes.length; i++)
 						sErrorMsg += oXMLDoc.getElementsByTagName("error")[0].childNodes[i].nodeValue;
 					document.getElementById("error_block").style.display = "";
-					setInnerHTML(document.getElementById("error_message"), sErrorMsg);
+					document.getElementById("error_message").innerHTML = sErrorMsg;
 					return false;
 				}
 
@@ -4516,8 +4515,8 @@ function template_database_changes()
 				iElapsed = (curTime.getTime() / 1000 - ', $upcontext['started'], ');
 				mins = parseInt(iElapsed / 60);
 				secs = parseInt(iElapsed - mins * 60);
-				setInnerHTML(document.getElementById("mins_elapsed"), mins);
-				setInnerHTML(document.getElementById("secs_elapsed"), secs);
+				document.getElementById("mins_elapsed").innerHTML = mins;
+				document.getElementById("secs_elapsed").innerHTML = secs;
 
 				getNextItem();
 				return true;
@@ -4530,7 +4529,7 @@ function template_database_changes()
 				if (!attemptAgain)
 				{
 					document.getElementById("error_block").style.display = "";
-					setInnerHTML(document.getElementById("error_message"), "Server has not responded for ', ($timeLimitThreshold * 10), ' seconds. It may be worth waiting a little longer or otherwise please click <a href=\"#\" onclick=\"retTimeout(true); return false;\">here<" + "/a> to try this step again");
+					document.getElementById("error_message").innerHTML = "Server has not responded for ', ($timeLimitThreshold * 10), ' seconds. It may be worth waiting a little longer or otherwise please click <a href=\"#\" onclick=\"retTimeout(true); return false;\">here<" + "/a> to try this step again";
 				}
 				else
 				{

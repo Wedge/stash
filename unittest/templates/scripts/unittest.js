@@ -35,7 +35,7 @@ UnitTest.prototype.buildTable = function ()
 		sTable += '</table>';
 	}
 
-	setInnerHTML(oTargetDiv, sTable);
+	oTargetDiv.innerHTML = sTable;
 
 };
 
@@ -74,7 +74,7 @@ UnitTest.prototype.checkTest = function()
 			if (this.iThreadsOpen == 0 || in_array(aTestParts[0], this.aMultiThreadedTests))
 			{
 				var oImage = document.getElementById('img_placeholder_' + aTestParts[0] + '-' + aTestParts[1]);
-				setInnerHTML(oImage, '<img src="' + smf_images_url + '/icons/field_check.gif" alt="" />');
+				oImage.innerHTML = '<img src="' + smf_images_url + '/icons/field_check.gif" alt="" />';
 
 				this.tmpMethod = getXMLDocument;
 				this.tmpMethod(this.opt.sScriptUrl + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1] + ';xml', this.onTestReady);
@@ -107,18 +107,18 @@ UnitTest.prototype.onTestReady = function (oXmlDoc)
 
 		if (bResult)
 		{
-			setInnerHTML(oImage, '<img src="' + smf_images_url + '/icons/field_valid.gif" alt="" />');
+			oImage.innerHTML = '<img src="' + smf_images_url + '/icons/field_valid.gif" alt="" />';
 			oErrorDiv.style.display = 'none';
 		}
 		else
 		{
-			setInnerHTML(oImage, '<img src="' + smf_images_url + '/icons/field_invalid.gif" alt="" />');
+			oImage.innerHTML = '<img src="' + smf_images_url + '/icons/field_invalid.gif" alt="" />';
 
 			oErrorDiv.style.display = 'block';
 			var sError = '';
 			for (var j = 0, m = aResults[i].childNodes.length; j < m; j++)
 				sError += aResults[i].childNodes[j].nodeValue.replace(/\n/g, '<br />')
-			setInnerHTML(oErrorDiv, sError);
+			oErrorDiv.innerHTML = sError;
 		}
 	}
 }
@@ -155,8 +155,8 @@ MouseOver.prototype.init = function()
 
 MouseOver.prototype.showDescription = function(sTitle, sDescription)
 {
-	setInnerHTML(this.oTitleDiv, sTitle);
-	setInnerHTML(this.oContentDiv, sDescription);
+	this.oTitleDiv.innerHTML = sTitle;
+	this.oContentDiv.innerHTML = sDescription;
 	this.oDiv.style.visibility = 'visible';
 
 	document.MouseOver_instanceRef = this;

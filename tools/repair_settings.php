@@ -480,21 +480,6 @@ function show_settings()
 
 	echo '
 			<script type="text/javascript"><!-- // --><![CDATA[
-				// Get the inner HTML of an element.
-				function getInnerHTML(element)
-				{
-					if (\'innerHTML\' in element)
-						return element.innerHTML;
-					else
-					{
-						var returnStr = \'\';
-						for (var i = 0; i < element.childNodes.length; i++)
-							returnStr += getOuterHTML(element.childNodes[i]);
-
-						return returnStr;
-					}
-				}
-
 				function getOuterHTML(node)
 				{
 					if (\'outerHTML\' in node)
@@ -517,7 +502,7 @@ function show_settings()
 						if (node.childNodes.length == 0 && in_array(node.nodeName.toLowerCase(), [\'hr\', \'input\', \'img\', \'link\', \'meta\', \'br\']))
 							str += \' />\';
 						else
-							str += \'>\' + getInnerHTML(node) + \'</\' + node.nodeName + \'>\';
+							str += \'>\' + node.innerHTML + \'</\' + node.nodeName + \'>\';
 						break;
 
 					// 2 is an attribute.
@@ -591,7 +576,7 @@ function show_settings()
 
 				if (isset($info[2]))
 					echo '
-								<div style="font-size: smaller;">', $txt['default_value'], ': &quot;<strong><a href="javascript:void(0);" onclick="document.getElementById(\'', $setting, '\').value = ', $info[2] == '' ? '\'\';">' . $txt['recommend_blank'] : 'getInnerHTML(this);">' . $info[2], '</a></strong>&quot;.</div>';
+								<div style="font-size: smaller;">', $txt['default_value'], ': &quot;<strong><a href="javascript:void(0);" onclick="document.getElementById(\'', $setting, '\').value = ', $info[2] == '' ? '\'\';">' . $txt['recommend_blank'] : 'this.innerHTML;">' . $info[2], '</a></strong>&quot;.</div>';
 			}
 
 			echo '

@@ -2098,10 +2098,9 @@ function template_welcome_message()
 
 				smfVer = document.getElementById("smfVersion");
 				yourVer = document.getElementById("yourVersion");
+				smfVer.innerHTML = window.smfVersion;
 
-				setInnerHTML(smfVer, window.smfVersion);
-
-				var currentVersion = getInnerHTML(yourVer);
+				var currentVersion = yourVer.innerHTML;
 				if (currentVersion < window.smfVersion)
 					document.getElementById(\'version_warning\').style.display = \'\';
 			}

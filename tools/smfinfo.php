@@ -1183,7 +1183,7 @@ function show_footer()
 					if (!document.getElementById(\'current\' + filename))
 						continue;
 
-					var yourVersion = getInnerHTML(document.getElementById(\'your\' + filename));
+					var yourVersion = document.getElementById(\'your\' + filename).innerHTML;
 
 					var versionType;
 					for (var verType in lowVersion)
@@ -1209,8 +1209,8 @@ function show_footer()
 					else if (yourVersion < smfVersions[filename])
 						lowVersion[versionType] = yourVersion;
 
-					setInnerHTML(document.getElementById(\'current\' + filename), smfVersions[filename]);
-					setInnerHTML(document.getElementById(\'your\' + filename), yourVersion);
+					document.getElementById(\'current\' + filename).innerHTML = smfVersions[filename];
+					document.getElementById(\'your\' + filename).innerHTML = yourVersion;
 				}
 
 				if (!(\'smfLanguageVersions\' in window))
@@ -1223,10 +1223,10 @@ function show_footer()
 						if (!document.getElementById(\'current\' + filename + knownLanguages[i]))
 							continue;
 
-						setInnerHTML(document.getElementById(\'current\' + filename + knownLanguages[i]), smfLanguageVersions[filename]);
+						document.getElementById(\'current\' + filename + knownLanguages[i]).innerHTML = smfLanguageVersions[filename];
 
-						yourVersion = getInnerHTML(document.getElementById(\'your\' + filename + knownLanguages[i]));
-						setInnerHTML(document.getElementById(\'your\' + filename + knownLanguages[i]), yourVersion);
+						yourVersion = document.getElementById(\'your\' + filename + knownLanguages[i]).innerHTML;
+						document.getElementById(\'your\' + filename + knownLanguages[i]).innerHTML = yourVersion;
 
 						if ((highYour[\'Languages\'] < yourVersion || highYour[\'Languages\'] == \'??\') && !lowVersion[\'Languages\'])
 							highYour[\'Languages\'] = yourVersion;
@@ -1241,27 +1241,27 @@ function show_footer()
 					}
 				}
 
-				setInnerHTML(document.getElementById(\'yourSources\'), lowVersion[\'Sources\'] ? lowVersion[\'Sources\'] : highYour[\'Sources\']);
-				setInnerHTML(document.getElementById(\'currentSources\'), highCurrent[\'Sources\']);
+				document.getElementById(\'yourSources\').innerHTML = lowVersion[\'Sources\'] ? lowVersion[\'Sources\'] : highYour[\'Sources\'];
+				document.getElementById(\'currentSources\').innerHTML = highCurrent[\'Sources\'];
 				if (lowVersion[\'Sources\'])
 					document.getElementById(\'yourSources\').style.color = \'red\';
 
-				setInnerHTML(document.getElementById(\'yourDefault\'), lowVersion[\'Default\'] ? lowVersion[\'Default\'] : highYour[\'Default\']);
-				setInnerHTML(document.getElementById(\'currentDefault\'), highCurrent[\'Default\']);
+				document.getElementById(\'yourDefault\').innerHTML = lowVersion[\'Default\'] ? lowVersion[\'Default\'] : highYour[\'Default\'];
+				document.getElementById(\'currentDefault\').innerHTML = highCurrent[\'Default\'];
 				if (lowVersion[\'Default\'])
 					document.getElementById(\'yourDefault\').style.color = \'red\';
 
 				if (document.getElementById(\'Templates\'))
 				{
-					setInnerHTML(document.getElementById(\'yourTemplates\'), lowVersion[\'Templates\'] ? lowVersion[\'Templates\'] : highYour[\'Templates\']);
-					setInnerHTML(document.getElementById(\'currentTemplates\'), highCurrent[\'Templates\']);
+					document.getElementById(\'yourTemplates\').innerHTML = lowVersion[\'Templates\'] ? lowVersion[\'Templates\'] : highYour[\'Templates\'];
+					document.getElementById(\'currentTemplates\').innerHTML = highCurrent[\'Templates\'];
 
 					if (lowVersion[\'Templates\'])
 						document.getElementById(\'yourTemplates\').style.color = \'red\';
 				}
 
-				setInnerHTML(document.getElementById(\'yourLanguages\'), lowVersion[\'Languages\'] ? lowVersion[\'Languages\'] : highYour[\'Languages\']);
-				setInnerHTML(document.getElementById(\'currentLanguages\'), highCurrent[\'Languages\']);
+				document.getElementById(\'yourLanguages\').innerHTML = lowVersion[\'Languages\'] ? lowVersion[\'Languages\'] : highYour[\'Languages\'];
+				document.getElementById(\'currentLanguages\').innerHTML = highCurrent[\'Languages\'];
 				if (lowVersion[\'Languages\'])
 					document.getElementById(\'yourLanguages\').style.color = \'red\';
 			}
