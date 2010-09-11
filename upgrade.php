@@ -918,7 +918,7 @@ function WelcomeLogin()
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
 		&& @file_exists($sourcedir . '/QueryString.php')
 		&& @file_exists($sourcedir . '/Subs-Database.php')
-		&& @file_exists(dirname(__FILE__) . '/upgrade_2-0_mysql.sql');
+		&& @file_exists(dirname(__FILE__) . '/upgrade_2-0.sql');
 
 	// Need legacy scripts?
 	if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] < 2.0)
@@ -1423,7 +1423,7 @@ function DatabaseChanges()
 	$files = array(
 		array('upgrade_1-0.sql', '1.1', '1.1 RC0'),
 		array('upgrade_1-1.sql', '2.0', '2.0 a'),
-		array('upgrade_2-0_mysql.sql', '3.0', SMF_VERSION),
+		array('upgrade_2-0.sql', '3.0', SMF_VERSION),
 	);
 
 	// How many files are there in total?
@@ -1708,7 +1708,7 @@ function CleanupMods()
 			package_flush_cache();
 
 		// Are we attempting to reinstall this thing?
-		if (isset($_POST['remove']) && !$test && isset($infoInstall))
+		if (!$test && isset($_POST['remove'], $infoInstall))
 		{
 			// Need to extract again I'm afraid.
 			if (is_file($boarddir . '/Packages/' . $filename))

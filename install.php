@@ -184,7 +184,7 @@ function initialize_inputs()
 
 			$ftp->unlink('install.php');
 			$ftp->unlink('webinstall.php');
-			$ftp->unlink('install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
+			$ftp->unlink('install_' . $GLOBALS['db_script_version'] . '.sql');
 
 			$ftp->close();
 
@@ -194,7 +194,7 @@ function initialize_inputs()
 		{
 			@unlink(__FILE__);
 			@unlink(dirname(__FILE__) . '/webinstall.php');
-			@unlink(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
+			@unlink(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql');
 		}
 
 		// Now just redirect to a blank.gif...
@@ -382,10 +382,10 @@ function Welcome()
 
 	if (function_exists('mysql_connect'))
 	{
-		if (!file_exists(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql'))
+		if (!file_exists(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql'))
 		{
 			$notFoundSQLFile = true;
-			$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install_' . $GLOBALS['db_script_version'] . '_mysql.sql');
+			$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install_' . $GLOBALS['db_script_version'] . '.sql');
 		}
 		else
 			$mysql_supported = true;
@@ -937,7 +937,7 @@ function DatabasePopulation()
 		$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
 	// Read in the SQL.  Turn this on and that off... internationalize... etc.
-	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '_mysql.sql')), $replaces));
+	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql')), $replaces));
 
 	// Execute the SQL.
 	$current_statement = '';
@@ -1384,7 +1384,7 @@ function DeleteInstall()
 	);
 
 	// Automatically log them in ;)
-	if (isset($incontext['member_id']) && isset($incontext['member_salt']))
+	if (isset($incontext['member_id'], $incontext['member_salt']))
 		setLoginCookie(3153600 * 60, $incontext['member_id'], sha1(sha1(strtolower($_POST['username']) . $_POST['password1']) . $incontext['member_salt']));
 
 	$result = $smcFunc['db_query']('', '
