@@ -1229,21 +1229,21 @@ if ($result === false)
 	upgrade_query("
 		INSERT INTO {$db_prefix}membergroups
 			(ID_GROUP, groupName, onlineColor, minPosts, stars)
-		SELECT ID_GROUP, membergroup, '#FF0000', -1, '5#staradmin.gif'
+		SELECT ID_GROUP, membergroup, '#FF0000', -1, '5#rankadmin.gif'
 		FROM {$db_prefix}old_membergroups
 		WHERE ID_GROUP = 1");
 
 	upgrade_query("
 		INSERT INTO {$db_prefix}membergroups
 			(ID_GROUP, groupName, onlineColor, minPosts, stars)
-		SELECT 2, membergroup, '#0000FF', -1, '5#stargmod.gif'
+		SELECT 2, membergroup, '#0000FF', -1, '5#rankgmod.gif'
 		FROM {$db_prefix}old_membergroups
 		WHERE ID_GROUP = 8");
 
 	upgrade_query("
 		INSERT INTO {$db_prefix}membergroups
 			(ID_GROUP, groupName, onlineColor, minPosts, stars)
-		SELECT 3, membergroup, '', -1, '5#starmod.gif'
+		SELECT 3, membergroup, '', -1, '5#rankmod.gif'
 		FROM {$db_prefix}old_membergroups
 		WHERE ID_GROUP = 2");
 
@@ -1257,7 +1257,7 @@ if ($result === false)
 				WHEN 5 THEN '$FullPostNum'
 				WHEN 6 THEN '$SrPostNum'
 				WHEN 7 THEN '$GodPostNum'
-			END, CONCAT(ID_GROUP - 2, '#star.gif')
+			END, CONCAT(ID_GROUP - 2, '#rank.gif')
 		FROM {$db_prefix}old_membergroups
 		WHERE ID_GROUP IN (3, 4, 5, 6, 7)");
 
