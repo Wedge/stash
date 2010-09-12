@@ -865,7 +865,7 @@ function initialize_inputs()
 		$dh = opendir(dirname(__FILE__));
 		while ($file = readdir($dh))
 		{
-			if (preg_match('~upgrade_\d-\d_([A-Za-z])+\.sql~i', $file, $matches) && isset($matches[1]))
+			if (preg_match('~upgrade_[\w-]+\.sql~i', $file, $matches))
 				@unlink(dirname(__FILE__) . '/' . $file);
 		}
 		closedir($dh);
