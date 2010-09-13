@@ -209,9 +209,9 @@ function smf_packagesMoreInfo(id)
 	setOuterHTML(document.getElementById("smfLatestPackagesWindow"),
 	'<div id="smfLatestPackagesWindow">\
 		<h3 style="margin: 0; padding: 4px;">' + smf_modificationInfo[id].name + '</h3>\
-			<h4 style="padding: 4px; margin: 0;"><a href="' + window.smfForum_scripturl + actionurl + 'http://custom.simplemachines.org/mods/downloads/' + id + '/' + smf_modificationInfo[id].file + ';' + window.smfForum_sessionvar + '=' + window.smfForum_sessionid + '">Install Now!</a></h4>\
-			<div style="margin: 4px;">' + smf_modificationInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
-			<div class="titlebg" style="padding: 4px; margin: 0;"><a href="javascript:smf_packagesBack();void(0);">(go back)</a></div>\
+		<h4 style="padding: 4px; margin: 0;"><a href="' + window.smfForum_scripturl + actionurl + 'http://custom.simplemachines.org/mods/downloads/' + id + '/' + smf_modificationInfo[id].file + ';' + window.smfForum_sessionvar + '=' + window.smfForum_sessionid + '">Install Now!</a></h4>\
+		<div style="margin: 4px;">' + smf_modificationInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
+		<div class="title_bar" style="padding: 4px; margin: 0;"><a href="javascript:smf_packagesBack();void(0);">(go back)</a></div>\
 	</div>');
 }
 
