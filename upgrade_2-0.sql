@@ -869,7 +869,7 @@ upgrade_query("
 
 ---# Checking display fields setup correctly..
 ---{
-if (isset($modSettings['smfVersion']) && $modSettings['smfVersion'] <= '2.0 Beta 1' && isset($modSettings['displayFields']) && @unserialize($modSettings['displayFields']) == false)
+if (isset($modSettings['smfVersion'], $modSettings['displayFields']) && $modSettings['smfVersion'] <= '2.0 Beta 1' && @unserialize($modSettings['displayFields']) == false)
 {
 $request = upgrade_query("
 	SELECT col_name, field_name, bbc
@@ -2864,7 +2864,7 @@ if ((!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] <= '2.0 RC
 			WHERE id_theme = 1");
 
 		// The other themes used to use core as their base theme.
-		if (isset($core['theme_dir']) && isset($core['theme_url']))
+		if (isset($core['theme_dir'], $core['theme_url']))
 		{
 			$coreBasedThemes = array_diff($allThemes, array(1));
 

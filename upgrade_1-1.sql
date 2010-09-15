@@ -487,7 +487,7 @@ if ((!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] <= '1.1 RC
 			WHERE ID_THEME = 1");
 
 		// The other themes used to use babylon as their base theme.
-		if (isset($babylon['theme_dir']) && isset($babylon['theme_url']))
+		if (isset($babylon['theme_dir'], $babylon['theme_url']))
 		{
 			$babylonBasedThemes = array_diff($allThemes, array(1));
 
