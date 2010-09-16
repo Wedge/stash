@@ -489,7 +489,7 @@ function show_system_info()
 						</td>
 					</tr>';
 
-	$server_checks = array('gd', 'eaccelerator', 'phpa', 'apc', 'memcache',);
+	$server_checks = array('gd', 'eaccelerator', 'phpa', 'apc', 'memcache');
 	foreach (get_server_versions($server_checks) as $values)
 		echo '
 					<tr>
