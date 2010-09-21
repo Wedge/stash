@@ -332,7 +332,7 @@
 
    a) for document specific toolbars/menus when used
       with the link element in document head e.g.
-        start, contents, previous, next, index, end, help
+        start, contents, previous, next, index, end
    b) to link to a separate style sheet (rel="stylesheet")
    c) to make a link to a script (rel="script")
    d) by stylesheets to control how collections of
