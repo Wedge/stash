@@ -32,15 +32,15 @@ $GLOBALS['required_php_version'] = '5.0.0';
 
 // Database info.
 $db = array(
-	'version' => '3.23.28',
+	'version' => '4.1.0',
 	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',
 	'default_host' => 'mysql.default_host',
 	'default_port' => 'mysql.default_port',
 	'utf8_version' => '4.1.0',
-	'utf8_version_check' => 'return mysql_get_server_info();',
-	'utf8_default' => false,
+	'utf8_version_check' => 'return -1;',
+	'utf8_default' => true,
 	'utf8_required' => false,
 	'validate_prefix' => create_function('&$value', '
 		$value = preg_replace(\'~[^A-Za-z0-9_\$]~\', \'\', $value);
@@ -843,16 +843,10 @@ function ForumSettings()
 		require(dirname(__FILE__) . '/Settings.php');
 
 		// UTF-8 requires a setting to override the language charset.
+		// If we're here, we must have MySQL 4.1.0 or better so no need to even check...
 		if (isset($_POST['utf8']))
 		{
-			if (version_compare($db['utf8_version'], preg_replace('~\-.+?$~', '', eval($db['utf8_version_check']))) > 0)
-			{
-				$incontext['error'] = sprintf($txt['error_utf8_version'], $db['utf8_version']);
-				return false;
-			}
-			else
-				// Set the character set here.
-				updateSettingsFile(array('db_character_set' => 'utf8'));
+			updateSettingsFile(array('db_character_set' => 'utf8'));
 		}
 
 		// Good, skip on.
