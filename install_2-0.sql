@@ -1873,7 +1873,7 @@ VALUES (1, 'Google', 'googlebot', ''),
 	(17, 'Alexa', 'ia_archiver', ''),
 	(18, 'Omgili', 'omgilibot', ''),
 	(19, 'EntireWeb', 'Speedy Spider', ''),
-	(20, 'Yandex', 'Yandex');
+	(20, 'Yandex', 'Yandex', '');
 
 #
 # Table structure for table `subscriptions`
