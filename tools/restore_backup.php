@@ -58,13 +58,6 @@ function step1($error_message = '')
 		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : @ini_get('mysql.default_user');
 		$db_passwd = @ini_get('mysql.default_password');
 
-		// This is just because it makes it easier for people on Tripod :P.
-		if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'members.lycos.co.uk' && defined('LOGIN'))
-		{
-			$db_user = LOGIN;
-			$db_name = LOGIN . '_uk_db';
-		}
-
 		// Should we use a non standard port?
 		$db_port = @ini_get('mysql.default_port');
 		if (!empty($db_port))
