@@ -2314,7 +2314,7 @@ function get_database_info()
 
 	foreach ($context['database_tables'] as $table => $info)
 	{
-		// Get the columns of the table, and thier stuff...
+		// Get the columns of the table, and their stuff...
 		$result = mysql_query('SHOW FULL COLUMNS FROM ' . $table . ' FROM ' . $db_name);
 		echo mysql_error();
 		while ($column = mysql_fetch_assoc($result))
