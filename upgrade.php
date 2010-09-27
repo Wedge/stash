@@ -2019,86 +2019,13 @@ function UpgradeTemplate()
 	makeFilesWritable($writable_files);
 	$upcontext['writable_files'] = $writable_files;
 
-	// Converting an old YaBBSE template?
-	$upcontext['can_upgrade_yabbse'] = file_exists($boarddir . '/template.php') || file_exists($boarddir . '/template.html') && !file_exists($boarddir . '/Themes/converted');
-	if (isset($_GET['conv']) && !file_exists($boarddir . '/Themes/converted'))
-	{
-		if ($is_debug && $command_line)
-			echo ' +++ ';
-
-		require_once($sourcedir . '/Themes.php');
-
-		mkdir($boarddir . '/Themes/converted', 0777);
-
-		convert_template($boarddir . '/Themes/converted');
-
-		// Copy over the default index.php file.
-		copy($boarddir . '/Themes/classic/index.php', $boarddir . '/Themes/converted/index.php');
-		@chmod($boarddir . '/Themes/converted/index.php', 0777);
-
-		// Now set up the "converted" theme.
-		$values = array(
-			'name' => 'Converted Theme from YaBB SE',
-			'theme_url' => $boardurl . '/Themes/classic',
-			'images_url' => $boardurl . '/Themes/classic/images',
-			'theme_dir' => strtr($boarddir, array('\\' => '/')) . '/Themes/converted',
-			'base_theme_dir' => strtr($boarddir, array('\\' => '/')) . '/Themes/classic',
-		);
-
-		// Get an available id_theme first...
-		$request = $smcFunc['db_query']('', '
-			SELECT MAX(id_theme) + 1
-			FROM {db_prefix}themes',
-			array(
-				'db_error_skip' => true,
-			)
-		);
-		list ($id_theme) = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
-
-		$themeData = array();
-		foreach ($values as $variable => $value)
-			$themeData[] = array(0, $id_theme, $variable, $value);
-
-		if (!empty($themeData))
-		{
-			$smcFunc['db_insert']('ignore',
-				$db_prefix . 'themes',
-				array('id_member' => 'int', 'id_theme' => 'int', 'variable' => 'string', 'value' => 'string'),
-				$themeData,
-				array('id_theme', 'id_member', 'variable')
-			);
-		}
-
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}settings
-			SET value = CONCAT(value, {string:new_theme})
-			WHERE variable = {string:knownThemes}',
-			array(
-				'knownThemes' => 'knownThemes',
-				'new_theme' => ',' . $id_theme,
-				'db_error_skip' => true,
-			)
-		);
-
-		$smcFunc['db_insert']('replace',
-				$db_prefix . 'settings',
-				array('variable' => 'string', 'value' => 'string'),
-				array(array('theme_guests', $id_theme), array('smiley_sets_default', 'classic')),
-				array('variable')
-			);
-
-		if ($is_debug && $command_line)
-			echo ' done.', $endl;
-	}
-
 	// If we're here we can get ready to do it for real.
 	$upcontext['is_test'] = false;
 	$upcontext['temp_progress'] = 0;
 	$_GET['substep'] = 0;
 
 	// If there is nothing it's true anyway!
-	if (!$upcontext['can_upgrade_yabbse'] && empty($upcontext['languages']) && empty($upcontext['themes']))
+	if (empty($upcontext['languages']) && empty($upcontext['themes']))
 		return true;
 
 	return isset($_GET['forreal']) ? true : false;
