@@ -4618,11 +4618,6 @@ function template_upgrade_templates()
 		echo '
 		<input type="hidden" name="writable_files" value="', base64_encode(serialize($upcontext['writable_files'])), '" />';
 
-	// Offer them the option to upgrade from YaBB SE?
-	if (!empty($upcontext['can_upgrade_yabbse']))
-		echo '
-		<br /><label for="conv"><input type="checkbox" name="conv" id="conv" value="1" class="input_check" /> Convert the existing YaBB SE template and set it as default.</label><br />';
-
 	// We'll want a continue button... assuming chmod is OK (Otherwise let them use connect!)
 	if (empty($upcontext['chmod']['files']) || $upcontext['is_test'])
 		$upcontext['continue'] = 1;
