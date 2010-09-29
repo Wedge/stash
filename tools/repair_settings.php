@@ -479,61 +479,6 @@ function show_settings()
 	}
 
 	echo '
-			<script type="text/javascript"><!-- // --><![CDATA[
-				function getOuterHTML(node)
-				{
-					if (\'outerHTML\' in node)
-						return node.outerHTML;
-
-					var str = \'\';
-
-					switch (node.nodeType)
-					{
-					// An element.
-					case 1:
-						str += \'<\' + node.nodeName;
-
-						for (var i = 0; i < node.attributes.length; i++)
-						{
-							if (node.attributes[i].nodeValue != null)
-								str += \' \' + node.attributes[i].nodeName + \'="\' + node.attributes[i].nodeValue + \'"\';
-						}
-
-						if (node.childNodes.length == 0 && in_array(node.nodeName.toLowerCase(), [\'hr\', \'input\', \'img\', \'link\', \'meta\', \'br\']))
-							str += \' />\';
-						else
-							str += \'>\' + node.innerHTML + \'</\' + node.nodeName + \'>\';
-						break;
-
-					// 2 is an attribute.
-
-					// Just some text..
-					case 3:
-						str += node.nodeValue;
-						break;
-
-					// A CDATA section.
-					case 4:
-						str += \'<![CDATA\' + \'[\' + node.nodeValue + \']\' + \']>\';
-						break;
-
-					// Entity reference..
-					case 5:
-						str += \'&\' + node.nodeName + \';\';
-						break;
-
-					// 6 is an actual entity, 7 is a PI.
-
-					// Comment.
-					case 8:
-						str += \'<!--\' + node.nodeValue + \'-->\';
-						break;
-					}
-
-					return str;
-				}
-			// ]]></script>
-
 			<form action="', $_SERVER['PHP_SELF'], '" method="post">
 				<div class="panel">';
 

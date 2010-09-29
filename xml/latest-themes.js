@@ -164,22 +164,19 @@ var smf_latestThemes = [', implode(', ', $latest_ids), '];';
 
 function smf_themesMoreInfo(id)
 {
-	window.smfLatestThemes_temp = getOuterHTML(document.getElementById("smfLatestThemesWindow"));
-	setOuterHTML(document.getElementById("smfLatestThemesWindow"),
-	'<div id="smfLatestThemesWindow" style="overflow: auto;">\
-		<h3 style="margin: 0; padding: 4px;">' + smf_themeInfo[id].name + '</h3>\
+	window.smfLatestThemes_temp = document.getElementById("smfLatestThemesWindow").innerHTML;
+	document.getElementById('smfLatestThemesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + smf_themeInfo[id].name + '</h3>\
 		<h4 style="margin: 0;padding: 4px;"><a href="http://custom.simplemachines.org/themes/index.php?lemma=' + id + '">View Theme Now!</a></h4>\
 		<div style="overflow: auto;">\
 			<img src="http://custom.simplemachines.org/themes/index.php?action=download;lemma='+id+';image=thumb" alt="" style="float: right; margin: 10px;" />\
 			<div style="padding:8px;">' + smf_themeInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
 		</div>\
-		<div style="padding: 4px;" class="smalltext"><a href="javascript:smf_themesBack();void(0);">(go back)</a></div>\
-	</div>');
+		<div style="padding: 4px;" class="smalltext"><a href="javascript:smf_themesBack();void(0);">(go back)</a></div>';
 }
 
 function smf_themesBack()
 {
-	setOuterHTML(document.getElementById("smfLatestThemesWindow"), window.smfLatestThemes_temp);
+	document.getElementById("smfLatestThemesWindow").innerHTML = window.smfLatestThemes_temp;
 	window.scrollTo(0, findTop(document.getElementById("smfLatestThemesWindow")) - 10);
 }
 
