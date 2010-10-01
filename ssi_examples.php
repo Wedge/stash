@@ -450,12 +450,7 @@ function template_ssi_above()
 				padding: 1em 2em 1em 1em;
 				line-height: 1.6em;
 			}
-			#footer_section
-			{
-				position: relative;
-				top: -20px;
-			}
-			#footer_section
+			#footer
 			{
 				position: relative;
 				top: -20px;
@@ -547,7 +542,7 @@ function template_ssi_below()
 				</div>
 			</div>
 		</div></div>
-		<div id="footer_section"><div class="frame">
+		<div id="footer"><div class="frame">
 			<div class="smalltext"><a href="http://www.simplemachines.org">Simple Machines Forum</a></div>
 		</div></div>
 	</body>
