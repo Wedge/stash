@@ -177,13 +177,12 @@ if (!function_exists('clean_cache'))
 		if (!is_dir($cachedir))
 			return;
 
-		$dh = opendir($cachedir);
-		while ($file = readdir($dh))
+		$dh = scandir($cachedir);
+		foreach ($dh as $file)
 		{
 			if ($file != '.' && $file != '..' && $file != 'index.php' && $file != '.htaccess' && (!$type || substr($file, 0, strlen($type)) == $type))
 				@unlink($cachedir . '/' . $file);
 		}
-		closedir($dh);
 	}
 }
 
@@ -850,13 +849,12 @@ function initialize_inputs()
 
 		@unlink(dirname(__FILE__) . '/webinstall.php');
 
-		$dh = opendir(dirname(__FILE__));
-		while ($file = readdir($dh))
+		$dh = scandir(dirname(__FILE__));
+		foreach ($dh as $file)
 		{
 			if (preg_match('~upgrade_[\w-]+\.sql~i', $file, $matches))
 				@unlink(dirname(__FILE__) . '/' . $file);
 		}
-		closedir($dh);
 
 		header('Location: http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']) . dirname($_SERVER['PHP_SELF']) . '/Themes/default/images/blank.gif');
 		exit;
