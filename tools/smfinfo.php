@@ -551,7 +551,7 @@ function show_detailed_file()
 	// Now list all the source file versions, starting with the overall version (if all match!).
 	echo '
 						<tr>
-							<td><a href="javascript:void(0);" onclick="return swapOption(this, \'Sources\');">', $txt['sources_version'], '</a></td><td><em id="yourSources">??</em></td><td><em id="currentSources">??</em></td>
+							<td><a href="#" onclick="return swapOption(this, \'Sources\');">', $txt['sources_version'], '</a></td><td><em id="yourSources">??</em></td><td><em id="currentSources">??</em></td>
 						</tr>
 					</table>
 					<table id="Sources" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
@@ -568,7 +568,7 @@ function show_detailed_file()
 					</table>
 					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
 						<tr>
-							<td width="50%"><a href="javascript:void(0);" onclick="return swapOption(this, \'Default\');">', $txt['template_version'], '</a></td><td width="25%"><em id="yourDefault">??</em></td><td width="25%"><em id="currentDefault">??</em></td>
+							<td width="50%"><a href="#" onclick="return swapOption(this, \'Default\');">', $txt['template_version'], '</a></td><td width="25%"><em id="yourDefault">??</em></td><td width="25%"><em id="currentDefault">??</em></td>
 						</tr>
 					</table>
 					<table id="Default" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
@@ -584,7 +584,7 @@ function show_detailed_file()
 					</table>
 					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
 						<tr>
-							<td width="50%"><a href="javascript:void(0);" onclick="return swapOption(this, \'Languages\');">', $txt['language_version'], '</a></td><td width="25%"><em id="yourLanguages">??</em></td><td width="25%"><em id="currentLanguages">??</em></td>
+							<td width="50%"><a href="#" onclick="return swapOption(this, \'Languages\');">', $txt['language_version'], '</a></td><td width="25%"><em id="yourLanguages">??</em></td><td width="25%"><em id="currentLanguages">??</em></td>
 						</tr>
 					</table>
 					<table id="Languages" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
@@ -607,7 +607,7 @@ function show_detailed_file()
 		echo '
 					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
 						<tr>
-							<td width="50%"><a href="javascript:void(0);" onclick="return swapOption(this, \'Templates\');">', $txt['custom_template_version'], '</a></td><td width="25%"><em id="yourTemplates">??</em></td><td width="25%"><em id="currentTemplates">??</em></td>
+							<td width="50%"><a href="#" onclick="return swapOption(this, \'Templates\');">', $txt['custom_template_version'], '</a></td><td width="25%"><em id="yourTemplates">??</em></td><td width="25%"><em id="currentTemplates">??</em></td>
 						</tr>
 					</table>
 					<table id="Templates" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
@@ -671,7 +671,7 @@ function show_detailed_db()
 	{
 		echo '
 								<tr class="row', $table_color = !$table_color, '">
-									<td>', !empty($table['columns']) ? '<a href="javascript:void(0);" onclick="return swapOption(this, \'' . $table['name'] . '\');">' : '', $table['name'], !empty($table['columns']) ? '</a>' : '', '</td>
+									<td>', !empty($table['columns']) ? '<a href="#" onclick="return swapOption(this, \'' . $table['name'] . '\');">' : '', $table['name'], !empty($table['columns']) ? '</a>' : '', '</td>
 									<td>', isset($table['engine']) ? $table['engine'] : $txt['na'], '</td>
 									<td>', isset($table['rows']) ? $table['rows'] : $txt['na'], '</td>
 									<td>', isset($table['size']) ? $table['size'] : $txt['na'], '</td>

@@ -487,7 +487,7 @@ CREATE TABLE {$db_prefix}boards (
   unapproved_posts smallint(5) NOT NULL default '0',
   unapproved_topics smallint(5) NOT NULL default '0',
   redirect varchar(255) NOT NULL default '',
-  redirect_newtab tinyint(4) unsigned NOT NULL default '0',
+  redirect_newtab tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY (id_board),
   UNIQUE categories (id_cat, id_board),
   KEY id_parent (id_parent),
