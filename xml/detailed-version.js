@@ -25,7 +25,6 @@ if (isset($_GET['version']) && strpos($_GET['version'], '2.0') !== false)
 	'SourcesDisplay.php': '2.0 RC2',
 	'SourcesDumpDatabase.php': '2.0 RC2',
 	'SourcesErrors.php': '2.0 RC2',
-	'SourcesFixLanguage.php': '2.0 RC2',
 	'SourcesGroups.php': '2.0 RC2',
 	'SourcesHelp.php': '2.0 RC2',
 	'SourcesKarma.php': '2.0 RC2',
