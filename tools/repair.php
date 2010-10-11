@@ -183,7 +183,6 @@ function action_resort()
 				'log_banned' => array('id_member'),
 				'log_boards' => array('id_member'),
 				'log_errors' => array('id_member'),
-				'log_karma' => array('ID_TARGET', 'ID_EXECUTOR'),
 				'log_mark_read' => array('id_member'),
 				'log_notify' => array('id_member'),
 				'log_online' => array('id_member'),

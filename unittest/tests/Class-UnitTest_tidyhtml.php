@@ -515,36 +515,31 @@
 				),
 				'ManageSettings_4' => array(
 					'name' => 'Manage settings (4)',
-					'description' => "Karma",
-					'url' => $scripturl . '?action=admin;area=featuresettings;sa=karma',
-				),
-				'ManageSettings_5' => array(
-					'name' => 'Manage settings (5)',
 					'description' => "Signatures",
 					'url' => $scripturl . '?action=admin;area=featuresettings;sa=sig',
 				),
-				'ManageSettings_6' => array(
-					'name' => 'Manage settings (6)',
+				'ManageSettings_5' => array(
+					'name' => 'Manage settings (5)',
 					'description' => "Profile Fields",
 					'url' => $scripturl . '?action=admin;area=featuresettings;sa=profile',
 				),
-				'ManageSettings_7' => array(
-					'name' => 'Manage settings (7)',
+				'ManageSettings_6' => array(
+					'name' => 'Manage settings (6)',
 					'description' => "Log Pruning",
 					'url' => $scripturl . '?action=admin;area=featuresettings;sa=pruning',
+				),
+				'ManageSettings_7' => array(
+					'name' => 'Manage settings (7)',
+					'description' => "Core features",
+					'url' => $scripturl . '?action=admin;area=securitysettings;sa=general',
 				),
 				'ManageSettings_8' => array(
 					'name' => 'Manage settings (8)',
 					'description' => "Core features",
-					'url' => $scripturl . '?action=admin;area=securitysettings;sa=general',
+					'url' => $scripturl . '?action=admin;area=securitysettings;sa=spam',
 				),
 				'ManageSettings_9' => array(
 					'name' => 'Manage settings (9)',
-					'description' => "Core features",
-					'url' => $scripturl . '?action=admin;area=securitysettings;sa=spam',
-				),
-				'ManageSettings_10' => array(
-					'name' => 'Manage settings (10)',
 					'description' => "Core features",
 					'url' => $scripturl . '?action=admin;area=securitysettings;sa=moderation',
 				),
