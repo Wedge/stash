@@ -491,7 +491,6 @@ function template_ssi_above()
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var smf_scripturl = "', $scripturl, '";
 			var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
-			var smf_charset = "UTF-8";
 
 			// Sets all ssi_preview class to hidden, then shows the one requested.
 			function showSSIBlock(elementID)
