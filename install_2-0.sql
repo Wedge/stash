@@ -1814,7 +1814,8 @@ VALUES (':)', 'smiley.gif', '{$default_smiley_smiley}', 0, 0),
 	('O0', 'afro.gif', '{$default_afro_smiley}', 18, 1),
 	(':))', 'laugh.gif', '{$default_laugh_smiley}', 19, 1),
 	('C:-)', 'police.gif', '{$default_police_smiley}', 20, 1),
-	('O:-)', 'angel.gif', '{$default_angel_smiley}', 21, 1);
+	('O:-)', 'angel.gif', '{$default_angel_smiley}', 21, 1),
+	(':edit:', 'edit.gif', '{$default_edit_smiley}', 22, 1);
 # --------------------------------------------------------
 
 #
