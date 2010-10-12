@@ -1330,7 +1330,7 @@ function get_database_version()
 	$match = explode('.', mysql_get_server_info());
 	$mysql_int_version = (int) sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2]));
 
-	// We used to get the default collation here but since we expressly define what we want, it's no longer relevant.
+	// !!! We used to get the default collation here but since we expressly define what we want, it's no longer relevant.
 
 	if (empty($smcFunc))
 		$context['database_version'] = 'MySQL ' . mysql_get_server_info();
