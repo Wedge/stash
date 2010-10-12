@@ -1417,8 +1417,11 @@ function DeleteInstall()
 	updateStats('postgroups');
 
 	// This function is needed to do the updateStats('subject') call.
-	// !!! PJS has modified this to not have the non-UTF-8 ternary. Why does this not have true strtolower?
-	$smcFunc['strtolower'] = create_function('$string', 'return $string;');
+	$smcFunc['strtolower'] = (function_exists('mb_strtolower') ? create_function('$string', '
+			return mb_strtolower($string, \'UTF-8\');') : create_function('$string', '
+			global $sourcedir;
+			require_once($sourcedir . \'/Subs-Charset.php\');
+			return utf8_strtolower($string);'));
 
 	$request = $smcFunc['db_query']('', '
 		SELECT id_msg
