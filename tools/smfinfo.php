@@ -42,8 +42,6 @@ $txt['php_version'] = 'PHP Version';
 $txt['database_version'] = 'Database Version';
 $txt['webserver_version'] = 'Web Server';
 $txt['php_api'] = 'PHP/Server Interface';
-$txt['lang_char_set'] = 'Language Character Set';
-$txt['db_char_set'] = 'Database Character Set';
 $txt['db_table_info'] = 'Detailed Table Information';
 
 // SMF Specific Info
@@ -201,7 +199,7 @@ function show_header()
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta name="robots" content="noindex" />
-		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>', $txt['title'], '</title>
 		<style type="text/css">
 			body
@@ -433,14 +431,6 @@ function show_system_info()
 						<td>', $forum_version, '</td>
 					</tr>
 					<tr>
-						<td width="25%"><strong>', $txt['lang_char_set'], '</strong></td>
-						<td>', $txt['lang_character_set'], '</td>
-					</tr>
-					<tr>
-						<td width="25%"><strong>', $txt['db_char_set'], '</strong></td>
-						<td>', $context['character_set'], '</td>
-					</tr>
-					<tr>
 						<td valign="top"><strong>', $txt['smf_relevant'], '</strong></td>
 						<td>
 							<table width="100%" cellpadding="2" cellspacing="2">';
@@ -639,10 +629,6 @@ function show_detailed_db()
 					<tr>
 						<td width="25%"><strong>', $txt['database_version'], '</strong></td>
 						<td>', $context['database_version'], '</td>
-					</tr>
-					<tr>
-						<td><strong>', $txt['db_char_set'], '</strong></td>
-						<td>', $context['character_set'], '</td>
 					</tr>';
 	if (isset($context['database_size']))
 		echo '
@@ -1344,18 +1330,7 @@ function get_database_version()
 	$match = explode('.', mysql_get_server_info());
 	$mysql_int_version = (int) sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2]));
 
-	if ($mysql_int_version >= 50006)
-		$query = 'SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = \'' . $db_name . '\' LIMIT 1;';
-	elseif ($mysql_int_version >= 40101)
-		$query = 'SHOW VARIABLES LIKE \'collation_database\';';
-	else
-		$query = 'SHOW VARIABLES LIKE \'collation_server\';';
-	$request = mysql_query($query);
-	$row = @mysql_fetch_row($request);
-	$collation = !empty($row[1]) ? $row[1] : $row[0];
-
-	if (!empty($collation))
-		$context['character_set'] = $collation;
+	// We used to get the default collation here but since we expressly define what we want, it's no longer relevant.
 
 	if (empty($smcFunc))
 		$context['database_version'] = 'MySQL ' . mysql_get_server_info();

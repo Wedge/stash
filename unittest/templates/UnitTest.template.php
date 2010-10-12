@@ -50,7 +50,7 @@ function template_ut_test_results()
 {
 	global $context, $settings, $options, $le_settings;
 
-	echo '<', '?xml version="1.0" encoding="', $context['character_set'], '"?', '>
+	echo '<', '?xml version="1.0" encoding="UTF-8"?', '>
 <smf>
 	<results>';
 	foreach ($context['test_results'] as $testResult)

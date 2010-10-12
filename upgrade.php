@@ -749,7 +749,7 @@ function redirectLocation($location, $addForm = true)
 // Load all essential data and connect to the DB as this is pre SSI.php
 function loadEssentialData()
 {
-	global $db_server, $db_user, $db_passwd, $db_name, $db_connection, $db_prefix, $db_character_set;
+	global $db_server, $db_user, $db_passwd, $db_name, $db_connection, $db_prefix;
 	global $modSettings, $sourcedir, $smcFunc, $upcontext;
 
 	// Do the non-SSI stuff...
@@ -780,9 +780,8 @@ function loadEssentialData()
 		if ($db_connection === null)
 			die('Unable to connect to database - please check username and password are correct in Settings.php');
 
-		if (isset($db_character_set) && preg_match('~^\w+$~', $db_character_set) === 1)
-			$smcFunc['db_query']('', '
-			SET NAMES ' . $db_character_set,
+		$smcFunc['db_query']('', '
+			SET NAMES utf8',
 			array(
 				'db_error_skip' => true,
 			)
@@ -2171,7 +2170,7 @@ function fixRelativePath($path)
 function parse_sql($filename)
 {
 	global $db_prefix, $db_collation, $boarddir, $boardurl, $command_line, $file_steps, $step_progress, $custom_warning;
-	global $upcontext, $support_js, $is_debug, $smcFunc, $db_connection, $db, $db_character_set;
+	global $upcontext, $support_js, $is_debug, $smcFunc, $db_connection, $db;
 
 /*
 	Failure allowed on:
@@ -2270,9 +2269,8 @@ function parse_sql($filename)
 		foreach ($lines as $key => $line)
 			$lines[$key] = strtr($line, array(') ENGINE=' => ') TYPE='));
 
-	// Make sure all newly created tables will have the proper characters set.
-	if (isset($db_character_set) && $db_character_set === 'utf8')
-		$lines = str_replace(') ENGINE=MyISAM;', ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;', $lines);
+	// Make sure all newly created tables will have the proper characters set. We do this so that if we need to modify the syntax later, we can do it once instead of per table!
+	$lines = str_replace(') ENGINE=MyISAM;', ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;', $lines);
 
 	// Count the total number of steps within this file - for progress.
 	$file_steps = substr_count(implode('', $lines), '---#');
@@ -3339,7 +3337,7 @@ function template_upgrade_above()
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=', isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'ISO-8859-1', '" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="robots" content="noindex" />
 		<title>', $txt['upgrade_upgrade_utility'], '</title>
 		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/css/index.css?rc3" />
@@ -3347,7 +3345,7 @@ function template_upgrade_above()
 				<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js"></script>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var smf_scripturl = \'', $upgradeurl, '\';
-			var smf_charset = \'', (empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'ISO-8859-1' : $txt['lang_character_set']) : $modSettings['global_character_set']), '\';
+			var smf_charset = \'UTF-8\';
 			var startPercent = ', $upcontext['overall_percent'], ';
 
 			// This function dynamically updates the step progress bar - and overall one as required.

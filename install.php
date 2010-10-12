@@ -32,16 +32,12 @@ $GLOBALS['required_php_version'] = '5.0.0';
 
 // Database info.
 $db = array(
-	'version' => '3.23.28',
+	'version' => '4.1.2',
 	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',
 	'default_host' => 'mysql.default_host',
 	'default_port' => 'mysql.default_port',
-	'utf8_version' => '4.1.0',
-	'utf8_version_check' => 'return mysql_get_server_info();',
-	'utf8_default' => false,
-	'utf8_required' => false,
 	'validate_prefix' => create_function('&$value', '
 		$value = preg_replace(\'~[^A-Za-z0-9_\$]~\', \'\', $value);
 		return true;
@@ -286,7 +282,7 @@ function load_lang_file()
 // This handy function loads some settings and the like.
 function load_database()
 {
-	global $db_prefix, $db_connection, $db_character_set, $sourcedir, $language;
+	global $db_prefix, $db_connection, $sourcedir, $language;
 	global $smcFunc, $mbname, $scripturl, $boardurl, $modSettings, $db_name, $db_user;
 
 	if (empty($sourcedir))
@@ -317,7 +313,7 @@ function installExit($fallThrough = false)
 	global $incontext, $installurl, $txt;
 
 	// Send character set.
-	header('Content-Type: text/html; charset=' . (isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'ISO-8859-1'));
+	header('Content-Type: text/html; charset=UTF-8');
 
 	// We usually dump our templates out.
 	if (!$fallThrough)
@@ -800,8 +796,6 @@ function ForumSettings()
 
 	// Check if the database sessions will even work.
 	$incontext['test_dbsession'] = @ini_get('session.auto_start') != 1;
-	$incontext['utf8_default'] = $db['utf8_default'];
-	$incontext['utf8_required'] = $db['utf8_required'];
 
 	$incontext['continue'] = 1;
 
@@ -835,19 +829,6 @@ function ForumSettings()
 		// Make sure it works.
 		require(dirname(__FILE__) . '/Settings.php');
 
-		// UTF-8 requires a setting to override the language charset.
-		if (isset($_POST['utf8']))
-		{
-			if (version_compare($db['utf8_version'], preg_replace('~\-.+?$~', '', eval($db['utf8_version_check']))) > 0)
-			{
-				$incontext['error'] = sprintf($txt['error_utf8_version'], $db['utf8_version']);
-				return false;
-			}
-			else
-				// Set the character set here.
-				updateSettingsFile(array('db_character_set' => 'utf8'));
-		}
-
 		// Good, skip on.
 		return true;
 	}
@@ -858,7 +839,7 @@ function ForumSettings()
 // Step one: Do the SQL thang.
 function DatabasePopulation()
 {
-	global $db_character_set, $txt, $db_connection, $smcFunc, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
+	global $txt, $db_connection, $smcFunc, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
 
 	$incontext['sub_template'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
@@ -895,14 +876,13 @@ function DatabasePopulation()
 		}
 	}
 
-	// If doing UTF8, select it.
-	if (!empty($db_character_set) && $db_character_set == 'utf8')
-		$smcFunc['db_query']('', '
-			SET NAMES utf8',
-			array(
-				'db_error_skip' => true,
-			)
-		);
+	// We're doing UTF8, select it.
+	$smcFunc['db_query']('', '
+		SET NAMES utf8',
+		array(
+			'db_error_skip' => true,
+		)
+	);
 
 	$replaces = array(
 		'{$db_prefix}' => $db_prefix,
@@ -922,12 +902,8 @@ function DatabasePopulation()
 	}
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
-	// MySQL users below v4 can't use engine.
-	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($db['version_check']))) > 0)
-		$replaces[') ENGINE='] = ') TYPE=';
-	// If the UTF-8 setting was enabled, add it to the table definitions.
-	if (isset($_POST['utf8']))
-		$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
+	// Add UTF-8 to the table definitions. We do this so that if we need to modify the syntax later, we can do it once instead of per table!
+	$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
 	// Read in the SQL.  Turn this on and that off... internationalize... etc.
 	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql')), $replaces));
@@ -1000,19 +976,6 @@ function DatabasePopulation()
 		else
 			$incontext['sql_results'][$key] = sprintf($txt['db_populate_' . $key], $number);
 	}
-
-	// Make sure UTF will be used globally.
-	if (isset($_POST['utf8']))
-		$smcFunc['db_insert']('replace',
-			$db_prefix . 'settings',
-			array(
-				'variable' => 'string-255', 'value' => 'string-65534',
-			),
-			array(
-				'global_character_set', 'UTF-8',
-			),
-			array('variable')
-		);
 
 	// Maybe we can auto-detect better cookie settings?
 	preg_match('~^http[s]?://([^\.]+?)([^/]*?)(/.*)?$~', $boardurl, $matches);
@@ -1337,7 +1300,7 @@ function AdminAccount()
 function DeleteInstall()
 {
 	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
-	global $smcFunc, $db_character_set, $mbname, $context, $scripturl, $boardurl;
+	global $smcFunc, $mbname, $context, $scripturl, $boardurl;
 	global $current_smf_version, $sourcedir, $forum_version, $modSettings, $user_info, $language;
 
 	$incontext['page_title'] = $txt['congratulations'];
@@ -1359,14 +1322,12 @@ function DeleteInstall()
 	if (!empty($incontext['account_existed']))
 		$incontext['warning'] = $incontext['account_existed'];
 
-	if (!empty($db_character_set))
-		$smcFunc['db_query']('', '
-			SET NAMES {raw:db_character_set}',
-			array(
-				'db_character_set' => $db_character_set,
-				'db_error_skip' => true,
-			)
-		);
+	$smcFunc['db_query']('', '
+		SET NAMES utf8',
+		array(
+			'db_error_skip' => true,
+		)
+	);
 
 	// As track stats is by default enabled let's add some activity.
 	$smcFunc['db_insert']('ignore',
@@ -1433,8 +1394,8 @@ function DeleteInstall()
 	updateStats('postgroups');
 
 	// This function is needed to do the updateStats('subject') call.
-	$smcFunc['strtolower'] = $db_character_set === 'utf8' || $txt['lang_character_set'] === 'UTF-8' ? create_function('$string', '
-		return $string;') : 'strtolower';
+	// !!! PJS has modified this to not have the non-UTF-8 ternary. Why does this not have true strtolower?
+	$smcFunc['strtolower'] = create_function('$string', 'return $string;');
 
 	$request = $smcFunc['db_query']('', '
 		SELECT id_msg
@@ -1946,7 +1907,7 @@ function template_install_above()
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"', !empty($txt['lang_rtl']) ? ' dir="rtl"' : '', '>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=', isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'ISO-8859-1', '" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="robots" content="noindex" />
 		<title>', $txt['smf_installer'], '</title>
 		<link rel="stylesheet" type="text/css" href="Themes/default/css/index.css?rc3" />
@@ -2229,7 +2190,7 @@ function template_database_settings()
 			</tr><tr id="db_name_contain">
 				<td valign="top" class="textbox"><label for="db_name_input">', $txt['db_settings_database'], ':</label></td>
 				<td>
-					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'smf' : $incontext['db']['name'], '" size="30" class="input_text" /><br />
+					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'wedge' : $incontext['db']['name'], '" size="30" class="input_text" /><br />
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_database_info'], '
 					<span id="db_name_info_warning">', $txt['db_settings_database_info_note'], '</span></div>
 				</td>
@@ -2286,13 +2247,6 @@ function template_forum_settings()
 				<td>
 					<input type="checkbox" name="dbsession" id="dbsession_check" checked="checked" class="input_check" /> <label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label><br />
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
-				</td>
-			</tr>
-			<tr>
-				<td valign="top" class="textbox">', $txt['install_settings_utf8'], ':</td>
-				<td>
-					<input type="checkbox" name="utf8" id="utf8_check"', $incontext['utf8_default'] ? ' checked="checked"' : '', ' class="input_check"', $incontext['utf8_required'] ? ' disabled="disabled"' : '', ' /> <label for="utf8_check">', $txt['install_settings_utf8_title'], '</label><br />
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_utf8_info'], '</div>
 				</td>
 			</tr>
 			<tr>
