@@ -342,6 +342,26 @@ function installExit($fallThrough = false)
 	die();
 }
 
+// This checks whether GD2 is available and all the neat little gizmos we want to use, returns true if all good, false if not.
+function checkGD2()
+{
+	$gd2_functions = array(
+		'imagecreatetruecolor',
+		'imagegif',
+		'imagepng',
+		'imagejpeg',
+		'imagecreatefromstring',
+		'imagecreatefrompng',
+		'imagecreatefromgif',
+	);
+
+	foreach ($gd2_functions as $function)
+		if (!is_callable($function))
+			return false;
+
+	return true;
+}
+
 function Welcome()
 {
 	global $incontext, $txt, $db, $installurl;
@@ -399,6 +419,9 @@ function Welcome()
 	// !!! Move this down later if they don't use database-driven sessions?
 	elseif (@ini_get('session.save_path') == '/tmp' && substr(__FILE__, 1, 2) == ':\\')
 		$error = 'error_session_save_path';
+	// What about GD2 and related functions?
+	elseif (!checkGD2())
+		$error = 'error_no_gd_library';
 
 	// Since each of the three messages would look the same, anyway...
 	if (isset($error))
