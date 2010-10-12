@@ -430,12 +430,12 @@ function template_ssi_above()
 			{
 				height: 80px;
 			}
-			#content_section
+			#content
 			{
 				position: relative;
 				top: -20px;
 			}
-			#main_content_section h2
+			#main_content h2
 			{
 				font-size: 1.5em;
 				border-bottom: solid 1px #d05800;
@@ -525,8 +525,8 @@ function template_ssi_above()
 				</div>
 			</div>
 		</div></div>
-		<div id="content_section"><div class="frame">
-			<div id="main_content_section">
+		<div id="content"><div class="frame">
+			<div id="main_content">
 				<div id="liftup" class="flow_auto">';
 }
 
