@@ -781,7 +781,7 @@ mysql_free_result($request);
 foreach ($themeLayerChanges as $id_theme => $data)
 {
 	// Has to be a SMF provided theme and have custom layers defined.
-	if (!isset($data['theme_layers']) || !isset($data['theme_dir']) || !in_array(substr($data['theme_dir'], -7), array('default', 'babylon', 'classic')))
+	if (!isset($data['theme_layers']) || !isset($data['theme_dir']) || substr($data['theme_dir'], -7) != 'default')
 		continue;
 
 	$layers = explode(',', $data['theme_layers']);
