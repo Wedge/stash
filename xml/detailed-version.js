@@ -17,7 +17,6 @@ if (isset($_GET['version']) && strpos($_GET['version'], '2.0') !== false)
 	'SourcesAdmin.php': '2.0 RC2',
 	'SourcesBoardIndex.php': '2.0 RC2',
 	'SourcesCalendar.php': '2.0 RC2',
-	'SourcesClass-Graphics.php': '2.0 RC2',
 	'SourcesClass-Package.php': '2.0 RC2',
 	'SourcesDbExtra.php': '2.0 RC2',
 	'SourcesDbPackages.php': '2.0 RC2',
