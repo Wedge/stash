@@ -92,7 +92,7 @@ if ($_GET['step'] <= 2)
 	{
 		protectTimeOut('step=2;start=' . $start);
 
-		$result = $smcFunc('', '
+		$result = $smcFunc['db_query']('', '
 			SELECT m.id_msg, t.id_topic
 			FROM {db_prefix}messages AS m
 				INNER JOIN {db_prefix}temp_topics AS t ON (t.old_id_topic = m.id_topic)

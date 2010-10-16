@@ -5,7 +5,7 @@
 * SMF: Simple Machines Forum                                                      *
 * Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
 * =============================================================================== *
-* Software Version:           SMF 2.0 RC3                                         *
+* Software Version:           SMF 2.0 RC4                                         *
 * Software by:                Simple Machines (http://www.simplemachines.org)     *
 * Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
 *           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
@@ -90,6 +90,11 @@ $txt['theme_path_url_settings_info'] = 'These are the paths and URLs to your SMF
 
 if (isset($_POST['submit']))
 	set_settings();
+
+// Try to find the forum logo: could be a .gif or a .png
+$wedgelogo = 'Themes/default/images/wedgelogo.png';
+if (!file_exists(dirname(__FILE__) . '/' . $wedgelogo))
+	$wedgelogo = 'Themes/default/images/wedgelogo.gif';
 
 // Note that we're using the default URLs because we aren't even going to try to use Settings.php's settings.
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -194,7 +199,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 	</head>
 	<body>
 		<div id="header">
-			<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.' . (file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.png') ? 'png' : 'gif') . '" style="width: 250px; float: right;" alt="Simple Machines" border="0" /></a>
+			<a href="http://www.wedgeo.org/" target="_blank"><img src="' . $wedgelogo . '" style="width: 250px; float: right;" alt="Wedge Forum" border="0" /></a>
 			<div>', $txt['smf_repair_settings'], '</div>
 		</div>
 		<div id="content">';
@@ -865,7 +870,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 			$insertRows[] = smf_db_query(false, $insertData, array_combine($indexed_columns, $dataRow));
 
 		// Determine the method of insertion.
-		$queryTitle = $method == 'replace' ? 'REPLACE' : ($method == 'ignore' ? 'INSERT IGNORE' : 'INSERT');
+		$queryTitle = ($method == 'replace') ? 'REPLACE' : (($method == 'ignore') ? 'INSERT IGNORE' : 'INSERT');
 
 		// Do the insert.
 		$smcFunc['db_query'](true, '
@@ -877,6 +882,40 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 				'security_override' => true,
 			)
 		);
+	}
+
+	function smf_db_list_tables($db = false, $filter = false)
+	{
+		global $db_name, $smcFunc;
+		$db = trim((empty($db) ? $db_name : $db));
+
+		$filter = $filter == false ? '' : ' LIKE \'' . $filter . '\'';
+		$query = "SHOW TABLES FROM $db " . $filter;
+
+		// 	Do it.
+		$smcFunc['db_query'](true, $query,
+			array()
+		);
+	}
+
+	// This function tries to work out additional error information from a back trace.
+	function smf_db_error_backtrace($error_message, $log_message = '', $error_type = false, $file = null, $line = null)
+	{
+		if (empty($log_message))
+			$log_message = $error_message;
+
+		// 	A special case - we want the file and line numbers for debugging.
+		if ($error_type == 'return')
+			return array($file, $line);
+
+		// Is always a critical error.
+		if (function_exists('log_error'))
+			log_error($log_message, 'critical', $file, $line);
+
+		if ($error_type)
+			trigger_error($error_message . ($line !== null ? '<em>(' . basename($file) . '-' . $line . ')</em>' : ''), $error_type);
+		else
+			trigger_error($error_message . ($line !== null ? '<em>(' . basename($file) . '-' . $line . ')</em>' : ''));
 	}
 
 	// Returns all tables
