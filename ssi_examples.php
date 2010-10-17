@@ -55,355 +55,351 @@ template_ssi_above();
 			<p>Need more information on using SSI.php? Check out <a href="http://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> or <a href="http://www.simplemachines.org/community/index.php?topic=14906.0">the SSI FAQ</a>.</p>
 
 			<div id="sidenav" class="windowbg wrc">
-				<div class="content">
-					<h2 id="functionlist">Function List</h2>
-					<h3>Recent Items</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_recentTopics'); return false;">Recent Topics</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_recentPosts'); return false;">Recent Posts</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_recentPoll'); return false;">Recent Poll</a></li>
-					</ul>
-					<h3>Top Items</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_topBoards'); return false;">Top Boards</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_topTopicsViews'); return false;">Top Topics</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_topPoll'); return false;">Top Poll</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_topPoster'); return false;">Top Poster</a></li>
-					</ul>
-					<h3>Members</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_latestMember'); return false;">Latest Member Function</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_randomMember'); return false;">Member of the Day</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_whosOnline'); return false;">Who's Online</a></li>
-					</ul>
-					<h3>Authentication</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_login'); return false;">Welcome, Login &amp; Logout</a></li>
-					</ul>
-					<h3>Calendar</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_todaysCalendar'); return false;">Today's Events</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_recentEvents'); return false;">Recent Events</a></li>
-					</ul>
-					<h3>Miscellaneous</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_boardStats'); return false;">Forum Stats</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_news'); return false;">News</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_boardNews'); return false;">Board News</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_menubar'); return false;">Menubar</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_quickSearch'); return false;">Quick Search Box</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_recentAttachments'); return false;">Recent Attachments</a></li>
-					</ul>
-					<?php if ($user_info['is_admin']) { ?>
-					<h3>Advanced Functions <img class="help" title="Functions that require additional tweaking, not just copy and paste." src="<?php echo $settings['images_url']; ?>/helptopics.gif" alt="" /></h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('ssi_showPoll'); return false;">Show Single Poll</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_fetchPosts'); return false;">Show Single Post</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_fetchMember'); return false;">Show Single Member</a></li>
-						<li><a href="#" onclick="showSSIBlock('ssi_fetchGroupMembers'); return false;">Show Group Members</a></li>
-					</ul>
-					<?php } ?>
-					<h3>Website Samples</h3>
-					<ul>
-						<li><a href="#" onclick="showSSIBlock('htmlhome')">Sample 1</a></li>
-					</ul>
-					<h2 id="other">Other</h2>
-					<ul>
-						<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', false); return false;">Show all examples</a></li>
-						<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', true); return false;">Hide all examples</a></li>
-					</ul>
-				</div>
+				<h2 id="functionlist">Function List</h2>
+				<h3>Recent Items</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_recentTopics'); return false;">Recent Topics</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_recentPosts'); return false;">Recent Posts</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_recentPoll'); return false;">Recent Poll</a></li>
+				</ul>
+				<h3>Top Items</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_topBoards'); return false;">Top Boards</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_topTopicsViews'); return false;">Top Topics</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_topPoll'); return false;">Top Poll</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_topPoster'); return false;">Top Poster</a></li>
+				</ul>
+				<h3>Members</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_latestMember'); return false;">Latest Member Function</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_randomMember'); return false;">Member of the Day</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_whosOnline'); return false;">Who's Online</a></li>
+				</ul>
+				<h3>Authentication</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_login'); return false;">Welcome, Login &amp; Logout</a></li>
+				</ul>
+				<h3>Calendar</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_todaysCalendar'); return false;">Today's Events</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_recentEvents'); return false;">Recent Events</a></li>
+				</ul>
+				<h3>Miscellaneous</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_boardStats'); return false;">Forum Stats</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_news'); return false;">News</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_boardNews'); return false;">Board News</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_menubar'); return false;">Menubar</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_quickSearch'); return false;">Quick Search Box</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_recentAttachments'); return false;">Recent Attachments</a></li>
+				</ul>
+				<?php if ($user_info['is_admin']) { ?>
+				<h3>Advanced Functions <img class="help" title="Functions that require additional tweaking, not just copy and paste." src="<?php echo $settings['images_url']; ?>/helptopics.gif" alt="" /></h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('ssi_showPoll'); return false;">Show Single Poll</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_fetchPosts'); return false;">Show Single Post</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_fetchMember'); return false;">Show Single Member</a></li>
+					<li><a href="#" onclick="showSSIBlock('ssi_fetchGroupMembers'); return false;">Show Group Members</a></li>
+				</ul>
+				<?php } ?>
+				<h3>Website Samples</h3>
+				<ul>
+					<li><a href="#" onclick="showSSIBlock('htmlhome')">Sample 1</a></li>
+				</ul>
+				<h2 id="other">Other</h2>
+				<ul>
+					<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', false); return false;">Show all examples</a></li>
+					<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', true); return false;">Hide all examples</a></li>
+				</ul>
 			</div>
 
 	<div id="preview" class="windowbg2 wrc">
-		<div class="content">
 
 <!-- RECENT ITEMS -->
-			<div class="ssi_preview" id="ssi_recentTopics">
-				<h2>Recent Topics Function</h2>
-				<h3>Code (simple mode)</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentTopics(); ?&gt;</code>
-				<h3>Code (advanced mode)</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentTopics($num_recent = 8, $exclude_boards = null, $include_boards = null, $output_method = 'echo'); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_recentTopics(); flush(); ?></div>
-			</div>
+		<div class="ssi_preview" id="ssi_recentTopics">
+			<h2>Recent Topics Function</h2>
+			<h3>Code (simple mode)</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentTopics(); ?&gt;</code>
+			<h3>Code (advanced mode)</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentTopics($num_recent = 8, $exclude_boards = null, $include_boards = null, $output_method = 'echo'); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_recentTopics(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_recentPosts">
-				<h2>Recent Posts Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentPosts(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_recentPosts(); flush(); ?></div>
-			</div>
+		<div class="ssi_preview" id="ssi_recentPosts">
+			<h2>Recent Posts Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentPosts(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_recentPosts(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_recentPoll">
-				<h2>Recent Poll Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentPoll(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_recentPoll(); flush(); ?></div>
-			</div>
+		<div class="ssi_preview" id="ssi_recentPoll">
+			<h2>Recent Poll Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentPoll(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_recentPoll(); flush(); ?></div>
+		</div>
 
 <!-- TOP ITEMS -->
-			<div class="ssi_preview" id="ssi_topBoards">
-				<h2>Top Boards Function</h2>
-				<p>Shows top boards by the number of posts.</p>
+		<div class="ssi_preview" id="ssi_topBoards">
+			<h2>Top Boards Function</h2>
+			<p>Shows top boards by the number of posts.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topBoards(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_topBoards(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topBoards(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_topBoards(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_topTopicsViews">
-				<h2>Top Topics</h2>
-				<p>Shows top topics by the number of replies or views.</p>
+		<div class="ssi_preview" id="ssi_topTopicsViews">
+			<h2>Top Topics</h2>
+			<p>Shows top topics by the number of replies or views.</p>
 
-				<h3>Code (show by number of views)</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topTopicsViews(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_topTopicsViews(); flush(); ?></div>
+			<h3>Code (show by number of views)</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topTopicsViews(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_topTopicsViews(); flush(); ?></div>
 
-				<h3>Code (show by number of replies)</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topTopicsReplies(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_topTopicsReplies(); flush(); ?></div>
-			</div>
+			<h3>Code (show by number of replies)</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topTopicsReplies(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_topTopicsReplies(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_topPoll">
-				<h2>Top Poll Function</h2>
-				<p>Shows the most-voted-in poll.</p>
+		<div class="ssi_preview" id="ssi_topPoll">
+			<h2>Top Poll Function</h2>
+			<p>Shows the most-voted-in poll.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topPoll(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_topPoll(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topPoll(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_topPoll(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_topPoster">
-				<h2>Top Poster Function</h2>
-				Shows the top poster's name and profile link.
+		<div class="ssi_preview" id="ssi_topPoster">
+			<h2>Top Poster Function</h2>
+			Shows the top poster's name and profile link.
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topPoster(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_topPoster(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_topPoster(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_topPoster(); flush(); ?></div>
+		</div>
 
 <!-- MEMBERS -->
-			<div class="ssi_preview" id="ssi_latestMember">
-				<h2>Latest Member Function</h2>
-				<p>Shows the latest member's name and profile link.</p>
+		<div class="ssi_preview" id="ssi_latestMember">
+			<h2>Latest Member Function</h2>
+			<p>Shows the latest member's name and profile link.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_latestMember(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_latestMember(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_latestMember(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_latestMember(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_randomMember">
-				<h2>Member of the Day</h2>
-				<p>Shows one random member of the day. This changes once a day.</p>
+		<div class="ssi_preview" id="ssi_randomMember">
+			<h2>Member of the Day</h2>
+			<p>Shows one random member of the day. This changes once a day.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_randomMember('day'); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_randomMember('day'); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_randomMember('day'); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_randomMember('day'); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_whosOnline">
-				<h2>Who's Online Function</h2>
-				<p>This function shows who are online inside the forum.</p>
+		<div class="ssi_preview" id="ssi_whosOnline">
+			<h2>Who's Online Function</h2>
+			<p>This function shows who are online inside the forum.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_whosOnline(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_whosOnline(); flush(); ?></div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_whosOnline(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_whosOnline(); flush(); ?></div>
 
-				<h2>Log Online Presence</h2>
-				<p>This function logs the SSI page's visitor, then shows the Who's Online list. In other words, this function shows who are online inside and outside the forum.</p>
+			<h2>Log Online Presence</h2>
+			<p>This function logs the SSI page's visitor, then shows the Who's Online list. In other words, this function shows who are online inside and outside the forum.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_logOnline(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_logOnline(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_logOnline(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_logOnline(); flush(); ?></div>
+		</div>
 
 <!-- WELCOME, LOGIN AND LOGOUT -->
-			<div class="ssi_preview" id="ssi_login">
-				<h2>Login Function</h2>
-				<p>Shows a login box only when user is not logged in.</p>
+		<div class="ssi_preview" id="ssi_login">
+			<h2>Login Function</h2>
+			<p>Shows a login box only when user is not logged in.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_login(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_login(); flush(); ?></div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_login(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_login(); flush(); ?></div>
 
-				<h2>Logout Function</h2>
-				<p>Shows a logout link only when user is logged in.</p>
+			<h2>Logout Function</h2>
+			<p>Shows a logout link only when user is logged in.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_logout(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_logout(); flush(); ?></div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_logout(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_logout(); flush(); ?></div>
 
-				<h2>Welcome Function</h2>
-				<p>Greets users or guests, also shows user's messages if logged in.</p>
+			<h2>Welcome Function</h2>
+			<p>Greets users or guests, also shows user's messages if logged in.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_welcome(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_welcome(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_welcome(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_welcome(); flush(); ?></div>
+		</div>
 
 <!-- CALENDAR -->
-			<div class="ssi_preview" id="ssi_todaysCalendar">
-				<h2>Today's Calendar Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysCalendar(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_todaysCalendar(); flush(); ?></div>
+		<div class="ssi_preview" id="ssi_todaysCalendar">
+			<h2>Today's Calendar Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysCalendar(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_todaysCalendar(); flush(); ?></div>
 
-				<h2>Today's Birthdays Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysBirthdays(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_todaysBirthdays(); flush(); ?></div>
+			<h2>Today's Birthdays Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysBirthdays(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_todaysBirthdays(); flush(); ?></div>
 
-				<h2>Today's Holidays Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysHolidays(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_todaysHolidays(); flush(); ?></div>
+			<h2>Today's Holidays Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysHolidays(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_todaysHolidays(); flush(); ?></div>
 
-				<h2>Today's Events Function</h2>
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysEvents(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_todaysEvents(); flush(); ?></div>
-			</div>
+			<h2>Today's Events Function</h2>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_todaysEvents(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_todaysEvents(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_recentEvents">
-				<h2>Recent Calendar Events Function</h2>
+		<div class="ssi_preview" id="ssi_recentEvents">
+			<h2>Recent Calendar Events Function</h2>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentEvents(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_recentEvents(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentEvents(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_recentEvents(); flush(); ?></div>
+		</div>
 
 <!-- MISCELLANEOUS -->
-			<div class="ssi_preview" id="ssi_boardStats">
-				<h2>Forum Stats</h2>
-				<p>Shows some basic forum stats: total members, posts, topics, boards, etc.</p>
+		<div class="ssi_preview" id="ssi_boardStats">
+			<h2>Forum Stats</h2>
+			<p>Shows some basic forum stats: total members, posts, topics, boards, etc.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_boardStats(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_boardStats(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_boardStats(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_boardStats(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_news">
-				<h2>News Function</h2>
-				<p>Shows random forum news.</p>
+		<div class="ssi_preview" id="ssi_news">
+			<h2>News Function</h2>
+			<p>Shows random forum news.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_news(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_news(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_news(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_news(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_boardNews">
-				<h2>Board News Function</h2>
-				<p>Shows the latest posts from read only boards, or a specific board.</p>
+		<div class="ssi_preview" id="ssi_boardNews">
+			<h2>Board News Function</h2>
+			<p>Shows the latest posts from read only boards, or a specific board.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_boardNews(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_boardNews(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_boardNews(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_boardNews(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_menubar">
-				<h2>Menubar Function</h2>
-				<p>Displays a menu bar, like one displayed at the top of the forum.</p>
+		<div class="ssi_preview" id="ssi_menubar">
+			<h2>Menubar Function</h2>
+			<p>Displays a menu bar, like one displayed at the top of the forum.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_menubar(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_menubar(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_menubar(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_menubar(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_quickSearch">
-				<h2>Quick Search Function</h2>
+		<div class="ssi_preview" id="ssi_quickSearch">
+			<h2>Quick Search Function</h2>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_quickSearch(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_quickSearch(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_quickSearch(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_quickSearch(); flush(); ?></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_recentAttachments">
-				<h2>Recent Attachments Function</h2>
+		<div class="ssi_preview" id="ssi_recentAttachments">
+			<h2>Recent Attachments Function</h2>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentAttachments(); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><?php ssi_recentAttachments(); flush(); ?></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_recentAttachments(); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><?php ssi_recentAttachments(); flush(); ?></div>
+		</div>
 
 <!-- ADVANCED FUNCTIONS -->
-			<div class="ssi_preview" id="ssi_showPoll">
-				<h2>Show Single Poll</h2>
-				<p>Shows a poll in the specified topic.</p>
+		<div class="ssi_preview" id="ssi_showPoll">
+			<h2>Show Single Poll</h2>
+			<p>Shows a poll in the specified topic.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_showPoll($topicID); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><i>Not shown because it needs specific topic ID that contains a poll.</i></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_showPoll($topicID); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><i>Not shown because it needs specific topic ID that contains a poll.</i></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_fetchPosts">
-				<h2>Show Single Post</h2>
-				<p>Fetches a post with a particular IDs. By default will only show if you have permission to the see
-				the board in question. This can be overriden by passing the 2nd parameter as <tt>true</tt>.</p>
+		<div class="ssi_preview" id="ssi_fetchPosts">
+			<h2>Show Single Post</h2>
+			<p>Fetches a post with a particular IDs. By default will only show if you have permission to the see
+			the board in question. This can be overriden by passing the 2nd parameter as <tt>true</tt>.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchPosts($postIDs, $isOverride); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><i>Not shown because it needs a specific post ID.</i></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchPosts($postIDs, $isOverride); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><i>Not shown because it needs a specific post ID.</i></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_fetchMember">
-				<h2>Show Single Member</h2>
-				<p>Shows the specified member's name and profile link.</p>
+		<div class="ssi_preview" id="ssi_fetchMember">
+			<h2>Show Single Member</h2>
+			<p>Shows the specified member's name and profile link.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchMember($memberIDs); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><i>Not shown because it needs a specific member ID.</i></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchMember($memberIDs); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><i>Not shown because it needs a specific member ID.</i></div>
+		</div>
 
-			<div class="ssi_preview" id="ssi_fetchGroupMembers">
-				<h2>Show Group Members</h2>
-				<p>Shows all members in a specified group.</p>
+		<div class="ssi_preview" id="ssi_fetchGroupMembers">
+			<h2>Show Group Members</h2>
+			<p>Shows all members in a specified group.</p>
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchGroupMembers($groupIDs); ?&gt;</code>
-				<h3>Result</h3>
-				<div class="ssi_result"><i>Not shown because it needs specific membergroup IDs.</i></div>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchGroupMembers($groupIDs); ?&gt;</code>
+			<h3>Result</h3>
+			<div class="ssi_result"><i>Not shown because it needs specific membergroup IDs.</i></div>
+		</div>
 
-			<div class="ssi_preview" id="htmlhome">
-				<h2>Home Page Sample</h2>
-				This sample uses the following features: ssi_recentTopics(), ssi_logOnline(), ssi_welcome(), and ssi_boardNews().
-				ssi_recentTopics() is fetched using the array method, to allow further customizations on the output.
+		<div class="ssi_preview" id="htmlhome">
+			<h2>Home Page Sample</h2>
+			This sample uses the following features: ssi_recentTopics(), ssi_logOnline(), ssi_welcome(), and ssi_boardNews().
+			ssi_recentTopics() is fetched using the array method, to allow further customizations on the output.
 
-				<h3>Code</h3>
-				<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code"><?php echo htmlspecialchars(template_homepage_sample1('source')); ?></code>
-				<h3>Result</h3>
-				<iframe src="?view=home1" width="99%" height="300"></iframe>
-			</div>
+			<h3>Code</h3>
+			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code"><?php echo htmlspecialchars(template_homepage_sample1('source')); ?></code>
+			<h3>Result</h3>
+			<iframe src="?view=home1" width="99%" height="300"></iframe>
 		</div>
 	</div>
 
