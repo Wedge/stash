@@ -2264,11 +2264,6 @@ function parse_sql($filename)
 	$substep = 0;
 	$last_step = '';
 
-	// MySQL users below v4 can't use engine.
-	if (version_compare('4', preg_replace('~\-.+?$~', '', eval($db['version_check']))) > 0)
-		foreach ($lines as $key => $line)
-			$lines[$key] = strtr($line, array(') ENGINE=' => ') TYPE='));
-
 	// Make sure all newly created tables will have the proper characters set. We do this so that if we need to modify the syntax later, we can do it once instead of per table!
 	$lines = str_replace(') ENGINE=MyISAM;', ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;', $lines);
 
