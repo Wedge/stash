@@ -860,6 +860,25 @@ CREATE TABLE {$db_prefix}log_group_requests (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `log_intrusion`
+#
+
+CREATE TABLE {$db_prefix}log_intrusion (
+  id_event int(10) unsigned NOT NULL auto_increment,
+  id_member mediumint(8) unsigned NOT NULL default '0',
+  error_type char(16) NOT NULL default '                ',
+  ip char(16) NOT NULL default '                ',
+  event_time int(10) unsigned NOT NULL,
+  http_method char(4) NOT NULL default '    ',
+  request_uri varchar(255) NOT NULL default '',
+  protocol varchar(15) NOT NULL default '',
+  user_agent varchar(255) NOT NULL default '',
+  headers text NOT NULL,
+  request_entity text NOT NULL,
+  PRIMARY KEY (id_event)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `log_mark_read`
 #
 
