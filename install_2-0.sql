@@ -110,6 +110,17 @@ CREATE TABLE {$db_prefix}ban_items (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `board_members`
+#
+
+CREATE TABLE {$db_prefix}board_members (
+  id_member mediumint(8) unsigned NOT NULL default '0',
+  id_board smallint(5) unsigned NOT NULL default '0',
+  permission enum('access','deny') NOT NULL default 'access',
+  PRIMARY KEY (id_member, id_board, permission)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `board_permissions`
 #
 
@@ -469,6 +480,7 @@ VALUES (-1, 1, 'poll_view'),
 
 CREATE TABLE {$db_prefix}boards (
   id_board smallint(5) unsigned NOT NULL auto_increment,
+  id_owner mediumint(8) unsigned NOT NULL default '0',
   id_cat tinyint(4) unsigned NOT NULL default '0',
   child_level tinyint(4) unsigned NOT NULL default '0',
   id_parent smallint(5) unsigned NOT NULL default '0',
@@ -478,21 +490,37 @@ CREATE TABLE {$db_prefix}boards (
   member_groups varchar(255) NOT NULL default '-1,0',
   id_profile smallint(5) unsigned NOT NULL default '1',
   name varchar(255) NOT NULL default '',
+  url varchar(64) NOT NULL DEFAULT '',
+  urllen tinyint(3) unsigned NOT NULL DEFAULT '0',
   description text NOT NULL,
+  created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   num_topics mediumint(8) unsigned NOT NULL default '0',
   num_posts mediumint(8) unsigned NOT NULL default '0',
+  num_members mediumint(8) unsigned NOT NULL DEFAULT '0',
+  check_members_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   count_posts tinyint(4) NOT NULL default '0',
   id_theme tinyint(4) unsigned NOT NULL default '0',
   override_theme tinyint(4) unsigned NOT NULL default '0',
+  css varchar(255) NOT NULL DEFAULT '',
+  showtitle tinyint(1) NOT NULL DEFAULT '1',
+  wedge_type enum('board','blog','site') NOT NULL DEFAULT 'board',
   unapproved_posts smallint(5) NOT NULL default '0',
   unapproved_topics smallint(5) NOT NULL default '0',
   redirect varchar(255) NOT NULL default '',
   redirect_newtab tinyint(1) unsigned NOT NULL default '0',
+  most_today smallint(5) unsigned NOT NULL DEFAULT '0',
+  most_ever smallint(5) unsigned NOT NULL DEFAULT '0',
+  most_date bigint(20) unsigned NOT NULL DEFAULT '0',
+  most_updated date NOT NULL DEFAULT '0000-00-00',
+  language varchar(255) NOT NULL NOT NULL DEFAULT 'english',
   PRIMARY KEY (id_board),
   UNIQUE categories (id_cat, id_board),
+  UNIQUE url (url),
+  KEY owner (id_owner),
   KEY id_parent (id_parent),
   KEY id_msg_updated (id_msg_updated),
-  KEY member_groups (member_groups(48))
+  KEY member_groups (member_groups(48)),
+  KEY urllen (urllen)
 ) ENGINE=MyISAM;
 
 #
@@ -1553,6 +1581,28 @@ CREATE TABLE {$db_prefix}poll_choices (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `pretty_topic_urls`
+#
+
+CREATE TABLE {$db_prefix}pretty_topic_urls (
+  id_topic mediumint(8) NOT NULL default '0',
+  pretty_url varchar(80) NOT NULL,
+  PRIMARY KEY (id_topic),
+  UNIQUE (pretty_url)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `pretty_urls_cache`
+#
+
+CREATE TABLE {db_prefix}pretty_urls_cache (
+  url_id varchar(255) NOT NULL,
+  replacement varchar(255) NOT NULL,
+  log_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (url_id)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `scheduled_tasks`
 #
 
@@ -1610,7 +1660,7 @@ VALUES ('smfVersion', '{$smf_version}'),
 	('compactTopicPagesContiguous', '5'),
 	('compactTopicPagesEnable', '1'),
 	('enableStickyTopics', '1'),
-	('todayMod', '1'),
+	('todayMod', '2'),
 	('enablePreviousNext', '1'),
 	('pollMode', '1'),
 	('enableVBStyleLogin', '1'),
@@ -1928,12 +1978,17 @@ VALUES (1, 'name', '{$default_theme_name}'),
 	(1, 'allow_no_censored', '0'),
 	(1, 'additional_options_collapsable', '1'),
 	(1, 'use_image_buttons', '1'),
-	(1, 'enable_news', '1');
+	(1, 'enable_news', '1'),
+	(1, 'return_to_post', '1'),
+	(1, 'copy_to_outbox', '1'),
+	(1, 'display_quick_mod', '1'),
+	(1, 'display_quick_reply', '1'),
+	(1, 'calendar_start_day', '1'),
+	(1, 'view_newest_pm_first', '1'),
+	(1, 'pm_remove_inbox_label', '1');
 
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'display_quick_reply', '1');
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'posts_apply_ignore_list', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'return_to_post', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'copy_to_outbox', '1');
 # --------------------------------------------------------
 
 #

@@ -155,7 +155,6 @@ $context['smfinfo'] = array (
 	'local_cookies' => get_smf_setting('localCookies', 'off'),
 	'global_cookies' => get_smf_setting('globalCookies'),
 	'log_pruning' => get_smf_setting('pruningOptions', 'on'),
-	'sef_urls' => get_smf_setting('queryless_urls'),
 	'compressed_output' => get_smf_setting('enableCompressedOutput', 'on'),
 );
 

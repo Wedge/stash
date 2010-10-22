@@ -45,9 +45,6 @@ $txt['maintenance1'] = 'Enabled';
 $txt['maintenance2'] = 'Unusable <em>(not recommended!)</em>';
 $txt['language'] = 'Language File';
 $txt['cookiename'] = 'Cookie Name';
-$txt['queryless_urls'] = 'Queryless URLs';
-$txt['queryless_urls0'] = 'Off (recommended)';
-$txt['queryless_urls1'] = 'On';
 $txt['enableCompressedOutput'] = 'Output Compression';
 $txt['enableCompressedOutput0'] = 'Off (recommended if you have problems)';
 $txt['enableCompressedOutput1'] = 'On (saves a lot of bandwidth)';
@@ -353,7 +350,6 @@ function show_settings()
 			'maintenance' => array('flat', 'int', 2),
 			'language' => array('flat', 'string', 'english'),
 			'cookiename' => array('flat', 'string', 'SMFCookie' . (!empty($db_name) ? abs(crc32($db_name . preg_replace('~[^A-Za-z0-9_$]~', '', $db_prefix)) % 1000) : '20')),
-			'queryless_urls' => array('db', 'int', 1),
 			'enableCompressedOutput' => array('db', 'int', 1),
 			'databaseSession_enable' => array('db', 'int', 1),
 		),

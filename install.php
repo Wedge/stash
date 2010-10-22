@@ -1265,7 +1265,7 @@ function AdminAccount()
 				return false;
 			}
 
-			$incontext['member_id'] = $smcFunc['db_insert_id']("{$db_prefix}members", 'id_member');
+			$incontext['member_id'] = $smcFunc['db_insert_id']();
 
 			// If we have a first post that we've inserted ourselves, let's fix that to be our new administrator.
 			$smcFunc['db_query']('', '

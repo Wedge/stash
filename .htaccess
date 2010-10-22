@@ -17,11 +17,17 @@
 	Allow from localhost
 </FilesMatch>
 
-# Try not to allow access to any SQLite databases that may be created here.
-<FilesMatch "\.db$">
-	Order Deny,Allow
-	Deny from all
-</FilesMatch>
+# Unencrypted avatars should be cached for a very long time.
+# !!! Requires mod_header to be enabled
+#<FilesMatch "avatar_[0-9]_[0-9]+\.(jpg|jpeg|png|gif)$">
+#	Header set Expires "Thu, 21 March 2025 03:42:00 GMT"
+#</FilesMatch>
+
+# Cached CSS and Javascript files should be cached for a very long time, too. (WIP)
+# !!! Requires mod_header to be enabled
+#<FilesMatch "cache/.+\.(css|js)$">
+#	Header set Expires "Thu, 21 March 2025 03:42:00 GMT"
+#</FilesMatch>
 
 # Apache 2 uses php_value, Apache 1 uses php_flag.
 <IfDefine APACHE2>
@@ -65,9 +71,6 @@
 	php_value magic_quotes_gpc 1
 	# This is a really bad setting for connections, and is best off just generally.
 	php_value implicit_flush 0
-
-	# The following enables queryless URLs on Apache 2.
-	AcceptPathInfo on
 </IfDefine>
 
 <IfDefine !APACHE2>
@@ -112,3 +115,13 @@
 	# This is a really bad setting for connections, and is best off just generally.
 	php_flag implicit_flush off
 </IfDefine>
+
+# Pretty URLs
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+
+	# Equivalent to ErrorDocument 404, without the status change :)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule .* /index.php [L]
+</IfModule>
