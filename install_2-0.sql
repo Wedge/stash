@@ -1595,7 +1595,7 @@ CREATE TABLE {$db_prefix}pretty_topic_urls (
 # Table structure for table `pretty_urls_cache`
 #
 
-CREATE TABLE {db_prefix}pretty_urls_cache (
+CREATE TABLE {$db_prefix}pretty_urls_cache (
   url_id varchar(255) NOT NULL,
   replacement varchar(255) NOT NULL,
   log_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
