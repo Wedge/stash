@@ -1442,8 +1442,8 @@ function DeleteInstall()
 	// Sanity check that they loaded earlier!
 	if (isset($modSettings['recycle_board']))
 	{
-		$forum_version = $current_smf_version;  // The variable is usually defined in index.php so let's just use our variable to do it for us.
-		scheduled_fetchSMfiles(); // Now go get those files!
+		$forum_version = $current_smf_version;	// The variable is usually defined in index.php so let's just use our variable to do it for us.
+		scheduled_fetchSMfiles();	// Now go get those files!
 
 		// We've just installed!
 		$user_info['ip'] = $_SERVER['REMOTE_ADDR'];

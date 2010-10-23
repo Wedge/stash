@@ -1837,8 +1837,8 @@ function DeleteUpgrade()
 	else
 	{
 		require_once($sourcedir . '/ScheduledTasks.php');
-		$forum_version = SMF_VERSION;  // The variable is usually defined in index.php so let's just use the constant to do it for us.
-		scheduled_fetchSMfiles(); // Now go get those files!
+		$forum_version = SMF_VERSION;	// The variable is usually defined in index.php so let's just use the constant to do it for us.
+		scheduled_fetchSMfiles();	// Now go get those files!
 	}
 
 	// Log what we've done.
