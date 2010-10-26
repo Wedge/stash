@@ -462,24 +462,7 @@ function show_header()
 
 			window.onload = function ()
 			{
-				smfInfoCurrentVersion();';
-
-	if ($context['browser']['is_ie'])
-		echo '
-				if (typeof(smf_codeFix) != "undefined")
-					window.detachEvent("onload", smf_codeFix);
-				window.attachEvent("onload",
-					function ()
-					{
-//						with (document.all.supportVersionsTable)
-//							style.height = parentNode.offsetHeight;
-					}
-				);
-				if (typeof(smf_codeFix) != "undefined")
-					window.attachEvent("onload", smf_codeFix);';
-
-	echo '
-
+				smfInfoCurrentVersion();
 				if (oldonload)
 					oldonload();
 			}
