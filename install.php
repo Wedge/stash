@@ -23,8 +23,6 @@
 **********************************************************************************/
 
 $GLOBALS['current_smf_version'] = '2.0 RC4';
-$GLOBALS['db_script_version'] = '2-0';
-
 $GLOBALS['required_php_version'] = '5.0.0';
 
 // Don't have PHP support, do you?
@@ -180,7 +178,7 @@ function initialize_inputs()
 
 			$ftp->unlink('install.php');
 			$ftp->unlink('webinstall.php');
-			$ftp->unlink('install_' . $GLOBALS['db_script_version'] . '.sql');
+			$ftp->unlink('install.sql');
 
 			$ftp->close();
 
@@ -190,7 +188,7 @@ function initialize_inputs()
 		{
 			@unlink(__FILE__);
 			@unlink(dirname(__FILE__) . '/webinstall.php');
-			@unlink(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql');
+			@unlink(dirname(__FILE__) . '/install.sql');
 		}
 
 		// Now just redirect to a blank.gif...
@@ -397,10 +395,10 @@ function Welcome()
 
 	if (function_exists('mysql_connect'))
 	{
-		if (!file_exists(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql'))
+		if (!file_exists(dirname(__FILE__) . '/install.sql'))
 		{
 			$notFoundSQLFile = true;
-			$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install_' . $GLOBALS['db_script_version'] . '.sql');
+			$txt['error_db_script_missing'] = sprintf($txt['error_db_script_missing'], 'install.sql');
 		}
 		else
 			$mysql_supported = true;
@@ -929,7 +927,7 @@ function DatabasePopulation()
 	$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
 	// Read in the SQL.  Turn this on and that off... internationalize... etc.
-	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install_' . $GLOBALS['db_script_version'] . '.sql')), $replaces));
+	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install.sql')), $replaces));
 
 	// Execute the SQL.
 	$current_statement = '';

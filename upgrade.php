@@ -894,7 +894,7 @@ function WelcomeLogin()
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
 		&& @file_exists($sourcedir . '/QueryString.php')
 		&& @file_exists($sourcedir . '/Subs-Database.php')
-		&& @file_exists(dirname(__FILE__) . '/upgrade_2-0.sql');
+		&& @file_exists(dirname(__FILE__) . '/upgrade.sql');
 
 	if (!$check)
 		// Don't tell them what files exactly because it's a spot check - just like teachers don't tell which problems they are spot checking, that's dumb.
@@ -1389,7 +1389,7 @@ function DatabaseChanges()
 	// All possible files.
 	// Name, <version, insert_on_complete
 	$files = array(
-		array('upgrade_2-0.sql', '3.0', SMF_VERSION),
+		array('upgrade.sql', '3.0', SMF_VERSION),
 	);
 
 	// How many files are there in total?
