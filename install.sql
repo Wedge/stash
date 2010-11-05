@@ -501,8 +501,7 @@ CREATE TABLE {$db_prefix}boards (
   count_posts tinyint(4) NOT NULL default '0',
   id_theme tinyint(4) unsigned NOT NULL default '0',
   override_theme tinyint(4) unsigned NOT NULL default '0',
-  css varchar(255) NOT NULL DEFAULT '',
-  showtitle tinyint(1) NOT NULL DEFAULT '1',
+  styling varchar(255) NOT NULL DEFAULT 'css',
   wedge_type enum('board','blog','site') NOT NULL DEFAULT 'board',
   unapproved_posts smallint(5) NOT NULL default '0',
   unapproved_topics smallint(5) NOT NULL default '0',
@@ -1919,7 +1918,7 @@ VALUES (1, 'Google', 'googlebot', ''),
 # Table structure for table `subscriptions`
 #
 
-CREATE TABLE {$db_prefix}subscriptions(
+CREATE TABLE {$db_prefix}subscriptions (
   id_subscribe mediumint(8) unsigned NOT NULL auto_increment,
   name varchar(60) NOT NULL default '',
   description varchar(255) NOT NULL default '',
