@@ -36,6 +36,8 @@
 	</FilesMatch>
 </IfModule>
 
+# Setting PHP variables is only supported in mod_php. If using PHP as CGI, edit php.ini instead.
+<IfModule mod_php.c>
 # Apache 2 uses php_value, Apache 1 uses php_flag.
 <IfDefine APACHE2>
 	# PHP has to be running for SMF to work, of course.
@@ -122,6 +124,7 @@
 	# This is a really bad setting for connections, and is best off just generally.
 	php_flag implicit_flush off
 </IfDefine>
+</IfModule>
 
 # Pretty URLs
 <IfModule mod_rewrite.c>
