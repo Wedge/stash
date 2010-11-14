@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
-<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<!DOCTYPE addon-info SYSTEM "http://www.simplemachines.org/xml/addon-info">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	This is a somewhat detailed package manifest for SMF packages.
+	This is a somewhat detailed add-on manifest for SMF add-ons.
 
 	ATTENTION: If you are trying to install this manually, you should try
-	the package manager.  If it will not work for you, please take a look
+	the add-on manager. If it will not work for you, please take a look
 	at the following for information on this format:
 		http://www.simplemachines.org/redirect/manual_mod_install
 
 ================================================================================
 
-	This script can be used to make your package do many different things.
+	This script can be used to make your add-on do many different things.
 	The following documentation should be available on the format of this
 	file and the things you can do with it:
-		http://www.simplemachines.org/redirect/mod_package_sdk
+		http://www.simplemachines.org/redirect/mod_addon_sdk
 
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-	<!-- For the id, always use something unique - put your name, a colon, and then the package name. -->
+<addon-info xmlns="http://www.simplemachines.org/xml/addon-info" xmlns:smf="http://www.simplemachines.org/">
+	<!-- For the id, always use something unique - put your name, a colon, and then the add-on name. -->
 	<id>username:testing123</id>
-	<!-- Below should be the name of this package. -->
+	<!-- Below should be the name of this add-on. -->
 	<name>Testing, 1-2-3!</name>
 	<!-- The version of this modification.  Keep it numeric so PHP can tell that old < new. -->
 	<version>1.01</version>
@@ -63,4 +63,4 @@
 		<require-file name="Blarg.css" destination="$themedir" />
 	</upgrade>
 
-</package-info>
+</addon-info>

@@ -13,7 +13,7 @@
 
 --------------------------------------------------------------------------------
 
--- This information needs to be the same as that in the package-info.xml. --
+-- This information needs to be the same as that in the addon-info.xml. --
 <id>username:testing123</id>
 <version>1.0</version>
 
