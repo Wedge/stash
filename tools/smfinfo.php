@@ -363,7 +363,7 @@ function show_header()
 			}
 
 		</style>
-		<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+		<script><!-- // --><![CDATA[
 			var sections = new Array();
 			var titles = new Array();
 
