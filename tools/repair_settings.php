@@ -349,7 +349,7 @@ function show_settings()
 		'critical_settings' => array(
 			'maintenance' => array('flat', 'int', 2),
 			'language' => array('flat', 'string', 'english'),
-			'cookiename' => array('flat', 'string', 'SMFCookie' . (!empty($db_name) ? abs(crc32($db_name . preg_replace('~[^A-Za-z0-9_$]~', '', $db_prefix)) % 1000) : '20')),
+			'cookiename' => array('flat', 'string', 'WedgeCookie' . (!empty($db_name) ? abs(crc32($db_name . preg_replace('~[^A-Za-z0-9_$]~', '', $db_prefix)) % 1000) : '20')),
 			'enableCompressedOutput' => array('db', 'int', 1),
 			'databaseSession_enable' => array('db', 'int', 1),
 		),

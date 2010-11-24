@@ -177,7 +177,7 @@ $context['smfinfo'] = array (
 	'hostname_lookup' => get_smf_setting('disableHostnameLookup'),
 	'cache' => (!empty($modSettings['cache_enable']) ? $txt['cache_level'] . ' ' . $modSettings['cache_enable'] : $txt['off']) . ($modSettings['cache_enable'] != '1' ? '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt['cache_level'] . ' 1)</strong>' : ''),
 	'memcached_settings' => isset($modSettings['cache_memcached']) && trim($modSettings['cache_memcached']) != '' ? trim($modSettings['cache_memcached']) : '<i>' . $txt['empty'] . '</i>',
-	'cookie_name' => !empty($cookiename) ? $cookiename : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': SMFCookie' . rand(100,999) . ')</strong>',
+	'cookie_name' => !empty($cookiename) ? $cookiename : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': WedgeCookie' . rand(100,999) . ')</strong>',
 	'local_cookies' => get_smf_setting('localCookies', 'off'),
 	'global_cookies' => get_smf_setting('globalCookies'),
 	'log_pruning' => get_smf_setting('pruningOptions', 'on'),
