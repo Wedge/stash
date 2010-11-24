@@ -22,7 +22,7 @@
 * The latest version can always be found at http://www.simplemachines.org.        *
 **********************************************************************************/
 
-$GLOBALS['current_smf_version'] = '2.0 RC4';
+$GLOBALS['current_wedge_version'] = '0.1 (based on SMF 2.0 RC4)';
 $GLOBALS['required_php_version'] = '5.0.0';
 
 // Don't have PHP support, do you?
@@ -48,8 +48,8 @@ load_lang_file();
 
 // This is what we are.
 $installurl = $_SERVER['PHP_SELF'];
-// This is where SMF is.
-$smfsite = 'http://www.simplemachines.org/smf';
+// This is where Wedge is.
+$wedgesite = 'http://www.wedgeforum.com/files';
 
 // All the steps in detail.
 // Number,Name,Function,Progress Weight.
@@ -237,7 +237,7 @@ function load_lang_file()
 		echo '<!DOCTYPE html>
 <html>
 	<head>
-		<title>SMF Installer: Error!</title>
+		<title>Wedge Installer: Error!</title>
 	</head>
 	<body style="font-family: sans-serif;"><div style="width: 600px;">
 		<h1 style="font-size: 14pt;">A critical error has occurred.</h1>
@@ -382,7 +382,7 @@ function Welcome()
 		{
 			if (preg_match('~^\$db_passwd\s=\s\'([^\']+)\';$~', $line))
 				$probably_installed++;
-			if (preg_match('~^\$boardurl\s=\s\'([^\']+)\';~', $line) && !preg_match('~^\$boardurl\s=\s\'http://127\.0\.0\.1/smf\';~', $line))
+			if (preg_match('~^\$boardurl\s=\s\'([^\']+)\';~', $line) && !preg_match('~^\$boardurl\s=\s\'http://127\.0\.0\.1/wedge\';~', $line))
 				$probably_installed++;
 		}
 
@@ -424,7 +424,7 @@ function Welcome()
 	if (isset($error))
 		$incontext['error'] = $txt[$error];
 
-	// Mod_security blocks everything that smells funny. Let SMF handle security.
+	// Mod_security blocks everything that smells funny. Let Wedge handle security.
 	if (!fixModSecurity() && !isset($_GET['overmodsecurity']))
 		$incontext['error'] = $txt['error_mod_security'] . '<br /><br /><a href="' . $installurl . '?overmodsecurity=true">' . $txt['error_message_click'] . '</a> ' . $txt['error_message_bad_try_again'];
 
@@ -694,7 +694,7 @@ function DatabaseSettings()
 			'db_server' => $_POST['db_server'],
 			'db_prefix' => $db_prefix,
 			// The cookiename is special; we want it to be the same if it ever needs to be reinstalled with the same info.
-			'cookiename' => 'SMFCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
+			'cookiename' => 'WedgeCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
 		);
 
 		// God I hope it saved!
@@ -911,7 +911,7 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
-		'{$smf_version}' => $GLOBALS['current_smf_version'],
+		'{$wedge_version}' => $GLOBALS['current_wedge_version'],
 		'{$current_time}' => time(),
 		'{$sched_task_offset}' => 82800 + mt_rand(0, 86399),
 	);
@@ -1030,6 +1030,8 @@ function DatabasePopulation()
 		}
 	}
 
+// !!! Disabling this for now.
+/*
 	// Are we allowing stat collection?
 	if (isset($_POST['stats']) && substr($_POST['boardurl'], 0, 16) != 'http://localhost')
 	{
@@ -1064,6 +1066,7 @@ function DatabasePopulation()
 				);
 		}
 	}
+*/
 
 	// As of PHP 5.1, setting a timezone is required.
 	if (!isset($modSettings['default_timezone']) && function_exists('date_default_timezone_set'))
@@ -1275,13 +1278,13 @@ function AdminAccount()
 				WHERE id_msg = 1
 					AND id_topic = 1
 					AND id_member = 0
-					AND poster_name = {string:smf}',
+					AND poster_name = {string:wedge}',
 				array(
 					'id_member' => $incontext['member_id'],
 					'poster_name' => stripslashes($_POST['username']),
 					'poster_email' => stripslashes($_POST['email']),
 					'poster_ip' => $ip,
-					'smf' => 'Simple Machines', // this is actually hard coded in the installer SQL
+					'wedge' => 'Wedge', // this is actually hard coded in the installer SQL
 				)
 			);
 			// If we updated the messages, we should fix the topic too. And user post count.
@@ -1322,7 +1325,7 @@ function DeleteInstall()
 {
 	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
 	global $smcFunc, $mbname, $context, $scripturl, $boardurl;
-	global $current_smf_version, $sourcedir, $forum_version, $modSettings, $user_info, $language;
+	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info, $language;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['sub_template'] = 'delete_install';
@@ -1440,8 +1443,8 @@ function DeleteInstall()
 	// Sanity check that they loaded earlier!
 	if (isset($modSettings['recycle_board']))
 	{
-		$forum_version = $current_smf_version;	// The variable is usually defined in index.php so let's just use our variable to do it for us.
-		scheduled_fetchSMfiles();	// Now go get those files!
+		$forum_version = $current_wedge_version; // The variable is usually defined in index.php so let's just use our variable to do it for us.
+		scheduled_fetchSMfiles(); // Now go get those files!
 
 		// We've just installed!
 		$user_info['ip'] = $_SERVER['REMOTE_ADDR'];
@@ -1874,12 +1877,12 @@ function updateSettingsFile($vars)
 	return true;
 }
 
-// Create an .htaccess file to prevent mod_security. SMF has filtering built-in.
+// Create an .htaccess file to prevent mod_security. Wedge has filtering built-in.
 function fixModSecurity()
 {
 	$htaccess_addition = '
 <IfModule mod_security.c>
-	# Turn off mod_security filtering.  SMF is a big boy, it doesn\'t need its hands held.
+	# Turn off mod_security filtering. Wedge is a big boy, it doesn\'t need its hands held.
 	SecFilterEngine Off
 
 	# The below probably isn\'t needed, but better safe than sorry.
@@ -1926,7 +1929,7 @@ function fixModSecurity()
 
 function template_install_above()
 {
-	global $incontext, $txt, $smfsite, $installurl;
+	global $incontext, $txt, $wedgesite, $installurl;
 
 	echo '<!DOCTYPE html>
 <html', !empty($txt['lang_rtl']) ? ' dir="rtl"' : '', '>
@@ -2026,26 +2029,26 @@ function template_install_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="http://www.simplemachines.org/" title="Free Forum Software" target="_blank" class="new_win">SMF &copy; 2006&ndash;2010, Simple Machines LLC</a></div>
+		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010, Wedgebox</a></div>
 	</div></div>
 	</body>
 </html>';
 }
 
-// Welcome them to the wonderful world of SMF!
+// Welcome them to the wonderful world of Wedge!
 function template_welcome_message()
 {
 	global $incontext, $installurl, $txt;
 
 	echo '
-	<script src="http://www.simplemachines.org/smf/current-version.js?version=' . $GLOBALS['current_smf_version'] . '"></script>
+	<script src="http://www.wedgeforum.com/files/current-version.js?version=' . $GLOBALS['current_wedge_version'] . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
-		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_smf_version']), '</p>
+		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
 			<strong style="text-decoration: underline;">', $txt['error_warning_notice'], '</strong><br />
 			<div style="padding-left: 6ex;">
-				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . $GLOBALS['current_smf_version'] . '</em>'), '
+				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . $GLOBALS['current_wedge_version'] . '</em>'), '
 			</div>
 		</div>';
 
@@ -2072,7 +2075,7 @@ function template_welcome_message()
 				if (!(\'smfVersion\' in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/SMF\s?/g, \'\');
+				window.smfVersion = window.smfVersion.replace(/Wedge\s?/g, \'\');
 
 				smfVer = document.getElementById("smfVersion");
 				yourVer = document.getElementById("yourVersion");

@@ -23,8 +23,8 @@
 **********************************************************************************/
 
 // Version information...
-define('SMF_VERSION', '2.0 RC4');
-define('SMF_LANG_VERSION', '2.0 RC4');
+define('WEDGE_VERSION', '0.1');
+define('WEDGE_LANG_VERSION', '0.1');
 
 $GLOBALS['required_php_version'] = '5.0.0';
 $GLOBALS['required_mysql_version'] = '3.23.28';
@@ -41,7 +41,7 @@ $timeLimitThreshold = 3;
 $upgrade_path = dirname(__FILE__);
 $upgradeurl = $_SERVER['PHP_SELF'];
 // Where the SMF images etc are kept.
-$smfsite = 'http://www.simplemachines.org/smf';
+$smfsite = 'http://www.wedgeforum.com/files';
 // Disable the need for admins to login?
 $disable_security = 0;
 // How long, in seconds, must admin be inactive to allow someone else to run?
@@ -862,7 +862,7 @@ function initialize_inputs()
 	if (!isset($_GET['xml']))
 	{
 		$upcontext['remote_files_available'] = false;
-		$test = @fsockopen('www.simplemachines.org', 80, $errno, $errstr, 1);
+		$test = @fsockopen('www.wedgeforum.com', 80, $errno, $errstr, 1);
 		if ($test)
 			$upcontext['remote_files_available'] = true;
 		@fclose($test);
@@ -913,8 +913,8 @@ function WelcomeLogin()
 
 	// Do a quick version spot check.
 	$temp = substr(@implode('', @file($boarddir . '/index.php')), 0, 4096);
-	preg_match('~\*\s*Software\s+Version:\s+SMF\s+(.+?)[\s]{2}~i', $temp, $match);
-	if (empty($match[1]) || $match[1] != SMF_VERSION)
+	preg_match('~\*\s*Software\s+Version:\s+Wedge\s+(.+?)[\s]{2}~i', $temp, $match);
+	if (empty($match[1]) || $match[1] != WEDGE_VERSION)
 		return throw_error('The upgrader found some old or outdated files.<br /><br />Please make certain you uploaded the new versions of all the files included in the package.');
 
 	// What absolutely needs to be writable?
@@ -935,7 +935,7 @@ function WelcomeLogin()
 		$temp = substr(@implode('', @file($boarddir . '/Themes/default/languages/index.' . $upcontext['language'] . '.php')), 0, 4096);
 		preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*index(?:[\s]{2}|\*/)~i', $temp, $match);
 
-		if (empty($match[1]) || $match[1] != SMF_LANG_VERSION)
+		if (empty($match[1]) || $match[1] != WEDGE_LANG_VERSION)
 			return throw_error('The upgrader found some old or outdated language files, for the forum default language, ' . $upcontext['language'] . '.<br /><br />Please make certain you uploaded the new versions of all the files included in the package, even the theme and language files for the default theme.<br />&nbsp;&nbsp;&nbsp;[<a href="' . $upgradeurl . '?skiplang">SKIP</a>] [<a href="' . $upgradeurl . '?lang=english">Try English</a>]');
 	}
 
@@ -1125,7 +1125,7 @@ function checkLogin()
 				$temp = substr(@implode('', @file($boarddir . '/Themes/default/languages/index.' . $user_language . '.php')), 0, 4096);
 				preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*index(?:[\s]{2}|\*/)~i', $temp, $match);
 
-				if (empty($match[1]) || $match[1] != SMF_LANG_VERSION)
+				if (empty($match[1]) || $match[1] != WEDGE_LANG_VERSION)
 					$upcontext['upgrade_options_warning'] = 'The language files for your selected language, ' . $user_language . ', have not been updated to the latest version. Upgrade will continue with the forum default, ' . $upcontext['language'] . '.';
 				elseif (!file_exists($boarddir . '/Themes/default/languages/Install.' . basename($user_language, '.lng') . '.php'))
 					$upcontext['upgrade_options_warning'] = 'The language files for your selected language, ' . $user_language . ', have not been uploaded/updated as the &quot;Install&quot; language file is missing. Upgrade will continue with the forum default, ' . $upcontext['language'] . '.';
@@ -1167,15 +1167,17 @@ function UpgradeOptions()
 	if (empty($_POST['upcont']))
 		return false;
 
+// !!! Disabled for now.
+/*
 	// Firstly, if they're enabling SM stat collection just do it.
 	if (!empty($_POST['stats']) && substr($boardurl, 0, 16) != 'http://localhost' && empty($modSettings['allow_sm_stats']))
 	{
 		// Attempt to register the site etc.
-		$fp = @fsockopen('www.simplemachines.org', 80, $errno, $errstr);
+		$fp = @fsockopen('www.wedgeforum.com', 80, $errno, $errstr);
 		if ($fp)
 		{
-			$out = 'GET /smf/stats/register_stats.php?site=' . base64_encode($boardurl) . ' HTTP/1.1' . "\r\n";
-			$out .= 'Host: www.simplemachines.org' . "\r\n";
+			$out = 'GET /files/stats/register_stats.php?site=' . base64_encode($boardurl) . ' HTTP/1.1' . "\r\n";
+			$out .= 'Host: www.wedgeforum.com' . "\r\n";
 			$out .= 'Connection: Close' . "\r\n\r\n";
 			fwrite($fp, $out);
 
@@ -1198,14 +1200,15 @@ function UpgradeOptions()
 		}
 	}
 	else
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}settings
-			WHERE variable = {string:allow_sm_stats}',
-			array(
-				'allow_sm_stats' => 'allow_sm_stats',
-				'db_error_skip' => true,
-			)
-		);
+*/
+	$smcFunc['db_query']('', '
+		DELETE FROM {db_prefix}settings
+		WHERE variable = {string:allow_sm_stats}',
+		array(
+			'allow_sm_stats' => 'allow_sm_stats',
+			'db_error_skip' => true,
+		)
+	);
 
 	// Emptying the error log?
 	if (!empty($_POST['empty_error']))
@@ -1389,7 +1392,7 @@ function DatabaseChanges()
 	// All possible files.
 	// Name, <version, insert_on_complete
 	$files = array(
-		array('upgrade.sql', '3.0', SMF_VERSION),
+		array('upgrade.sql', '1.0', WEDGE_VERSION),
 	);
 
 	// How many files are there in total?
@@ -1837,8 +1840,8 @@ function DeleteUpgrade()
 	else
 	{
 		require_once($sourcedir . '/ScheduledTasks.php');
-		$forum_version = SMF_VERSION;	// The variable is usually defined in index.php so let's just use the constant to do it for us.
-		scheduled_fetchSMfiles();	// Now go get those files!
+		$forum_version = WEDGE_VERSION; // The variable is usually defined in index.php so let's just use the constant to do it for us.
+		scheduled_fetchSMfiles(); // Now go get those files!
 	}
 
 	// Log what we've done.
@@ -1915,7 +1918,7 @@ function cli_scheduled_fetchSMfiles()
 	foreach ($js_files as $ID_FILE => $file)
 	{
 		// Create the url
-		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://www.simplemachines.org' : '';
+		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://www.wedgeforum.com' : '';
 		$url = $server . (!empty($file['path']) ? $file['path'] : $file['path']) . $file['filename'] . (!empty($file['parameters']) ? '?' . $file['parameters'] : '');
 
 		// Get the file
@@ -2933,8 +2936,8 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 
 	// Do a quick version spot check.
 	$temp = substr(@implode('', @file($boarddir . '/index.php')), 0, 4096);
-	preg_match('~\*\s*Software\s+Version:\s+SMF\s+(.+?)[\s]{2}~i', $temp, $match);
-	if (empty($match[1]) || $match[1] != SMF_VERSION)
+	preg_match('~\*\s*Software\s+Version:\s+Wedge\s+(.+?)[\s]{2}~i', $temp, $match);
+	if (empty($match[1]) || $match[1] != WEDGE_VERSION)
 		print_error('Error: Some files have not yet been updated properly.');
 
 	// Make sure Settings.php is writable.
@@ -2976,7 +2979,7 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	$temp = substr(@implode('', @file($boarddir . '/Themes/default/languages/index.' . $upcontext['language'] . '.php')), 0, 4096);
 	preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*index(?:[\s]{2}|\*/)~i', $temp, $match);
 
-	if (empty($match[1]) || $match[1] != SMF_LANG_VERSION)
+	if (empty($match[1]) || $match[1] != WEDGE_LANG_VERSION)
 		print_error('Error: Language files out of date.', true);
 	if (!file_exists($boarddir . '/Themes/default/languages/Install.' . $upcontext['language'] . '.php'))
 		print_error('Error: Install language is missing for selected language.', true);
@@ -3466,7 +3469,7 @@ function template_upgrade_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="http://www.simplemachines.org/" title="Free Forum Software" target="_blank" class="new_win">SMF &copy; 2006&ndash;2010, Simple Machines LLC</a></div>
+		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010, Wedgebox</a></div>
 	</div></div>
 	</body>
 </html>';
@@ -3536,15 +3539,15 @@ function template_welcome_message()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $txt;
 
 	echo '
-		<script type="text/javascript" src="http://www.simplemachines.org/smf/current-version.js?version=' . SMF_VERSION . '"></script>
+		<script type="text/javascript" src="http://www.wedgeforum.com/files/current-version.js?version=' . WEDGE_VERSION . '"></script>
 		<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-			<h3>', sprintf($txt['upgrade_ready_proceed'], SMF_VERSION), '</h3>
+			<h3>', sprintf($txt['upgrade_ready_proceed'], WEDGE_VERSION), '</h3>
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
 			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br />
 			<div style="padding-left: 6ex;">
-				', sprintf($txt['upgrade_warning_out_of_date'], SMF_VERSION), '
+				', sprintf($txt['upgrade_warning_out_of_date'], WEDGE_VERSION), '
 			</div>
 		</div>';
 

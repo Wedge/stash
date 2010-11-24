@@ -23,13 +23,13 @@ CREATE TABLE {$db_prefix}admin_info_files (
 INSERT INTO {$db_prefix}admin_info_files
 	(id_file, filename, path, parameters, data, filetype)
 VALUES
-	(1, 'current-version.js', '/smf/', 'version=%3$s', '', 'text/javascript'),
-	(2, 'detailed-version.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
-	(3, 'latest-news.js', '/smf/', 'language=%1$s&format=%2$s', '', 'text/javascript'),
-	(4, 'latest-packages.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
-	(5, 'latest-smileys.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
-	(6, 'latest-support.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
-	(7, 'latest-themes.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript');
+	(1, 'current-version.js', '/files/', 'version=%3$s', '', 'text/javascript'),
+	(2, 'detailed-version.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
+	(3, 'latest-news.js', '/files/', 'language=%1$s&format=%2$s', '', 'text/javascript'),
+	(4, 'latest-packages.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
+	(5, 'latest-smileys.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
+	(6, 'latest-support.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
+	(7, 'latest-themes.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript');
 # --------------------------------------------------------
 
 #
@@ -1365,7 +1365,7 @@ CREATE TABLE {$db_prefix}messages (
 
 INSERT INTO {$db_prefix}messages
 	(id_msg, id_msg_modified, id_topic, id_board, poster_time, subject, poster_name, poster_email, poster_ip, modified_name, body, icon)
-VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Simple Machines', 'info@simplemachines.org', '127.0.0.1', '', '{$default_topic_message}', 'xx');
+VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Wedge', 'dontreply@wedgeforum.com', '127.0.0.1', '', '{$default_topic_message}', 'xx');
 # --------------------------------------------------------
 
 #
@@ -1654,7 +1654,7 @@ CREATE TABLE {$db_prefix}settings (
 
 INSERT INTO {$db_prefix}settings
 	(variable, value)
-VALUES ('smfVersion', '{$smf_version}'),
+VALUES ('smfVersion', '{$wedge_version}'),
 	('news', '{$default_news}'),
 	('compactTopicPagesContiguous', '5'),
 	('compactTopicPagesEnable', '1'),
