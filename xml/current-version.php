@@ -19,19 +19,16 @@ header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT
 
 header('Content-Type: text/javascript');
 
-list($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
-if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($modified_since) >= filemtime(__FILE__))
+if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 {
-	header('HTTP/1.1 304 Not Modified');
-	die;
+	list($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
+	if (strtotime($modified_since) >= filemtime(__FILE__))
+	{
+		header('HTTP/1.1 304 Not Modified');
+		die;
+	}
 }
 
-// Do as little PHP as poss.
-if (isset($_GET['version']) && strpos($_GET['version'], '2.0') !== false)
-	$version = 'SMF 2.0 RC2';
-else
-	$version = 'SMF 1.1.4';
-
-echo 'window.smfVersion = "' . $version . '";';
+echo 'window.smfVersion = "Wedge 0.1 (SMF 2.0 RC4)";';
 
 ?>
