@@ -18,6 +18,8 @@ window.smfForum_scripturl . '?action=pgdownload;auto;package=' + url_to_package 
 
 */
 
+exit();
+
 include_once('/home/sites/simplemachines.org/public_html/community/SSI.php');
 include_once('/home/sites/custom.simplemachines.org/public_html/mods/ModSiteSettings.php');
 include_once('/home/sites/custom.simplemachines.org/public_html/mods/ModSiteDBSettings.php');

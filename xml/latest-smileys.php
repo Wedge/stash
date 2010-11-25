@@ -8,11 +8,11 @@
 	  (white on black, etc.); we've got the element, so we can change it.
 	- the url to install is:
 window.smfForum_scripturl . '?action=smileys;sa=install;set_gz=' + url_to_package + ';sesc=' + window.smfForum_sessionid
-	- only poackages from the .simplemachines.org domain will be accepted.
-	- we've got their langauge in $_GET['language'].
+	- only packages from the .simplemachines.org domain will be accepted.
+	- we've got their language in $_GET['language'].
 
 */
 
 header('Content-Type: text/javascript');
 
-?>window.smfLatestSmileys = "Coming soon... there aren't many smiley sets available yet.";
+?>window.smfLatestSmileys = "If you ever see something instead of this text, then make sure Hell hasn't frozen over. Thank you.";

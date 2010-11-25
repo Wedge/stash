@@ -15,6 +15,8 @@ window.smfForum_scripturl + '?action=theme=sa=install;theme_gz=' + url_to_packag
 
 */
 
+exit();
+
 // Some required files to make everything work
 require_once('/home/sites/simplemachines.org/public_html/community/SSI.php');
 require_once('/home/sites/custom.simplemachines.org/public_html/themes/ThemeSiteSettings.php');
