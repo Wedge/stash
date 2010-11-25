@@ -890,7 +890,7 @@ function DatabasePopulation()
 
 		// Do they match?  If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
-		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != $GLOBALS['current_smf_version'])
+		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != $GLOBALS['current_wedge_version'])
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
