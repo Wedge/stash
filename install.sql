@@ -1262,6 +1262,7 @@ CREATE TABLE {$db_prefix}members (
   secret_question varchar(255) NOT NULL default '',
   secret_answer varchar(64) NOT NULL default '',
   id_theme tinyint(4) unsigned NOT NULL default '0',
+  styling varchar(255) NOT NULL DEFAULT '',
   is_activated tinyint(3) unsigned NOT NULL default '1',
   validation_code varchar(10) NOT NULL default '',
   id_msg_last_visit int(10) unsigned NOT NULL default '0',
