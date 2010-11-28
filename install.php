@@ -191,9 +191,9 @@ function initialize_inputs()
 			@unlink(dirname(__FILE__) . '/install.sql');
 		}
 
-		// Now just redirect to a blank.gif...
-		header('Location: http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']) . dirname($_SERVER['PHP_SELF']) . '/Themes/default/images/blank.gif');
-		exit;
+		// Now just output to a blank.gif... (I would use the one in Subs.php but it isn't loaded yet.)
+		header('Content-Type: image/gif');
+		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 	}
 
 	// PHP 5 might cry if we don't do this now.
@@ -449,10 +449,6 @@ function CheckFilesWritable()
 		'agreement.txt',
 		'Settings.php',
 		'Settings_bak.php'
-	);
-	$extra_files = array(
-		'Themes/classic/index.template.php',
-		'Themes/classic/style.css'
 	);
 	foreach ($incontext['detected_languages'] as $lang => $temp)
 		$extra_files[] = 'Themes/default/languages/' . $lang;
