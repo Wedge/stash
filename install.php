@@ -23,7 +23,7 @@
 **********************************************************************************/
 
 $GLOBALS['current_wedge_version'] = '0.1 (based on SMF 2.0 RC4)';
-$GLOBALS['required_php_version'] = '5.0.0';
+$GLOBALS['required_php_version'] = '5.1.2';
 
 // Don't have PHP support, do you?
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none;">

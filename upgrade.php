@@ -26,8 +26,8 @@
 define('WEDGE_VERSION', '0.1');
 define('WEDGE_LANG_VERSION', '0.1');
 
-$GLOBALS['required_php_version'] = '5.0.0';
-$GLOBALS['required_mysql_version'] = '3.23.28';
+$GLOBALS['required_php_version'] = '5.1.2';
+$GLOBALS['required_mysql_version'] = '4.1.2';
 
 $db = array(
 	'version' => '3.23.28',
