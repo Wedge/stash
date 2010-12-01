@@ -290,17 +290,18 @@ function load_database()
 	if (!defined('SMF'))
 		define('SMF', 1);
 	if (empty($smcFunc))
-		$smcFunc = array();
+		$smcFunc = array(); // used later
 
 	$modSettings['disableQueryCheck'] = true;
 
 	// Connect the database.
 	if (!$db_connection)
 	{
-		require_once($sourcedir . '/Subs-Database.php');
+		require_once($sourcedir . '/Class-DB.php');
+		weDB::getInstance();
 
 		if (!$db_connection)
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
+			$db_connection = weDB::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
 	}
 }
 
@@ -718,17 +719,17 @@ function DatabaseSettings()
 		$modSettings['disableQueryCheck'] = true;
 		if (empty($smcFunc))
 			$smcFunc = array();
-		require_once($sourcedir . '/Subs-Database.php');
+		require_once($sourcedir . '/Class-DB.php');
 
 		// Attempt a connection.
-		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
+		$db_connection = weDB::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
 
 		// No dice?  Let's try adding the prefix they specified, just in case they misread the instructions ;)
 		if ($db_connection == null)
 		{
-			$db_error = @$smcFunc['db_error']();
+			$db_error = @weDB::error();
 
-			$db_connection = smf_db_initiate($db_server, $db_name, $_POST['db_prefix'] . $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
+			$db_connection = weDB::connect($db_server, $db_name, $_POST['db_prefix'] . $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
 			if ($db_connection != null)
 			{
 				$db_user = $_POST['db_prefix'] . $db_user;
@@ -754,7 +755,7 @@ function DatabaseSettings()
 		// Let's try that database on for size... assuming we haven't already lost the opportunity.
 		if ($db_name != '')
 		{
-			$smcFunc['db_query']('', "
+			weDB::query("
 				CREATE DATABASE IF NOT EXISTS `$db_name`",
 				array(
 					'security_override' => true,
@@ -764,9 +765,9 @@ function DatabaseSettings()
 			);
 
 			// Okay, let's try the prefix if it didn't work...
-			if (!$smcFunc['db_select_db']($db_name, $db_connection) && $db_name != '')
+			if (!weDB::select_db($db_name, $db_connection) && $db_name != '')
 			{
-				$smcFunc['db_query']('', "
+				weDB::query("
 					CREATE DATABASE IF NOT EXISTS `$_POST[db_prefix]$db_name`",
 					array(
 						'security_override' => true,
@@ -775,7 +776,7 @@ function DatabaseSettings()
 					$db_connection
 				);
 
-				if ($smcFunc['db_select_db']($_POST['db_prefix'] . $db_name, $db_connection))
+				if (weDB::select_db($_POST['db_prefix'] . $db_name, $db_connection))
 				{
 					$db_name = $_POST['db_prefix'] . $db_name;
 					updateSettingsFile(array('db_name' => $db_name));
@@ -783,7 +784,7 @@ function DatabaseSettings()
 			}
 
 			// Okay, now let's try to connect...
-			if (!$smcFunc['db_select_db']($db_name, $db_connection))
+			if (!weDB::select_db($db_name, $db_connection))
 			{
 				$incontext['error'] = sprintf($txt['error_db_database'], $db_name);
 				return false;
@@ -799,7 +800,7 @@ function DatabaseSettings()
 // Let's start with basic forum type settings.
 function ForumSettings()
 {
-	global $txt, $incontext, $db, $smcFunc, $db_connection;
+	global $txt, $incontext, $db, $db_connection;
 
 	$incontext['sub_template'] = 'forum_settings';
 	$incontext['page_title'] = $txt['install_settings'];
@@ -855,7 +856,7 @@ function ForumSettings()
 // Step one: Do the SQL thang.
 function DatabasePopulation()
 {
-	global $txt, $db_connection, $smcFunc, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
+	global $txt, $db_connection, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
 
 	$incontext['sub_template'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
@@ -870,7 +871,7 @@ function DatabasePopulation()
 	load_database();
 
 	// Before running any of the queries, let's make sure another version isn't already installed.
-	$result = $smcFunc['db_query']('', '
+	$result = weDB::query('
 		SELECT variable, value
 		FROM {db_prefix}settings',
 		array(
@@ -880,9 +881,9 @@ function DatabasePopulation()
 	$modSettings = array();
 	if ($result !== false)
 	{
-		while ($row = $smcFunc['db_fetch_assoc']($result))
+		while ($row = weDB::fetch_assoc($result))
 			$modSettings[$row['variable']] = $row['value'];
-		$smcFunc['db_free_result']($result);
+		weDB::free_result($result);
 
 		// Do they match?  If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
@@ -894,7 +895,7 @@ function DatabasePopulation()
 	}
 
 	// We're doing UTF8, select it.
-	$smcFunc['db_query']('', '
+	weDB::query('
 		SET NAMES utf8',
 		array(
 			'db_error_skip' => true,
@@ -903,7 +904,7 @@ function DatabasePopulation()
 
 	$replaces = array(
 		'{$db_prefix}' => $db_prefix,
-		'{$boarddir}' => $smcFunc['db_escape_string'](dirname(__FILE__)),
+		'{$boarddir}' => weDB::escape_string(dirname(__FILE__)),
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
@@ -915,7 +916,7 @@ function DatabasePopulation()
 	foreach ($txt as $key => $value)
 	{
 		if (substr($key, 0, 8) == 'default_')
-			$replaces['{$' . $key . '}'] = $smcFunc['db_escape_string']($value);
+			$replaces['{$' . $key . '}'] = weDB::escape_string($value);
 	}
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
@@ -953,7 +954,7 @@ function DatabasePopulation()
 			continue;
 		}
 
-		if ($smcFunc['db_query']('', $current_statement, array('security_override' => true, 'db_error_skip' => true), $db_connection) === false)
+		if (weDB::query($current_statement, array('security_override' => true, 'db_error_skip' => true), $db_connection) === false)
 		{
 			// Error 1050: Table already exists!
 			//!!! Needs to be made better!
@@ -965,7 +966,7 @@ function DatabasePopulation()
 			// Don't error on duplicate indexes
 			elseif (!preg_match('~^\s*CREATE( UNIQUE)? INDEX ([^\n\r]+?)~', $current_statement, $match))
 			{
-				$incontext['failures'][$count] = $smcFunc['db_error']();
+				$incontext['failures'][$count] = weDB::error();
 			}
 		}
 		else
@@ -1017,7 +1018,7 @@ function DatabasePopulation()
 
 		if (!empty($rows))
 		{
-			$smcFunc['db_insert']('replace',
+			weDB::insert('replace',
 				$db_prefix . 'settings',
 				array('variable' => 'string-255', 'value' => 'string-65534'),
 				$rows,
@@ -1050,7 +1051,7 @@ function DatabasePopulation()
 			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $ID);
 
 			if (!empty($ID[1]))
-				$smcFunc['db_insert']('',
+				weDB::insert('',
 					$db_prefix . 'settings',
 					array(
 						'variable' => 'string-255', 'value' => 'string-65534',
@@ -1070,7 +1071,7 @@ function DatabasePopulation()
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
 		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);
 		if (date_default_timezone_set($timezone_id))
-			$smcFunc['db_insert']('',
+			weDB::insert('',
 				$db_prefix . 'settings',
 				array(
 					'variable' => 'string-255', 'value' => 'string-65534',
@@ -1083,21 +1084,21 @@ function DatabasePopulation()
 	}
 
 	// Let's optimize those new tables.
-	db_extend();
-	$tables = $smcFunc['db_list_tables']($db_name, $db_prefix . '%');
+	weDB::extend();
+	$tables = weDBExtra::list_tables($db_name, $db_prefix . '%');
 	foreach ($tables as $table)
 	{
-		$smcFunc['db_optimize_table']($table) != -1 or $db_messed = true;
+		weDBExtra::optimize_table($table) != -1 or $db_messed = true;
 
 		if (!empty($db_messed))
 		{
-			$incontext['failures'][-1] = $smcFunc['db_error']();
+			$incontext['failures'][-1] = weDB::error();
 			break;
 		}
 	}
 
 	// Check for the ALTER privilege.
-	if ($smcFunc['db_query']('', "ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
+	if (weDB::query("ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
 	{
 		$incontext['error'] = $txt['error_db_alter_priv'];
 		return false;
@@ -1115,7 +1116,7 @@ function DatabasePopulation()
 // Ask for the administrator login information.
 function AdminAccount()
 {
-	global $txt, $db_connection, $smcFunc, $incontext, $db_prefix, $db_passwd, $sourcedir;
+	global $txt, $db_connection, $incontext, $db_prefix, $db_passwd, $sourcedir;
 
 	$incontext['sub_template'] = 'admin_account';
 	$incontext['page_title'] = $txt['user_settings'];
@@ -1138,7 +1139,7 @@ function AdminAccount()
 	$incontext['email'] = htmlspecialchars(stripslashes($_POST['email']));
 
 	// Only allow skipping if we think they already have an account setup.
-	$request = $smcFunc['db_query']('', '
+	$request = weDB::query('
 		SELECT id_member
 		FROM {db_prefix}members
 		WHERE id_group = {int:admin_group} OR FIND_IN_SET({int:admin_group}, additional_groups) != 0
@@ -1148,9 +1149,9 @@ function AdminAccount()
 			'admin_group' => 1,
 		)
 	);
-	if ($smcFunc['db_num_rows']($request) != 0)
+	if (weDB::num_rows($request) != 0)
 		$incontext['skip'] = 1;
-	$smcFunc['db_free_result']($request);
+	weDB::free_result($request);
 
 	// Trying to create an account?
 	if (isset($_POST['password1']) && !empty($_POST['contbutt']))
@@ -1187,7 +1188,7 @@ function AdminAccount()
 		$invalid_characters = preg_match('~[<>&"\'=\\\]~', $_POST['username']) != 0;
 		$_POST['username'] = preg_replace('~[<>&"\'=\\\]~', '', $_POST['username']);
 
-		$result = $smcFunc['db_query']('', '
+		$result = weDB::query('
 			SELECT id_member, password_salt
 			FROM {db_prefix}members
 			WHERE member_name = {string:username} OR email_address = {string:email}
@@ -1198,10 +1199,10 @@ function AdminAccount()
 				'db_error_skip' => true,
 			)
 		);
-		if ($smcFunc['db_num_rows']($result) != 0)
+		if (weDB::num_rows($result) != 0)
 		{
-			list ($incontext['member_id'], $incontext['member_salt']) = $smcFunc['db_fetch_row']($result);
-			$smcFunc['db_free_result']($result);
+			list ($incontext['member_id'], $incontext['member_salt']) = weDB::fetch_row($result);
+			weDB::free_result($result);
 
 			$incontext['account_existed'] = $txt['error_user_settings_taken'];
 		}
@@ -1231,8 +1232,8 @@ function AdminAccount()
 			$_POST['username'] = preg_replace('~[\t\n\r\x0B\0\xA0]+~', ' ', $_POST['username']);
 			$ip = isset($_SERVER['REMOTE_ADDR']) ? substr($_SERVER['REMOTE_ADDR'], 0, 255) : '';
 
-			$request = $smcFunc['db_insert']('',
-				$db_prefix . 'members',
+			$request = weDB::insert('insert',
+				'{db_prefix}members',
 				array(
 					'member_name' => 'string-25', 'real_name' => 'string-25', 'passwd' => 'string', 'email_address' => 'string',
 					'id_group' => 'int', 'posts' => 'int', 'date_registered' => 'int', 'hide_email' => 'int',
@@ -1258,14 +1259,14 @@ function AdminAccount()
 			if ($request === false)
 			{
 				$incontext['error'] = $txt['error_user_settings_query'] . '<br />
-				<div style="margin: 2ex;">' . nl2br(htmlspecialchars($smcFunc['db_error']($db_connection))) . '</div>';
+				<div style="margin: 2ex;">' . nl2br(htmlspecialchars(weDB::error($db_connection))) . '</div>';
 				return false;
 			}
 
-			$incontext['member_id'] = $smcFunc['db_insert_id']();
+			$incontext['member_id'] = weDB::insert_id();
 
 			// If we have a first post that we've inserted ourselves, let's fix that to be our new administrator.
-			$smcFunc['db_query']('', '
+			weDB::query('
 				UPDATE {db_prefix}messages
 				SET id_member = {int:id_member},
 					poster_name = {string:poster_name},
@@ -1284,9 +1285,9 @@ function AdminAccount()
 				)
 			);
 			// If we updated the messages, we should fix the topic too. And user post count.
-			if ($smcFunc['db_affected_rows']() != 0)
+			if (weDB::affected_rows() != 0)
 			{
-				$smcFunc['db_query']('', '
+				weDB::query('
 					UPDATE {db_prefix}topics
 					SET id_member_started = {int:id_member},
 						id_member_updated = {int:id_member}
@@ -1298,7 +1299,7 @@ function AdminAccount()
 					)
 				);
 
-				$smcFunc['db_query']('', '
+				weDB::query('
 					UPDATE {db_prefix}members
 					SET posts = posts + 1
 					WHERE id_member = {int:id_member}',
@@ -1320,7 +1321,7 @@ function AdminAccount()
 function DeleteInstall()
 {
 	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
-	global $smcFunc, $mbname, $context, $scripturl, $boardurl;
+	global $mbname, $context, $scripturl, $boardurl, $smcFunc;
 	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info, $language;
 
 	$incontext['page_title'] = $txt['congratulations'];
@@ -1342,7 +1343,7 @@ function DeleteInstall()
 	if (!empty($incontext['account_existed']))
 		$incontext['warning'] = $incontext['account_existed'];
 
-	$smcFunc['db_query']('', '
+	weDB::query('
 		SET NAMES utf8',
 		array(
 			'db_error_skip' => true,
@@ -1350,7 +1351,7 @@ function DeleteInstall()
 	);
 
 	// As track stats is by default enabled let's add some activity.
-	$smcFunc['db_insert']('ignore',
+	weDB::insert('ignore',
 		'{db_prefix}log_activity',
 		array('date' => 'date', 'topics' => 'int', 'posts' => 'int', 'registers' => 'int'),
 		array(strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
@@ -1361,7 +1362,7 @@ function DeleteInstall()
 	if (isset($incontext['member_id'], $incontext['member_salt']))
 		setLoginCookie(3153600 * 60, $incontext['member_id'], sha1(sha1(strtolower($_POST['username']) . $_POST['password1']) . $incontext['member_salt']));
 
-	$result = $smcFunc['db_query']('', '
+	$result = weDB::query('
 		SELECT value
 		FROM {db_prefix}settings
 		WHERE variable = {string:db_sessions}',
@@ -1370,9 +1371,9 @@ function DeleteInstall()
 			'db_error_skip' => true,
 		)
 	);
-	if ($smcFunc['db_num_rows']($result) != 0)
-		list ($db_sessions) = $smcFunc['db_fetch_row']($result);
-	$smcFunc['db_free_result']($result);
+	if (weDB::num_rows($result) != 0)
+		list ($db_sessions) = weDB::fetch_row($result);
+	weDB::free_result($result);
 
 	if (empty($db_sessions))
 		$_SESSION['admin_time'] = time();
@@ -1380,7 +1381,7 @@ function DeleteInstall()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = substr($_SERVER['HTTP_USER_AGENT'], 0, 211);
 
-		$smcFunc['db_insert']('replace',
+		weDB::insert('replace',
 			'{db_prefix}sessions',
 			array(
 				'session_id' => 'string', 'last_update' => 'int', 'data' => 'string',
@@ -1393,7 +1394,7 @@ function DeleteInstall()
 	}
 
 	// We're going to want our lovely $modSettings now.
-	$request = $smcFunc['db_query']('', '
+	$request = weDB::query('
 		SELECT variable, value
 		FROM {db_prefix}settings',
 		array(
@@ -1403,9 +1404,9 @@ function DeleteInstall()
 	// Only proceed if we can load the data.
 	if ($request)
 	{
-		while ($row = $smcFunc['db_fetch_row']($request))
+		while ($row = weDB::fetch_row($request))
 			$modSettings[$row[0]] = $row[1];
-		$smcFunc['db_free_result']($request);
+		weDB::free_result($request);
 	}
 
 	updateStats('member');
@@ -1420,7 +1421,7 @@ function DeleteInstall()
 			require_once($sourcedir . \'/Subs-Charset.php\');
 			return utf8_strtolower($string);'));
 
-	$request = $smcFunc['db_query']('', '
+	$request = weDB::query('
 		SELECT id_msg
 		FROM {db_prefix}messages
 		WHERE id_msg = 1
@@ -1430,9 +1431,9 @@ function DeleteInstall()
 			'db_error_skip' => true,
 		)
 	);
-	if ($smcFunc['db_num_rows']($request) > 0)
+	if (weDB::num_rows($request) > 0)
 		updateStats('subject', 1, htmlspecialchars($txt['default_topic_subject']));
-	$smcFunc['db_free_result']($request);
+	weDB::free_result($request);
 
 	// Now is the perfect time to fetch the SM files.
 	require_once($sourcedir . '/ScheduledTasks.php');
@@ -1449,7 +1450,7 @@ function DeleteInstall()
 	}
 
 	// Check if we need some stupid MySQL fix.
-	$server_version = $smcFunc['db_server_info']();
+	$server_version = weDB::server_info();
 	if (in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
 		updateSettings(array('db_mysql_group_by_fix' => '1'));
 
