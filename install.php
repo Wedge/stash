@@ -708,9 +708,9 @@ function DatabaseSettings()
 			$sourcedir = dirname(__FILE__) . '/Sources';
 
 		// Better find the database file!
-		if (!file_exists($sourcedir . '/Subs-Database.php'))
+		if (!file_exists($sourcedir . '/Class-DB.php'))
 		{
-			$incontext['error'] = sprintf($txt['error_db_file'], 'Subs-Database.php');
+			$incontext['error'] = sprintf($txt['error_db_file'], 'Class-DB.php');
 			return false;
 		}
 
