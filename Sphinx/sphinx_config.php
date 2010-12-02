@@ -22,7 +22,6 @@
 * The latest version can always be found at http://www.simplemachines.org.        *
 **********************************************************************************/
 
-$smfsite = 'http://www.simplemachines.org/smf';
 if (!file_exists(dirname(__FILE__) . '/SSI.php'))
 	die('Please move this file to the main SMF directory and make sure SSI.php is part of that directory.');
 
@@ -156,59 +155,59 @@ function step_2()
 	template_sphinx_config_above('Configure SMF for Sphinx');
 
 	echo '
-		A few settings can be configured allowing to customize the search engine. Generally all options can be left untouched.<br />
-		<br />
-		<form action="' . $_SERVER['PHP_SELF'] . '?step=3" method="post">
-			<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
-				<tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_data_path_input">Index data path:</label></td>
-					<td>
-						<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($modSettings['sphinx_data_path']) ? $modSettings['sphinx_data_path'] : '/var/sphinx/data', '" size="65" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">This is the path that will be containing the search index files used by Sphinx.</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_log_path_input">Log path:</label></td>
-					<td>
-						<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($modSettings['sphinx_log_path']) ? $modSettings['sphinx_log_path'] : '/var/sphinx/log', '" size="65" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">Server path that will contain the log files created by Sphinx.</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_stopword_path_input">Stopword path:</label></td>
-					<td>
-						<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($modSettings['sphinx_stopword_path']) ? $modSettings['sphinx_stopword_path'] : '', '" size="65" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">The server path to the stopword list (leave empty for no stopword list).</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_indexer_mem_input">Memory limit indexer:</label></td>
-					<td>
-						<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($modSettings['sphinx_indexer_mem']) ? $modSettings['sphinx_indexer_mem'] : '32', '" size="4" class="input_text" /> MB
-						<div style="font-size: smaller; margin-bottom: 2ex;">The maximum amount of (RAM) memory the indexer is allowed to be using.</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_server_input">Search deamon server:</label></td>
-					<td>
-						<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($modSettings['sphinx_searchd_server']) ? $modSettings['sphinx_searchd_server'] : 'localhost', '" size="65" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">Server the Sphinx search deamon resides on.</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_port_input">Search deamon port:</label></td>
-					<td>
-						<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($modSettings['sphinx_searchd_port']) ? $modSettings['sphinx_searchd_port'] : '3312', '" size="4" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">Port on which the search deamon will listen.</div>
-					</td>
-				</tr><tr>
-					<td width="20%" valign="top" class="textbox"><label for="sphinx_max_results_input">Maximum # matches:</label></td>
-					<td>
-						<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($modSettings['sphinx_max_results']) ? $modSettings['sphinx_max_results'] : '2000', '" size="4" class="input_text" />
-						<div style="font-size: smaller; margin-bottom: 2ex;">Maximum amount of matches the search deamon will return.</div>
-					</td>
-				</tr>
-			</table>
-			<div style="margin: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';">
-				<input type="submit" value="Proceed" class="button_submit" />
-				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-			</div>
-		</form>';
+	A few settings can be configured allowing to customize the search engine. Generally all options can be left untouched.<br />
+	<br />
+	<form action="' . $_SERVER['PHP_SELF'] . '?step=3" method="post">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
+			<tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_data_path_input">Index data path:</label></td>
+				<td>
+					<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($modSettings['sphinx_data_path']) ? $modSettings['sphinx_data_path'] : '/var/sphinx/data', '" size="65" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">This is the path that will be containing the search index files used by Sphinx.</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_log_path_input">Log path:</label></td>
+				<td>
+					<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($modSettings['sphinx_log_path']) ? $modSettings['sphinx_log_path'] : '/var/sphinx/log', '" size="65" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">Server path that will contain the log files created by Sphinx.</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_stopword_path_input">Stopword path:</label></td>
+				<td>
+					<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($modSettings['sphinx_stopword_path']) ? $modSettings['sphinx_stopword_path'] : '', '" size="65" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">The server path to the stopword list (leave empty for no stopword list).</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_indexer_mem_input">Memory limit indexer:</label></td>
+				<td>
+					<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($modSettings['sphinx_indexer_mem']) ? $modSettings['sphinx_indexer_mem'] : '32', '" size="4" class="input_text" /> MB
+					<div style="font-size: smaller; margin-bottom: 2ex;">The maximum amount of (RAM) memory the indexer is allowed to be using.</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_server_input">Search deamon server:</label></td>
+				<td>
+					<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($modSettings['sphinx_searchd_server']) ? $modSettings['sphinx_searchd_server'] : 'localhost', '" size="65" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">Server the Sphinx search deamon resides on.</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_port_input">Search deamon port:</label></td>
+				<td>
+					<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($modSettings['sphinx_searchd_port']) ? $modSettings['sphinx_searchd_port'] : '3312', '" size="4" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">Port on which the search deamon will listen.</div>
+				</td>
+			</tr><tr>
+				<td width="20%" valign="top" class="textbox"><label for="sphinx_max_results_input">Maximum # matches:</label></td>
+				<td>
+					<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($modSettings['sphinx_max_results']) ? $modSettings['sphinx_max_results'] : '2000', '" size="4" class="input_text" />
+					<div style="font-size: smaller; margin-bottom: 2ex;">Maximum amount of matches the search deamon will return.</div>
+				</td>
+			</tr>
+		</table>
+		<div style="margin: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';">
+			<input type="submit" value="Proceed" class="button_submit" />
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+		</div>
+	</form>';
 
 	template_sphinx_config_below();
 }
@@ -236,62 +235,61 @@ function step_3()
 
 	template_sphinx_config_above('Configure SMF for Sphinx');
 	echo '
-		Your configuration has been saved successfully. The next time you run this tool, your configuration will automatically be loaded.
-		<h4>Generating a configuration file</h4>
-		Based on the settings you submitted in the previous screen, this tool can generate a configuration file for you that will be used by Sphinx. Press the button below to generate the configuration file, and upload it to /usr/local/etc/sphinx.conf (default configuration).<br />
-		<br />
-		<form action="' . $_SERVER['PHP_SELF'] . '?step=999" method="post" target="_blank">
-			<input type="submit" value="Generate sphinx.conf" class="button_submit" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-		</form><br />
+	Your configuration has been saved successfully. The next time you run this tool, your configuration will automatically be loaded.
+	<h4>Generating a configuration file</h4>
+	Based on the settings you submitted in the previous screen, this tool can generate a configuration file for you that will be used by Sphinx. Press the button below to generate the configuration file, and upload it to /usr/local/etc/sphinx.conf (default configuration).<br />
+	<br />
+	<form action="' . $_SERVER['PHP_SELF'] . '?step=999" method="post" target="_blank">
+		<input type="submit" value="Generate sphinx.conf" class="button_submit" />
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+	</form><br />
 
-		<h4>Some file actions</h4>
-		Move Sphinx\' PHP API file to the Sources directory of your SMF installation (the path used here is merely an example):<br />
-		<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br />
-		<br />
-		Create directories for storing the indexes:<br />', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
-		<tt>[~]#  mkdir /var/sphinx</tt><br />', '
-		<tt>[~]#  mkdir ' . $modSettings['sphinx_data_path'] . '</tt><br />
-		<tt>[~]#  mkdir ' . $modSettings['sphinx_log_path'] . '</tt><br />
-		<br />
-		Make the data and log directories writable:<br />
-		<tt>[~]#  chmod 666 ' . $modSettings['sphinx_data_path'] . '</tt><br />
-		<tt>[~]#  chmod 666 ' . $modSettings['sphinx_log_path'] . '</tt><br />
+	<h4>Some file actions</h4>
+	Move Sphinx\' PHP API file to the Sources directory of your SMF installation (the path used here is merely an example):<br />
+	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br />
+	<br />
+	Create directories for storing the indexes:<br />', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
+	<tt>[~]#  mkdir /var/sphinx</tt><br />', '
+	<tt>[~]#  mkdir ' . $modSettings['sphinx_data_path'] . '</tt><br />
+	<tt>[~]#  mkdir ' . $modSettings['sphinx_log_path'] . '</tt><br />
+	<br />
+	Make the data and log directories writable:<br />
+	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_data_path'] . '</tt><br />
+	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_log_path'] . '</tt><br />
 
-		<h4>Indexing time!</h4>
-		It\'s time to create the full-text index:<br />
-		<tt>[~]#  indexer --config /usr/local/etc/sphinx.conf --all</tt><br />
-		<br />
-		If that went successful, we can test run the search deamon. Start it by typing:<br />
-		<tt>[~]#  searchd --config /usr/local/etc/sphinx.conf</tt><br />
-		<br />
-		If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying SMF\'s search to work with Sphinx.
+	<h4>Indexing time!</h4>
+	It\'s time to create the full-text index:<br />
+	<tt>[~]#  indexer --config /usr/local/etc/sphinx.conf --all</tt><br />
+	<br />
+	If that went successful, we can test run the search deamon. Start it by typing:<br />
+	<tt>[~]#  searchd --config /usr/local/etc/sphinx.conf</tt><br />
+	<br />
+	If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying SMF\'s search to work with Sphinx.
 
-		<h4>Configuring SMF</h4>
-		Upload the package file to the \'Packages\' directory and apply it in SMF\'s package manager.<br /><br />
-		Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br />
-		<br />
-		<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
-			<select name="search_index">
-				<option value=""', empty($modSettings['search_index']) ? ' selected="selected"' : '', '>(None)</option>
-				<option value="fulltext"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'fulltext' ? ' selected="selected"' : '', '>Fulltext</option>
-				<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected="selected"' : '', '>Custom index</option>
-				<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected="selected"' : '', '>Sphinx</option>
-			</select>
-			<input type="submit" value="Change Search Index" class="button_submit" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-		</form><br />
-		<br />
+	<h4>Configuring SMF</h4>
+	Upload the package file to the \'Packages\' directory and apply it in SMF\'s package manager.<br /><br />
+	Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br />
+	<br />
+	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
+		<select name="search_index">
+			<option value=""', empty($modSettings['search_index']) ? ' selected="selected"' : '', '>(None)</option>
+			<option value="fulltext"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'fulltext' ? ' selected="selected"' : '', '>Fulltext</option>
+			<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected="selected"' : '', '>Custom index</option>
+			<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected="selected"' : '', '>Sphinx</option>
+		</select>
+		<input type="submit" value="Change Search Index" class="button_submit" />
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+	</form><br />
+	<br />
 
-		<h4>Creating a cron job for the indexer</h4>
-		In order to keep the full-text index up to date, you need to add a cron job that will update the index from time to time. The configuration file defines two indexes: <tt>smf_delta_index</tt>, an index that only stores the recent changes and can be called frequently.  <tt>smf_base_index</tt>, an index that stores the full database and should be called less frequently.
+	<h4>Creating a cron job for the indexer</h4>
+	In order to keep the full-text index up to date, you need to add a cron job that will update the index from time to time. The configuration file defines two indexes: <tt>smf_delta_index</tt>, an index that only stores the recent changes and can be called frequently.  <tt>smf_base_index</tt>, an index that stores the full database and should be called less frequently.
 
-		Adding the following lines to /etc/crontab would let the index rebuild every day (at 3 am) and update the most recently changed messages each hour:<br />
-		<tt># search indexer<br />
-		10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_base_index<br />
-		0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_delta_index</tt><br />
+	Adding the following lines to /etc/crontab would let the index rebuild every day (at 3 am) and update the most recently changed messages each hour:<br />
+	<tt># search indexer<br />
+	10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_base_index<br />
+	0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_delta_index</tt><br />';
 
-		';
 	template_sphinx_config_below();
 }
 
@@ -453,38 +451,36 @@ searchd
 
 function template_sphinx_config_above($title)
 {
-	global $smfsite;
-
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	echo '<!DOCTYPE html>
 <html>
-	<head>
-		<title>SMF Sphinx Configuration Utility</title>
-		<script type="text/javascript" src="', $settings['default_theme_url'], '/script.js"></script>
-		<link rel="stylesheet" type="text/css" href="', $smfsite, '/style.css" />
-	</head>
-	<body>
-		<div id="header">
-			<a href="http://www.simplemachines.org/" target="_blank"><img src="', $smfsite, '/smflogo.gif" style=" float: right;" alt="Simple Machines" border="0" /></a>
-			<div title="Building the pyramids with Simple Machines">SMF Sphinx Configuration Utility</div>
-		</div>
-		<div id="content">
-			<table width="100%" border="0" cellpadding="0" cellspacing="0" style="padding-top: 1ex;">
-			<tr>
-				<td width="100%" valign="top">
-					<div class="panel">
-						<h2>', $title, '</h2>';
+<head>
+	<title>Wedge Sphinx Configuration Utility</title>
+	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
+	<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css" />
+</head>
+<body>
+	<div id="header">
+		<a href="http://www.simplemachines.org/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge" /></a>
+		<div title="Building the pyramids with Wedge">Wedge Sphinx Configuration Utility</div>
+	</div>
+	<div id="content">
+		<table class="w100 cp0 cs0" style="padding-top: 1ex;">
+		<tr>
+			<td class="top">
+				<div class="panel">
+					<h2>', $title, '</h2>';
 }
 
 function template_sphinx_config_below()
 {
 
 	echo '
-					</div>
-				</td>
-			</tr>
-		</table>
-		</div>
-	</body>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+</body>
 </html>';
 }
 

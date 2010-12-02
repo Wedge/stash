@@ -38,80 +38,80 @@ if (isset($_GET['view']) && $_GET['view'] == 'home1')
 template_ssi_above();
 ?>
 
-			<h2>SMF SSI.php Functions</h2>
-			<p><strong>Current Version:</strong> 2.0 RC4</p>
-			<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
+	<h2>Wedge SSI.php Functions</h2>
+	<p><strong>Current Version:</strong> 2.0 RC4</p>
+	<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
 
-			<h2>Include Code</h2>
-			<p>To use SSI.php in your page add at the very top of your page before the &lt;html&gt; tag on line 1 of your php file:</p>
-			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php require(&quot;<?php echo addslashes($user_info['is_admin'] ? realpath($boarddir . '/SSI.php') : 'SSI.php'); ?>&quot;); ?&gt;</code>
+	<h2>Include Code</h2>
+	<p>To use SSI.php in your page add at the very top of your page before the &lt;html&gt; tag on line 1 of your php file:</p>
+	<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php require(&quot;<?php echo addslashes($user_info['is_admin'] ? realpath($boarddir . '/SSI.php') : 'SSI.php'); ?>&quot;); ?&gt;</code>
 
-			<h2>Some notes on usage</h2>
-			<p>All the functions have an output method parameter.  This can either be &quot;echo&quot; (the default) or &quot;array&quot;</p>
-			<p>If it is &quot;echo&quot;, the function will act normally - otherwise, it will return an array containing information about the requested task. For example, it might return a list of topics for ssi_recentTopics.</p>
-			<p onclick="if (this.innerHTML.indexOf('Bird') == -1) this.innerHTML += '<br /><img src=&quot;http://www.simplemachines.org/images/chocobo.jpg&quot; title=&quot;Bird-san&quot; alt=&quot;Chocobo!&quot; />'; return false;">This functionality can be used to allow you to present the information in any way you wish.</p>
+	<h2>Some notes on usage</h2>
+	<p>All the functions have an output method parameter.  This can either be &quot;echo&quot; (the default) or &quot;array&quot;</p>
+	<p>If it is &quot;echo&quot;, the function will act normally - otherwise, it will return an array containing information about the requested task. For example, it might return a list of topics for ssi_recentTopics.</p>
+	<p onclick="this.innerHTML += '<br /><img src=&quot;http://www.simplemachines.org/images/chocobo.jpg&quot; title=&quot;Chocobo!&quot; alt=&quot;Chocobo!&quot; />'; return false;">This functionality can be used to allow you to present the information in any way you wish.</p>
 
-			<h2>Additional Guides &amp; FAQ</h2>
-			<p>Need more information on using SSI.php? Check out <a href="http://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> or <a href="http://www.simplemachines.org/community/index.php?topic=14906.0">the SSI FAQ</a>.</p>
+	<h2>Additional Guides &amp; FAQ</h2>
+	<p>Need more information on using SSI.php? Check out SMF's <a href="http://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> and <a href="http://www.simplemachines.org/community/index.php?topic=14906.0">SSI FAQ</a>.</p>
 
-			<div id="sidenav" class="windowbg wrc">
-				<h2 id="functionlist">Function List</h2>
-				<h3>Recent Items</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_recentTopics'); return false;">Recent Topics</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_recentPosts'); return false;">Recent Posts</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_recentPoll'); return false;">Recent Poll</a></li>
-				</ul>
-				<h3>Top Items</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_topBoards'); return false;">Top Boards</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_topTopicsViews'); return false;">Top Topics</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_topPoll'); return false;">Top Poll</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_topPoster'); return false;">Top Poster</a></li>
-				</ul>
-				<h3>Members</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_latestMember'); return false;">Latest Member Function</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_randomMember'); return false;">Member of the Day</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_whosOnline'); return false;">Who's Online</a></li>
-				</ul>
-				<h3>Authentication</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_login'); return false;">Welcome, Login &amp; Logout</a></li>
-				</ul>
-				<h3>Calendar</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_todaysCalendar'); return false;">Today's Events</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_recentEvents'); return false;">Recent Events</a></li>
-				</ul>
-				<h3>Miscellaneous</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_boardStats'); return false;">Forum Stats</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_news'); return false;">News</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_boardNews'); return false;">Board News</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_menubar'); return false;">Menubar</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_quickSearch'); return false;">Quick Search Box</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_recentAttachments'); return false;">Recent Attachments</a></li>
-				</ul>
-				<?php if ($user_info['is_admin']) { ?>
-				<h3>Advanced Functions <img class="help" title="Functions that require additional tweaking, not just copy and paste." src="<?php echo $settings['images_url']; ?>/helptopics.gif" alt="" /></h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('ssi_showPoll'); return false;">Show Single Poll</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_fetchPosts'); return false;">Show Single Post</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_fetchMember'); return false;">Show Single Member</a></li>
-					<li><a href="#" onclick="showSSIBlock('ssi_fetchGroupMembers'); return false;">Show Group Members</a></li>
-				</ul>
-				<?php } ?>
-				<h3>Website Samples</h3>
-				<ul>
-					<li><a href="#" onclick="showSSIBlock('htmlhome')">Sample 1</a></li>
-				</ul>
-				<h2 id="other">Other</h2>
-				<ul>
-					<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', false); return false;">Show all examples</a></li>
-					<li><a href="#" onclick="toggleVisibleByClass('ssi_preview', true); return false;">Hide all examples</a></li>
-				</ul>
-			</div>
+	<div id="sidenav" class="windowbg wrc">
+		<h2 id="functionlist">Function List</h2>
+		<h3>Recent Items</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_recentTopics');">Recent Topics</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_recentPosts');">Recent Posts</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_recentPoll');">Recent Poll</a></li>
+		</ul>
+		<h3>Top Items</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_topBoards');">Top Boards</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_topTopicsViews');">Top Topics</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_topPoll');">Top Poll</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_topPoster');">Top Poster</a></li>
+		</ul>
+		<h3>Members</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_latestMember');">Latest Member Function</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_randomMember');">Member of the Day</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_whosOnline');">Who's Online</a></li>
+		</ul>
+		<h3>Authentication</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_login');">Welcome, Login &amp; Logout</a></li>
+		</ul>
+		<h3>Calendar</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_todaysCalendar');">Today's Events</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_recentEvents');">Recent Events</a></li>
+		</ul>
+		<h3>Miscellaneous</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_boardStats');">Forum Stats</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_news');">News</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_boardNews');">Board News</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_menubar');">Menubar</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_quickSearch');">Quick Search Box</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_recentAttachments');">Recent Attachments</a></li>
+		</ul>
+		<?php if ($user_info['is_admin']) { ?>
+		<h3>Advanced Functions <img class="help" title="Functions that require additional tweaking, not just copy and paste." src="<?php echo $settings['images_url']; ?>/helptopics.gif" alt="" /></h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('ssi_showPoll');">Show Single Poll</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_fetchPosts');">Show Single Post</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_fetchMember');">Show Single Member</a></li>
+			<li><a href="#" onclick="return showSSIBlock('ssi_fetchGroupMembers');">Show Group Members</a></li>
+		</ul>
+		<?php } ?>
+		<h3>Website Samples</h3>
+		<ul>
+			<li><a href="#" onclick="return showSSIBlock('htmlhome');">Sample 1</a></li>
+		</ul>
+		<h2 id="other">Other</h2>
+		<ul>
+			<li><a href="#" onclick="return toggleVisibleByClass('ssi_preview', false);">Show all examples</a></li>
+			<li><a href="#" onclick="return toggleVisibleByClass('ssi_preview', true);">Hide all examples</a></li>
+		</ul>
+	</div>
 
 	<div id="preview" class="windowbg2 wrc">
 
@@ -363,7 +363,7 @@ template_ssi_above();
 		<div class="ssi_preview" id="ssi_fetchPosts">
 			<h2>Show Single Post</h2>
 			<p>Fetches a post with a particular IDs. By default will only show if you have permission to the see
-			the board in question. This can be overriden by passing the 2nd parameter as <tt>true</tt>.</p>
+			the board in question. This can be overriden by passing the 2nd parameter as <code>true</code>.</p>
 
 			<h3>Code</h3>
 			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code">&lt;?php ssi_fetchPosts($postIDs, $isOverride); ?&gt;</code>
@@ -399,7 +399,7 @@ template_ssi_above();
 			<h3>Code</h3>
 			<div class="codeheader">Code: <a href="#" onclick="return smfSelectText(this);" class="codeoperation">[Select]</a></div><code class="bbc_code"><?php echo htmlspecialchars(template_homepage_sample1('source')); ?></code>
 			<h3>Result</h3>
-			<iframe src="?view=home1" width="99%" height="300"></iframe>
+			<iframe src="?view=home1" seamless style="width: 98%; height: 220px; overflow: hidden;"></iframe>
 		</div>
 	</div>
 
@@ -411,119 +411,122 @@ function template_ssi_above()
 {
 	global $settings, $context, $scripturl;
 
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>SMF 2.0 RC3 SSI.php Examples</title>
-		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/css/index.css?rc3" />
-		<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js"></script>
-		<style type="text/css">
-			#upper_section .user
-			{
-				height: 4em;
-			}
-			#upper_section .news
-			{
-				height: 80px;
-			}
-			#content
-			{
-				position: relative;
-				top: -20px;
-			}
-			#main_content h2
-			{
-				font-size: 1.5em;
-				border-bottom: solid 1px #d05800;
-				line-height: 1.5em;
-				margin: 0.5em 0;
-				color: #d05800;
-			}
-			#liftup
-			{
-				position: relative;
-				top: -70px;
-				padding: 1em 2em 1em 1em;
-				line-height: 1.6em;
-			}
-			#footer
-			{
-				position: relative;
-				top: -20px;
-			}
-			#sidenav
-			{
-				width: 210px;
-				float: left;
-				margin-right: 20px;
-			}
-			#sidenav ul
-			{
-				margin: 0 0 0 15px;
-				padding: 0;
-				list-style: none;
-				font-size: 90%;
-			}
-			#preview
-			{
-				margin-left: 230px;
-			}
-			.ssi_preview
-			{
-				margin-bottom: 1.5em;
-			}
-			.ssi_preview h3
-			{
-				margin: 1em 0 0.5em 0;
-			}
-			.ssi_result
-			{
-				background-color: #fff;
-				border: 1px solid #99a;
-				padding: 10px;
-				overflow: hidden;
-			}
-		</style>
-		<script type="text/javascript"><!-- // --><![CDATA[
-			var smf_scripturl = "', $scripturl, '";
-			var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
+	echo '<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Wedge SSI.php Examples</title>
+	<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css?rc3" />
+	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
+	<style>
+		#upper_section .user
+		{
+			height: 4em;
+		}
+		#upper_section .news
+		{
+			height: 80px;
+		}
+		#content
+		{
+			position: relative;
+			top: -20px;
+		}
+		#main_content h2
+		{
+			font-size: 1.5em;
+			border-bottom: solid 1px #d05800;
+			line-height: 1.5em;
+			margin: 0.5em 0;
+			color: #d05800;
+		}
+		#liftup
+		{
+			position: relative;
+			top: -70px;
+			padding: 1em 2em 1em 1em;
+			line-height: 1.6em;
+		}
+		#footer
+		{
+			position: relative;
+			top: -20px;
+		}
+		#sidenav
+		{
+			width: 180px;
+			float: left;
+			margin-right: 15px;
+		}
+		#sidenav ul
+		{
+			margin: 0 0 0 15px;
+			padding: 0;
+			list-style: none;
+			font-size: 90%;
+		}
+		#preview
+		{
+			margin-left: 230px;
+		}
+		.ssi_preview
+		{
+			margin-bottom: 1.5em;
+		}
+		.ssi_preview h3
+		{
+			margin: 1em 0 0.5em 0;
+		}
+		.ssi_result
+		{
+			background-color: #fff;
+			border: 1px solid #99a;
+			padding: 10px;
+			overflow: hidden;
+		}
+	</style>
+	<script><!-- // --><![CDATA[
+		var smf_scripturl = "', $scripturl, '";
+		var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
 
-			// Sets all ssi_preview class to hidden, then shows the one requested.
-			function showSSIBlock(elementID)
-			{
-				toggleVisibleByClass("ssi_preview", true);
-				document.getElementById(elementID).style.display = "block";
-			}
+		// Sets all ssi_preview class to hidden, then shows the one requested.
+		function showSSIBlock(elementID)
+		{
+			toggleVisibleByClass("ssi_preview", true);
+			document.getElementById(elementID).style.display = "block";
+			return false;
+		}
 
-			// Toggle visibility of all sections.
-			function toggleVisibleByClass(sClassName, bHide)
+		// Toggle visibility of all sections.
+		function toggleVisibleByClass(sClassName, bHide)
+		{
+			var oSections = document.getElementsByTagName("div");
+			for (var i = 0; i < oSections.length; i++)
 			{
-				var oSections = document.getElementsByTagName("div");
-				for (var i = 0; i < oSections.length; i++)
-				{
-					if (oSections[i].className == null || oSections[i].className.indexOf(sClassName) == -1)
-						continue;
+				if (oSections[i].className == null || oSections[i].className.indexOf(sClassName) == -1)
+					continue;
 
-					oSections[i].style.display = bHide ? "none" : "block";
-				}
+				oSections[i].style.display = bHide ? "none" : "block";
 			}
-		// ]]></script>
-	</head>
-	<body>
-		<div id="header"><div class="frame">
-			<div id="top_section">
-				<h1 class="forumtitle">SMF 2.0 RC3 SSI.php Examples</h1>
-				<img id="smflogo" src="Themes/default/images/smflogo.png" alt="Simple Machines Forum" title="Simple Machines Forum" />
+			return false;
+		}
+	// ]]></script>
+</head>
+<body>
+	<div id="header"><div class="frame">
+		<div id="top_section">
+			<h1 class="forumtitle">Wedge SSI.php Examples</h1>
+			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" />
+		</div>
+		<div id="upper_section" class="middletext" style="overflow: hidden;">
+			<div class="user"></div>
+			<div class="news normaltext">
 			</div>
-			<div id="upper_section" class="middletext" style="overflow: hidden;">
-				<div class="user"></div>
-				<div class="news normaltext">
-				</div>
-			</div>
-		</div></div>
-		<div id="content"><div class="frame">
-			<div id="main_content">
-				<div id="liftup" class="flow_auto">';
+		</div>
+	</div></div>
+	<div id="content"><div class="frame">
+		<div id="main_content">
+			<div id="liftup" class="flow_auto">';
 }
 
 function template_ssi_below()
@@ -531,16 +534,16 @@ function template_ssi_below()
 	global $time_start;
 
 	echo '
-					<script type="text/javascript"><!-- // --><![CDATA[
-						showSSIBlock("ssi_recentTopics");
-					// ]]></script>
-				</div>
+				<script><!-- // --><![CDATA[
+					showSSIBlock("ssi_recentTopics");
+				// ]]></script>
 			</div>
-		</div></div>
-		<div id="footer"><div class="frame">
-			<div class="smalltext"><a href="http://www.simplemachines.org">Simple Machines Forum</a></div>
-		</div></div>
-	</body>
+		</div>
+	</div></div>
+	<div id="footer"><div class="frame">
+		<div class="smalltext"><a href="http://www.wedgeforum.com">WedgeForum.com</a></div>
+	</div></div>
+</body>
 </html>';
 }
 
@@ -548,11 +551,12 @@ function template_homepage_sample1($method = 'source')
 {
 	global $user_info, $boarddir;
 
-	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+	$header = '<!DOCTYPE html>
+<html>
 <head>
+	<meta charset="utf-8" />
 	<title>SSI.php example for home page</title>
-	<style type="text/css">
+	<style>
 		body { font-family: Arial, Tahoma, sans-serif; font-size: 80%; background: #DFDFDF; color: #FFFFFF; margin: 0 }
 		ul,ol { padding-left: 19px; margin: 0; }
 		li { font-size: 11px; }
@@ -651,7 +655,7 @@ $topics = ssi_recentTopics(8, null, null, \'array\');
 
 foreach ($topics as $topic)
 {
-	// Uncomment the following code to get a listing of array elements that SMF provides for this function.
+	// Uncomment the following code to get a listing of array elements that Wedge provides for this function.
 	// echo \'<pre>\', print_r($topic), \'</pre>\';
 
 	echo \'

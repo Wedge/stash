@@ -94,118 +94,119 @@ if (!file_exists(dirname(__FILE__) . '/' . $wedgelogo))
 	$wedgelogo = 'Themes/default/images/wedgelogo.gif';
 
 // Note that we're using the default URLs because we aren't even going to try to use Settings.php's settings.
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta name="robots" content="noindex" />
-		<title>', $txt['smf_repair_settings'], '</title>
-		<script type="text/javascript" src="Themes/default/scripts/script.js"></script>
-		<style type="text/css">
-			body
-			{
-				background-color: #e5e5e8;
-				margin: 0px;
-				padding: 0px;
-			}
-			body, td
-			{
-				color: #000000;
-				font-size: small;
-				font-family: verdana, sans-serif;
-			}
-			div#header
-			{
-				background-image: url(Themes/default/images/catbg.jpg);
-				background-repeat: repeat-x;
-				background-color: #88a6c0;
-				padding: 22px 4% 12px 4%;
-				color: white;
-				font-family: Georgia, serif;
-				font-size: xx-large;
-				border-bottom: 1px solid black;
-				height: 40px;
-			}
-			div#content
-			{
-				padding: 20px 30px;
-			}
-			div.error_message
-			{
-				border: 2px dashed red;
-				background-color: #e1e1e1;
-				margin: 1ex 4ex;
-				padding: 1.5ex;
-			}
-			div.panel
-			{
-				border: 1px solid gray;
-				background-color: #f6f6f6;
-				margin: 1ex 0;
-				padding: 1.2ex;
-			}
-			div.panel h2
-			{
-				margin: 0;
-				margin-bottom: 0.5ex;
-				padding-bottom: 3px;
-				border-bottom: 1px dashed black;
-				font-size: 14pt;
-				font-weight: normal;
-			}
-			div.panel h3
-			{
-				margin: 0;
-				margin-bottom: 2ex;
-				font-size: 10pt;
-				font-weight: normal;
-			}
-			form
-			{
-				margin: 0;
-			}
-			td.textbox
-			{
-				padding-top: 2px;
-				font-weight: bold;
-				white-space: nowrap;
-				padding-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 2ex;
-			}
-			.smalltext
-			{
-				font-size: 0.8em;
-				font-weight: normal;
-			}
-			.centertext
-			{
-				margin: 0 auto;
-				text-align: center;
-			}
-			.righttext
-			{
-				margin-left: auto;
-				margin-right: 0;
-				text-align: right;
-			}
-			.lefttext
-			{
-				margin-left: 0;
-				margin-right: auto;
-				text-align: left;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="header">
-			<a href="http://www.wedgeo.org/" target="_blank"><img src="' . $wedgelogo . '" style="width: 250px; float: right;" alt="Wedge Forum" border="0" /></a>
-			<div>', $txt['smf_repair_settings'], '</div>
-		</div>
-		<div id="content">';
+echo '<!DOCTYPE html>
+<html>
+<head>
+	<meta name="robots" content="noindex" />
+	<title>', $txt['smf_repair_settings'], '</title>
+	<script src="Themes/default/scripts/script.js"></script>
+	<link rel="stylesheet" href="Themes/default/css/index.css" />
+	<style>
+		body
+		{
+			background-color: #e5e5e8;
+			margin: 0px;
+			padding: 0px;
+		}
+		body, td
+		{
+			color: #000000;
+			font-size: small;
+			font-family: verdana, sans-serif;
+		}
+		div#header
+		{
+			background-image: url(Themes/default/images/catbg.jpg);
+			background-repeat: repeat-x;
+			background-color: #88a6c0;
+			padding: 22px 4% 12px 4%;
+			color: white;
+			font-family: Georgia, serif;
+			font-size: xx-large;
+			border-bottom: 1px solid black;
+			height: 40px;
+		}
+		div#content
+		{
+			padding: 20px 30px;
+		}
+		div.error_message
+		{
+			border: 2px dashed red;
+			background-color: #e1e1e1;
+			margin: 1ex 4ex;
+			padding: 1.5ex;
+		}
+		div.panel
+		{
+			border: 1px solid gray;
+			background-color: #f6f6f6;
+			margin: 1ex 0;
+			padding: 1.2ex;
+		}
+		div.panel h2
+		{
+			margin: 0;
+			margin-bottom: 0.5ex;
+			padding-bottom: 3px;
+			border-bottom: 1px dashed black;
+			font-size: 14pt;
+			font-weight: normal;
+		}
+		div.panel h3
+		{
+			margin: 0;
+			margin-bottom: 2ex;
+			font-size: 10pt;
+			font-weight: normal;
+		}
+		form
+		{
+			margin: 0;
+		}
+		td.textbox
+		{
+			padding-top: 2px;
+			font-weight: bold;
+			white-space: nowrap;
+			padding-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 2ex;
+		}
+		.smalltext
+		{
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+		.centertext
+		{
+			margin: 0 auto;
+			text-align: center;
+		}
+		.righttext
+		{
+			margin-left: auto;
+			margin-right: 0;
+			text-align: right;
+		}
+		.lefttext
+		{
+			margin-left: 0;
+			margin-right: auto;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="' . $wedgelogo . '" style="width: 150px; float: right" alt="Wedge" /></a>
+		<div>', $txt['smf_repair_settings'], '</div>
+	</div>
+	<div id="content">';
 
 show_settings();
 
 echo '
-		</div>
-	</body>
+	</div>
+</body>
 </html>';
 
 function initialize_inputs()

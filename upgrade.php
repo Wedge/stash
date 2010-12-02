@@ -3246,13 +3246,13 @@ function template_chmod()
 	if (!empty($upcontext['chmod']['ftp_error']) && $upcontext['chmod']['ftp_error'] == 'total_mess')
 	{
 		echo '
-			<div class="error_message">
-				<div style="color: red;">The following files need to be writable to continue the upgrade. Please ensure the Windows permissions are correctly set to allow this:</div>
-				<ul style="margin: 2.5ex; font-family: monospace;">
-				<li>' . implode('</li>
-				<li>', $upcontext['chmod']['files']). '</li>
-			</ul>
-			</div>';
+		<div class="error_message">
+			<div style="color: red;">The following files need to be writable to continue the upgrade. Please ensure the Windows permissions are correctly set to allow this:</div>
+			<ul style="margin: 2.5ex; font-family: monospace;">
+			<li>' . implode('</li>
+			<li>', $upcontext['chmod']['files']). '</li>
+		</ul>
+		</div>';
 
 		return false;
 	}
@@ -3278,14 +3278,14 @@ function template_chmod()
 
 	if (!empty($upcontext['chmod']['ftp_error']))
 		echo '
-			<div class="error_message">
-				<div style="color: red;">
-					The following error was encountered when trying to connect:<br />
-					<br />
-					<code>', $upcontext['chmod']['ftp_error'], '</code>
-				</div>
+		<div class="error_message">
+			<div style="color: red;">
+				The following error was encountered when trying to connect:<br />
+				<br />
+				<code>', $upcontext['chmod']['ftp_error'], '</code>
 			</div>
-			<br />';
+		</div>
+		<br />';
 
 	if (empty($upcontext['chmod_in_form']))
 		echo '

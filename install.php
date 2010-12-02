@@ -1928,8 +1928,8 @@ function template_install_above()
 		<meta charset="utf-8" />
 		<meta name="robots" content="noindex" />
 		<title>', $txt['smf_installer'], '</title>
-		<link rel="stylesheet" type="text/css" href="Themes/default/css/index.css?rc3" />
-		<link rel="stylesheet" type="text/css" href="Themes/default/css/install.css?rc3" />
+		<link rel="stylesheet" href="Themes/default/css/index.css?rc3" />
+		<link rel="stylesheet" href="Themes/default/css/install.css?rc3" />
 		<script src="Themes/default/scripts/script.js"></script>
 	</head>
 	<body>

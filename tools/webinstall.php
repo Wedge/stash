@@ -45,11 +45,11 @@ function template_webinstall_above()
 	global $txt;
 
 	echo '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<meta name="robots" content="noindex" />
 		<title>', $txt['smf_installer'], '</title>
-		<style type="text/css">
+		<style>
 			body
 			{
 				background-color: #e5e5e8;
@@ -166,7 +166,7 @@ function template_webinstall_above()
 	</head>
 	<body>
 		<div id="header">
-			<div title="Akihabara">', $txt['smf_installer'], '</div>
+			<div>', $txt['smf_installer'], '</div>
 		</div>
 		<div id="content">';
 }
@@ -221,19 +221,19 @@ function initialize_inputs()
 		global $txt;
 
 		echo '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>', $txt['ftp_path'], '</title>
-	</head>
-	<body style="background-color: #D4D4D4; font: 10pt verdana, sans-serif; margin-top: 5%;">
-		<div style="background-color: #F0F0F0; border: 1px solid gray; margin: 1ex 0; padding: 1.2ex;">
-			<strong>', $txt['ftp_path'], '</strong><br />
-			<br />
-			', $txt['ftp_path_help'], '<br />
-			<br />
-			<div class="righttext"><a href="javascript:self.close();">', $txt['ftp_path_help_close'], '</a></div>
-		</div>
-	</body>
+<html>
+<head>
+	<title>', $txt['ftp_path'], '</title>
+</head>
+<body style="background-color: #D4D4D4; font: 10pt verdana, sans-serif; margin-top: 5%;">
+	<div style="background-color: #F0F0F0; border: 1px solid gray; margin: 1ex 0; padding: 1.2ex;">
+		<strong>', $txt['ftp_path'], '</strong><br />
+		<br />
+		', $txt['ftp_path_help'], '<br />
+		<br />
+		<div class="righttext"><a href="javascript:self.close();">', $txt['ftp_path_help_close'], '</a></div>
+	</div>
+</body>
 </html>';
 		exit;
 	}
