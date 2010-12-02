@@ -750,7 +750,7 @@ upgrade_query("
 
 ---# Adjusting timezone settings...
 ---{
-	if (!isset($modSettings['default_timezone']) && function_exists('date_default_timezone_set'))
+	if (!isset($modSettings['default_timezone']))
 	{
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
 		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);

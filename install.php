@@ -196,12 +196,8 @@ function initialize_inputs()
 		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 	}
 
-	// PHP 5 might cry if we don't do this now.
-	if (function_exists('date_default_timezone_set'))
-	{
-		$server_offset = @mktime(0, 0, 0, 1, 1, 1970);
-		date_default_timezone_set('Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600));
-	}
+	$server_offset = mktime(0, 0, 0, 1, 1, 1970);
+	date_default_timezone_set('Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600));
 
 	// Force an integer step, defaulting to 0.
 	$_GET['step'] = (int) @$_GET['step'];
@@ -279,8 +275,7 @@ function load_lang_file()
 // This handy function loads some settings and the like.
 function load_database()
 {
-	global $db_prefix, $db_connection, $sourcedir, $language;
-	global $smcFunc, $mbname, $scripturl, $boardurl, $modSettings, $db_name, $db_user;
+	global $smcFunc, $modSettings, $sourcedir, $db_prefix, $db_connection, $db_name, $db_user;
 
 	if (empty($sourcedir))
 		$sourcedir = dirname(__FILE__) . '/Sources';
@@ -800,7 +795,7 @@ function DatabaseSettings()
 // Let's start with basic forum type settings.
 function ForumSettings()
 {
-	global $txt, $incontext, $db, $db_connection;
+	global $txt, $incontext, $db;
 
 	$incontext['sub_template'] = 'forum_settings';
 	$incontext['page_title'] = $txt['install_settings'];
@@ -1066,7 +1061,7 @@ function DatabasePopulation()
 */
 
 	// As of PHP 5.1, setting a timezone is required.
-	if (!isset($modSettings['default_timezone']) && function_exists('date_default_timezone_set'))
+	if (!isset($modSettings['default_timezone']))
 	{
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
 		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);
@@ -1116,7 +1111,7 @@ function DatabasePopulation()
 // Ask for the administrator login information.
 function AdminAccount()
 {
-	global $txt, $db_connection, $incontext, $db_prefix, $db_passwd, $sourcedir;
+	global $txt, $db_connection, $incontext, $db_passwd, $sourcedir;
 
 	$incontext['sub_template'] = 'admin_account';
 	$incontext['page_title'] = $txt['user_settings'];
@@ -1320,9 +1315,8 @@ function AdminAccount()
 // Final step, clean up and a complete message!
 function DeleteInstall()
 {
-	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
-	global $mbname, $context, $scripturl, $boardurl, $smcFunc;
-	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info, $language;
+	global $txt, $incontext, $context, $scripturl, $boardurl, $smcFunc;
+	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['sub_template'] = 'delete_install';
