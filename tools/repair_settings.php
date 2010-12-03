@@ -211,7 +211,7 @@ echo '
 
 function initialize_inputs()
 {
-	global $smcFunc, $db_connection, $sourcedir, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $context;
+	global $db_connection, $sourcedir, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $context;
 
 	// Turn off magic quotes runtime and enable error reporting.
 	@set_magic_quotes_runtime(0);
@@ -275,7 +275,7 @@ function initialize_inputs()
 
 function show_settings()
 {
-	global $txt, $smcFunc, $db_connection, $db_name, $db_prefix, $context;
+	global $txt, $db_connection, $db_name, $db_prefix, $context;
 
 	// Check to make sure Settings.php exists!
 	if (file_exists(dirname(__FILE__) . '/Settings.php'))
@@ -669,7 +669,7 @@ function set_settings()
 // Compat mode!
 function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_options = array())
 {
-	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix, $smcFunc;
+	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix;
 
 	if (!empty($db_options['persist']))
 		$db_connection = @mysql_pconnect($db_server, $db_user, $db_passwd);
@@ -833,7 +833,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	// Insert some data...
 	function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false)
 	{
-		global $smcFunc, $db_connection, $db_prefix;
+		global $db_connection, $db_prefix;
 
 		// With nothing to insert, simply return.
 		if (empty($data))
@@ -883,7 +883,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 
 	function smf_db_list_tables($db = false, $filter = false)
 	{
-		global $db_name, $smcFunc;
+		global $db_name;
 		$db = trim((empty($db) ? $db_name : $db));
 
 		$filter = $filter == false ? '' : ' LIKE \'' . $filter . '\'';
@@ -918,7 +918,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	// Returns all tables
 	function smf_db_list_tables($db = false, $filter = false)
 	{
-		global $db_name, $smcFunc;
+		global $db_name;
 
 		$db = $db == false ? $db_name : $db;
 		$db = trim($db);

@@ -750,7 +750,7 @@ function redirectLocation($location, $addForm = true)
 function loadEssentialData()
 {
 	global $db_server, $db_user, $db_passwd, $db_name, $db_connection, $db_prefix;
-	global $modSettings, $sourcedir, $smcFunc, $upcontext;
+	global $modSettings, $sourcedir, $upcontext;
 
 	// Do the non-SSI stuff...
 	@set_magic_quotes_runtime(0);
@@ -887,7 +887,7 @@ function initialize_inputs()
 function WelcomeLogin()
 {
 	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
-	global $upcontext, $disable_security, $smcFunc, $txt;
+	global $upcontext, $disable_security, $txt;
 
 	$upcontext['sub_template'] = 'welcome_message';
 
@@ -983,7 +983,7 @@ function WelcomeLogin()
 function checkLogin()
 {
 	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
-	global $upcontext, $disable_security, $smcFunc, $support_js, $txt;
+	global $upcontext, $disable_security, $support_js, $txt;
 
 	// Are we trying to login?
 	if (isset($_POST['contbutt']) && (!empty($_POST['user']) || $disable_security))
@@ -1158,7 +1158,7 @@ function checkLogin()
 // Step 1: Do the maintenance and backup.
 function UpgradeOptions()
 {
-	global $db_prefix, $command_line, $modSettings, $is_debug, $smcFunc;
+	global $db_prefix, $command_line, $modSettings, $is_debug;
 	global $boarddir, $boardurl, $sourcedir, $maintenance, $mmessage, $cachedir, $upcontext;
 
 	$upcontext['sub_template'] = 'upgrade_options';
@@ -1285,7 +1285,7 @@ function UpgradeOptions()
 // Backup the database - why not...
 function BackupDatabase()
 {
-	global $upcontext, $db_prefix, $command_line, $is_debug, $support_js, $file_steps, $smcFunc;
+	global $upcontext, $db_prefix, $command_line, $is_debug, $support_js, $file_steps;
 
 	$upcontext['sub_template'] = isset($_GET['xml']) ? 'backup_xml' : 'backup_database';
 	$upcontext['page_title'] = 'Backup Database';
@@ -1363,7 +1363,7 @@ function BackupDatabase()
 // Backup one table...
 function backupTable($table)
 {
-	global $is_debug, $command_line, $db_prefix, $smcFunc;
+	global $is_debug, $command_line, $db_prefix;
 
 	if ($is_debug && $command_line)
 	{
@@ -1380,7 +1380,7 @@ function backupTable($table)
 // Step 2: Everything.
 function DatabaseChanges()
 {
-	global $db_prefix, $modSettings, $command_line, $smcFunc;
+	global $db_prefix, $modSettings, $command_line;
 	global $language, $boardurl, $sourcedir, $boarddir, $upcontext, $support_js;
 
 	// Have we just completed this?
@@ -1472,7 +1472,7 @@ function DatabaseChanges()
 // Clean up any mods installed...
 function CleanupMods()
 {
-	global $db_prefix, $modSettings, $upcontext, $boarddir, $sourcedir, $settings, $smcFunc, $command_line;
+	global $db_prefix, $modSettings, $upcontext, $boarddir, $sourcedir, $settings, $command_line;
 
 	// Sorry. Not supported for command line users.
 	if ($command_line)
@@ -1793,7 +1793,7 @@ function CleanupMods()
 // Delete the damn thing!
 function DeleteUpgrade()
 {
-	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $forum_version, $user_info, $maintenance, $smcFunc;
+	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $forum_version, $user_info, $maintenance;
 
 	// Now it's nice to have some of the basic SMF source files.
 	if (!isset($_GET['ssi']) && !$command_line)
@@ -1889,7 +1889,7 @@ function DeleteUpgrade()
 // Just like the built in one, but setup for CLI to not use themes.
 function cli_scheduled_fetchSMfiles()
 {
-	global $sourcedir, $txt, $language, $settings, $forum_version, $modSettings, $smcFunc;
+	global $sourcedir, $txt, $language, $settings, $forum_version, $modSettings;
 
 	if (empty($modSettings['time_format']))
 		$modSettings['time_format'] = '%B %d, %Y, %I:%M:%S %p';
@@ -1945,7 +1945,7 @@ function cli_scheduled_fetchSMfiles()
 
 function convertSettingsToTheme()
 {
-	global $db_prefix, $modSettings, $smcFunc;
+	global $db_prefix, $modSettings;
 
 	$values = array(
 		'show_latest_member' => @$GLOBALS['showlatestmember'],
@@ -1989,7 +1989,7 @@ function convertSettingsToTheme()
 
 function convertSettingstoOptions()
 {
-	global $db_prefix, $modSettings, $smcFunc;
+	global $db_prefix, $modSettings;
 
 	// Format: new_setting -> old_setting_name.
 	$values = array(
@@ -2127,7 +2127,7 @@ function db_version_check()
 
 function getMemberGroups()
 {
-	global $db_prefix, $smcFunc;
+	global $db_prefix;
 	static $member_groups = array();
 
 	if (!empty($member_groups))
@@ -2174,7 +2174,7 @@ function fixRelativePath($path)
 function parse_sql($filename)
 {
 	global $db_prefix, $db_collation, $boarddir, $boardurl, $command_line, $file_steps, $step_progress, $custom_warning;
-	global $upcontext, $support_js, $is_debug, $smcFunc, $db_connection, $db;
+	global $upcontext, $support_js, $is_debug, $db_connection, $db;
 
 /*
 	Failure allowed on:
@@ -2384,7 +2384,7 @@ function parse_sql($filename)
 					continue;
 				}
 
-				if (eval('global $db_prefix, $modSettings, $smcFunc; ' . $current_data) === false)
+				if (eval('global $db_prefix, $modSettings; ' . $current_data) === false)
 				{
 					$upcontext['error_message'] = 'Error in upgrade script ' . basename($filename) . ' on line ' . $line_number . '!' . $endl;
 					if ($command_line)
@@ -2446,7 +2446,7 @@ function parse_sql($filename)
 function upgrade_query($string, $unbuffered = false)
 {
 	global $db_connection, $db_server, $db_user, $db_passwd, $command_line, $upcontext, $upgradeurl, $modSettings;
-	global $db_name, $db_unbuffered, $smcFunc;
+	global $db_name, $db_unbuffered;
 
 	// Get the query result - working around some SMF specific security - just this once!
 	$modSettings['disableQueryCheck'] = true;
@@ -2570,7 +2570,7 @@ function upgrade_query($string, $unbuffered = false)
 // This performs a table alter, but does it unbuffered so the script can time out professionally.
 function protected_alter($change, $substep, $is_test = false)
 {
-	global $db_prefix, $smcFunc;
+	global $db_prefix;
 
 	db_extend('packages');
 
@@ -2674,7 +2674,7 @@ function protected_alter($change, $substep, $is_test = false)
 // Alter a text column definition preserving its character set.
 function textfield_alter($change, $substep)
 {
-	global $db_prefix, $db, $smcFunc;
+	global $db_prefix, $db;
 
 	// Versions of MySQL < 4.1 wouldn't benefit from character set detection.
 	if (version_compare($db['utf8_version'], eval($db['utf8_version_check'])) > 0)
@@ -2754,7 +2754,7 @@ function textfield_alter($change, $substep)
 // Check if we need to alter this query.
 function checkChange(&$change)
 {
-	global $smcFunc, $db;
+	global $db;
 	static $database_version, $where_field_support;
 
 	// Attempt to find a database_version.
@@ -2883,7 +2883,7 @@ function nextSubstep($substep)
 
 function cmdStep0()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $start_time, $cachedir, $db, $smcFunc, $upcontext;
+	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $start_time, $cachedir, $db, $upcontext;
 	global $language, $is_debug, $txt;
 	$start_time = time();
 

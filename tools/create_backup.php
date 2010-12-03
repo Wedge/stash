@@ -155,7 +155,7 @@ function step1($error_message = '')
 
 function step2()
 {
-	global $start_time, $table_sizes, $total_size, $before_length, $write_data, $smcFunc;
+	global $start_time, $table_sizes, $total_size, $before_length, $write_data;
 
 	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 	if (!$db_connection)
@@ -1137,7 +1137,7 @@ class ftp_connection
 // Compat mode!
 function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_options = array())
 {
-	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix, $smcFunc;
+	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix;
 
 	if (!empty($db_options['persist']))
 		$db_connection = @mysql_pconnect($db_server, $db_user, $db_passwd);
@@ -1301,7 +1301,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	// Insert some data...
 	function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false)
 	{
-		global $smcFunc, $db_connection, $db_prefix;
+		global $db_connection, $db_prefix;
 
 		// With nothing to insert, simply return.
 		if (empty($data))
@@ -1364,7 +1364,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 
 function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
-	global $smcFunc, $db_connection;
+	global $db_connection;
 
 	// Gonna need a lot of memory.
 	if (@ini_get('memory_limit') < 128)

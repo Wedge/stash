@@ -275,7 +275,7 @@ function load_lang_file()
 // This handy function loads some settings and the like.
 function load_database()
 {
-	global $smcFunc, $modSettings, $sourcedir, $db_prefix, $db_connection, $db_name, $db_user;
+	global $modSettings, $sourcedir, $db_prefix, $db_connection, $db_name, $db_user;
 
 	if (empty($sourcedir))
 		$sourcedir = dirname(__FILE__) . '/Sources';
@@ -284,8 +284,6 @@ function load_database()
 	require(dirname(__FILE__) . '/Settings.php');
 	if (!defined('SMF'))
 		define('SMF', 1);
-	if (empty($smcFunc))
-		$smcFunc = array(); // used later
 
 	$modSettings['disableQueryCheck'] = true;
 
@@ -622,7 +620,7 @@ function CheckFilesWritable()
 
 function DatabaseSettings()
 {
-	global $txt, $db, $incontext, $smcFunc;
+	global $txt, $db, $incontext;
 
 	$incontext['sub_template'] = 'database_settings';
 	$incontext['page_title'] = $txt['db_settings'];
@@ -712,8 +710,6 @@ function DatabaseSettings()
 		// Now include it for database functions!
 		define('SMF', 1);
 		$modSettings['disableQueryCheck'] = true;
-		if (empty($smcFunc))
-			$smcFunc = array();
 		require_once($sourcedir . '/Class-DB.php');
 
 		// Attempt a connection.
@@ -1315,7 +1311,7 @@ function AdminAccount()
 // Final step, clean up and a complete message!
 function DeleteInstall()
 {
-	global $txt, $incontext, $context, $scripturl, $boardurl, $smcFunc;
+	global $txt, $incontext, $context, $scripturl, $boardurl;
 	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
@@ -1332,6 +1328,7 @@ function DeleteInstall()
 	require_once($sourcedir . '/Load.php');
 	require_once($sourcedir . '/Security.php');
 	require_once($sourcedir . '/Subs-Auth.php');
+	require_once($sourcedir . '/Class-String.php');
 
 	// Bring a warning over.
 	if (!empty($incontext['account_existed']))
@@ -1407,13 +1404,6 @@ function DeleteInstall()
 	updateStats('message');
 	updateStats('topic');
 	updateStats('postgroups');
-
-	// This function is needed to do the updateStats('subject') call.
-	$smcFunc['strtolower'] = (function_exists('mb_strtolower') ? create_function('$string', '
-			return mb_strtolower($string, \'UTF-8\');') : create_function('$string', '
-			global $sourcedir;
-			require_once($sourcedir . \'/Subs-Charset.php\');
-			return utf8_strtolower($string);'));
 
 	$request = wedb::query('
 		SELECT id_msg

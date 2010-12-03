@@ -502,7 +502,7 @@ function show_password_form()
 
 function show_system_info()
 {
-	global $txt, $smcFunc, $context, $smfInfo, $modSettings, $forum_version;
+	global $txt, $context, $smfInfo, $modSettings, $forum_version;
 	global $db_persist, $maintenance, $cookiename, $db_last_error, $db_show_debug;
 
 	get_database_version();
@@ -1407,7 +1407,7 @@ function initialize()
 
 function get_database_version()
 {
-	global $smcFunc, $context, $db_name;
+	global $context, $db_name;
 
 	// Learned some of this from phpMyAdmin...
 	$match = explode('.', mysql_get_server_info());
@@ -2310,7 +2310,7 @@ function get_file_data($filename)
 
 function get_server_versions($checkFor)
 {
-	global $txt, $db_connection, $_PHPA, $smcFunc, $memcached, $modSettings;
+	global $txt, $db_connection, $_PHPA, $memcached, $modSettings;
 
 	loadLanguage('Admin');
 
@@ -2391,7 +2391,7 @@ function get_database_info()
 
 function get_error_log()
 {
-	global $context, $db_prefix, $smcFunc, $scripturl, $txt;
+	global $context, $db_prefix, $scripturl, $txt;
 
 	$context['errors'] = array();
 

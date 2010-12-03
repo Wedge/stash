@@ -29,7 +29,7 @@
 		// if it didn't exist yet.
 		protected function _getUnitTestBoardId()
 		{
-			global $smcFunc, $sourcedir;
+			global $sourcedir;
 
 			$request = $smcFunc['db_query']('', '
 				SELECT id_board
@@ -74,7 +74,7 @@
 
 		protected function _getUnitTestCatId()
 		{
-			global $smcFunc, $sourcedir;
+			global $sourcedir;
 
 			$request = $smcFunc['db_query']('', '
 				SELECT id_cat
@@ -96,7 +96,7 @@
 
 		protected function _getUnitTestMemberId($role)
 		{
-			global $sourcedir, $smcFunc;
+			global $sourcedir;
 
 			switch ($role)
 			{
@@ -150,7 +150,7 @@
 
 		protected function _getUnitTestTopic($id_board, $id_member, $subject, $body)
 		{
-			global $sourcedir, $smcFunc;
+			global $sourcedir;
 
 			$request = $smcFunc['db_query']('', '
 				SELECT t.id_topic, m.id_msg
@@ -244,7 +244,7 @@
 
 		protected function _simulateClick($URL, $memberID = 0, $sessionID = null, $cookies = array())
 		{
-			global $cookiename, $smcFunc, $modSettings;
+			global $cookiename, $modSettings;
 
 			if ($sessionID !== null)
 				$cookies['PHPSESSID'] = $sessionID;

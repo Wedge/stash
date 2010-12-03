@@ -159,7 +159,7 @@ if (function_exists('set_magic_quotes_runtime'))
 // Hopefully the forum is in the same place as this script.
 require_once(dirname(__FILE__) . '/Settings.php');
 
-global $smcFunc, $smf_settings, $smf_user_info, $smf_connection;
+global $smf_settings, $smf_user_info, $smf_connection;
 
 // If $maintenance is set to 2, don't connect to the database at all.
 if ($maintenance != 2)
@@ -200,7 +200,7 @@ $smf_user_info = array();
 function smf_setLoginCookie($cookie_length, $id, $password = '', $encrypted = true)
 {
 	// This should come from Settings.php, hopefully.
-	global $smcFunc, $smf_connection, $smf_settings;
+	global $smf_connection, $smf_settings;
 
 	// The $id is not numeric; it's probably a username.
 	if (!is_integer($id))
@@ -261,7 +261,7 @@ function smf_setLoginCookie($cookie_length, $id, $password = '', $encrypted = tr
 
 	function smf_cookie_url($local, $global)
 	{
-		global $smcFunc, $smf_settings;
+		global $smf_settings;
 		// Use PHP to parse the URL, hopefully it does its job.
 		$parsed_url = parse_url($smf_settings['forum_url']);
 
@@ -308,7 +308,7 @@ function smf_setLoginCookie($cookie_length, $id, $password = '', $encrypted = tr
 
 function smf_authenticateUser()
 {
-	global $smcFunc, $smf_connection, $smf_settings;
+	global $smf_connection, $smf_settings;
 
 	// No connection, no authentication!
 	if (!$smf_connection)
@@ -400,7 +400,7 @@ function smf_authenticateUser()
 
 function smf_registerMember($username, $email, $password, $extra_fields = array(), $theme_options = array())
 {
-	global $smcFunc, $smf_settings, $smf_connection;
+	global $smf_settings, $smf_connection;
 
 	// No connection means no registrations...
 	if (!$smf_connection)
@@ -520,7 +520,7 @@ function smf_registerMember($username, $email, $password, $extra_fields = array(
 // Log the current user online.
 function smf_logOnline($action = null)
 {
-	global $smcFunc, $smf_settings, $smf_connection, $smf_user_info;
+	global $smf_settings, $smf_connection, $smf_user_info;
 
 	if (!$smf_connection)
 		return false;
@@ -582,7 +582,7 @@ function smf_logOnline($action = null)
 
 function smf_is_online($user)
 {
-	global $smcFunc, $smf_settings, $smf_connection;
+	global $smf_settings, $smf_connection;
 
 	if (!$smf_connection)
 		return false;
@@ -606,7 +606,7 @@ function smf_is_online($user)
 // Log an error, if the option is on.
 function smf_logError($error_message, $file = null, $line = null)
 {
-	global $smcFunc, $smf_settings, $smf_connection;
+	global $smf_settings, $smf_connection;
 
 	// Check if error logging is actually on and we're connected...
 	if (empty($smf_settings['enableErrorLogging']) || !$smf_connection)
@@ -656,7 +656,7 @@ function smf_formatTime($log_time)
 // Mother, may I?
 function smf_allowedTo($permission)
 {
-	global $smcFunc, $smf_settings, $smf_user_info, $smf_connection;
+	global $smf_settings, $smf_user_info, $smf_connection;
 
 	if (!$smf_connection)
 		return null;
@@ -702,7 +702,7 @@ function smf_allowedTo($permission)
 
 function smf_loadThemeData($id_theme = 0)
 {
-	global $smcFunc, $smf_settings, $smf_user_info, $smf_connection;
+	global $smf_settings, $smf_user_info, $smf_connection;
 
 	if (!$smf_connection)
 		return null;
@@ -740,7 +740,7 @@ function smf_loadThemeData($id_theme = 0)
 
 	$member = empty($smf_user_info['id']) ? -1 : $smf_user_info['id'];
 
-	// Load variables from the current or default theme, global $smcFunc, or this user's.
+	// Load variables from the current or default theme, global or this user's.
 	$result = $smcFunc['db_query']('', '
 		SELECT variable, value, id_member, id_theme
 		FROM {raw:smf_db_prefix}themes
@@ -833,7 +833,7 @@ function smf_sessionClose()
 
 function smf_sessionRead($session_id)
 {
-	global $smcFunc, $smf_settings;
+	global $smf_settings;
 
 	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
 		return false;
@@ -857,7 +857,7 @@ function smf_sessionRead($session_id)
 
 function smf_sessionWrite($session_id, $data)
 {
-	global $smcFunc, $smf_settings, $smf_connection;
+	global $smf_settings, $smf_connection;
 
 	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
 		return false;
@@ -889,7 +889,7 @@ function smf_sessionWrite($session_id, $data)
 
 function smf_sessionDestroy($session_id)
 {
-	global $smcFunc, $smf_settings;
+	global $smf_settings;
 
 	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
 		return false;
@@ -906,7 +906,7 @@ function smf_sessionDestroy($session_id)
 
 function smf_sessionGC($max_lifetime)
 {
-	global $smcFunc, $smf_settings;
+	global $smf_settings;
 
 	// Just set to the default or lower?  Ignore it for a higher value. (hopefully)
 	if ($max_lifetime <= 1440 && !empty($smf_settings['databaseSession_lifetime']))

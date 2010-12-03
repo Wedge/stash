@@ -44,7 +44,7 @@
 
 		public function initialize()
 		{
-			global $sourcedir, $smcFunc;
+			global $sourcedir;
 
 			require_once($sourcedir . '/Subs.php');
 
