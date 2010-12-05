@@ -187,7 +187,7 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(44, 'right', 'parsed', '<div style="text-align: right;">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(45, 'rtl', 'parsed', '<div dir="rtl">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(46, 's', 'parsed', '<del>', '</del>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
-	(47, 'size', 'unparsed_equals', '<span style="font-size: $1;" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|(?:x-)?small(?:er)?|(?:x-)?large[r]?|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none'),
+	(47, 'size', 'unparsed_equals', '<span style="font-size: $1;" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|small(?:er)?|large[r]?|x[x]?-(?:small|large)|medium|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none'),
 	(48, 'size', 'unparsed_equals', '<span style="font-size: $1;" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 0.7, 2 => 1.0, 3 => 1.35, 4 => 1.45, 5 => 2.0, 6 => 2.65, 7 => 3.95);\r\n$data = $sizes[$data] . ''em'';', '', '', '', '', 'none', '', 'none'),
 	(49, 'spoiler', 'parsed', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="{{spoiler}}" onclick="n = this.parentNode.parentNode.lastChild.style; n.display = n.display == ''none'' ? ''block'' : ''none''; return false;" />{{click_for_spoiler}}</div><div class="spoiled" style="display: none">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(50, 'sub', 'parsed', '<sub>', '</sub>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
