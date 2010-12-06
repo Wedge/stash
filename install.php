@@ -291,10 +291,10 @@ function load_database()
 	if (!$db_connection)
 	{
 		require_once($sourcedir . '/Class-DB.php');
-		wedb::getInstance();
+		wesql::getInstance();
 
 		if (!$db_connection)
-			$db_connection = wedb::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
+			$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
 	}
 }
 
@@ -713,14 +713,14 @@ function DatabaseSettings()
 		require_once($sourcedir . '/Class-DB.php');
 
 		// Attempt a connection.
-		$db_connection = wedb::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
+		$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
 
 		// No dice?  Let's try adding the prefix they specified, just in case they misread the instructions ;)
 		if ($db_connection == null)
 		{
-			$db_error = @wedb::error();
+			$db_error = @wesql::error();
 
-			$db_connection = wedb::connect($db_server, $db_name, $_POST['db_prefix'] . $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
+			$db_connection = wesql::connect($db_server, $db_name, $_POST['db_prefix'] . $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
 			if ($db_connection != null)
 			{
 				$db_user = $_POST['db_prefix'] . $db_user;
@@ -746,7 +746,7 @@ function DatabaseSettings()
 		// Let's try that database on for size... assuming we haven't already lost the opportunity.
 		if ($db_name != '')
 		{
-			wedb::query("
+			wesql::query("
 				CREATE DATABASE IF NOT EXISTS `$db_name`",
 				array(
 					'security_override' => true,
@@ -756,9 +756,9 @@ function DatabaseSettings()
 			);
 
 			// Okay, let's try the prefix if it didn't work...
-			if (!wedb::select_db($db_name, $db_connection) && $db_name != '')
+			if (!wesql::select_db($db_name, $db_connection) && $db_name != '')
 			{
-				wedb::query("
+				wesql::query("
 					CREATE DATABASE IF NOT EXISTS `$_POST[db_prefix]$db_name`",
 					array(
 						'security_override' => true,
@@ -767,7 +767,7 @@ function DatabaseSettings()
 					$db_connection
 				);
 
-				if (wedb::select_db($_POST['db_prefix'] . $db_name, $db_connection))
+				if (wesql::select_db($_POST['db_prefix'] . $db_name, $db_connection))
 				{
 					$db_name = $_POST['db_prefix'] . $db_name;
 					updateSettingsFile(array('db_name' => $db_name));
@@ -775,7 +775,7 @@ function DatabaseSettings()
 			}
 
 			// Okay, now let's try to connect...
-			if (!wedb::select_db($db_name, $db_connection))
+			if (!wesql::select_db($db_name, $db_connection))
 			{
 				$incontext['error'] = sprintf($txt['error_db_database'], $db_name);
 				return false;
@@ -862,7 +862,7 @@ function DatabasePopulation()
 	load_database();
 
 	// Before running any of the queries, let's make sure another version isn't already installed.
-	$result = wedb::query('
+	$result = wesql::query('
 		SELECT variable, value
 		FROM {db_prefix}settings',
 		array(
@@ -872,9 +872,9 @@ function DatabasePopulation()
 	$modSettings = array();
 	if ($result !== false)
 	{
-		while ($row = wedb::fetch_assoc($result))
+		while ($row = wesql::fetch_assoc($result))
 			$modSettings[$row['variable']] = $row['value'];
-		wedb::free_result($result);
+		wesql::free_result($result);
 
 		// Do they match?  If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
@@ -886,7 +886,7 @@ function DatabasePopulation()
 	}
 
 	// We're doing UTF8, select it.
-	wedb::query('
+	wesql::query('
 		SET NAMES utf8',
 		array(
 			'db_error_skip' => true,
@@ -895,7 +895,7 @@ function DatabasePopulation()
 
 	$replaces = array(
 		'{$db_prefix}' => $db_prefix,
-		'{$boarddir}' => wedb::escape_string(dirname(__FILE__)),
+		'{$boarddir}' => wesql::escape_string(dirname(__FILE__)),
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
@@ -907,7 +907,7 @@ function DatabasePopulation()
 	foreach ($txt as $key => $value)
 	{
 		if (substr($key, 0, 8) == 'default_')
-			$replaces['{$' . $key . '}'] = wedb::escape_string($value);
+			$replaces['{$' . $key . '}'] = wesql::escape_string($value);
 	}
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
@@ -945,7 +945,7 @@ function DatabasePopulation()
 			continue;
 		}
 
-		if (wedb::query($current_statement, array('security_override' => true, 'db_error_skip' => true), $db_connection) === false)
+		if (wesql::query($current_statement, array('security_override' => true, 'db_error_skip' => true), $db_connection) === false)
 		{
 			// Error 1050: Table already exists!
 			//!!! Needs to be made better!
@@ -957,7 +957,7 @@ function DatabasePopulation()
 			// Don't error on duplicate indexes
 			elseif (!preg_match('~^\s*CREATE( UNIQUE)? INDEX ([^\n\r]+?)~', $current_statement, $match))
 			{
-				$incontext['failures'][$count] = wedb::error();
+				$incontext['failures'][$count] = wesql::error();
 			}
 		}
 		else
@@ -1009,7 +1009,7 @@ function DatabasePopulation()
 
 		if (!empty($rows))
 		{
-			wedb::insert('replace',
+			wesql::insert('replace',
 				$db_prefix . 'settings',
 				array('variable' => 'string-255', 'value' => 'string-65534'),
 				$rows,
@@ -1042,7 +1042,7 @@ function DatabasePopulation()
 			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $ID);
 
 			if (!empty($ID[1]))
-				wedb::insert('',
+				wesql::insert('',
 					$db_prefix . 'settings',
 					array(
 						'variable' => 'string-255', 'value' => 'string-65534',
@@ -1062,7 +1062,7 @@ function DatabasePopulation()
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
 		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);
 		if (date_default_timezone_set($timezone_id))
-			wedb::insert('',
+			wesql::insert('',
 				$db_prefix . 'settings',
 				array(
 					'variable' => 'string-255', 'value' => 'string-65534',
@@ -1075,7 +1075,7 @@ function DatabasePopulation()
 	}
 
 	// Let's optimize those new tables.
-	wedb::extend();
+	wesql::extend();
 	$tables = wedbExtra::list_tables($db_name, $db_prefix . '%');
 	foreach ($tables as $table)
 	{
@@ -1083,13 +1083,13 @@ function DatabasePopulation()
 
 		if (!empty($db_messed))
 		{
-			$incontext['failures'][-1] = wedb::error();
+			$incontext['failures'][-1] = wesql::error();
 			break;
 		}
 	}
 
 	// Check for the ALTER privilege.
-	if (wedb::query("ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
+	if (wesql::query("ALTER TABLE {$db_prefix}boards ORDER BY id_board", array('security_override' => true, 'db_error_skip' => true)) === false)
 	{
 		$incontext['error'] = $txt['error_db_alter_priv'];
 		return false;
@@ -1130,7 +1130,7 @@ function AdminAccount()
 	$incontext['email'] = htmlspecialchars(stripslashes($_POST['email']));
 
 	// Only allow skipping if we think they already have an account setup.
-	$request = wedb::query('
+	$request = wesql::query('
 		SELECT id_member
 		FROM {db_prefix}members
 		WHERE id_group = {int:admin_group} OR FIND_IN_SET({int:admin_group}, additional_groups) != 0
@@ -1140,9 +1140,9 @@ function AdminAccount()
 			'admin_group' => 1,
 		)
 	);
-	if (wedb::num_rows($request) != 0)
+	if (wesql::num_rows($request) != 0)
 		$incontext['skip'] = 1;
-	wedb::free_result($request);
+	wesql::free_result($request);
 
 	// Trying to create an account?
 	if (isset($_POST['password1']) && !empty($_POST['contbutt']))
@@ -1179,7 +1179,7 @@ function AdminAccount()
 		$invalid_characters = preg_match('~[<>&"\'=\\\]~', $_POST['username']) != 0;
 		$_POST['username'] = preg_replace('~[<>&"\'=\\\]~', '', $_POST['username']);
 
-		$result = wedb::query('
+		$result = wesql::query('
 			SELECT id_member, password_salt
 			FROM {db_prefix}members
 			WHERE member_name = {string:username} OR email_address = {string:email}
@@ -1190,10 +1190,10 @@ function AdminAccount()
 				'db_error_skip' => true,
 			)
 		);
-		if (wedb::num_rows($result) != 0)
+		if (wesql::num_rows($result) != 0)
 		{
-			list ($incontext['member_id'], $incontext['member_salt']) = wedb::fetch_row($result);
-			wedb::free_result($result);
+			list ($incontext['member_id'], $incontext['member_salt']) = wesql::fetch_row($result);
+			wesql::free_result($result);
 
 			$incontext['account_existed'] = $txt['error_user_settings_taken'];
 		}
@@ -1223,7 +1223,7 @@ function AdminAccount()
 			$_POST['username'] = preg_replace('~[\t\n\r\x0B\0\xA0]+~', ' ', $_POST['username']);
 			$ip = isset($_SERVER['REMOTE_ADDR']) ? substr($_SERVER['REMOTE_ADDR'], 0, 255) : '';
 
-			$request = wedb::insert('insert',
+			$request = wesql::insert('insert',
 				'{db_prefix}members',
 				array(
 					'member_name' => 'string-25', 'real_name' => 'string-25', 'passwd' => 'string', 'email_address' => 'string',
@@ -1250,14 +1250,14 @@ function AdminAccount()
 			if ($request === false)
 			{
 				$incontext['error'] = $txt['error_user_settings_query'] . '<br />
-				<div style="margin: 2ex;">' . nl2br(htmlspecialchars(wedb::error($db_connection))) . '</div>';
+				<div style="margin: 2ex;">' . nl2br(htmlspecialchars(wesql::error($db_connection))) . '</div>';
 				return false;
 			}
 
-			$incontext['member_id'] = wedb::insert_id();
+			$incontext['member_id'] = wesql::insert_id();
 
 			// If we have a first post that we've inserted ourselves, let's fix that to be our new administrator.
-			wedb::query('
+			wesql::query('
 				UPDATE {db_prefix}messages
 				SET id_member = {int:id_member},
 					poster_name = {string:poster_name},
@@ -1276,9 +1276,9 @@ function AdminAccount()
 				)
 			);
 			// If we updated the messages, we should fix the topic too. And user post count.
-			if (wedb::affected_rows() != 0)
+			if (wesql::affected_rows() != 0)
 			{
-				wedb::query('
+				wesql::query('
 					UPDATE {db_prefix}topics
 					SET id_member_started = {int:id_member},
 						id_member_updated = {int:id_member}
@@ -1290,7 +1290,7 @@ function AdminAccount()
 					)
 				);
 
-				wedb::query('
+				wesql::query('
 					UPDATE {db_prefix}members
 					SET posts = posts + 1
 					WHERE id_member = {int:id_member}',
@@ -1334,7 +1334,7 @@ function DeleteInstall()
 	if (!empty($incontext['account_existed']))
 		$incontext['warning'] = $incontext['account_existed'];
 
-	wedb::query('
+	wesql::query('
 		SET NAMES utf8',
 		array(
 			'db_error_skip' => true,
@@ -1342,7 +1342,7 @@ function DeleteInstall()
 	);
 
 	// As track stats is by default enabled let's add some activity.
-	wedb::insert('ignore',
+	wesql::insert('ignore',
 		'{db_prefix}log_activity',
 		array('date' => 'date', 'topics' => 'int', 'posts' => 'int', 'registers' => 'int'),
 		array(strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
@@ -1353,7 +1353,7 @@ function DeleteInstall()
 	if (isset($incontext['member_id'], $incontext['member_salt']))
 		setLoginCookie(3153600 * 60, $incontext['member_id'], sha1(sha1(strtolower($_POST['username']) . $_POST['password1']) . $incontext['member_salt']));
 
-	$result = wedb::query('
+	$result = wesql::query('
 		SELECT value
 		FROM {db_prefix}settings
 		WHERE variable = {string:db_sessions}',
@@ -1362,9 +1362,9 @@ function DeleteInstall()
 			'db_error_skip' => true,
 		)
 	);
-	if (wedb::num_rows($result) != 0)
-		list ($db_sessions) = wedb::fetch_row($result);
-	wedb::free_result($result);
+	if (wesql::num_rows($result) != 0)
+		list ($db_sessions) = wesql::fetch_row($result);
+	wesql::free_result($result);
 
 	if (empty($db_sessions))
 		$_SESSION['admin_time'] = time();
@@ -1372,7 +1372,7 @@ function DeleteInstall()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = substr($_SERVER['HTTP_USER_AGENT'], 0, 211);
 
-		wedb::insert('replace',
+		wesql::insert('replace',
 			'{db_prefix}sessions',
 			array(
 				'session_id' => 'string', 'last_update' => 'int', 'data' => 'string',
@@ -1385,7 +1385,7 @@ function DeleteInstall()
 	}
 
 	// We're going to want our lovely $modSettings now.
-	$request = wedb::query('
+	$request = wesql::query('
 		SELECT variable, value
 		FROM {db_prefix}settings',
 		array(
@@ -1395,9 +1395,9 @@ function DeleteInstall()
 	// Only proceed if we can load the data.
 	if ($request)
 	{
-		while ($row = wedb::fetch_row($request))
+		while ($row = wesql::fetch_row($request))
 			$modSettings[$row[0]] = $row[1];
-		wedb::free_result($request);
+		wesql::free_result($request);
 	}
 
 	updateStats('member');
@@ -1405,7 +1405,7 @@ function DeleteInstall()
 	updateStats('topic');
 	updateStats('postgroups');
 
-	$request = wedb::query('
+	$request = wesql::query('
 		SELECT id_msg
 		FROM {db_prefix}messages
 		WHERE id_msg = 1
@@ -1415,9 +1415,9 @@ function DeleteInstall()
 			'db_error_skip' => true,
 		)
 	);
-	if (wedb::num_rows($request) > 0)
+	if (wesql::num_rows($request) > 0)
 		updateStats('subject', 1, htmlspecialchars($txt['default_topic_subject']));
-	wedb::free_result($request);
+	wesql::free_result($request);
 
 	// Now is the perfect time to fetch the SM files.
 	require_once($sourcedir . '/ScheduledTasks.php');
@@ -1434,7 +1434,7 @@ function DeleteInstall()
 	}
 
 	// Check if we need some stupid MySQL fix.
-	$server_version = wedb::server_info();
+	$server_version = wesql::server_info();
 	if (in_array(substr($server_version, 0, 6), array('5.0.50', '5.0.51')))
 		updateSettings(array('db_mysql_group_by_fix' => '1'));
 
