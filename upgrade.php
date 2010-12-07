@@ -3673,7 +3673,7 @@ function template_welcome_message()
 	// This defines whether javascript is going to work elsewhere :D
 	echo '
 		<script type="text/javascript"><!-- // --><![CDATA[
-			if (\'XMLHttpRequest\' in window && document.getElementById(\'js_works\'))
+			if (can_ajax && document.getElementById(\'js_works\'))
 				document.getElementById(\'js_works\').value = 1;
 
 			// Latest version?
