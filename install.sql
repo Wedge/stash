@@ -1706,6 +1706,7 @@ CREATE TABLE {$db_prefix}scheduled_tasks (
   time_unit varchar(1) NOT NULL default 'h',
   disabled tinyint(3) NOT NULL default '0',
   task varchar(24) NOT NULL default '',
+  sourcefile varchar(24) NOT NULL default '',
   PRIMARY KEY (id_task),
   KEY next_time (next_time),
   KEY disabled (disabled),
@@ -1717,17 +1718,17 @@ CREATE TABLE {$db_prefix}scheduled_tasks (
 #
 
 INSERT INTO {$db_prefix}scheduled_tasks
-	(id_task, next_time, time_offset, time_regularity, time_unit, disabled, task)
+	(id_task, next_time, time_offset, time_regularity, time_unit, disabled, task, sourcefile)
 VALUES
-	(1, 0, 0, 2, 'h', 0, 'approval_notification'),
-	(2, 0, 0, 7, 'd', 0, 'auto_optimize'),
-	(3, 0, 60, 1, 'd', 0, 'daily_maintenance'),
-	(5, 0, 0, 1, 'd', 0, 'daily_digest'),
-	(6, 0, 0, 1, 'w', 0, 'weekly_digest'),
-	(7, 0, {$sched_task_offset}, 1, 'd', 0, 'fetchSMfiles'),
-	(8, 0, 0, 1, 'd', 1, 'birthdayemails'),
-	(9, 0, 0, 1, 'w', 0, 'weekly_maintenance'),
-	(10, 0, 120, 1, 'd', 0, 'paid_subscriptions');
+	(1, 0, 0, 2, 'h', 0, 'approval_notification', ''),
+	(2, 0, 0, 7, 'd', 0, 'auto_optimize', ''),
+	(3, 0, 60, 1, 'd', 0, 'daily_maintenance', ''),
+	(5, 0, 0, 1, 'd', 0, 'daily_digest', ''),
+	(6, 0, 0, 1, 'w', 0, 'weekly_digest', ''),
+	(7, 0, {$sched_task_offset}, 1, 'd', 0, 'fetchSMfiles', ''),
+	(8, 0, 0, 1, 'd', 1, 'birthdayemails', ''),
+	(9, 0, 0, 1, 'w', 0, 'weekly_maintenance', ''),
+	(10, 0, 120, 1, 'd', 0, 'paid_subscriptions', '');
 
 # --------------------------------------------------------
 
