@@ -1892,7 +1892,7 @@ function cli_scheduled_fetchSMfiles()
 	global $sourcedir, $txt, $language, $settings, $forum_version, $modSettings;
 
 	if (empty($modSettings['time_format']))
-		$modSettings['time_format'] = '%B %d, %Y, %I:%M:%S %p';
+		$modSettings['time_format'] = '%B %e, %Y, %I:%M:%S %p';
 
 	// What files do we want to get
 	$request = $smcFunc['db_query']('', '
