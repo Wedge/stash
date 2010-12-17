@@ -1920,6 +1920,7 @@ function template_install_above()
 		<title>', $txt['smf_installer'], '</title>
 		<link rel="stylesheet" href="Themes/default/css/index.css?rc3" />
 		<link rel="stylesheet" href="Themes/default/css/install.css?rc3" />
+		<script src="Themes/default/scripts/jquery.1.4.4.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 	</head>
 	<body>
