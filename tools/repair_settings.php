@@ -97,10 +97,12 @@ if (!file_exists(dirname(__FILE__) . '/' . $wedgelogo))
 echo '<!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8" />
 	<meta name="robots" content="noindex" />
 	<title>', $txt['smf_repair_settings'], '</title>
-	<script src="Themes/default/scripts/script.js"></script>
 	<link rel="stylesheet" href="Themes/default/css/index.css" />
+	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+	<script src="Themes/default/scripts/script.js"></script>
 	<style>
 		body
 		{
@@ -248,28 +250,14 @@ function initialize_inputs()
 	{
 		define('SMF', 1);
 
-		if (empty($smcFunc))
-			$smcFunc = array();
-
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');
 		require_once($sourcedir . '/Load.php');
-		require_once($sourcedir . '/Security.php');
-		require_once($sourcedir . '/Subs-Auth.php');
-
-		// Compat mode. Active!
-		$context['is_legacy'] = true;
-		if (!file_exists($sourcedir . '/Subs-Database.php'))
-			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
-		else
-		{
-			// Far as we know, this is 2.0.
-			$context['is_legacy'] = false;
-			require_once($sourcedir . '/Subs-Database.php');
-			require_once($sourcedir . '/DbExtra.php');
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
-			db_extra_init();
-		}
+		loadSource('Security');
+		loadSource('Subs-Auth');
+		loadSource('Class-DB');
+		loadSource('Class-DBExtra');
+		$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 	}
 }
 
@@ -312,7 +300,7 @@ function show_settings()
 
 	if ($db_connection == true)
 	{
-		$request = $smcFunc['db_query'](true, '
+		$request = wesql::query('
 			SELECT DISTINCT variable, value
 			FROM {db_prefix}settings',
 			array(
@@ -320,12 +308,12 @@ function show_settings()
 			),
 			$db_connection
 		);
-		while ($row = $smcFunc['db_fetch_assoc']($request))
+		while ($row = wesql::fetch_assoc($request))
 			$settings[$row['variable']] = $row['value'];
-		$smcFunc['db_free_result']($request);
+		wesql::free_result($request);
 
 		// Load all the themes.
-		$request = $smcFunc['db_query'](true, '
+		$request = wesql::query('
 			SELECT variable, value, id_theme
 			FROM {db_prefix}themes
 			WHERE id_member = 0
@@ -337,9 +325,9 @@ function show_settings()
 		);
 
 		$theme_settings = array();
-		while ($row = $smcFunc['db_fetch_row']($request))
+		while ($row = wesql::fetch_row($request))
 			$theme_settings[$row[2]][$row[0]] = $row[1];
-		$smcFunc['db_free_result']($request);
+		wesql::free_result($request);
 
 		$show_db_settings = $request;
 	}
@@ -378,22 +366,9 @@ function show_settings()
 		'theme_path_url_settings' => array(),
 	);
 
-	// 1.x didn't have ssi_x, nor cachedir
-	if ($context['is_legacy'])
-	{
-		if (empty($known_settings['database_settings']['ssi_db_user']))
-			unset($known_settings['database_settings']['ssi_db_user']);
-		if (empty($known_settings['database_settings']['ssi_db_passwd']))
-			unset($known_settings['database_settings']['ssi_db_passwd']);
-		if (empty($known_settings['path_url_settings']['cachedir']))
-			unset($known_settings['path_url_settings']['cachedir']);
-	}
-	else
-	{
-		// !!! Multiple Attachment Dirs not supported as yet, so hide this field
-		if (empty($known_settings['path_url_settings']['attachmentUploadDir']))
-			unset($known_settings['path_url_settings']['attachmentUploadDir']);
-	}
+	// !!! Multiple Attachment Dirs not supported as yet, so hide this field
+	if (empty($known_settings['path_url_settings']['attachmentUploadDir']))
+		unset($known_settings['path_url_settings']['attachmentUploadDir']);
 
 	$host = empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] . (empty($_SERVER['SERVER_PORT']) || $_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT']) : $_SERVER['HTTP_HOST'];
 	$url = 'http://' . $host . substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
@@ -459,7 +434,7 @@ function show_settings()
 
 	if ($db_connection == true)
 	{
-		$request = $smcFunc['db_list_tables']('', '
+		$request = weDBExtra::list_tables('', '
 			{db_prefix}log_topics',
 			array(
 				'db_error_skip' => true,
@@ -467,9 +442,9 @@ function show_settings()
 		);
 		if ($request == true)
 		{
-			if ($smcFunc['db_num_rows']($request) == 1)
-				list ($known_settings['database_settings']['db_prefix'][2]) = preg_replace('~log_topics$~', '', $smcFunc['db_fetch_row']($request));
-			$smcFunc['db_free_result']($request);
+			if (wesql::num_rows($request) == 1)
+				list ($known_settings['database_settings']['db_prefix'][2]) = preg_replace('~log_topics$~', '', wesql::fetch_row($request));
+			wesql::free_result($request);
 		}
 	}
 	elseif (empty($show_db_settings))
@@ -577,8 +552,6 @@ function show_settings()
 
 function set_settings()
 {
-	global $smcFunc;
-
 	$db_updates = isset($_POST['dbsettings']) ? $_POST['dbsettings'] : array();
 	$theme_updates = isset($_POST['themesettings']) ? $_POST['themesettings'] : array();
 	$file_updates = isset($_POST['flatsettings']) ? $_POST['flatsettings'] : array();
@@ -639,7 +612,7 @@ function set_settings()
 		$setString[] = array($var, stripslashes($val));
 
 	if (!empty($setString))
-		$smcFunc['db_insert']('replace',
+		wesql::insert('replace',
 			'{db_prefix}settings',
 			array('variable' => 'string', 'value' => 'string-65534'),
 			$setString,
@@ -658,318 +631,12 @@ function set_settings()
 	}
 
 	if (!empty($setString))
-		$smcFunc['db_insert']('replace',
+		wesql::insert('replace',
 			'{db_prefix}themes',
 			array('id_theme' => 'int', 'id_member' => 'int', 'variable' => 'string', 'value' => 'string-65534'),
 			$setString,
 			array('id_theme', 'id_member', 'variable')
 		);
-}
-
-// Compat mode!
-function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_options = array())
-{
-	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix;
-
-	if (!empty($db_options['persist']))
-		$db_connection = @mysql_pconnect($db_server, $db_user, $db_passwd);
-	else
-		$db_connection = @mysql_connect($db_server, $db_user, $db_passwd);
-
-	// Something's wrong, show an error if it's fatal (which we assume it is)
-	if (!$db_connection)
-	{
-		if (!empty($db_options['non_fatal']))
-			return null;
-		else
-		{
-			if (file_exists($sourcedir . '/Subs-Auth.php'))
-			{
-				require_once($sourcedir . '/Subs-Auth.php');
-				show_db_error();
-			}
-			exit('Sorry, SMF was unable to connect to database.');
-		}
-	}
-
-	// Select the database, unless told not to
-	if (empty($db_options['dont_select_db']) && !@mysql_select_db($db_name, $connection) && empty($db_options['non_fatal']))
-	{
-		if (file_exists($sourcedir . '/Subs-Auth.php'))
-		{
-			require_once($sourcedir . '/Subs-Auth.php');
-			show_db_error();
-		}
-		exit('Sorry, SMF was unable to connect to database.');
-	}
-	else
-		$db_prefix = is_numeric(substr($db_prefix, 0, 1)) ? $db_name . '.' . $db_prefix : '`' . $db_name . '`.' . $db_prefix;
-
-	// Some core functions.
-	function smf_db_replacement__callback($matches)
-	{
-		global $db_callback, $user_info, $db_prefix;
-
-		list ($values, $connection) = $db_callback;
-
-		if ($matches[1] === 'db_prefix')
-			return $db_prefix;
-
-		if ($matches[1] === 'query_see_board')
-			return $user_info['query_see_board'];
-
-		if ($matches[1] === 'query_wanna_see_board')
-			return $user_info['query_wanna_see_board'];
-
-		if (!isset($matches[2]))
-			smf_db_error_backtrace('Invalid value inserted or no type specified.', '', E_USER_ERROR, __FILE__, __LINE__);
-
-		if (!isset($values[$matches[2]]))
-			smf_db_error_backtrace('The database value you\'re trying to insert does not exist: ' . htmlspecialchars($matches[2]), '', E_USER_ERROR, __FILE__, __LINE__);
-
-		$replacement = $values[$matches[2]];
-
-		switch ($matches[1])
-		{
-			case 'int':
-				if (!is_numeric($replacement) || (string) $replacement !== (string) (int) $replacement)
-					smf_db_error_backtrace('Wrong value type sent to the database. Integer expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-				return (string) (int) $replacement;
-			break;
-
-			case 'string':
-			case 'text':
-				return sprintf('\'%1$s\'', mysql_real_escape_string($replacement, $connection));
-			break;
-
-			case 'array_int':
-				if (is_array($replacement))
-				{
-					if (empty($replacement))
-						smf_db_error_backtrace('Database error, given array of integer values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-
-					foreach ($replacement as $key => $value)
-					{
-						if (!is_numeric($value) || (string) $value !== (string) (int) $value)
-							smf_db_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-
-						$replacement[$key] = (string) (int) $value;
-					}
-
-					return implode(', ', $replacement);
-				}
-				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-
-			break;
-
-			case 'array_string':
-				if (is_array($replacement))
-				{
-					if (empty($replacement))
-						smf_db_error_backtrace('Database error, given array of string values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-
-					foreach ($replacement as $key => $value)
-						$replacement[$key] = sprintf('\'%1$s\'', mysql_real_escape_string($value, $connection));
-
-					return implode(', ', $replacement);
-				}
-				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Array of strings expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-			break;
-
-			case 'date':
-				if (preg_match('~^(\d{4})-([0-1]?\d)-([0-3]?\d)$~', $replacement, $date_matches) === 1)
-					return sprintf('\'%04d-%02d-%02d\'', $date_matches[1], $date_matches[2], $date_matches[3]);
-				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Date expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-			break;
-
-			case 'float':
-				if (!is_numeric($replacement))
-					smf_db_error_backtrace('Wrong value type sent to the database. Floating point number expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
-				return (string) (float) $replacement;
-			break;
-
-			case 'identifier':
-				// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for SMF.
-				return '`' . strtr($replacement, array('`' => '', '.' => '')) . '`';
-			break;
-
-			case 'raw':
-				return $replacement;
-			break;
-
-			default:
-				smf_db_error_backtrace('Undefined type used in the database query. (' . $matches[1] . ':' . $matches[2] . ')', '', false, __FILE__, __LINE__);
-			break;
-		}
-	}
-
-	// Because this is just compat mode, this is good enough.
-	function smf_db_query($execute = true, $db_string, $db_values)
-	{
-		global $db_callback, $db_connection;
-
-		// Only bother if there's something to replace.
-		if (strpos($db_string, '{') !== false)
-		{
-			// This is needed by the callback function.
-			$db_callback = array($db_values, $db_connection);
-
-			// Do the quoting and escaping
-			$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
-
-			// Clear this global variable.
-			$db_callback = array();
-		}
-
-		// We actually make the query in compat mode.
-		if ($execute === false)
-			return $db_string;
-		return mysql_query($db_string, $db_connection);
-	}
-
-	// Insert some data...
-	function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false)
-	{
-		global $db_connection, $db_prefix;
-
-		// With nothing to insert, simply return.
-		if (empty($data))
-			return;
-
-		// Replace the prefix holder with the actual prefix.
-		$table = str_replace('{db_prefix}', $db_prefix, $table);
-
-		// Inserting data as a single row can be done as a single array.
-		if (!is_array($data[array_rand($data)]))
-			$data = array($data);
-
-		// Create the mold for a single row insert.
-		$insertData = '(';
-		foreach ($columns as $columnName => $type)
-		{
-			// Are we restricting the length?
-			if (strpos($type, 'string-') !== false)
-				$insertData .= sprintf('SUBSTRING({string:%1$s}, 1, ' . substr($type, 7) . '), ', $columnName);
-			else
-				$insertData .= sprintf('{%1$s:%2$s}, ', $type, $columnName);
-		}
-		$insertData = substr($insertData, 0, -2) . ')';
-
-		// Create an array consisting of only the columns.
-		$indexed_columns = array_keys($columns);
-
-		// Here's where the variables are injected to the query.
-		$insertRows = array();
-		foreach ($data as $dataRow)
-			$insertRows[] = smf_db_query(false, $insertData, array_combine($indexed_columns, $dataRow));
-
-		// Determine the method of insertion.
-		$queryTitle = ($method == 'replace') ? 'REPLACE' : (($method == 'ignore') ? 'INSERT IGNORE' : 'INSERT');
-
-		// Do the insert.
-		$smcFunc['db_query'](true, '
-			' . $queryTitle . ' INTO ' . $table . '(`' . implode('`, `', $indexed_columns) . '`)
-			VALUES
-				' . implode(',
-				', $insertRows),
-			array(
-				'security_override' => true,
-			)
-		);
-	}
-
-	function smf_db_list_tables($db = false, $filter = false)
-	{
-		global $db_name;
-		$db = trim((empty($db) ? $db_name : $db));
-
-		$filter = $filter == false ? '' : ' LIKE \'' . $filter . '\'';
-		$query = "SHOW TABLES FROM $db " . $filter;
-
-		// 	Do it.
-		$smcFunc['db_query'](true, $query,
-			array()
-		);
-	}
-
-	// This function tries to work out additional error information from a back trace.
-	function smf_db_error_backtrace($error_message, $log_message = '', $error_type = false, $file = null, $line = null)
-	{
-		if (empty($log_message))
-			$log_message = $error_message;
-
-		// 	A special case - we want the file and line numbers for debugging.
-		if ($error_type == 'return')
-			return array($file, $line);
-
-		// Is always a critical error.
-		if (function_exists('log_error'))
-			log_error($log_message, 'critical', $file, $line);
-
-		if ($error_type)
-			trigger_error($error_message . ($line !== null ? '<em>(' . basename($file) . '-' . $line . ')</em>' : ''), $error_type);
-		else
-			trigger_error($error_message . ($line !== null ? '<em>(' . basename($file) . '-' . $line . ')</em>' : ''));
-	}
-
-	// Returns all tables
-	function smf_db_list_tables($db = false, $filter = false)
-	{
-		global $db_name;
-
-		$db = $db == false ? $db_name : $db;
-		$db = trim($db);
-		$filter = $filter == false ? '' : ' LIKE \'' . $filter . '\'';
-
-		$request = $smcFunc['db_query'](true, '
-			SHOW TABLES
-			FROM `{raw:db}`
-			{raw:filter}',
-			array(
-				'db' => $db[0] == '`' ? strtr($db, array('`' => '')) : $db,
-				'filter' => $filter,
-			)
-		);
-		$tables = array();
-		while ($row = $smcFunc['db_fetch_row']($request))
-			$tables[] = $row[0];
-		$smcFunc['db_free_result']($request);
-
-		return $tables;
-	}
-
-	// This function tries to work out additional error information from a back trace.
-	function smf_db_error_backtrace($error_message, $log_message = '', $error_type = false, $file = null, $line = null)
-	{
-		if (empty($log_message))
-			$log_message = $error_message;
-
-		// A special case - we want the file and line numbers for debugging.
-		if ($error_type == 'return')
-			return array($file, $line);
-
-		// Is always a critical error.
-		if (function_exists('log_error'))
-			log_error($log_message, 'critical', $file, $line);
-
-		trigger_error($error_message . ($line !== null ? '<em>(' . basename($file) . '-' . $line . ')</em>' : ''), ($error_type ? $error_type : ''));
-	}
-
-	// Now, go functions, spread your love.
-	$smcFunc['db_free_result'] = 'mysql_free_result';
-	$smcFunc['db_fetch_row'] = 'mysql_fetch_row';
-	$smcFunc['db_fetch_assoc'] = 'mysql_fetch_assoc';
-	$smcFunc['db_num_rows'] = 'mysql_num_rows';
-	$smcFunc['db_insert'] = 'smf_db_insert';
-	$smcFunc['db_query'] = 'smf_db_query';
-	$smcFunc['db_quote'] = 'smf_db_query';
-	$smcFunc['db_error_backtrace'] = 'smf_db_error_backtrace';
-	$smcFunc['db_list_tables'] = 'smf_db_list_tables';
-
-	return $db_connection;
 }
 
 ?>

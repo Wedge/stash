@@ -454,14 +454,14 @@ function template_sphinx_config_above($title)
 	echo '<!DOCTYPE html>
 <html>
 <head>
-	<title>Wedge Sphinx Configuration Utility</title>
-	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
-	<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css" />
+	<title>Wedge Sphinx Configuration Utility</title>',
+	theme_base_js(1),
+	theme_base_css(), '
 </head>
 <body>
 	<div id="header">
-		<a href="http://www.simplemachines.org/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge" /></a>
-		<div title="Building the pyramids with Wedge">Wedge Sphinx Configuration Utility</div>
+		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge" /></a>
+		<div title="A wedge is like a pyramid...">Wedge Sphinx Configuration Utility</div>
 	</div>
 	<div id="content">
 		<table class="w100 cp0 cs0" style="padding-top: 1ex;">

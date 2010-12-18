@@ -108,8 +108,8 @@ template_ssi_above();
 		</ul>
 		<h2 id="other">Other</h2>
 		<ul>
-			<li><a href="#" onclick="return toggleVisibleByClass('ssi_preview', false);">Show all examples</a></li>
-			<li><a href="#" onclick="return toggleVisibleByClass('ssi_preview', true);">Hide all examples</a></li>
+			<li><a href="#" onclick="return toggleVisible('ssi_preview', true);">Show all examples</a></li>
+			<li><a href="#" onclick="return toggleVisible('ssi_preview', false);">Hide all examples</a></li>
 		</ul>
 	</div>
 
@@ -415,99 +415,83 @@ function template_ssi_above()
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Wedge SSI.php Examples</title>
-	<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css?rc3" />
-	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
+	<title>Wedge SSI.php Examples</title>',
+	theme_base_css(), '
 	<style>
-		#upper_section .user
-		{
+		#header {
+			margin-top: 20px;
+		}
+		#upper_section .user {
 			height: 4em;
 		}
-		#upper_section .news
-		{
+		#upper_section .news {
 			height: 80px;
 		}
-		#content
-		{
+		#content {
 			position: relative;
 			top: -20px;
 		}
-		#main_content h2
-		{
+		#main_content h2 {
 			font-size: 1.5em;
 			border-bottom: solid 1px #d05800;
 			line-height: 1.5em;
 			margin: 0.5em 0;
 			color: #d05800;
 		}
-		#liftup
-		{
+		#liftup {
 			position: relative;
 			top: -70px;
-			padding: 1em 2em 1em 1em;
+			padding: 0 2em 1em 1em;
 			line-height: 1.6em;
 		}
-		#footer
-		{
+		#footer {
 			position: relative;
 			top: -20px;
 		}
-		#sidenav
-		{
+		#sidenav {
 			width: 180px;
 			float: left;
 			margin-right: 15px;
+			padding-top: 0;
 		}
-		#sidenav ul
-		{
+		#sidenav ul {
 			margin: 0 0 0 15px;
 			padding: 0;
 			list-style: none;
 			font-size: 90%;
 		}
-		#preview
-		{
+		#preview {
 			margin-left: 230px;
+			padding-top: 0;
 		}
-		.ssi_preview
-		{
+		.ssi_preview {
 			margin-bottom: 1.5em;
 		}
-		.ssi_preview h3
-		{
+		.ssi_preview h3 {
 			margin: 1em 0 0.5em 0;
 		}
-		.ssi_result
-		{
-			background-color: #fff;
+		.ssi_result {
+			background: #fff;
 			border: 1px solid #99a;
 			padding: 10px;
 			overflow: hidden;
 		}
-	</style>
+	</style>',
+	theme_base_js(1), '
 	<script><!-- // --><![CDATA[
-		var smf_scripturl = "', $scripturl, '";
-		var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
+		var smf_scripturl = "', $scripturl, '", smf_iso_case_folding = false;
 
 		// Sets all ssi_preview class to hidden, then shows the one requested.
 		function showSSIBlock(elementID)
 		{
-			toggleVisibleByClass("ssi_preview", true);
-			document.getElementById(elementID).style.display = "block";
+			$("#" + elementID).slideDown(300).siblings().slideUp(300);
 			return false;
 		}
 
 		// Toggle visibility of all sections.
-		function toggleVisibleByClass(sClassName, bHide)
+		function toggleVisible(sClassName, bShow)
 		{
-			var oSections = document.getElementsByTagName("div");
-			for (var i = 0; i < oSections.length; i++)
-			{
-				if (oSections[i].className == null || oSections[i].className.indexOf(sClassName) == -1)
-					continue;
-
-				oSections[i].style.display = bHide ? "none" : "block";
-			}
+			$("." + sClassName).toggle(bShow);
 			return false;
 		}
 	// ]]></script>
@@ -558,20 +542,20 @@ function template_homepage_sample1($method = 'source')
 	<title>SSI.php example for home page</title>
 	<style>
 		body { font-family: Arial, Tahoma, sans-serif; font-size: 80%; background: #DFDFDF; color: #FFFFFF; margin: 0 }
-		ul,ol { padding-left: 19px; margin: 0; }
+		ul, ol { padding-left: 19px; margin: 0; }
 		li { font-size: 11px; }
-		h1,h2,h3 { margin: 0; padding: 0; }
+		h1, h2, h3 { margin: 0; padding: 0; }
 		h3 { font-size: 15px; }
-		a:link,a:visited { color: #FF9000; text-decoration: none; }
+		a:link, a:visited { color: #FF9000; text-decoration: none; }
 		a:hover { text-decoration: underline; }
 
 		#container { background: #52514E; width: 100%; border: 1px solid midnightblue; line-height: 150%; margin: 0; }
-		#header,#footer { color: lightgray; background-color: #2A2825; clear: both; padding: .5em; }
+		#header, #footer { color: lightgray; background-color: #2A2825; clear: both; padding: .5em; }
 		#leftbar { background: #DF7E00; float: left; width: 160px; margin: 0; padding: 1em; }
 		#leftbar a { color: #000000; text-decoration: underline; }
 		#content { margin-left: 190px; padding: 1em; }
 		#navigation { float: right; }
-		#navigation a:link,#navigation a:visited { color: #FF9000; }
+		#navigation a:link, #navigation a:visited { color: #FF9000; }
 	</style>
 </head>
 <body>

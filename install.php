@@ -319,12 +319,7 @@ function installExit($fallThrough = false)
 
 			call_user_func('template_' . $incontext['sub_template']);
 		}
-		//!!! REMOVE THIS!!
-		else
-		{
-			if (function_exists('doStep' . $_GET['step']))
-				call_user_func('doStep' . $_GET['step']);
-		}
+
 		// Show the footer.
 		template_install_below();
 	}
@@ -1918,9 +1913,9 @@ function template_install_above()
 		<meta charset="utf-8" />
 		<meta name="robots" content="noindex" />
 		<title>', $txt['smf_installer'], '</title>
-		<link rel="stylesheet" href="Themes/default/css/index.css?rc3" />
-		<link rel="stylesheet" href="Themes/default/css/install.css?rc3" />
-		<script src="Themes/default/scripts/jquery.1.4.4.js"></script>
+		<link rel="stylesheet" href="Themes/default/css/index.css" />
+		<link rel="stylesheet" href="Themes/default/css/install.css" />
+		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 	</head>
 	<body>
