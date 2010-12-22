@@ -3838,7 +3838,7 @@ function template_backup_database()
 		// If debug flood the screen.
 		if ($is_debug)
 			echo '
-				setOuterHTML(document.getElementById(\'debuginfo\'), \'<br />Completed Table: &quot;\' + sCompletedTableName + \'&quot;.<span id="debuginfo"><\' + \'/span>\');';
+				$(\'#debuginfo\').append(\'<br />Completed Table: &quot;\' + sCompletedTableName + \'&quot;.\');';
 
 		echo '
 				// Get the next update...
@@ -3976,7 +3976,7 @@ function template_database_changes()
 
 	if ($is_debug)
 		echo '
-						setOuterHTML(document.getElementById(\'debuginfo\'), \'<span style="color: red;">failed<\' + \'/span><span id="debuginfo"><\' + \'/span>\');';
+						$(\'#debuginfo\').append(\'<span style="color: red;">failed<\' + \'/span>\');';
 
 	echo '
 					}
@@ -3999,7 +3999,7 @@ function template_database_changes()
 
 	if ($is_debug)
 		echo '
-						setOuterHTML(document.getElementById(\'debuginfo\'), \'<span style="color: red;">failed<\' + \'/span><span id="debuginfo"><\' + \'/span>\');';
+						$(\'#debuginfo\').append(\'<span style="color: red;">failed<\' + \'/span>\');';
 
 	echo '
 					}
@@ -4060,7 +4060,7 @@ function template_database_changes()
 
 		if ($is_debug)
 			echo '
-					setOuterHTML(document.getElementById(\'debuginfo\'), \'done<span id="debuginfo"><\' + \'/span>\');
+					$(\'#debuginfo\').append(\'done\');
 					document.getElementById(\'debug_section\').style.display = "none"';
 
 		echo '
@@ -4086,7 +4086,7 @@ function template_database_changes()
 
 		if ($is_debug)
 			echo '
-					setOuterHTML(document.getElementById(\'debuginfo\'), \'done<br />Moving to next script file...<span id="debuginfo"><\' + \'/span>\');';
+					$(\'#debuginfo\').append(\'done<br />Moving to next script file...\');';
 
 		echo '
 					getNextItem();
@@ -4103,14 +4103,14 @@ function template_database_changes()
 					numDots = dots ? dots.length : 0;
 					for (var i = numDots; i < 3; i++)
 						sDebugName += ".";
-					setOuterHTML(document.getElementById(\'debuginfo\'), sDebugName + \'<span id="debuginfo"><\' + \'/span>\');
+					$(\'#debuginfo\').append(sDebugName);
 				}
 				iLastSubStepProgress = iSubStepProgress;
 
 				if (bIsComplete)
-					setOuterHTML(document.getElementById(\'debuginfo\'), \'done<br /><span id="debuginfo"><\' + \'/span>\');
+					$(\'#debuginfo\').append(\'done<br />\');
 				else
-					setOuterHTML(document.getElementById(\'debuginfo\'), \'...<span id="debuginfo"><\' + \'/span>\');
+					$(\'#debuginfo\').append(\'...\');
 
 				if (document.getElementById(\'debug_section\').scrollHeight)
 					document.getElementById(\'debug_section\').scrollTop = document.getElementById(\'debug_section\').scrollHeight';
