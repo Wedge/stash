@@ -1306,7 +1306,7 @@ function AdminAccount()
 // Final step, clean up and a complete message!
 function DeleteInstall()
 {
-	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename;
+	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename, $cachedir;
 	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
