@@ -1957,7 +1957,8 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('masterAutoSavePostDrafts', '1'),
 	('masterSavePmDrafts', '1'),
 	('masterAutoSavePmDrafts', '1'),
-	('masterAutoSaveDraftsDelay', '30');
+	('masterAutoSaveDraftsDelay', '30'),
+	('pruneSaveDrafts', '7');
 # --------------------------------------------------------
 
 #
