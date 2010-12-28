@@ -192,8 +192,8 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(49, 'tr', 'parsed', '<tr>', '</tr>', '', ' ', ' ', '', 1, '', '', '', 'table', 'td', '', 'none', '', 'both'),
 	(50, 'tt', 'parsed', '<span class="bbc_tt">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
 	(51, 'u', 'parsed', '<span class="bbc_u">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(52, 'url', 'unparsed_content', '', '', '<a href="$1" class="bbc_link new_win" target="_blank">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br />'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none'),
-	(53, 'url', 'unparsed_equals', '<a href="$1" class="bbc_link new_win" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none');
+	(52, 'url', 'unparsed_content', '', '', '<a href="$1" class="bbc_link" target="_blank">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br />'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none'),
+	(53, 'url', 'unparsed_equals', '<a href="$1" class="bbc_link" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none');
 # --------------------------------------------------------
 
 #
