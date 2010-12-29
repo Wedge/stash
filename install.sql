@@ -2079,6 +2079,16 @@ CREATE TABLE {$db_prefix}subscriptions (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `subscriptions_groups`
+#
+
+CREATE TABLE {$db_prefix}subscriptions_groups (
+  id_subscribe mediumint(8) unsigned NOT NULL default '0',
+  id_group smallint(5) NOT NULL default '0',
+  PRIMARY KEY (id_subscribe, id_group)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `themes`
 #
 
