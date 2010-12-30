@@ -620,7 +620,7 @@ CREATE TABLE {$db_prefix}boards (
   most_ever smallint(5) unsigned NOT NULL DEFAULT '0',
   most_date bigint(20) unsigned NOT NULL DEFAULT '0',
   most_updated date NOT NULL DEFAULT '0000-00-00',
-  language varchar(255) NOT NULL NOT NULL DEFAULT 'english',
+  language varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id_board),
   UNIQUE categories (id_cat, id_board),
   UNIQUE url (url),
