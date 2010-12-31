@@ -665,7 +665,7 @@ CREATE TABLE {$db_prefix}calendar (
 CREATE TABLE {$db_prefix}calendar_holidays (
   id_holiday smallint(5) unsigned NOT NULL auto_increment,
   event_date date NOT NULL default '0001-01-01',
-  title varchar(60) NOT NULL default '',
+  title varchar(255) NOT NULL default '',
   PRIMARY KEY (id_holiday),
   KEY event_date (event_date)
 ) ENGINE=MyISAM;
