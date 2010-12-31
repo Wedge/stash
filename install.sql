@@ -1958,7 +1958,11 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('masterSavePmDrafts', '1'),
 	('masterAutoSavePmDrafts', '1'),
 	('masterAutoSaveDraftsDelay', '30'),
-	('pruneSaveDrafts', '7');
+	('pruneSaveDrafts', '7'),
+	('gravatarEnabled', '1'),
+	('gravatarOverride', '0'),
+	('gravatarAllowExtraEmail', '1'),
+	('gravatarMaxRating', 'PG');
 # --------------------------------------------------------
 
 #
