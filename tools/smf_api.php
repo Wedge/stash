@@ -411,7 +411,7 @@ function smf_registerMember($username, $email, $password, $extra_fields = array(
 		return false;
 
 	// Make sure the email is valid too.
-	if (empty($email) || preg_match('~^[0-9A-Za-z=_+\-/][0-9A-Za-z=_\'+\-/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$~', $email) === 0 || strlen($email) > 255)
+	if (empty($email) || !preg_match('~^[\w=+/-][\w=\'+/\.-]*@[\w-]+(\.[\w-]+)*(\.\w{2,6})$~', $email) || strlen($email) > 255)
 		return false;
 
 	// !!! Validate username isn't already used?  Validate reserved, etc.?
