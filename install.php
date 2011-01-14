@@ -1013,7 +1013,7 @@ function DatabasePopulation()
 		}
 	}
 
-// !!! Disabling this for now.
+// !!! Disabling this for now. We don't really need any stats, we have work to do.
 /*
 	// Are we allowing stat collection?
 	if (isset($_POST['stats']) && substr($_POST['boardurl'], 0, 16) != 'http://localhost')
@@ -1034,16 +1034,16 @@ function DatabasePopulation()
 			fclose($fp);
 
 			// Get the unique site ID.
-			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $ID);
+			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $id);
 
-			if (!empty($ID[1]))
+			if (!empty($id[1]))
 				wesql::insert('',
 					$db_prefix . 'settings',
 					array(
 						'variable' => 'string-255', 'value' => 'string-65534',
 					),
 					array(
-						'allow_sm_stats', $ID[1],
+						'allow_sm_stats', $id[1],
 					),
 					array('variable')
 				);

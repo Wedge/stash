@@ -1189,13 +1189,13 @@ function UpgradeOptions()
 			fclose($fp);
 
 			// Get the unique site ID.
-			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $ID);
+			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $id);
 
-			if (!empty($ID[1]))
+			if (!empty($id[1]))
 				$smcFunc['db_insert']('replace',
 					$db_prefix . 'settings',
 					array('variable' => 'string', 'value' => 'string'),
-					array('allow_sm_stats', $ID[1]),
+					array('allow_sm_stats', $id[1]),
 					array('variable')
 				);
 		}
@@ -1916,7 +1916,7 @@ function cli_scheduled_fetchSMfiles()
 	// We're gonna need fetch_web_data() to pull this off.
 	require_once($sourcedir . '/Subs-Package.php');
 
-	foreach ($js_files as $ID_FILE => $file)
+	foreach ($js_files as $id_file => $file)
 	{
 		// Create the url
 		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://www.wedgeforum.com' : '';
@@ -1935,7 +1935,7 @@ function cli_scheduled_fetchSMfiles()
 			SET data = SUBSTRING({string:file_data}, 1, 65534)
 			WHERE id_file = {int:id_file}',
 			array(
-				'id_file' => $ID_FILE,
+				'id_file' => $id_file,
 				'file_data' => $file_data,
 			)
 		);
