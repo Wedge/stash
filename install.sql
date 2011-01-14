@@ -1963,7 +1963,8 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('gravatarEnabled', '1'),
 	('gravatarOverride', '0'),
 	('gravatarAllowExtraEmail', '1'),
-	('gravatarMaxRating', 'PG');
+	('gravatarMaxRating', 'PG'),
+	('display_flags', 'specified');
 # --------------------------------------------------------
 
 #
