@@ -138,5 +138,5 @@
 	# Equivalent to ErrorDocument 404, without the status change :)
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule .* /index.php [L]
+	RewriteRule .* index.php [L]
 </IfModule>
