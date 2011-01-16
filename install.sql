@@ -1735,6 +1735,19 @@ CREATE TABLE {$db_prefix}pretty_urls_cache (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `scheduled_imperative`
+#
+
+CREATE TABLE {$db_prefix}scheduled_imperative (
+  id_instr int(10) NOT NULL auto_increment,
+  instr_time int(10) NOT NULL default '0',
+  instr_details text NOT NULL,
+  PRIMARY KEY (id_instr),
+  KEY instr_time (instr_time)
+) ENGINE=MyISAM;
+
+
+#
 # Table structure for table `scheduled_tasks`
 #
 
