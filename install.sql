@@ -1781,7 +1781,7 @@ VALUES
 	(7, 0, {$sched_task_offset}, 1, 'd', 0, 'fetchSMfiles', ''),
 	(8, 0, 0, 1, 'd', 1, 'birthdayemails', ''),
 	(9, 0, 0, 1, 'w', 0, 'weekly_maintenance', ''),
-	(10, 0, 120, 1, 'd', 0, 'paid_subscriptions', '');
+	(10, 0, 120, 1, 'd', 1, 'paid_subscriptions', '');
 
 # --------------------------------------------------------
 
@@ -1838,7 +1838,7 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('max_image_height', '0'),
 	('onlineEnable', '0'),
 	('cal_enabled', '0'),
-	('cal_maxyear', '2016'),
+	('cal_maxyear', '2020'),
 	('cal_minyear', '2008'),
 	('cal_daysaslink', '0'),
 	('cal_defaultboard', ''),
