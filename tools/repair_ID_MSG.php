@@ -211,7 +211,7 @@ function protectTimeOut($request)
 				document.autoSubmit.b.value = "Continue (" + countdown + ")";
 				countdown--;
 
-				setTimeout("doAutoSubmit();", 1000);
+				setTimeout(doAutoSubmit, 1000);
 			}
 		// ]]></script>';
 	exit;

@@ -708,7 +708,7 @@ function nextRow($row, $table, $max_rows, $max_tables, $fp = null)
 					document.autoSubmit.b.value = "Continue (" + countdown + ")";
 					countdown--;
 
-					setTimeout("doAutoSubmit();", 1000);
+					setTimeout(doAutoSubmit, 1000);
 				}
 			// ]]></script>
 		</div>';
