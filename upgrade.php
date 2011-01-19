@@ -3296,26 +3296,26 @@ function template_chmod()
 			<tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_server">', $txt['ftp_server'], ':</label></td>
 				<td>
-					<div style="float: right; margin-right: 1px;"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($upcontext['chmod']['port']) ? $upcontext['chmod']['port'] : '21', '" class="input_text" /></div>
-					<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($upcontext['chmod']['server']) ? $upcontext['chmod']['server'] : 'localhost', '" style="width: 70%;" class="input_text" />
+					<div style="float: right; margin-right: 1px;"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($upcontext['chmod']['port']) ? $upcontext['chmod']['port'] : '21', '"></div>
+					<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($upcontext['chmod']['server']) ? $upcontext['chmod']['server'] : 'localhost', '" style="width: 70%">
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_server_info'], '</div>
 				</td>
 			</tr><tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
 				<td>
-					<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($upcontext['chmod']['username']) ? $upcontext['chmod']['username'] : '', '" style="width: 99%;" class="input_text" />
+					<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($upcontext['chmod']['username']) ? $upcontext['chmod']['username'] : '', '" style="width: 99%">
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_username_info'], '</div>
 				</td>
 			</tr><tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_password">', $txt['ftp_password'], ':</label></td>
 				<td>
-					<input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 99%;" class="input_password" />
+					<input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 99%">
 					<div style="font-size: smaller; margin-bottom: 3ex;">', $txt['ftp_password_info'], '</div>
 				</td>
 			</tr><tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_path">', $txt['ftp_path'], ':</label></td>
 				<td style="padding-bottom: 1ex;">
-					<input type="text" size="50" name="ftp_path" id="ftp_path" value="', isset($upcontext['chmod']['path']) ? $upcontext['chmod']['path'] : '', '" style="width: 99%;" class="input_text" />
+					<input type="text" size="50" name="ftp_path" id="ftp_path" value="', isset($upcontext['chmod']['path']) ? $upcontext['chmod']['path'] : '', '" style="width: 99%">
 					<div style="font-size: smaller; margin-bottom: 2ex;">', !empty($upcontext['chmod']['path']) ? $txt['ftp_path_found_info'] : $txt['ftp_path_info'], '</div>
 				</td>
 			</tr>
@@ -3457,7 +3457,7 @@ function template_upgrade_below()
 
 	if (!empty($upcontext['continue']))
 		echo '
-									<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '"', $upcontext['continue'] == 2 ? ' disabled="disabled"' : '', ' class="button_submit" />';
+									<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '"', $upcontext['continue'] == 2 ? ' disabled' : '', ' class="button_submit" />';
 	if (!empty($upcontext['skip']))
 		echo '
 									<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="dontSubmit = true; document.getElementById(\'contbutt\').disabled = \'disabled\'; return true;" class="button_submit" />';
@@ -3626,7 +3626,7 @@ function template_welcome_message()
 				<tr valign="top">
 					<td><strong ', $disable_security ? 'style="color: gray;"' : '', '>Username:</strong></td>
 					<td>
-						<input type="text" name="user" value="', !empty($upcontext['username']) ? $upcontext['username'] : '', '" ', $disable_security ? 'disabled="disabled"' : '', ' class="input_text" />';
+						<input type="text" name="user" value="', !empty($upcontext['username']) ? $upcontext['username'] : '', '"', $disable_security ? ' disabled' : '', '>';
 
 	if (!empty($upcontext['username_incorrect']))
 		echo '
@@ -3638,7 +3638,7 @@ function template_welcome_message()
 				<tr valign="top">
 					<td><strong ', $disable_security ? 'style="color: gray;"' : '', '>Password:</strong></td>
 					<td>
-						<input type="password" name="passwrd" value=""', $disable_security ? ' disabled="disabled"' : '', ' class="input_password" />
+						<input type="password" name="passwrd" value=""', $disable_security ? ' disabled' : '', '>
 						<input type="hidden" name="hash_passwrd" value="" />';
 
 	if (!empty($upcontext['password_failed']))
@@ -3655,7 +3655,7 @@ function template_welcome_message()
 		echo '
 				<tr>
 					<td colspan="2">
-						<label for="cont"><input type="checkbox" id="cont" name="cont" checked="checked" class="input_check" />Continue from step reached during last execution of upgrade script.</label>
+						<label for="cont"><input type="checkbox" id="cont" name="cont" checked>Continue from step reached during last execution of upgrade script.</label>
 					</td>
 				</tr>';
 	}
@@ -3727,7 +3727,7 @@ function template_upgrade_options()
 				<table cellpadding="1" cellspacing="0">
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="backup" id="backup" value="1" class="input_check" />
+							<input type="checkbox" name="backup" id="backup" value="1">
 						</td>
 						<td width="100%">
 							<label for="backup">Backup tables in your database with the prefix &quot;backup_', $db_prefix, '&quot;.</label> (recommended!)
@@ -3735,13 +3735,13 @@ function template_upgrade_options()
 					</tr>
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="maint" id="maint" value="1" checked="checked" class="input_check" />
+							<input type="checkbox" name="maint" id="maint" value="1" checked>
 						</td>
 						<td width="100%">
 							<label for="maint">Put the forum into maintenance mode during upgrade.</label> <span class="smalltext">(<a href="#" onclick="document.getElementById(\'mainmess\').style.display = document.getElementById(\'mainmess\').style.display == \'\' ? \'none\' : \'\'">Customize</a>)</span>
 							<div id="mainmess" style="display: none;">
 								<strong class="smalltext">Maintenance Title: </strong><br />
-								<input type="text" name="maintitle" size="30" value="', htmlspecialchars($mtitle), '" class="input_text" /><br />
+								<input type="text" name="maintitle" size="30" value="', htmlspecialchars($mtitle), '"><br />
 								<strong class="smalltext">Maintenance Message: </strong><br />
 								<textarea name="mainmessage" rows="3" cols="50">', htmlspecialchars($mmessage), '</textarea>
 							</div>
@@ -3749,7 +3749,7 @@ function template_upgrade_options()
 					</tr>
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="debug" id="debug" value="1" class="input_check" />
+							<input type="checkbox" name="debug" id="debug" value="1">
 						</td>
 						<td width="100%">
 							<label for="debug">Output extra debugging information</label>
@@ -3757,7 +3757,7 @@ function template_upgrade_options()
 					</tr>
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="empty_error" id="empty_error" value="1" class="input_check" />
+							<input type="checkbox" name="empty_error" id="empty_error" value="1">
 						</td>
 						<td width="100%">
 							<label for="empty_error">Empty error log before upgrading</label>
@@ -3765,7 +3765,7 @@ function template_upgrade_options()
 					</tr>
 					<tr valign="top">
 						<td width="2%">
-							<input type="checkbox" name="stats" id="stats" value="1"', empty($modSettings['allow_sm_stats']) ? '' : ' checked="checked"', ' class="input_check" />
+							<input type="checkbox" name="stats" id="stats" value="1"', empty($modSettings['allow_sm_stats']) ? '' : ' checked', '>
 						</td>
 						<td width="100%">
 							<label for="stats">
@@ -4231,7 +4231,7 @@ function template_clean_mods()
 				<td width="20%"><span style="font-weight: bold; color: ', $package['color'], '">', $package['status'], '</span></td>
 				<td width="5%" align="center">
 					<input type="hidden" name="remove[', $package['id'], ']" value="0" />
-					<input type="checkbox" name="remove[', $package['id'], ']"', $package['color'] == 'green' ? ' disabled="disabled"' : '', ' class="input_check" />
+					<input type="checkbox" name="remove[', $package['id'], ']"', $package['color'] == 'green' ? ' disabled' : '', '>
 				</td>
 			</tr>';
 	}
@@ -4287,7 +4287,7 @@ function template_upgrade_complete()
 
 	if (!empty($upcontext['can_delete_script']))
 		echo '
-			<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete(this);" class="input_check" /> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
+			<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete(this);"> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
 			<script><!-- // --><![CDATA[
 				function doTheDelete(theCheck)
 				{

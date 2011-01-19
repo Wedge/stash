@@ -162,43 +162,43 @@ function step_2()
 			<tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_data_path_input">Index data path:</label></td>
 				<td>
-					<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($modSettings['sphinx_data_path']) ? $modSettings['sphinx_data_path'] : '/var/sphinx/data', '" size="65" class="input_text" />
+					<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($modSettings['sphinx_data_path']) ? $modSettings['sphinx_data_path'] : '/var/sphinx/data', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">This is the path that will be containing the search index files used by Sphinx.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_log_path_input">Log path:</label></td>
 				<td>
-					<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($modSettings['sphinx_log_path']) ? $modSettings['sphinx_log_path'] : '/var/sphinx/log', '" size="65" class="input_text" />
+					<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($modSettings['sphinx_log_path']) ? $modSettings['sphinx_log_path'] : '/var/sphinx/log', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Server path that will contain the log files created by Sphinx.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_stopword_path_input">Stopword path:</label></td>
 				<td>
-					<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($modSettings['sphinx_stopword_path']) ? $modSettings['sphinx_stopword_path'] : '', '" size="65" class="input_text" />
+					<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($modSettings['sphinx_stopword_path']) ? $modSettings['sphinx_stopword_path'] : '', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">The server path to the stopword list (leave empty for no stopword list).</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_indexer_mem_input">Memory limit indexer:</label></td>
 				<td>
-					<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($modSettings['sphinx_indexer_mem']) ? $modSettings['sphinx_indexer_mem'] : '32', '" size="4" class="input_text" /> MB
+					<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($modSettings['sphinx_indexer_mem']) ? $modSettings['sphinx_indexer_mem'] : '32', '" size="4"> MB
 					<div style="font-size: smaller; margin-bottom: 2ex;">The maximum amount of (RAM) memory the indexer is allowed to be using.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_server_input">Search deamon server:</label></td>
 				<td>
-					<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($modSettings['sphinx_searchd_server']) ? $modSettings['sphinx_searchd_server'] : 'localhost', '" size="65" class="input_text" />
+					<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($modSettings['sphinx_searchd_server']) ? $modSettings['sphinx_searchd_server'] : 'localhost', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Server the Sphinx search deamon resides on.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_port_input">Search deamon port:</label></td>
 				<td>
-					<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($modSettings['sphinx_searchd_port']) ? $modSettings['sphinx_searchd_port'] : '3312', '" size="4" class="input_text" />
+					<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($modSettings['sphinx_searchd_port']) ? $modSettings['sphinx_searchd_port'] : '3312', '" size="4">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Port on which the search deamon will listen.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_max_results_input">Maximum # matches:</label></td>
 				<td>
-					<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($modSettings['sphinx_max_results']) ? $modSettings['sphinx_max_results'] : '2000', '" size="4" class="input_text" />
+					<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($modSettings['sphinx_max_results']) ? $modSettings['sphinx_max_results'] : '2000', '" size="4">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Maximum amount of matches the search deamon will return.</div>
 				</td>
 			</tr>
@@ -272,10 +272,10 @@ function step_3()
 	<br />
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
 		<select name="search_index">
-			<option value=""', empty($modSettings['search_index']) ? ' selected="selected"' : '', '>(None)</option>
-			<option value="fulltext"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'fulltext' ? ' selected="selected"' : '', '>Fulltext</option>
-			<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected="selected"' : '', '>Custom index</option>
-			<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected="selected"' : '', '>Sphinx</option>
+			<option value=""', empty($modSettings['search_index']) ? ' selected' : '', '>(None)</option>
+			<option value="fulltext"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'fulltext' ? ' selected' : '', '>Fulltext</option>
+			<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected' : '', '>Custom index</option>
+			<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected' : '', '>Sphinx</option>
 		</select>
 		<input type="submit" value="Change Search Index" class="button_submit" />
 		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
