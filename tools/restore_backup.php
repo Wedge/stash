@@ -82,45 +82,45 @@ function step1($error_message = '')
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="db_server">Database server name:</label></td>
 								<td>
-									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br />
+									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex;">This is nearly always localhost - so if you don\'t know, try localhost.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_user">Database username:</label></td>
 								<td>
-									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the username you need to connect to your database here.<br />If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
+									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the username you need to connect to your database here.<br>If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_passwd">Database password:</label></td>
 								<td>
-									<input type="password" name="db_passwd" id="db_passwd" value="', $db_passwd, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Here, put the password you need to connect to your database.<br />If you don\'t know this, you should try the password to your ftp account.</div>
+									<input type="password" name="db_passwd" id="db_passwd" value="', $db_passwd, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Here, put the password you need to connect to your database.<br>If you don\'t know this, you should try the password to your ftp account.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_name">database name:</label></td>
 								<td>
-									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'smf' : $db_name, '" size="30"><br />
+									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'smf' : $db_name, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the name of the database you want to backup.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_prefix">Table prefix:</label></td>
 								<td>
-									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in a prefix to only backup tables that start with this prefix.<br />Normally, you can leave this blank to get a full backup.</div>
+									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in a prefix to only backup tables that start with this prefix.<br>Normally, you can leave this blank to get a full backup.</div>
 								</td>
 							</tr>
 						</table>
 
 						<h2>Database backup file</h2>
-						<h3>Please upload your database backup file (it may be a <tt>.sql</tt> file, <tt>.sql.gz</tt> file, or a <tt>.sql.zip</tt> file) through FTP or other means, and enter the path here.<br />', !function_exists('gzcompress') ? '<strong>Warning</strong>: To restore compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : 'Please note that if this file is compressed, it may be replaced by an uncompressed version during this process.', @ini_get('allow_url_fopen') ? '<br />If your backup is uncompressed, you can also specify a URL to it here.' : '', '</h3>
+						<h3>Please upload your database backup file (it may be a <tt>.sql</tt> file, <tt>.sql.gz</tt> file, or a <tt>.sql.zip</tt> file) through FTP or other means, and enter the path here.<br>', !function_exists('gzcompress') ? '<strong>Warning</strong>: To restore compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : 'Please note that if this file is compressed, it may be replaced by an uncompressed version during this process.', @ini_get('allow_url_fopen') ? '<br>If your backup is uncompressed, you can also specify a URL to it here.' : '', '</h3>
 
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="path">Path/URL to backup file:</label></td>
 								<td>
-									<input type="text" name="path" id="path" value="', isset($_POST['path']) ? $_POST['path'] : substr(__FILE__, 0, strlen(dirname(__FILE__)) + 1), '" size="60" style="width: 90%"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">The default value for this field is the path to this file.<br />If you put the database dump in the same place, just add its name.</div>
+									<input type="text" name="path" id="path" value="', isset($_POST['path']) ? $_POST['path'] : substr(__FILE__, 0, strlen(dirname(__FILE__)) + 1), '" size="60" style="width: 90%"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">The default value for this field is the path to this file.<br>If you put the database dump in the same place, just add its name.</div>
 								</td>
 							</tr>
 						</table>
@@ -128,7 +128,7 @@ function step1($error_message = '')
 						<h2>Before you continue...</h2>
 						<h3>Please note that any existing tables will be deleted.  Please verify your connection info and create any necessary backups before continuing!</h3>
 
-						<div class="righttext" style="margin: 1ex;"><input type="submit" value="Proceed" class="button_submit" /></div>
+						<div class="righttext" style="margin: 1ex;"><input type="submit" value="Proceed" class="submit"></div>
 					</form>
 				</div>';
 
@@ -141,7 +141,7 @@ function step2()
 
 	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 	if (!$db_connection)
-		return step1('Cannot connect to the database server with the supplied data.<br /><br />If you are not sure about what to type in, please contact your host.');
+		return step1('Cannot connect to the database server with the supplied data.<br><br>If you are not sure about what to type in, please contact your host.');
 
 	// This is going to *burn* memory...
 	if (@ini_get('memory_limit') < 24)
@@ -245,7 +245,7 @@ function step2()
 
 		foreach ($failures as $line => $fail)
 			echo '
-						<strong>Line #', $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail)), '<br />';
+						<strong>Line #', $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail), false), '<br>';
 
 		echo '
 					</div>
@@ -256,13 +256,13 @@ function step2()
 				<div class="panel">
 					<h2>Restoration process complete!</h2>
 
-					Congratulations!  Your database backup has been restored successfully.<br />
-					<br />';
+					Congratulations!  Your database backup has been restored successfully.<br>
+					<br>';
 
 	if (file_exists(dirname(__FILE__) . '/Settings.php') && is_writable(dirname(__FILE__) . '/Settings.php') && defined('SID') && SID == '')
 	{
 		echo '
-					<label for="fix_paths"><input type="checkbox" id="fix_paths" onclick="doThePaths(this);"> Attempt to fix the database\'s paths for this server.</label><br />
+					<label for="fix_paths"><input type="checkbox" id="fix_paths" onclick="doThePaths(this);"> Attempt to fix the database\'s paths for this server.</label><br>
 					<script type="text/javascript"><!-- // --><![CDATA[
 						function doThePaths(theCheck)
 						{
@@ -273,15 +273,15 @@ function step2()
 							theCheck.disabled = true;
 						}
 					// ]]></script>
-					<img src="about:blank" width="0" alt="" id="auto_paths" /><br /><br />';
+					<img src="about:blank" width="0" alt="" id="auto_paths"><br><br>';
 
 		$_SESSION['temp_db'] = array($_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']);
 	}
 
 	echo '
 					If you had any problems, please <a href="http://www.simplemachines.org/community/index.php">tell us about them</a> so that we can help you get them resolved.
-					<br />
-					Good luck!<br />
+					<br>
+					Good luck!<br>
 					Simple Machines
 				</div>';
 
@@ -398,7 +398,7 @@ function show_header()
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<meta name="robots" content="noindex" />
+		<meta name="robots" content="noindex">
 		<title>Backup Restoration Tool</title>
 		<style type="text/css">
 			body
@@ -486,7 +486,7 @@ function show_header()
 	</head>
 	<body>
 		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0" /></a>
+			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right" alt="Simple Machines" border="0"></a>
 			' : '', '<div title="Vandole">Backup Restoration Tool</div>
 		</div>
 		<div id="content">';
@@ -643,7 +643,7 @@ function nextLine($line, $max, $failures)
 
 		foreach ($failures as $line => $fail)
 			echo '
-						<strong>Line #', $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail)), '<br />';
+						<strong>Line #', $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail), false), '<br>';
 
 		echo '
 					</div>
@@ -665,13 +665,13 @@ function nextLine($line, $max, $failures)
 			<p>Please note that this percentage, regrettably, is not terribly accurate, and is only an approximation of progress.</p>
 
 			<form action="', $_SERVER['PHP_SELF'], $query_string, '" method="post" name="autoSubmit">
-				<input type="hidden" name="db_server" value="', $_POST['db_server'], '" />
-				<input type="hidden" name="db_user" value="', $_POST['db_user'], '" />
-				<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '" />
-				<input type="hidden" name="db_name" value="', $_POST['db_name'], '" />
-				<input type="hidden" name="path" value="', $_POST['path'], '" />
+				<input type="hidden" name="db_server" value="', $_POST['db_server'], '">
+				<input type="hidden" name="db_user" value="', $_POST['db_user'], '">
+				<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '">
+				<input type="hidden" name="db_name" value="', $_POST['db_name'], '">
+				<input type="hidden" name="path" value="', $_POST['path'], '">
 
-				<div class="righttext" style="margin: 1ex;"><input name="b" type="submit" value="Continue" class="button_submit" /></div>
+				<div class="righttext" style="margin: 1ex;"><input name="b" type="submit" value="Continue" class="submit"></div>
 			</form>
 			<script type="text/javascript"><!-- // --><![CDATA[
 				window.onload = doAutoSubmit;

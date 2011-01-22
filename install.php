@@ -415,7 +415,7 @@ function Welcome()
 
 	// Mod_security blocks everything that smells funny. Let Wedge handle security.
 	if (!fixModSecurity() && !isset($_GET['overmodsecurity']))
-		$incontext['error'] = $txt['error_mod_security'] . '<br /><br /><a href="' . $installurl . '?overmodsecurity=true">' . $txt['error_message_click'] . '</a> ' . $txt['error_message_bad_try_again'];
+		$incontext['error'] = $txt['error_mod_security'] . '<br><br><a href="' . $installurl . '?overmodsecurity=true">' . $txt['error_message_click'] . '</a> ' . $txt['error_message_bad_try_again'];
 
 	return false;
 }
@@ -1244,8 +1244,8 @@ function AdminAccount()
 			// Awww, crud!
 			if ($request === false)
 			{
-				$incontext['error'] = $txt['error_user_settings_query'] . '<br />
-				<div style="margin: 2ex;">' . nl2br(htmlspecialchars(wesql::error($db_connection))) . '</div>';
+				$incontext['error'] = $txt['error_user_settings_query'] . '<br>
+				<div style="margin: 2ex">' . nl2br(htmlspecialchars(wesql::error($db_connection)), false) . '</div>';
 				return false;
 			}
 
@@ -1910,11 +1910,11 @@ function template_install_above()
 	echo '<!DOCTYPE html>
 <html', !empty($txt['lang_rtl']) ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="utf-8" />
-		<meta name="robots" content="noindex" />
+		<meta charset="utf-8">
+		<meta name="robots" content="noindex">
 		<title>', $txt['smf_installer'], '</title>
-		<link rel="stylesheet" href="Themes/default/css/index.css" />
-		<link rel="stylesheet" href="Themes/default/css/install.css" />
+		<link rel="stylesheet" href="Themes/default/css/index.css">
+		<link rel="stylesheet" href="Themes/default/css/install.css">
 		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 	</head>
@@ -1922,7 +1922,7 @@ function template_install_above()
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">', $txt['smf_installer'], '</h1>
-			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" />
+			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
 		</div>
 		<div id="upper_section" class="middletext flow_hidden">
 			<div class="user"></div>
@@ -1942,7 +1942,7 @@ function template_install_above()
 
 		echo '
 						</select>
-						<noscript><input type="submit" value="', $txt['installer_language_set'], '" class="submit" /></noscript>
+						<noscript><input type="submit" value="', $txt['installer_language_set'], '" class="submit"></noscript>
 					</form>
 				</div>';
 	}
@@ -1986,10 +1986,10 @@ function template_install_below()
 
 		if (!empty($incontext['continue']))
 			echo '
-							<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '" onclick="return submitThisOnce(this);" class="submit" />';
+							<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '" onclick="return submitThisOnce(this);" class="submit">';
 		if (!empty($incontext['skip']))
 			echo '
-							<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="return submitThisOnce(this);" class="submit" />';
+							<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="return submitThisOnce(this);" class="submit">';
 		echo '
 						</div>';
 	}
@@ -2023,7 +2023,7 @@ function template_welcome_message()
 		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['error_warning_notice'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['error_warning_notice'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . $GLOBALS['current_wedge_version'] . '</em>'), '
 			</div>
@@ -2076,7 +2076,7 @@ function template_warning_divs()
 		echo '
 		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_critical_error'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_critical_error'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', $incontext['error'], '
 			</div>
@@ -2086,7 +2086,7 @@ function template_warning_divs()
 		echo '
 		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', $incontext['warning'], '
 			</div>
@@ -2111,19 +2111,19 @@ function template_chmod_files()
 		return;
 
 	echo '
-		<hr />
+		<hr>
 		<p>', $txt['ftp_setup_info'], '</p>';
 
 	if (!empty($incontext['ftp_errors']))
 		echo '
 		<div class="error_message">
 			<div style="color: red;">
-				', $txt['error_ftp_no_connect'], '<br />
-				<br />
-				<code>', implode('<br />', $incontext['ftp_errors']), '</code>
+				', $txt['error_ftp_no_connect'], '<br>
+				<br>
+				<code>', implode('<br>', $incontext['ftp_errors']), '</code>
 			</div>
 		</div>
-		<br />';
+		<br>';
 
 	echo '
 		<form action="', $incontext['form_url'], '" method="post">
@@ -2155,7 +2155,7 @@ function template_chmod_files()
 					</td>
 				</tr>
 			</table>
-			<div style="margin: 1ex; margin-top: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';"><input type="submit" value="', $txt['ftp_connect'], '" onclick="return submitThisOnce(this);" class="submit" /></div>
+			<div style="margin: 1ex; margin-top: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';"><input type="submit" value="', $txt['ftp_connect'], '" onclick="return submitThisOnce(this);" class="submit"></div>
 		</form>
 		<a href="', $incontext['form_url'], '">', $txt['error_message_click'], '</a> ', $txt['ftp_setup_again'];
 }
@@ -2176,32 +2176,32 @@ function template_database_settings()
 			<tr id="db_server_contain">
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="db_server_input">', $txt['db_settings_server'], ':</label></td>
 				<td>
-					<input type="text" name="db_server" id="db_server_input" value="', $incontext['db']['server'], '" size="30"><br />
+					<input type="text" name="db_server" id="db_server_input" value="', $incontext['db']['server'], '" size="30"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_server_info'], '</div>
 				</td>
 			</tr><tr id="db_user_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_user_input">', $txt['db_settings_username'], ':</label></td>
 				<td>
-					<input type="text" name="db_user" id="db_user_input" value="', $incontext['db']['user'], '" size="30"><br />
+					<input type="text" name="db_user" id="db_user_input" value="', $incontext['db']['user'], '" size="30"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_username_info'], '</div>
 				</td>
 			</tr><tr id="db_passwd_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_passwd_input">', $txt['db_settings_password'], ':</label></td>
 				<td>
-					<input type="password" name="db_passwd" id="db_passwd_input" value="', $incontext['db']['pass'], '" size="30"><br />
+					<input type="password" name="db_passwd" id="db_passwd_input" value="', $incontext['db']['pass'], '" size="30"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_password_info'], '</div>
 				</td>
 			</tr><tr id="db_name_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_name_input">', $txt['db_settings_database'], ':</label></td>
 				<td>
-					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'wedge' : $incontext['db']['name'], '" size="30"><br />
+					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'wedge' : $incontext['db']['name'], '" size="30"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_database_info'], '
 					<span id="db_name_info_warning">', $txt['db_settings_database_info_note'], '</span></div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="db_prefix_input">', $txt['db_settings_prefix'], ':</label></td>
 				<td>
-					<input type="text" name="db_prefix" id="db_prefix_input" value="', $incontext['db']['prefix'], '" size="30"><br />
+					<input type="text" name="db_prefix" id="db_prefix_input" value="', $incontext['db']['prefix'], '" size="30"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_prefix_info'], '</div>
 				</td>
 			</tr>
@@ -2231,26 +2231,26 @@ function template_forum_settings()
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="boardurl_input">', $txt['install_settings_url'], ':</label></td>
 				<td>
-					<input type="text" name="boardurl" id="boardurl_input" value="', $incontext['detected_url'], '" size="65"><br />
+					<input type="text" name="boardurl" id="boardurl_input" value="', $incontext['detected_url'], '" size="65"><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_url_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_compress'], ':</td>
 				<td>
-					<input type="checkbox" name="compress" id="compress_check" checked> <label for="compress_check">', $txt['install_settings_compress_title'], '</label><br />
+					<input type="checkbox" name="compress" id="compress_check" checked> <label for="compress_check">', $txt['install_settings_compress_title'], '</label><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_compress_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_dbsession'], ':</td>
 				<td>
-					<input type="checkbox" name="dbsession" id="dbsession_check" checked> <label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label><br />
+					<input type="checkbox" name="dbsession" id="dbsession_check" checked> <label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
 				</td>
 			</tr>
 			<tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_stats'], ':</td>
 				<td>
-					<input type="checkbox" name="stats" id="stats_check"> <label for="stats_check">', $txt['install_settings_stats_title'], '</label><br />
+					<input type="checkbox" name="stats" id="stats_check"> <label for="stats_check">', $txt['install_settings_stats_title'], '</label><br>
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_stats_info'], '</div>
 				</td>
 			</tr>
@@ -2294,7 +2294,7 @@ function template_populate_database()
 	template_warning_divs();
 
 	echo '
-	<input type="hidden" name="pop_done" value="1" />';
+	<input type="hidden" name="pop_done" value="1">';
 }
 
 // Create the admin account.
@@ -2358,8 +2358,8 @@ function template_delete_install()
 	// Install directory still writable?
 	if ($incontext['dir_still_writable'])
 		echo '
-		<em>', $txt['still_writable'], '</em><br />
-		<br />';
+		<em>', $txt['still_writable'], '</em><br>
+		<br>';
 
 	// Don't show the box if it's like 99% sure it won't work :P.
 	if ($incontext['probably_delete_install'])
@@ -2378,11 +2378,11 @@ function template_delete_install()
 				theCheck.disabled = true;
 			}
 		// ]]></script>
-		<br />';
+		<br>';
 
 	echo '
-		', sprintf($txt['go_to_your_forum'], $boardurl . '/index.php'), '<br />
-		<br />
+		', sprintf($txt['go_to_your_forum'], $boardurl . '/index.php'), '<br>
+		<br>
 		', $txt['good_luck'];
 }
 
