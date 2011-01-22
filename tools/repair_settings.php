@@ -526,12 +526,12 @@ function show_settings()
 	else
 	{
 		// Funny enough, chmod actually does do something on windows - it removes the read only attribute.
-		@chmod(dirname(__FILE__) . '/' . 'Settings.php', 0777);
-		$fp = @fopen(dirname(__FILE__) . '/' . 'Settings.php', 'r+');
+		@chmod(dirname(__FILE__) . '/Settings.php', 0777);
+		$fp = @fopen(dirname(__FILE__) . '/Settings.php', 'r+');
 
 		// Hmm, okay, try just for write in that case...
 		if (!$fp)
-			$fp = @fopen(dirname(__FILE__) . '/' . 'Settings.php', 'w');
+			$fp = @fopen(dirname(__FILE__) . '/Settings.php', 'w');
 
 		$failure |= !$fp;
 		@fclose($fp);
