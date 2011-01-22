@@ -77,7 +77,7 @@ function step_0()
 	</ul>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=1" method="post">
 		<div style="margin: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';">
-			<input type="submit" value="Proceed" class="button_submit" />
+			<input type="submit" value="Proceed" class="submit">
 		</div>
 	</form>
 	';
@@ -97,53 +97,53 @@ function step_1()
 	</p>
 	<h4>Retrieving and unpacking the package</h4>
 
-	Grab the file from the Sphinx website:<br />
-	<tt>[~]#  wget http://www.sphinxsearch.com/downloads/sphinx-', $sphinx_ver, '.tar.gz</tt><br />
-	<br />
-	Untar the package:<br />
-	<tt>[~]#  tar -xzvf sphinx-', $sphinx_ver, '.tar.gz</tt><br />
-	<br />
-	Go to the Sphinx directory:<br />
+	Grab the file from the Sphinx website:<br>
+	<tt>[~]#  wget http://www.sphinxsearch.com/downloads/sphinx-', $sphinx_ver, '.tar.gz</tt><br>
+	<br>
+	Untar the package:<br>
+	<tt>[~]#  tar -xzvf sphinx-', $sphinx_ver, '.tar.gz</tt><br>
+	<br>
+	Go to the Sphinx directory:<br>
 	<tt>[~]#  cd sphinx-', $sphinx_ver, '</tt>
 
 	<h4>Editing the sources of Sphinx</h4>
-	In the current version there are a few things that need to be changed before compiling Sphinx for a better result. Pick your favourite text editor and edit the following:<br />
-	<br />
+	In the current version there are a few things that need to be changed before compiling Sphinx for a better result. Pick your favourite text editor and edit the following:<br>
+	<br>
 
 	<div style="background-color: white; overflow: auto; margin: 10px;">
-		<small><strong>Find (src/sphinx.cpp):</strong></small><br />
-		<pre>			if (!( GetPriority(iEntry) < GetPriority(iParent) ))</pre><br />
-		<small><strong>Replace:</strong></small><br />
+		<small><strong>Find (src/sphinx.cpp):</strong></small><br>
+		<pre>			if (!( GetPriority(iEntry) < GetPriority(iParent) ))</pre><br>
+		<small><strong>Replace:</strong></small><br>
 		<pre>			if ( !COMP::IsLess ( m_dMatches [ m_dIndexes[iEntry] ], m_dMatches [ m_dIndexes[iParent] ], m_tState ) )</pre>
 	</div>
 
 	<div style="background-color: white; overflow: auto; margin: 10px;">
-		<small><strong>Find (src/sphinx.cpp):</strong></small><br />
-		<pre>				if ( GetPriority(iChild+1) < GetPriority(iChild) )</pre><br />
-		<small><strong>Replace:</strong></small><br />
+		<small><strong>Find (src/sphinx.cpp):</strong></small><br>
+		<pre>				if ( GetPriority(iChild+1) < GetPriority(iChild) )</pre><br>
+		<small><strong>Replace:</strong></small><br>
 		<pre>				if ( COMP::IsLess ( m_dMatches [ m_dIndexes[iChild+1] ], m_dMatches [ m_dIndexes[iChild] ], m_tState ) )</pre>
 	</div>
 
 	<div style="background-color: white; overflow: auto; margin: 10px;">
-		<small><strong>Find (src/sphinx.cpp):</strong></small><br />
-		<pre>			if ( GetPriority(iChild) < GetPriority(iEntry) )</pre><br />
-		<small><strong>Replace:</strong></small><br />
+		<small><strong>Find (src/sphinx.cpp):</strong></small><br>
+		<pre>			if ( GetPriority(iChild) < GetPriority(iEntry) )</pre><br>
+		<small><strong>Replace:</strong></small><br>
 		<pre>			if ( COMP::IsLess ( m_dMatches [ m_dIndexes[iChild] ], m_dMatches [ m_dIndexes[iEntry] ], m_tState ) )</pre>
 	</div>
 
 	<h4>Compiling Sphinx</h4>
-	Configure Sphinx (generally no options are needed):<br />
-	<tt>[~]#  ./configure</tt><br />
-	<br />
-	If everything went well, run the make tool:<br />
-	<tt>[~]#  make</tt><br />
-	<br />
-	If that went well too, make the install:<br />
-	<tt>[~]#  make install</tt><br />
+	Configure Sphinx (generally no options are needed):<br>
+	<tt>[~]#  ./configure</tt><br>
+	<br>
+	If everything went well, run the make tool:<br>
+	<tt>[~]#  make</tt><br>
+	<br>
+	If that went well too, make the install:<br>
+	<tt>[~]#  make install</tt><br>
 
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=2" method="post">
 		<div style="margin: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';">
-			<input type="submit" value="Proceed" class="button_submit" />
+			<input type="submit" value="Proceed" class="submit">
 		</div>
 	</form>';
 }
@@ -155,8 +155,8 @@ function step_2()
 	template_sphinx_config_above('Configure SMF for Sphinx');
 
 	echo '
-	A few settings can be configured allowing to customize the search engine. Generally all options can be left untouched.<br />
-	<br />
+	A few settings can be configured allowing to customize the search engine. Generally all options can be left untouched.<br>
+	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=3" method="post">
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
 			<tr>
@@ -204,8 +204,8 @@ function step_2()
 			</tr>
 		</table>
 		<div style="margin: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';">
-			<input type="submit" value="Proceed" class="button_submit" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+			<input type="submit" value="Proceed" class="submit">
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 		</div>
 	</form>';
 
@@ -237,39 +237,39 @@ function step_3()
 	echo '
 	Your configuration has been saved successfully. The next time you run this tool, your configuration will automatically be loaded.
 	<h4>Generating a configuration file</h4>
-	Based on the settings you submitted in the previous screen, this tool can generate a configuration file for you that will be used by Sphinx. Press the button below to generate the configuration file, and upload it to /usr/local/etc/sphinx.conf (default configuration).<br />
-	<br />
+	Based on the settings you submitted in the previous screen, this tool can generate a configuration file for you that will be used by Sphinx. Press the button below to generate the configuration file, and upload it to /usr/local/etc/sphinx.conf (default configuration).<br>
+	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=999" method="post" target="_blank">
-		<input type="submit" value="Generate sphinx.conf" class="button_submit" />
-		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-	</form><br />
+		<input type="submit" value="Generate sphinx.conf" class="submit">
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+	</form><br>
 
 	<h4>Some file actions</h4>
-	Move Sphinx\' PHP API file to the Sources directory of your SMF installation (the path used here is merely an example):<br />
-	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br />
-	<br />
-	Create directories for storing the indexes:<br />', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
-	<tt>[~]#  mkdir /var/sphinx</tt><br />', '
-	<tt>[~]#  mkdir ' . $modSettings['sphinx_data_path'] . '</tt><br />
-	<tt>[~]#  mkdir ' . $modSettings['sphinx_log_path'] . '</tt><br />
-	<br />
-	Make the data and log directories writable:<br />
-	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_data_path'] . '</tt><br />
-	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_log_path'] . '</tt><br />
+	Move Sphinx\' PHP API file to the Sources directory of your SMF installation (the path used here is merely an example):<br>
+	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br>
+	<br>
+	Create directories for storing the indexes:<br>', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
+	<tt>[~]#  mkdir /var/sphinx</tt><br>', '
+	<tt>[~]#  mkdir ' . $modSettings['sphinx_data_path'] . '</tt><br>
+	<tt>[~]#  mkdir ' . $modSettings['sphinx_log_path'] . '</tt><br>
+	<br>
+	Make the data and log directories writable:<br>
+	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_data_path'] . '</tt><br>
+	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_log_path'] . '</tt><br>
 
 	<h4>Indexing time!</h4>
-	It\'s time to create the full-text index:<br />
-	<tt>[~]#  indexer --config /usr/local/etc/sphinx.conf --all</tt><br />
-	<br />
-	If that went successful, we can test run the search deamon. Start it by typing:<br />
-	<tt>[~]#  searchd --config /usr/local/etc/sphinx.conf</tt><br />
-	<br />
+	It\'s time to create the full-text index:<br>
+	<tt>[~]#  indexer --config /usr/local/etc/sphinx.conf --all</tt><br>
+	<br>
+	If that went successful, we can test run the search deamon. Start it by typing:<br>
+	<tt>[~]#  searchd --config /usr/local/etc/sphinx.conf</tt><br>
+	<br>
 	If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying SMF\'s search to work with Sphinx.
 
 	<h4>Configuring SMF</h4>
-	Upload the package file to the \'Packages\' directory and apply it in SMF\'s package manager.<br /><br />
-	Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br />
-	<br />
+	Upload the package file to the \'Packages\' directory and apply it in SMF\'s package manager.<br><br>
+	Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br>
+	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
 		<select name="search_index">
 			<option value=""', empty($modSettings['search_index']) ? ' selected' : '', '>(None)</option>
@@ -277,18 +277,18 @@ function step_3()
 			<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected' : '', '>Custom index</option>
 			<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected' : '', '>Sphinx</option>
 		</select>
-		<input type="submit" value="Change Search Index" class="button_submit" />
-		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-	</form><br />
-	<br />
+		<input type="submit" value="Change Search Index" class="submit">
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+	</form><br>
+	<br>
 
 	<h4>Creating a cron job for the indexer</h4>
 	In order to keep the full-text index up to date, you need to add a cron job that will update the index from time to time. The configuration file defines two indexes: <tt>smf_delta_index</tt>, an index that only stores the recent changes and can be called frequently.  <tt>smf_base_index</tt>, an index that stores the full database and should be called less frequently.
 
-	Adding the following lines to /etc/crontab would let the index rebuild every day (at 3 am) and update the most recently changed messages each hour:<br />
-	<tt># search indexer<br />
-	10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_base_index<br />
-	0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_delta_index</tt><br />';
+	Adding the following lines to /etc/crontab would let the index rebuild every day (at 3 am) and update the most recently changed messages each hour:<br>
+	<tt># search indexer<br>
+	10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_base_index<br>
+	0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_delta_index</tt><br>';
 
 	template_sphinx_config_below();
 }
@@ -460,7 +460,7 @@ function template_sphinx_config_above($title)
 </head>
 <body>
 	<div id="header">
-		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge" /></a>
+		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge"></a>
 		<div title="A wedge is like a pyramid...">Wedge Sphinx Configuration Utility</div>
 	</div>
 	<div id="content">

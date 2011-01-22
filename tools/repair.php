@@ -421,20 +421,20 @@ function action_spell()
 			<p>If your host doesn\'t trust this test, you can ask them to use the following code.  If the below does not work as expected, it is not configured properly - the expected output would be "<tt>pass pass</tt>".</p>
 
 			<div class="code">
-				&lt;?php<br />
-				<br />
-				<span class="comment">// Show any and all errors, just in case!</span><br />
-				error_reporting(E_ALL);<br />
-				<br />
-				$test = pspell_new(\'en\');<br />
-				<br />
-				<span class="comment">// Some Windows builds of PHP won\'t return a good link the first time.</span><br />
-				if (!$test)<br />
-				&nbsp; &nbsp; $test = pspell_new(\'en\');<br />
-				<br />
-				<span class="comment">// Try both a misspelled and a correctly spell word, to make sure nothing funny is happening.</span><br />
-				echo pspell_check($test, \'mispelin\') ? \'fail\' : \'pass\', \' \', pspell_check($test, \'machines\') ? \'pass\' : \'fail\';<br />
-				<br />
+				&lt;?php<br>
+				<br>
+				<span class="comment">// Show any and all errors, just in case!</span><br>
+				error_reporting(E_ALL);<br>
+				<br>
+				$test = pspell_new(\'en\');<br>
+				<br>
+				<span class="comment">// Some Windows builds of PHP won\'t return a good link the first time.</span><br>
+				if (!$test)<br>
+				&nbsp; &nbsp; $test = pspell_new(\'en\');<br>
+				<br>
+				<span class="comment">// Try both a misspelled and a correctly spell word, to make sure nothing funny is happening.</span><br>
+				echo pspell_check($test, \'mispelin\') ? \'fail\' : \'pass\', \' \', pspell_check($test, \'machines\') ? \'pass\' : \'fail\';<br>
+				<br>
 				?&gt;
 			</div>
 
@@ -534,7 +534,7 @@ function show_header()
 	</head>
 	<body>
 		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0" /></a>
+			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0"></a>
 			' : '', '<div title="Ta-Kumsaw">Repair Tool</div>
 		</div>
 		<div id="content">';
@@ -559,10 +559,10 @@ function protectTimeOut($request)
 		return;
 
 	echo '
-		<em>This repair has paused to avoid overloading your server, please click continue.</em><br />
-		<br />
+		<em>This repair has paused to avoid overloading your server, please click continue.</em><br>
+		<br>
 		<form action="', $_SERVER['PHP_SELF'], '?action=', $_REQUEST['action'], '&', (isset($_REQUEST['sa']) ? 'sa=' . $_REQUEST['sa'] : '') . '&' . $request, '" method="post" name="autoSubmit">
-			<input type="submit" value="Continue" class="button_submit" />
+			<input type="submit" value="Continue" class="submit">
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			window.onload = doAutoSubmit;

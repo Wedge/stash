@@ -84,44 +84,44 @@ function step1($error_message = '')
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="db_server">Database server name:</label></td>
 								<td>
-									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br />
+									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex;">This is nearly always localhost - so if you don\'t know, try localhost.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_user">Database username:</label></td>
 								<td>
-									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the username you need to connect to your database here.<br />If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
+									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the username you need to connect to your database here.<br>If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_passwd">Database password:</label></td>
 								<td>
-									<input type="password" name="db_passwd" id="db_passwd" value="', $db_passwd, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Here, put the password you need to connect to your database.<br />If you don\'t know this, you should try the password to your ftp account.</div>
+									<input type="password" name="db_passwd" id="db_passwd" value="', $db_passwd, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Here, put the password you need to connect to your database.<br>If you don\'t know this, you should try the password to your ftp account.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_name">database name:</label></td>
 								<td>
-									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'smf' : $db_name, '" size="30"><br />
+									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'smf' : $db_name, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the name of the database you want to backup.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_prefix">Table prefix:</label></td>
 								<td>
-									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br />
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in a prefix to only backup tables that start with this prefix.<br />Normally, you can leave this blank to get a full backup.</div>
+									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in a prefix to only backup tables that start with this prefix.<br>Normally, you can leave this blank to get a full backup.</div>
 								</td>
 							</tr>
 						</table>
 
 						<h2>Database backup file</h2>
-						<h3>The database backup will be created as a file on your server.  Please specify where you want it saved.<br />', !function_exists('gzencode') ? '<strong>Warning</strong>: To create a compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : '', '</h3>
+						<h3>The database backup will be created as a file on your server.  Please specify where you want it saved.<br>', !function_exists('gzencode') ? '<strong>Warning</strong>: To create a compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : '', '</h3>
 
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="path">Path to backup file:</label></td>
 								<td>
-									<input type="text" name="path" id="path" value="', $_POST['path'], '" size="60" style="width: 90%" /><br>
+									<input type="text" name="path" id="path" value="', $_POST['path'], '" size="60" style="width: 90%"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex;">The default value for this field is a file in this script\'s directory.</div>
 								</td>';
 
@@ -139,14 +139,14 @@ function step1($error_message = '')
 												el.form.path.value = el.form.path.value.substr(0, el.form.path.value.length - 3);
 										}
 									// ]]></script>
-									<label for="compress"><input type="checkbox" name="compress" id="compress" value="1"', isset($_POST['compress']) ? ' checked' : '', ' onchange="fixExtension(this);"> Compress the backup with gzip.</label><div style="font-size: smaller;">Please note that this will only compress the backup after it is complete.</div><br />
+									<label for="compress"><input type="checkbox" name="compress" id="compress" value="1"', isset($_POST['compress']) ? ' checked' : '', ' onchange="fixExtension(this);"> Compress the backup with gzip.</label><div style="font-size: smaller;">Please note that this will only compress the backup after it is complete.</div><br>
 								</td>';
 
 	echo '
 							</tr>
 						</table>
 
-						<div class="righttext" style="margin: 1ex;"><input type="submit" value="Proceed" class="button_submit" /></div>
+						<div class="righttext" style="margin: 1ex;"><input type="submit" value="Proceed" class="submit"></div>
 					</form>
 				</div>';
 
@@ -159,7 +159,7 @@ function step2()
 
 	$db_connection = smc_compat_database($_POST['db_server'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
 	if (!$db_connection)
-		return step1('Cannot connect to the database server with the supplied data.<br /><br />If you are not sure about what to type in, please contact your host.');
+		return step1('Cannot connect to the database server with the supplied data.<br><br>If you are not sure about what to type in, please contact your host.');
 
 	$_GET['table'] = (int) @$_GET['table'];
 	$_GET['row'] = (int) @$_GET['row'];
@@ -353,18 +353,18 @@ function step2()
 				<div class="panel">
 					<h2>Backup process complete!</h2>
 
-					Congratulations!  Your database backup has been created successfully (assuming no errors were shown during processing).<br />
-					<br />';
+					Congratulations!  Your database backup has been created successfully (assuming no errors were shown during processing).<br>
+					<br>';
 
 	if (dirname($_POST['path']) == dirname(__FILE__))
 		echo '
-					You can <a href="', basename($_POST['path']), '">download the backup now</a> if you wish to.  Please note that it\'s recommended that you put the backup in a place others cannot access by URL.<br />
-					<br />';
+					You can <a href="', basename($_POST['path']), '">download the backup now</a> if you wish to.  Please note that it\'s recommended that you put the backup in a place others cannot access by URL.<br>
+					<br>';
 
 	echo '
 					If you had any problems, please <a href="http://www.simplemachines.org/community/index.php">tell us about them</a> so that we can help you get them resolved.
-					<br />
-					Good luck!<br />
+					<br>
+					Good luck!<br>
 					Simple Machines
 				</div>';
 }
@@ -439,12 +439,12 @@ function get_ftp_info()
 			echo '
 					<div class="error_message">
 						<div style="color: red;">
-							Unable to connect to FTP server with this combination of details.<br />
-							<br />
+							Unable to connect to FTP server with this combination of details.<br>
+							<br>
 							<code>', $ftp_error, '</code>
 						</div>
 					</div>
-					<br />';
+					<br>';
 
 		echo '
 					<form action="', $_SERVER['PHP_SELF'], '?step=2" method="post">
@@ -478,15 +478,15 @@ function get_ftp_info()
 							</tr>
 						</table>
 
-						<input type="hidden" name="db_server" value="', $_POST['db_server'], '" />
-						<input type="hidden" name="db_user" value="', $_POST['db_user'], '" />
-						<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '" />
-						<input type="hidden" name="db_name" value="', $_POST['db_name'], '" />
-						<input type="hidden" name="db_prefix" value="', $_POST['db_prefix'], '" />
-						<input type="hidden" name="path" value="', $_POST['path'], '" />
-						<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '" />
+						<input type="hidden" name="db_server" value="', $_POST['db_server'], '">
+						<input type="hidden" name="db_user" value="', $_POST['db_user'], '">
+						<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '">
+						<input type="hidden" name="db_name" value="', $_POST['db_name'], '">
+						<input type="hidden" name="db_prefix" value="', $_POST['db_prefix'], '">
+						<input type="hidden" name="path" value="', $_POST['path'], '">
+						<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '">
 
-						<div class="righttext" style="margin: 1ex; margin-top: 2ex;"><input type="submit" value="Connect" class="button_submit" /></div>
+						<div class="righttext" style="margin: 1ex; margin-top: 2ex;"><input type="submit" value="Connect" class="submit"></div>
 					</form>
 				</div>';
 	}
@@ -502,7 +502,7 @@ function show_header()
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<meta name="robots" content="noindex" />
+		<meta name="robots" content="noindex">
 		<title>Backup Creation Tool</title>
 		<style type="text/css">
 			body
@@ -590,7 +590,7 @@ function show_header()
 	</head>
 	<body>
 		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0" /></a>
+			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0"></a>
 			' : '', '<div title="Belthasar">Backup Creation Tool</div>
 		</div>
 		<div id="content">';
@@ -684,15 +684,15 @@ function nextRow($row, $table, $max_rows, $max_tables, $fp = null)
 			<p>Data is currently being written at approximately ', round($speed / 1024, 3), ' kilobytes per second.</p>
 
 			<form action="', $_SERVER['PHP_SELF'], $query_string, '" method="post" name="autoSubmit">
-				<input type="hidden" name="db_server" value="', $_POST['db_server'], '" />
-				<input type="hidden" name="db_user" value="', $_POST['db_user'], '" />
-				<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '" />
-				<input type="hidden" name="db_name" value="', $_POST['db_name'], '" />
-				<input type="hidden" name="db_prefix" value="', $_POST['db_prefix'], '" />
-				<input type="hidden" name="path" value="', $_POST['path'], '" />
-				<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '" />
+				<input type="hidden" name="db_server" value="', $_POST['db_server'], '">
+				<input type="hidden" name="db_user" value="', $_POST['db_user'], '">
+				<input type="hidden" name="db_passwd" value="', $_POST['db_passwd'], '">
+				<input type="hidden" name="db_name" value="', $_POST['db_name'], '">
+				<input type="hidden" name="db_prefix" value="', $_POST['db_prefix'], '">
+				<input type="hidden" name="path" value="', $_POST['path'], '">
+				<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '">
 
-				<div class="righttext" style="margin: 1ex;"><input name="b" type="submit" value="Continue" class="button_submit" /></div>
+				<div class="righttext" style="margin: 1ex;"><input name="b" type="submit" value="Continue" class="submit"></div>
 			</form>
 			<script type="text/javascript"><!-- // --><![CDATA[
 				window.onload = doAutoSubmit;

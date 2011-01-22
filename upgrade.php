@@ -899,24 +899,24 @@ function WelcomeLogin()
 
 	if (!$check)
 		// Don't tell them what files exactly because it's a spot check - just like teachers don't tell which problems they are spot checking, that's dumb.
-		return throw_error('The upgrader was unable to find some crucial files.<br /><br />Please make sure you uploaded all of the files included in the package, including the Themes, Sources, and other directories.');
+		return throw_error('The upgrader was unable to find some crucial files.<br><br>Please make sure you uploaded all of the files included in the package, including the Themes, Sources, and other directories.');
 
 	// Do they meet the install requirements?
 	if (!php_version_check())
-		return throw_error('Warning!  You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br /><br />Please ask your host to upgrade.');
+		return throw_error('Warning!  You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br><br>Please ask your host to upgrade.');
 
 	if (!db_version_check())
-		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br /><br />Please ask your host to upgrade.');
+		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br><br>Please ask your host to upgrade.');
 
 	// Do they have ALTER privileges?
 	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
-		return throw_error('The MySQL user you have set in Settings.php does not have proper privileges.<br /><br />Please ask your host to give this user the ALTER, CREATE, and DROP privileges.');
+		return throw_error('The MySQL user you have set in Settings.php does not have proper privileges.<br><br>Please ask your host to give this user the ALTER, CREATE, and DROP privileges.');
 
 	// Do a quick version spot check.
 	$temp = substr(@implode('', @file($boarddir . '/index.php')), 0, 4096);
 	preg_match('~\*\s*Software\s+Version:\s+Wedge\s+(.+?)[\s]{2}~i', $temp, $match);
 	if (empty($match[1]) || $match[1] != WEDGE_VERSION)
-		return throw_error('The upgrader found some old or outdated files.<br /><br />Please make certain you uploaded the new versions of all the files included in the package.');
+		return throw_error('The upgrader found some old or outdated files.<br><br>Please make certain you uploaded the new versions of all the files included in the package.');
 
 	// What absolutely needs to be writable?
 	$writable_files = array(
@@ -929,7 +929,7 @@ function WelcomeLogin()
 	if (!file_exists($cachedir_temp))
 		@mkdir($cachedir_temp);
 	if (!file_exists($cachedir_temp))
-		return throw_error('The cache directory could not be found.<br /><br />Please make sure you have a directory called &quot;cache&quot; in your forum directory before continuing.');
+		return throw_error('The cache directory could not be found.<br><br>Please make sure you have a directory called &quot;cache&quot; in your forum directory before continuing.');
 
 	if (!isset($_GET['skiplang']))
 	{
@@ -937,12 +937,12 @@ function WelcomeLogin()
 		preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*index(?:[\s]{2}|\*/)~i', $temp, $match);
 
 		if (empty($match[1]) || $match[1] != WEDGE_LANG_VERSION)
-			return throw_error('The upgrader found some old or outdated language files, for the forum default language, ' . $upcontext['language'] . '.<br /><br />Please make certain you uploaded the new versions of all the files included in the package, even the theme and language files for the default theme.<br />&nbsp;&nbsp;&nbsp;[<a href="' . $upgradeurl . '?skiplang">SKIP</a>] [<a href="' . $upgradeurl . '?lang=english">Try English</a>]');
+			return throw_error('The upgrader found some old or outdated language files, for the forum default language, ' . $upcontext['language'] . '.<br><br>Please make certain you uploaded the new versions of all the files included in the package, even the theme and language files for the default theme.<br>&nbsp;&nbsp;&nbsp;[<a href="' . $upgradeurl . '?skiplang">SKIP</a>] [<a href="' . $upgradeurl . '?lang=english">Try English</a>]');
 	}
 
 	// This needs to exist!
 	if (!file_exists($boarddir . '/Themes/default/languages/Install.' . $upcontext['language'] . '.php'))
-		return throw_error('The upgrader could not find the &quot;Install&quot; language file for the forum default language, ' . $upcontext['language'] . '.<br /><br />Please make certain you uploaded all the files included in the package, even the theme and language files for the default theme.<br />&nbsp;&nbsp;&nbsp;[<a href="' . $upgradeurl . '?lang=english">Try English</a>]');
+		return throw_error('The upgrader could not find the &quot;Install&quot; language file for the forum default language, ' . $upcontext['language'] . '.<br><br>Please make certain you uploaded all the files included in the package, even the theme and language files for the default theme.<br>&nbsp;&nbsp;&nbsp;[<a href="' . $upgradeurl . '?lang=english">Try English</a>]');
 	else
 		require_once($boarddir . '/Themes/default/languages/Install.' . $upcontext['language'] . '.php');
 
@@ -951,7 +951,7 @@ function WelcomeLogin()
 
 	// Check agreement.txt. (it may not exist, in which case $boarddir must be writable.)
 	if (isset($modSettings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
-		return throw_error('The upgrader was unable to obtain write access to agreement.txt.<br /><br />If you are using a linux or unix based server, please ensure that the file is chmod\'d to 777, or if it does not exist that the directory this upgrader is in is 777.<br />If your server is running Windows, please ensure that the internet guest account has the proper permissions on it or its folder.');
+		return throw_error('The upgrader was unable to obtain write access to agreement.txt.<br><br>If you are using a linux or unix based server, please ensure that the file is chmod\'d to 777, or if it does not exist that the directory this upgrader is in is 777.<br>If your server is running Windows, please ensure that the internet guest account has the proper permissions on it or its folder.');
 
 	// Upgrade the agreement.
 	elseif (isset($modSettings['agreement']))
@@ -964,7 +964,7 @@ function WelcomeLogin()
 	// We're going to check that their board dir setting is right incase they've been moving stuff around.
 	if (strtr($boarddir, array('/' => '', '\\' => '')) != strtr(dirname(__FILE__), array('/' => '', '\\' => '')))
 		$upcontext['warning'] = '
-			It looks as if your board directory settings <em>might</em> be incorrect. Your board directory is currently set to &quot;' . $boarddir . '&quot; but should probably be &quot;' . dirname(__FILE__) . '&quot;. Settings.php currently lists your paths as:<br />
+			It looks as if your board directory settings <em>might</em> be incorrect. Your board directory is currently set to &quot;' . $boarddir . '&quot; but should probably be &quot;' . dirname(__FILE__) . '&quot;. Settings.php currently lists your paths as:<br>
 			<ul>
 				<li>Board Directory: ' . $boarddir . '</li>
 				<li>Source Directory: ' . $boarddir . '</li>
@@ -1802,7 +1802,7 @@ function DeleteUpgrade()
 	$upcontext['sub_template'] = 'upgrade_complete';
 	$upcontext['page_title'] = 'Upgrade Complete';
 
-	$endl = $command_line ? "\n" : '<br />' . "\n";
+	$endl = $command_line ? "\n" : '<br>' . "\n";
 
 	$changes = array(
 		'language' => '\'' . (substr($language, -4) == '.lng' ? substr($language, 0, -4) : $language) . '\'',
@@ -2259,7 +2259,7 @@ function parse_sql($filename)
 	if (empty($db_collation))
 		$db_collation = '';
 
-	$endl = $command_line ? "\n" : '<br />' . "\n";
+	$endl = $command_line ? "\n" : '<br>' . "\n";
 
 	$lines = file($filename);
 
@@ -2549,7 +2549,7 @@ function upgrade_query($string, $unbuffered = false)
 
 	// Otherwise we have to display this somewhere appropriate if possible.
 	$upcontext['forced_error_message'] = '
-			<strong>Unsuccessful!</strong><br />
+			<strong>Unsuccessful!</strong><br>
 
 			<div style="margin: 2ex;">
 				This query:
@@ -2560,7 +2560,7 @@ function upgrade_query($string, $unbuffered = false)
 			</div>
 
 			<form action="' . $upgradeurl . $query_string . '" method="post">
-				<input type="submit" value="Try again" class="button_submit" />
+				<input type="submit" value="Try again" class="submit">
 			</form>
 		</div>';
 
@@ -3238,7 +3238,7 @@ function template_chmod()
 	$txt['ftp_path'] = 'Install Path';
 	$txt['ftp_path_info'] = 'This is the <em>relative</em> path you use in your FTP client <a href="' . $_SERVER['PHP_SELF'] . '?ftphelp" onclick="window.open(this.href, \'\', \'width=450,height=250\');return false;" target="_blank">(more help)</a>.';
 	$txt['ftp_path_found_info'] = 'The path in the box above was automatically detected.';
-	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client.  It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;.  It is different from your URL and full path.<br /><br />Files in this path may be overwritten, so make sure it\'s correct.';
+	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client.  It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;.  It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it\'s correct.';
 	$txt['ftp_path_help_close'] = 'Close';
 	$txt['ftp_connect'] = 'Connect';
 
@@ -3267,10 +3267,10 @@ function template_chmod()
 					popup = window.open(\'\',\'popup\',\'height=150,width=400,scrollbars=yes\');
 					var content = popup.document;
 					content.write(\'<!DOCTYPE html>\n\');
-					content.write(\'<html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>\n\t<head>\n\t\t<meta name="robots" content="noindex" />\n\t\t\');
-					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css" />\n\t</head>\n\t<body id="popup">\n\t\t\');
+					content.write(\'<html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>\n\t<head>\n\t\t<meta name="robots" content="noindex">\n\t\t\');
+					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
 					content.write(\'<div class="windowbg wrc description">\n\t\t\t<h4>The following files needs to be made writable to continue:</h4>\n\t\t\t\');
-					content.write(\'<p>', implode('<br />\n\t\t\t', $upcontext['chmod']['files']), '</p>\n\t\t\t\');
+					content.write(\'<p>', implode('<br>\n\t\t\t', $upcontext['chmod']['files']), '</p>\n\t\t\t\');
 					content.write(\'<a href="javascript:self.close();">close</a>\n\t\t</div>\n\t</body>\n</html>\');
 					content.close();
 				}
@@ -3280,12 +3280,12 @@ function template_chmod()
 		echo '
 		<div class="error_message">
 			<div style="color: red;">
-				The following error was encountered when trying to connect:<br />
-				<br />
+				The following error was encountered when trying to connect:<br>
+				<br>
 				<code>', $upcontext['chmod']['ftp_error'], '</code>
 			</div>
 		</div>
-		<br />';
+		<br>';
 
 	if (empty($upcontext['chmod_in_form']))
 		echo '
@@ -3321,7 +3321,7 @@ function template_chmod()
 			</tr>
 		</table>
 
-		<div class="righttext" style="margin: 1ex;"><input type="submit" value="', $txt['ftp_connect'], '" class="button_submit" /></div>
+		<div class="righttext" style="margin: 1ex;"><input type="submit" value="', $txt['ftp_connect'], '" class="submit"></div>
 	</div>';
 
 	if (empty($upcontext['chmod_in_form']))
@@ -3336,11 +3336,11 @@ function template_upgrade_above()
 	echo '<!DOCTYPE html>
 <html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="utf-8" />
-		<meta name="robots" content="noindex" />
+		<meta charset="utf-8">
+		<meta name="robots" content="noindex">
 		<title>', $txt['upgrade_upgrade_utility'], '</title>
-		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css" />
-		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/install.css" />
+		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
+		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/install.css">
 		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 		<script><!-- // --><![CDATA[
@@ -3370,7 +3370,7 @@ function template_upgrade_above()
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">', $txt['upgrade_upgrade_utility'], '</h1>
-			<img id="smflogo" src="Themes/default/images/smflogo.png" alt="Simple Machines Forum" title="Simple Machines Forum" />
+			<img id="smflogo" src="Themes/default/images/smflogo.png" alt="Simple Machines Forum" title="Simple Machines Forum">
 		</div>
 		<div id="upper_section" class="middletext flow_hidden">
 			<div class="user"></div>
@@ -3437,7 +3437,7 @@ function template_upgrade_below()
 
 	if (!empty($upcontext['pause']))
 		echo '
-								<em>', $txt['upgrade_incomplete'], '.</em><br />
+								<em>', $txt['upgrade_incomplete'], '.</em><br>
 
 								<h2 style="margin-top: 2ex;">', $txt['upgrade_not_quite_done'], '</h2>
 								<h3>
@@ -3448,7 +3448,7 @@ function template_upgrade_below()
 		echo '
 								<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
 									<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-									<strong style="text-decoration: underline;">', $txt['upgrade_note'], '</strong><br />
+									<strong style="text-decoration: underline;">', $txt['upgrade_note'], '</strong><br>
 									<div style="padding-left: 6ex;">', $upcontext['custom_warning'], '</div>
 								</div>';
 
@@ -3457,10 +3457,10 @@ function template_upgrade_below()
 
 	if (!empty($upcontext['continue']))
 		echo '
-									<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '"', $upcontext['continue'] == 2 ? ' disabled' : '', ' class="button_submit" />';
+									<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '"', $upcontext['continue'] == 2 ? ' disabled' : '', ' class="submit">';
 	if (!empty($upcontext['skip']))
 		echo '
-									<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="dontSubmit = true; document.getElementById(\'contbutt\').disabled = \'disabled\'; return true;" class="button_submit" />';
+									<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="dontSubmit = true; document.getElementById(\'contbutt\').disabled = \'disabled\'; return true;" class="cancel">';
 
 	echo '
 								</div>
@@ -3531,7 +3531,7 @@ function template_error_message()
 		<div style="color: red;">
 			', $upcontext['error_msg'], '
 		</div>
-		<br />
+		<br>
 		<a href="', $_SERVER['PHP_SELF'], '">Click here to try again.</a>
 	</div>';
 }
@@ -3547,7 +3547,7 @@ function template_welcome_message()
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', sprintf($txt['upgrade_warning_out_of_date'], WEDGE_VERSION), '
 			</div>
@@ -3561,7 +3561,7 @@ function template_welcome_message()
 		echo '
 		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', $upcontext['warning'], '
 			</div>
@@ -3571,7 +3571,7 @@ function template_welcome_message()
 	echo '
 		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #804840; color: black; background-color: #fe5a44; ', (file_exists($settings['default_theme_dir'] . '/scripts/script.js') ? 'display: none;' : ''), '" id="js_script_missing_error">
 			<div style="float: left; width: 2ex; font-size: 2em; color: black;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_critical_error'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_critical_error'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				', $txt['upgrade_error_script_js'], '
 			</div>
@@ -3599,7 +3599,7 @@ function template_welcome_message()
 		echo '
 		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br />
+			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br>
 			<div style="padding-left: 6ex;">
 				&quot;', $upcontext['user']['name'], '&quot; has been running the upgrade script for the last ', $ago, ' - and was last active ', $updated, ' ago.';
 
@@ -3609,10 +3609,10 @@ function template_welcome_message()
 
 		if ($active > $upcontext['inactive_timeout'])
 			echo '
-				<br /><br />You can choose to either run the upgrade again from the beginning - or alternatively continue from the last step reached during the last upgrade.';
+				<br><br>You can choose to either run the upgrade again from the beginning - or alternatively continue from the last step reached during the last upgrade.';
 		else
 			echo '
-				<br /><br />This upgrade script cannot be run until ', $upcontext['user']['name'], ' has been inactive for at least ', ($upcontext['inactive_timeout'] > 120 ? round($upcontext['inactive_timeout'] / 60, 1) . ' minutes!' : $upcontext['inactive_timeout'] . ' seconds!');
+				<br><br>This upgrade script cannot be run until ', $upcontext['user']['name'], ' has been inactive for at least ', ($upcontext['inactive_timeout'] > 120 ? round($upcontext['inactive_timeout'] / 60, 1) . ' minutes!' : $upcontext['inactive_timeout'] . ' seconds!');
 
 		echo '
 			</div>
@@ -3639,7 +3639,7 @@ function template_welcome_message()
 					<td><strong ', $disable_security ? 'style="color: gray;"' : '', '>Password:</strong></td>
 					<td>
 						<input type="password" name="passwrd" value=""', $disable_security ? ' disabled' : '', '>
-						<input type="hidden" name="hash_passwrd" value="" />';
+						<input type="hidden" name="hash_passwrd" value="">';
 
 	if (!empty($upcontext['password_failed']))
 		echo '
@@ -3661,12 +3661,12 @@ function template_welcome_message()
 	}
 
 	echo '
-			</table><br />
+			</table><br>
 			<span class="smalltext">
 				<strong>Note:</strong> If necessary the above security check can be bypassed for users who may administrate a server but not have admin rights on the forum. In order to bypass the above check simply open &quot;upgrade.php&quot; in a text editor and replace &quot;$disable_security = 0;&quot; with &quot;$disable_security = 1;&quot; and refresh this page.
 			</span>
-			<input type="hidden" name="login_attempt" id="login_attempt" value="1" />
-			<input type="hidden" name="js_works" id="js_works" value="0" />';
+			<input type="hidden" name="login_attempt" id="login_attempt" value="1">
+			<input type="hidden" name="js_works" id="js_works" value="0">';
 
 	// Say we want the continue button!
 	$upcontext['continue'] = !empty($upcontext['user']['id']) && time() - $upcontext['user']['updated'] < $upcontext['inactive_timeout'] ? 2 : 1;
@@ -3717,7 +3717,7 @@ function template_upgrade_options()
 		echo '
 		<div style="margin: 1ex; padding: 1ex; border: 1px dashed #cc3344; color: black; background-color: #ffe4e9;">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">Warning!</strong><br />
+			<strong style="text-decoration: underline;">Warning!</strong><br>
 			<div style="padding-left: 4ex;">
 				', $upcontext['upgrade_options_warning'], '
 			</div>
@@ -3740,9 +3740,9 @@ function template_upgrade_options()
 						<td width="100%">
 							<label for="maint">Put the forum into maintenance mode during upgrade.</label> <span class="smalltext">(<a href="#" onclick="document.getElementById(\'mainmess\').style.display = document.getElementById(\'mainmess\').style.display == \'\' ? \'none\' : \'\'">Customize</a>)</span>
 							<div id="mainmess" style="display: none;">
-								<strong class="smalltext">Maintenance Title: </strong><br />
-								<input type="text" name="maintitle" size="30" value="', htmlspecialchars($mtitle), '"><br />
-								<strong class="smalltext">Maintenance Message: </strong><br />
+								<strong class="smalltext">Maintenance Title: </strong><br>
+								<input type="text" name="maintitle" size="30" value="', htmlspecialchars($mtitle), '"><br>
+								<strong class="smalltext">Maintenance Message: </strong><br>
 								<textarea name="mainmessage" rows="3" cols="50">', htmlspecialchars($mmessage), '</textarea>
 							</div>
 						</td>
@@ -3769,13 +3769,13 @@ function template_upgrade_options()
 						</td>
 						<td width="100%">
 							<label for="stats">
-								Allow Simple Machines to Collect Basic Stats Monthly.<br />
+								Allow Simple Machines to Collect Basic Stats Monthly.<br>
 								<span class="smalltext">If enabled, this will allow Simple Machines to visit your site once a month to collect basic statistics. This will help us make decisions as to which configurations to optimise the software for. For more information please visit our <a href="http://www.simplemachines.org/about/stats.php" target="_blank">info page</a>.</span>
 							</label>
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="upcont" value="1" />';
+				<input type="hidden" name="upcont" value="1">';
 
 	// We need a normal continue button here!
 	$upcontext['continue'] = 1;
@@ -3791,7 +3791,7 @@ function template_backup_database()
 
 	echo '
 			<form action="', $upcontext['form_url'], '" name="upform" id="upform" method="post">
-			<input type="hidden" name="backup_done" id="backup_done" value="0" />
+			<input type="hidden" name="backup_done" id="backup_done" value="0">
 			<strong>Completed <span id="tab_done">', $upcontext['cur_table_num'], '</span> out of ', $upcontext['table_count'], ' tables.</strong>
 			<span id="debuginfo"></span>';
 
@@ -3799,11 +3799,11 @@ function template_backup_database()
 	if (!empty($upcontext['previous_tables']))
 		foreach ($upcontext['previous_tables'] as $table)
 			echo '
-			<br />Completed Table: &quot;', $table, '&quot;.';
+			<br>Completed Table: &quot;', $table, '&quot;.';
 
 	echo '
 			<h3 id="current_tab_div">Current Table: &quot;<span id="current_table">', $upcontext['cur_table_name'], '</span>&quot;</h3>
-			<br /><span id="commess" style="font-weight: bold; display: ', $upcontext['cur_table_num'] == $upcontext['table_count'] ? 'inline' : 'none', ';">Backup Complete! Click Continue to Proceed.</span>';
+			<br><span id="commess" style="font-weight: bold; display: ', $upcontext['cur_table_num'] == $upcontext['table_count'] ? 'inline' : 'none', ';">Backup Complete! Click Continue to Proceed.</span>';
 
 	// Continue please!
 	$upcontext['continue'] = $support_js ? 2 : 1;
@@ -3838,7 +3838,7 @@ function template_backup_database()
 		// If debug flood the screen.
 		if ($is_debug)
 			echo '
-				$(\'#debuginfo\').append(\'<br />Completed Table: &quot;\' + sCompletedTableName + \'&quot;.\');';
+				$(\'#debuginfo\').append(\'<br>Completed Table: &quot;\' + sCompletedTableName + \'&quot;.\');';
 
 		echo '
 				// Get the next update...
@@ -3876,7 +3876,7 @@ function template_database_changes()
 
 	echo '
 		<form action="', $upcontext['form_url'], '&amp;filecount=', $upcontext['file_count'], '" name="upform" id="upform" method="post">
-		<input type="hidden" name="database_done" id="database_done" value="0" />';
+		<input type="hidden" name="database_done" id="database_done" value="0">';
 
 	// No javascript looks rubbish!
 	if (!$support_js)
@@ -3885,10 +3885,10 @@ function template_database_changes()
 		{
 			if ($num != 0)
 				echo ' Successful!';
-			echo '<br />' . $item;
+			echo '<br>' . $item;
 		}
 		if (!empty($upcontext['changes_complete']))
-			echo ' Successful!<br /><br /><span id="commess" style="font-weight: bold;">Database Updates Complete! Click Continue to Proceed.</span><br />';
+			echo ' Successful!<br><br><span id="commess" style="font-weight: bold;">Database Updates Complete! Click Continue to Proceed.</span><br>';
 	}
 	else
 	{
@@ -3899,7 +3899,7 @@ function template_database_changes()
 
 		echo '
 		<h3 id="info2"><strong>Executing:</strong> &quot;<span id="cur_item_name">', $upcontext['current_item_name'], '</span>&quot; (<span id="item_num">', $upcontext['current_item_num'], '</span> of <span id="total_items"><span id="item_count">', $upcontext['total_items'], '</span>', $upcontext['file_count'] > 1 ? ' - of this script' : '', ')</span></h3>
-		<br /><span id="commess" style="font-weight: bold; display: ', !empty($upcontext['changes_complete']) || $upcontext['current_debug_item_num'] == $upcontext['debug_items'] ? 'inline' : 'none', ';">Database Updates Complete! Click Continue to Proceed.</span>';
+		<br><span id="commess" style="font-weight: bold; display: ', !empty($upcontext['changes_complete']) || $upcontext['current_debug_item_num'] == $upcontext['debug_items'] ? 'inline' : 'none', ';">Database Updates Complete! Click Continue to Proceed.</span>';
 
 		if ($is_debug)
 		{
@@ -3914,7 +3914,7 @@ function template_database_changes()
 	echo '
 		<div id="error_block" style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9; display: ', empty($upcontext['error_message']) ? 'none' : '', ';">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">Error!</strong><br />
+			<strong style="text-decoration: underline;">Error!</strong><br>
 			<div style="padding-left: 6ex;" id="error_message">', isset($upcontext['error_message']) ? $upcontext['error_message'] : 'Unknown Error!', '</div>
 		</div>';
 
@@ -4086,7 +4086,7 @@ function template_database_changes()
 
 		if ($is_debug)
 			echo '
-					$(\'#debuginfo\').append(\'done<br />Moving to next script file...\');';
+					$(\'#debuginfo\').append(\'done<br>Moving to next script file...\');';
 
 		echo '
 					getNextItem();
@@ -4108,7 +4108,7 @@ function template_database_changes()
 				iLastSubStepProgress = iSubStepProgress;
 
 				if (bIsComplete)
-					$(\'#debuginfo\').append(\'done<br />\');
+					$(\'#debuginfo\').append(\'done<br>\');
 				else
 					$(\'#debuginfo\').append(\'...\');
 
@@ -4227,22 +4227,22 @@ function template_clean_mods()
 			<tr style="background-color: #cccccc;">
 				<td width="40%">', $package['name'], '</td>
 				<td width="10%">', $package['version'], '</td>
-				<td width="15%">', $package['file_count'], ' <span class="smalltext">[<a href="#" onclick="alert(\'The following files are affected by this modification:\\n\\n', strtr(implode('<br />', $package['files']), array('\\' => '\\\\', '<br />' => '\\n')), '\'); return false;">details</a>]</td>
+				<td width="15%">', $package['file_count'], ' <span class="smalltext">[<a href="#" onclick="alert(\'The following files are affected by this modification:\\n\\n', strtr(implode('<br>', $package['files']), array('\\' => '\\\\', '<br>' => '\\n')), '\'); return false;">details</a>]</td>
 				<td width="20%"><span style="font-weight: bold; color: ', $package['color'], '">', $package['status'], '</span></td>
 				<td width="5%" align="center">
-					<input type="hidden" name="remove[', $package['id'], ']" value="0" />
+					<input type="hidden" name="remove[', $package['id'], ']" value="0">
 					<input type="checkbox" name="remove[', $package['id'], ']"', $package['color'] == 'green' ? ' disabled' : '', '>
 				</td>
 			</tr>';
 	}
 	echo '
 		</table>
-		<input type="hidden" name="cleandone" value="1" />';
+		<input type="hidden" name="cleandone" value="1">';
 
 	// Files to make writable?
 	if (!empty($upcontext['writable_files']))
 		echo '
-		<input type="hidden" name="writable_files" value="', base64_encode(serialize($upcontext['writable_files'])), '" />';
+		<input type="hidden" name="writable_files" value="', base64_encode(serialize($upcontext['writable_files'])), '">';
 
 	// We'll want a continue button...
 	if (empty($upcontext['chmod']['files']))
@@ -4271,7 +4271,7 @@ function template_cleanup_done()
 	}
 	echo '
 		</table>
-		<input type="hidden" name="cleandone2" value="1" />';
+		<input type="hidden" name="cleandone2" value="1">';
 
 	// We'll want a continue button...
 	$upcontext['continue'] = 1;
@@ -4297,12 +4297,12 @@ function template_upgrade_complete()
 					theCheck.disabled = true;
 				}
 			// ]]></script>
-			<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader" /><br />';
+			<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
 
-	echo '<br />
-			If you had any problems with this upgrade, or have any problems using SMF, please don\'t hesitate to <a href="http://www.simplemachines.org/community/index.php">look to us for assistance</a>.<br />
-			<br />
-			Best of luck,<br />
+	echo '<br>
+			If you had any problems with this upgrade, or have any problems using SMF, please don\'t hesitate to <a href="http://www.simplemachines.org/community/index.php">look to us for assistance</a>.<br>
+			<br>
+			Best of luck,<br>
 			Simple Machines';
 }
 
