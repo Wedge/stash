@@ -542,7 +542,7 @@ function show_settings()
 				<input type="submit" name="submit" value="', $txt['save_settings'], '" disabled class="submit" /><br />', $txt['not_writable'];
 	else
 		echo '
-				<input type="submit" name="submit" value="', $txt['save_settings'], '" class="button_submit" />';
+				<input type="submit" name="submit" value="', $txt['save_settings'], '" class="submit" />';
 
 	echo '
 				</div>

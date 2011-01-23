@@ -171,7 +171,7 @@ function protectTimeOut($request)
 		<em>This repair has paused to avoid overloading your server, please click continue.</em><br />
 		<br />
 		<form action="', $_SERVER['PHP_SELF'], '?' . $request, '" method="post" name="autoSubmit">
-			<input type="submit" value="Continue" class="button_submit" />
+			<input type="submit" value="Continue" class="submit" />
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			window.onload = doAutoSubmit;

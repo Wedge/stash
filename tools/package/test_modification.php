@@ -46,7 +46,7 @@ if (empty($actions))
 			<br />
 			Upload it instead: <input type="file" name="mod_file" size="40"><br />
 			<br />
-			<div class="righttext" style="margin: 1ex;"><input type="submit" value="Test it!" class="button_submit" /></div>
+			<div class="righttext" style="margin: 1ex;"><input type="submit" value="Test it!" class="submit" /></div>
 		</form>
 	</div>';
 }
