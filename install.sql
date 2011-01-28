@@ -1977,7 +1977,8 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('gravatarOverride', '0'),
 	('gravatarAllowExtraEmail', '1'),
 	('gravatarMaxRating', 'PG'),
-	('display_flags', 'specified');
+	('display_flags', 'specified'),
+	('reverse_proxy_header', 'X-Forwarded-For');
 # --------------------------------------------------------
 
 #
