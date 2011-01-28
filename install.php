@@ -2006,7 +2006,7 @@ function template_install_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
 	</div></div>
 	</body>
 </html>';
