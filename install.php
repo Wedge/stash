@@ -5,7 +5,7 @@
 * SMF: Simple Machines Forum                                                      *
 * Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
 * =============================================================================== *
-* Software Version:           SMF 2.0 RC4                                         *
+* Software Version:           SMF 2.0 RC5                                         *
 * Software by:                Simple Machines (http://www.simplemachines.org)     *
 * Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
 *           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
@@ -22,7 +22,7 @@
 * The latest version can always be found at http://www.simplemachines.org.        *
 **********************************************************************************/
 
-$GLOBALS['current_wedge_version'] = '0.1 (based on SMF 2.0 RC4)';
+$GLOBALS['current_wedge_version'] = '0.1 (based on SMF 2.0 RC5)';
 $GLOBALS['required_php_version'] = '5.1.2';
 
 // Don't have PHP support, do you?

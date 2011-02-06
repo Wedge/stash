@@ -5,7 +5,7 @@
 * SMF: Simple Machines Forum                                                      *
 * Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
 * =============================================================================== *
-* Software Version:           SMF 2.0 RC4                                         *
+* Software Version:           SMF 2.0 RC5                                         *
 * Software by:                Simple Machines (http://www.simplemachines.org)     *
 * Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
 *           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
@@ -39,7 +39,7 @@ template_ssi_above();
 ?>
 
 	<h2>Wedge SSI.php Functions</h2>
-	<p><strong>Current Version:</strong> 2.0 RC4</p>
+	<p><strong>Current Version:</strong> 2.0 RC5</p>
 	<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
 
 	<h2>Include Code</h2>
