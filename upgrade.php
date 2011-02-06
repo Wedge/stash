@@ -4060,7 +4060,6 @@ function template_database_changes()
 
 		if ($is_debug)
 			echo '
-					$(\'#debuginfo\').append(\'done\');
 					document.getElementById(\'debug_section\').style.display = "none"';
 
 		echo '
@@ -4086,7 +4085,7 @@ function template_database_changes()
 
 		if ($is_debug)
 			echo '
-					$(\'#debuginfo\').append(\'done<br>Moving to next script file...\');';
+					$(\'#debuginfo\').append(\'done<br>Moving to next script file...done\');';
 
 		echo '
 					getNextItem();
