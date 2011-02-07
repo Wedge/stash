@@ -363,9 +363,6 @@ function Welcome()
 	if (!function_exists('version_compare') || (version_compare($GLOBALS['required_php_version'], PHP_VERSION) > 0))
 		$incontext['warning'] = $txt['error_php_too_low'];
 
-	if (!is_callable('xml_parser_create'))
-		$incontext['warning'] = $txt['error_no_libxml'];
-
 	// See if we think they have already installed it?
 	if (is_readable(dirname(__FILE__) . '/Settings.php'))
 	{
