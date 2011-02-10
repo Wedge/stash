@@ -1905,7 +1905,32 @@ function fixModSecurity()
 
 function template_install_above()
 {
-	global $incontext, $txt, $wedgesite, $installurl;
+	global
+		$incontext, $txt, $wedgesite, $installurl, $cachedir, $boarddir,
+		$sourcedir, $settings, $context, $modSettings;
+
+	// Load Wedge's default paths and pray that it works...
+	define('SMF', 1);
+	$boarddir = dirname(__FILE__);
+	$cachedir = $boarddir . '/cache';
+	$sourcedir = $boarddir . '/Sources';
+	require_once($sourcedir . '/Load.php');
+	// !!! I dunno if we have to load all of these, but better safe than sorry.
+	loadSource(array(
+		'QueryString', 'Subs', 'Errors',
+		'Security', 'Subs-Auth', 'Class-String'
+	));
+	detectBrowser();
+	$settings['theme_dir'] = $boarddir . '/Themes/default';
+	$settings['default_theme_dir'] = $boarddir . '/Themes/default';
+	$settings['theme_url'] = '/Themes/default';
+	$settings['images_url'] = '/Themes/default/images';
+	$context['css_generic_files'] = array($context['browser']['agent']);
+	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
+	// !!! and if they don't, we can still tell people to delete these lines before installing.
+	$modSettings['obfuscate_js'] = true;
+	$modSettings['enableCompressedData'] = true;
+	$modSettings['minify'] = 'packer';
 
 	echo '<!DOCTYPE html>
 <html', !empty($txt['lang_rtl']) ? ' dir="rtl"' : '', '>
@@ -1913,10 +1938,9 @@ function template_install_above()
 		<meta charset="utf-8">
 		<meta name="robots" content="noindex">
 		<title>', $txt['smf_installer'], '</title>
-		<link rel="stylesheet" href="Themes/default/css/index.css">
-		<link rel="stylesheet" href="Themes/default/css/install.css">
+		<link rel="stylesheet" href="', add_css_file(array('index', 'install'), false, true), '">
 		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-		<script src="Themes/default/scripts/script.js"></script>
+		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
 	</head>
 	<body>
 	<div id="header"><div class="frame">
