@@ -1928,7 +1928,7 @@ function template_install_above()
 	$context['css_generic_files'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
-	$modSettings['obfuscate_js'] = true;
+	$modSettings['obfuscate_filenames'] = true;
 	$modSettings['enableCompressedData'] = true;
 	$modSettings['minify'] = 'packer';
 
