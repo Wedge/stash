@@ -703,7 +703,8 @@ function DatabaseSettings()
 		}
 
 		// Now include it for database functions!
-		define('SMF', 1);
+		if (!defined('SMF'))
+			define('SMF', 1);
 		$modSettings['disableQueryCheck'] = true;
 		require_once($sourcedir . '/Class-DB.php');
 
@@ -1114,6 +1115,14 @@ function AdminAccount()
 
 	// Need this to check whether we need the database password.
 	require(dirname(__FILE__) . '/Settings.php');
+
+	// We need this for some of the IP stuff.
+	if (!defined('SMF'))
+		define('SMF', 1);
+	@include(dirname(__FILE__) . '/Sources/QueryString.php');
+	if (!defined('INVALID_IP'))
+		define('INVALID_IP', '00000000000000000000000000000000');
+
 	load_database();
 
 	if (!isset($_POST['username']))
@@ -1216,7 +1225,7 @@ function AdminAccount()
 
 			// Format the username properly.
 			$_POST['username'] = preg_replace('~[\t\n\r\x0B\0\xA0]+~', ' ', $_POST['username']);
-			$ip = isset($_SERVER['REMOTE_ADDR']) ? substr($_SERVER['REMOTE_ADDR'], 0, 255) : '';
+			$ip = isset($_SERVER['REMOTE_ADDR']) ? expand_ip($_SERVER['REMOTE_ADDR']) : expand_ip('');
 
 			$request = wesql::insert('insert',
 				'{db_prefix}members',
@@ -1257,7 +1266,7 @@ function AdminAccount()
 				SET id_member = {int:id_member},
 					poster_name = {string:poster_name},
 					poster_email = {string:poster_email},
-					poster_ip = {string:poster_ip}
+					poster_ip = {int:poster_ip}
 				WHERE id_msg = 1
 					AND id_topic = 1
 					AND id_member = 0
@@ -1266,7 +1275,7 @@ function AdminAccount()
 					'id_member' => $incontext['member_id'],
 					'poster_name' => stripslashes($_POST['username']),
 					'poster_email' => stripslashes($_POST['email']),
-					'poster_ip' => $ip,
+					'poster_ip' => get_ip_identifier($ip),
 					'wedge' => 'Wedge', // this is actually hard coded in the installer SQL
 				)
 			);
@@ -1910,7 +1919,8 @@ function template_install_above()
 		$sourcedir, $settings, $context, $modSettings;
 
 	// Load Wedge's default paths and pray that it works...
-	define('SMF', 1);
+	if (!defined('SMF'))
+		define('SMF', 1);
 	$boarddir = dirname(__FILE__);
 	$cachedir = $boarddir . '/cache';
 	$sourcedir = $boarddir . '/Sources';

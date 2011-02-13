@@ -882,7 +882,7 @@ CREATE TABLE {$db_prefix}log_actions (
   id_log tinyint(3) unsigned NOT NULL default '1',
   log_time int(10) unsigned NOT NULL default '0',
   id_member mediumint(8) unsigned NOT NULL default '0',
-  ip char(16) NOT NULL default '                ',
+  ip int(10) NOT NULL default '0',
   action varchar(30) NOT NULL default '',
   id_board smallint(5) unsigned NOT NULL default '0',
   id_topic mediumint(8) unsigned NOT NULL default '0',
@@ -918,7 +918,7 @@ CREATE TABLE {$db_prefix}log_activity (
 CREATE TABLE {$db_prefix}log_banned (
   id_ban_log mediumint(8) unsigned NOT NULL auto_increment,
   id_member mediumint(8) unsigned NOT NULL default '0',
-  ip char(16) NOT NULL default '                ',
+  ip int(10) NOT NULL default '0',
   email varchar(255) NOT NULL default '',
   log_time int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (id_ban_log),
@@ -977,7 +977,7 @@ CREATE TABLE {$db_prefix}log_errors (
   id_error mediumint(8) unsigned NOT NULL auto_increment,
   log_time int(10) unsigned NOT NULL default '0',
   id_member mediumint(8) unsigned NOT NULL default '0',
-  ip char(16) NOT NULL default '                ',
+  ip int(10) NOT NULL default '0',
   url text NOT NULL,
   message text NOT NULL,
   session char(32) NOT NULL default '                                ',
@@ -987,7 +987,7 @@ CREATE TABLE {$db_prefix}log_errors (
   PRIMARY KEY (id_error),
   KEY log_time (log_time),
   KEY id_member (id_member),
-  KEY ip (ip(16))
+  KEY ip (ip)
 ) ENGINE=MyISAM;
 
 #
@@ -995,10 +995,10 @@ CREATE TABLE {$db_prefix}log_errors (
 #
 
 CREATE TABLE {$db_prefix}log_floodcontrol (
-  ip char(16) NOT NULL default '                ',
+  ip int(10) NOT NULL default '0',
   log_time int(10) unsigned NOT NULL default '0',
   log_type varchar(8) NOT NULL default 'post',
-  PRIMARY KEY (ip(16), log_type(8))
+  PRIMARY KEY (ip, log_type(8))
 ) ENGINE=MyISAM;
 
 #
@@ -1016,6 +1016,17 @@ CREATE TABLE {$db_prefix}log_group_requests (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `log_ips`
+#
+
+CREATE TABLE {$db_prefix}log_ips (
+  id_ip int(10) unsigned NOT NULL auto_increment,
+  member_ip char(32) NOT NULL default '',
+  PRIMARY KEY (id_ip),
+  UNIQUE member_ip (member_ip)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `log_intrusion`
 #
 
@@ -1023,7 +1034,7 @@ CREATE TABLE {$db_prefix}log_intrusion (
   id_event int(10) unsigned NOT NULL auto_increment,
   id_member mediumint(8) unsigned NOT NULL default '0',
   error_type char(16) NOT NULL default '                ',
-  ip char(16) NOT NULL default '                ',
+  ip int(10) NOT NULL default '0',
   event_time int(10) unsigned NOT NULL,
   http_method char(4) NOT NULL default '    ',
   request_uri varchar(255) NOT NULL default '',
@@ -1074,7 +1085,7 @@ CREATE TABLE {$db_prefix}log_notify (
 #
 
 CREATE TABLE {$db_prefix}log_online (
-  session varchar(32) NOT NULL default '',
+  session varchar(34) NOT NULL default '',
   log_time int(10) NOT NULL default '0',
   id_member mediumint(8) unsigned NOT NULL default '0',
   id_spider smallint(5) unsigned NOT NULL default '0',
@@ -1156,7 +1167,7 @@ CREATE TABLE {$db_prefix}log_reported_comments (
   id_member mediumint(8) NOT NULL,
   membername varchar(255) NOT NULL default '',
   email_address varchar(255) NOT NULL default '',
-  member_ip varchar(255) NOT NULL default '',
+  member_ip int(10) NOT NULL default '0',
   comment varchar(255) NOT NULL default '',
   time_sent int(10) NOT NULL,
   PRIMARY KEY (id_comment),
@@ -1226,7 +1237,7 @@ CREATE TABLE {$db_prefix}log_search_topics (
 #
 
 CREATE TABLE {$db_prefix}log_spider_hits (
-	id_hit int(10) unsigned NOT NULL auto_increment,
+  id_hit int(10) unsigned NOT NULL auto_increment,
   id_spider smallint(5) unsigned NOT NULL default '0',
   log_time int(10) unsigned NOT NULL default '0',
   url varchar(255) NOT NULL default '',
@@ -1386,8 +1397,8 @@ CREATE TABLE {$db_prefix}members (
   notify_regularity tinyint(4) NOT NULL default '1',
   notify_send_body tinyint(4) NOT NULL default '0',
   notify_types tinyint(4) NOT NULL default '2',
-  member_ip varchar(255) NOT NULL default '',
-  member_ip2 varchar(255) NOT NULL default '',
+  member_ip varchar(32) NOT NULL default '',
+  member_ip2 varchar(32) NOT NULL default '',
   secret_question varchar(255) NOT NULL default '',
   secret_answer varchar(64) NOT NULL default '',
   id_theme tinyint(4) unsigned NOT NULL default '0',
@@ -1468,7 +1479,7 @@ CREATE TABLE {$db_prefix}messages (
   subject varchar(255) NOT NULL default '',
   poster_name varchar(255) NOT NULL default '',
   poster_email varchar(255) NOT NULL default '',
-  poster_ip varchar(255) NOT NULL default '',
+  poster_ip int(10) NOT NULL default '0',
   smileys_enabled tinyint(4) NOT NULL default '1',
   modified_time int(10) unsigned NOT NULL default '0',
   modified_name varchar(255) NOT NULL default '',
@@ -1480,7 +1491,7 @@ CREATE TABLE {$db_prefix}messages (
   UNIQUE id_board (id_board, id_msg),
   UNIQUE id_member (id_member, id_msg),
   KEY approved (approved),
-  KEY ip_index (poster_ip(15), id_topic),
+  KEY ip_index (poster_ip, id_topic),
   KEY participation (id_member, id_topic),
   KEY show_posts (id_member, id_board),
   KEY id_topic (id_topic),
@@ -1495,7 +1506,7 @@ CREATE TABLE {$db_prefix}messages (
 
 INSERT INTO {$db_prefix}messages
 	(id_msg, id_msg_modified, id_topic, id_board, poster_time, subject, poster_name, poster_email, poster_ip, modified_name, body, icon)
-VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Wedge', 'dontreply@wedgeforum.com', '127.0.0.1', '', '{$default_topic_message}', 'xx');
+VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Wedge', 'dontreply@wedgeforum.com', '0', '', '{$default_topic_message}', 'xx');
 # --------------------------------------------------------
 
 #
