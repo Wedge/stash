@@ -100,6 +100,7 @@ function initialize_inputs()
 	global $incontext;
 
 	// Just so people using older versions of PHP aren't left in the cold.
+	// At least, just long enough to give them a proper error message.
 	if (!isset($_SERVER['PHP_SELF']))
 		$_SERVER['PHP_SELF'] = isset($GLOBALS['HTTP_SERVER_VARS']['PHP_SELF']) ? $GLOBALS['HTTP_SERVER_VARS']['PHP_SELF'] : 'install.php';
 
@@ -108,7 +109,7 @@ function initialize_inputs()
 		@set_magic_quotes_runtime(0);
 	error_reporting(E_ALL);
 
-	// Fun.  Low PHP version...
+	// Fun. Low PHP version...
 	if (!isset($_GET))
 	{
 		$GLOBALS['_GET']['step'] = 0;
@@ -133,15 +134,9 @@ function initialize_inputs()
 		session_start();
 
 		if (!headers_sent())
-			echo '<!DOCTYPE html>
-<html>
-	<head>
-		<title>', htmlspecialchars($_GET['pass_string']), '</title>
-	</head>
-	<body style="background-color: #d4d4d4; margin-top: 16%; text-align: center; font-size: 16pt;">
-		<strong>', htmlspecialchars($_GET['pass_string']), '</strong>
-	</body>
-</html>';
+			echo '<div class="windowbg2 wrc" style="text-align: center; font-size: 16pt">
+	<strong>', htmlspecialchars($_GET['pass_string']), '</strong>
+</div>';
 		exit;
 	}
 
