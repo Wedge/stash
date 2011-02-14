@@ -1915,8 +1915,8 @@ function fixModSecurity()
 function template_install_above()
 {
 	global
-		$incontext, $txt, $wedgesite, $installurl, $cachedir, $boarddir,
-		$sourcedir, $settings, $context, $modSettings;
+		$incontext, $txt, $installurl, $boardurl, $cachedir, $boarddir,
+		$sourcedir, $wedgesite, $settings, $context, $modSettings;
 
 	// Load Wedge's default paths and pray that it works...
 	if (!defined('SMF'))
@@ -1931,10 +1931,16 @@ function template_install_above()
 		'Security', 'Subs-Auth', 'Class-String'
 	));
 	detectBrowser();
+
+	// Fill in the server URL for the current user. This is user-specific, as they may be using a different URL than the script's default URL (Pretty URL, secure access...)
+	$host = empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_X_FORWARDED_SERVER'] : $_SERVER['HTTP_HOST'];
+	$boardurl = 'http' . (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off' ? 's' : '') . '://' . $host;
+	$boardurl .= substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'));
+
 	$settings['theme_dir'] = $boarddir . '/Themes/default';
 	$settings['default_theme_dir'] = $boarddir . '/Themes/default';
-	$settings['theme_url'] = '/Themes/default';
-	$settings['images_url'] = '/Themes/default/images';
+	$settings['theme_url'] = $boardurl . '/Themes/default';
+	$settings['images_url'] = $boardurl . '/Themes/default/images';
 	$context['css_generic_files'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
