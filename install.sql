@@ -610,7 +610,7 @@ CREATE TABLE {$db_prefix}boards (
   count_posts tinyint(4) NOT NULL default '0',
   id_theme tinyint(4) unsigned NOT NULL default '0',
   override_theme tinyint(4) unsigned NOT NULL default '0',
-  styling varchar(255) NOT NULL DEFAULT 'css',
+  styling varchar(255) NOT NULL DEFAULT 'styles',
   wedge_type enum('board','blog','site') NOT NULL DEFAULT 'board',
   unapproved_posts smallint(5) NOT NULL default '0',
   unapproved_topics smallint(5) NOT NULL default '0',
@@ -638,7 +638,7 @@ CREATE TABLE {$db_prefix}boards (
 INSERT INTO {$db_prefix}boards
 	(id_board, id_cat, board_order, id_last_msg, id_msg_updated, name, description, url, urllen, num_topics, num_posts, member_groups)
 VALUES (1, 1, 1, 1, 1, '{$default_board_name}', '{$default_board_description}', '{$default_board_url}', CHAR_LENGTH('{$default_board_url}'), 1, 1, '-1,0,2'),
-    (2, 1, 2, 0, 0, '{$default_recycling_board_name}', '{$default_recycling_board_description}', '{$default_recycling_board_url}', CHAR_LENGTH('{$default_recycling_board_url}'), 0, 0, '2');
+	(2, 1, 2, 0, 0, '{$default_recycling_board_name}', '{$default_recycling_board_description}', '{$default_recycling_board_url}', CHAR_LENGTH('{$default_recycling_board_url}'), 0, 0, '2');
 # --------------------------------------------------------
 
 #
@@ -1874,7 +1874,7 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('theme_allow', '1'),
 	('theme_default', '1'),
 	('theme_guests', '1'),
-	('theme_styling_guests', 'css'),
+	('theme_styling_guests', 'styles'),
 	('enableEmbeddedFlash', '0'),
 	('xmlnews_enable', '1'),
 	('xmlnews_maxlen', '255'),
@@ -2142,7 +2142,7 @@ VALUES (1, 'name', '{$default_theme_name}'),
 	(1, 'theme_url', '{$boardurl}/Themes/default'),
 	(1, 'images_url', '{$boardurl}/Themes/default/images'),
 	(1, 'theme_dir', '{$boarddir}/Themes/default'),
-	(1, 'styling', 'css'),
+	(1, 'styling', 'styles'),
 	(1, 'show_bbc', '1'),
 	(1, 'show_latest_member', '1'),
 	(1, 'show_modify', '1'),

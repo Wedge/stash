@@ -128,6 +128,6 @@
 	RewriteRule .* index.php [L]
 
 	# Note: on Apache 2.2.16 and later, if the mod_dir module is installed,
-	# you can replace the three lines above with:
+	# you can save processing time by replacing the three lines above with:
 	# FallbackResource /index.php
 </IfModule>
