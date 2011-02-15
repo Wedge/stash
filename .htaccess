@@ -28,18 +28,6 @@
 	</FilesMatch>
 </IfModule>
 
-<IfModule mod_mime.c>
-	AddEncoding x-gzip .gz
-	AddEncoding x-gzip .cgz
-	AddEncoding x-gzip .jgz
-	<FilesMatch "\.(js\.gz|jgz)$">
-		ForceType text/javascript
-	</FilesMatch>
-	<FilesMatch "\.(css\.gz|cgz)$">
-		ForceType text/css
-	</FilesMatch>
-</IfModule>
-
 # Setting PHP variables is only supported in mod_php. If using PHP as CGI, edit php.ini instead.
 <IfModule mod_php.c>
 # Apache 2 uses php_value, Apache 1 uses php_flag.
