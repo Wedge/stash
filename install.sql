@@ -197,6 +197,29 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 # --------------------------------------------------------
 
 #
+# Table structure for table `board_groups`
+#
+
+CREATE TABLE {$db_prefix}board_groups (
+  id_board smallint(5) NOT NULL default '0',
+  id_group mediumint(5) NOT NULL default '0',
+  view_perm enum('allow','deny') NOT NULL default 'allow',
+  enter_perm enum('allow','deny') NOT NULL default 'deny',
+  PRIMARY KEY (id_group, id_board)
+) ENGINE=MyISAM;
+
+#
+# Dumping data for table `bbcode`
+#
+INSERT INTO {$db_prefix}board_groups
+	(`id_board`, `id_group`, `view_perm`, `enter_perm`)
+VALUES (1, -1, 'allow', 'allow'),
+	(1, 0, 'allow', 'allow'),
+	(1, 2, 'allow', 'allow'),
+	(2, 2, 'allow', 'allow');
+# --------------------------------------------------------
+
+#
 # Table structure for table `board_members`
 #
 
