@@ -1941,14 +1941,9 @@ function template_install_above()
 		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
 	</head>
-	<body>
+	<body><div id="wedge">
 	<div id="header"><div class="frame">
-		<div id="top_section">
-			<h1 class="forumtitle">', $txt['smf_installer'], '</h1>
-			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
-		</div>
-		<div id="upper_section" class="middletext flow_hidden">
-			<div class="user"></div>
+		<div id="top_section"><div class="frame">
 			<div class="news normaltext">';
 
 	// Have we got a language drop down - if so do it on the first step only.
@@ -1972,7 +1967,11 @@ function template_install_above()
 
 	echo '
 			</div>
-		</div>
+		</div></div>
+		<div id="upper_section" class="middletext flow_hidden"><div class="frame">
+			<h1 class="forumtitle"><a>', $txt['smf_installer'], '</a></h1>
+			<div id="wedgelogo"></div>
+		</div></div>
 	</div></div>
 	<div id="content"><div class="frame">
 		<div id="main_content">
@@ -1987,7 +1986,7 @@ function template_install_above()
 	echo '
 				</ul>
 			</div>
-			<div style="font-size: 12pt; height: 25pt; border: 1px solid black; background: white; float: left; margin-left: 12%; width: 25%;">
+			<div style="font-size: 12pt; height: 25pt; border: 1px solid black; background: white; float: left; margin: 42px 0 0 12%; width: 25%">
 				<div id="overall_text" style="padding-top: 8pt; z-index: 2; color: black; margin-left: -4em; position: absolute; text-align: center; font-weight: bold;">', $incontext['overall_percent'], '%</div>
 				<div id="overall_progress" style="width: ', $incontext['overall_percent'], '%; height: 25pt; z-index: 1; background-color: lime;">&nbsp;</div>
 				<div class="overall_progress">', $txt['upgrade_overall_progress'], '</div>
@@ -1995,7 +1994,7 @@ function template_install_above()
 			<div id="main_screen" class="clear">
 				<h2>', $incontext['page_title'], '</h2>
 				<div class="panel">
-					<div style="max-height: 560px; overflow: auto;">';
+					<div style="max-height: 560px; overflow: auto">';
 }
 
 function template_install_below()
@@ -2005,33 +2004,29 @@ function template_install_below()
 	if (!empty($incontext['continue']) || !empty($incontext['skip']))
 	{
 		echo '
-						<div class="righttext" style="margin: 1ex;">';
+		<div class="righttext" style="margin: 1ex;">';
 
 		if (!empty($incontext['continue']))
 			echo '
-							<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '" onclick="return submitThisOnce(this);" class="submit">';
+			<input type="submit" id="contbutt" name="contbutt" value="', $txt['upgrade_continue'], '" onclick="return submitThisOnce(this);" class="submit">';
 		if (!empty($incontext['skip']))
 			echo '
-							<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="return submitThisOnce(this);" class="submit">';
+			<input type="submit" id="skip" name="skip" value="', $txt['upgrade_skip'], '" onclick="return submitThisOnce(this);" class="submit">';
 		echo '
-						</div>';
+		</div>';
 	}
 
 	// Show the closing form tag and other data only if not in the last step
 	if (count($incontext['steps']) - 1 !== (int) $incontext['current_step'])
 		echo '
-							</form>';
+	</form>';
 
 	echo '
-					</div>
-				</div>
-			</div>
-		</div>
-	</div></div>
-	<div id="footer"><div class="frame" style="height: 40px;">
+	</div></div></div></div></div></div>
+	<div id="footer"><div class="frame" style="height: 40px">
 		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
 	</div></div>
-	</body>
+	</div></body>
 </html>';
 }
 
@@ -2041,7 +2036,7 @@ function template_welcome_message()
 	global $incontext, $installurl, $txt;
 
 	echo '
-	<script src="http://www.wedgeforum.com/files/current-version.js?version=' . $GLOBALS['current_wedge_version'] . '"></script>
+	<script src="http://www.wedgeforum.com/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
 		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
@@ -2058,7 +2053,7 @@ function template_welcome_message()
 		<h3>', $txt['install_all_lovely'], '</h3>';
 
 	echo '
-		<div style="height: 100px;"></div>';
+		<div style="height: 100px"></div>';
 
 	// Say we want the continue button!
 	if (empty($incontext['error']))
@@ -2300,15 +2295,15 @@ function template_populate_database()
 	if (!empty($incontext['failures']))
 	{
 		echo '
-				<div style="color: red;">', $txt['error_db_queries'], '</div>
-				<ul>';
+		<div style="color: red;">', $txt['error_db_queries'], '</div>
+		<ul>';
 
 		foreach ($incontext['failures'] as $line => $fail)
 			echo '
-						<li><strong>', $txt['error_db_queries_line'], $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail)), '</li>';
+			<li><strong>', $txt['error_db_queries_line'], $line + 1, ':</strong> ', nl2br(htmlspecialchars($fail)), '</li>';
 
 		echo '
-				</ul>';
+		</ul>';
 	}
 
 	echo '
@@ -2317,7 +2312,7 @@ function template_populate_database()
 	template_warning_divs();
 
 	echo '
-	<input type="hidden" name="pop_done" value="1">';
+		<input type="hidden" name="pop_done" value="1">';
 }
 
 // Create the admin account.
