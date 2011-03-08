@@ -417,7 +417,7 @@ function show_header()
 				}
 				else
 					// Ok just add it to the list of functions to call.
-					onload_events[onload_events.length] = func;
+					onload_events.push(func);
 			}
 			addLoadEvent(function() {swapSection(0);});
 		// ]]></script>
