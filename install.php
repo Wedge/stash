@@ -1952,7 +1952,7 @@ function template_install_above()
 		echo '
 				<div class="righttext">
 					<form action="', $installurl, '" method="get">
-						<label for="installer_language">', $txt['installer_language'], ':</label> <select id="installer_language" name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;">';
+						<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;"></label>';
 
 		foreach ($incontext['detected_languages'] as $lang => $name)
 			echo '
@@ -2149,9 +2149,9 @@ function template_chmod_files()
 				<tr>
 					<td style="width: 26%; vertical-align: top" class="textbox"><label for="ftp_server">', $txt['ftp_server'], ':</label></td>
 					<td>
-						<div style="float: ', empty($txt['lang_rtl']) ? 'right' : 'left', '; margin-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 1px;"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', $incontext['ftp']['port'], '"></div>
+						<div style="float: ', empty($txt['lang_rtl']) ? 'right' : 'left', '; margin-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 1px;"><label class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong> <input type="text" size="3" name="ftp_port" value="', $incontext['ftp']['port'], '"></label></div>
 						<input type="text" size="30" name="ftp_server" id="ftp_server" value="', $incontext['ftp']['server'], '" style="width: 70%">
-						<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_server_info'], '</div>
+						<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_server_info'], '</div>
 					</td>
 				</tr><tr>
 					<td style="vertical-align: top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
@@ -2190,37 +2190,37 @@ function template_database_settings()
 	template_warning_divs();
 
 	echo '
-		<table class="w100 cp0 cs0" style="margin: 1em 0;">
+		<table class="w100 cp0 cs0" style="margin: 1em 0">
 			<tr id="db_server_contain">
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="db_server_input">', $txt['db_settings_server'], ':</label></td>
 				<td>
 					<input type="text" name="db_server" id="db_server_input" value="', $incontext['db']['server'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_server_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_server_info'], '</div>
 				</td>
 			</tr><tr id="db_user_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_user_input">', $txt['db_settings_username'], ':</label></td>
 				<td>
 					<input type="text" name="db_user" id="db_user_input" value="', $incontext['db']['user'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_username_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_username_info'], '</div>
 				</td>
 			</tr><tr id="db_passwd_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_passwd_input">', $txt['db_settings_password'], ':</label></td>
 				<td>
 					<input type="password" name="db_passwd" id="db_passwd_input" value="', $incontext['db']['pass'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_password_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_password_info'], '</div>
 				</td>
 			</tr><tr id="db_name_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_name_input">', $txt['db_settings_database'], ':</label></td>
 				<td>
 					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'wedge' : $incontext['db']['name'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_database_info'], '
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_database_info'], '
 					<span id="db_name_info_warning">', $txt['db_settings_database_info_note'], '</span></div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="db_prefix_input">', $txt['db_settings_prefix'], ':</label></td>
 				<td>
 					<input type="text" name="db_prefix" id="db_prefix_input" value="', $incontext['db']['prefix'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_prefix_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_prefix_info'], '</div>
 				</td>
 			</tr>
 		</table>';
@@ -2244,32 +2244,32 @@ function template_forum_settings()
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="mbname_input">', $txt['install_settings_name'], ':</label></td>
 				<td>
 					<input type="text" name="mbname" id="mbname_input" value="', $txt['install_settings_name_default'], '" size="65">
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_name_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_name_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="boardurl_input">', $txt['install_settings_url'], ':</label></td>
 				<td>
 					<input type="text" name="boardurl" id="boardurl_input" value="', $incontext['detected_url'], '" size="65"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_url_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_url_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_compress'], ':</td>
 				<td>
-					<input type="checkbox" name="compress" id="compress_check" checked> <label for="compress_check">', $txt['install_settings_compress_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_compress_info'], '</div>
+					<label><input type="checkbox" name="compress" checked> ', $txt['install_settings_compress_title'], '</label><br>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_compress_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_dbsession'], ':</td>
 				<td>
-					<input type="checkbox" name="dbsession" id="dbsession_check" checked> <label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
+					<label><input type="checkbox" name="dbsession" checked> ', $txt['install_settings_dbsession_title'], '</label><br>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
 				</td>
 			</tr>
 			<tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_stats'], ':</td>
 				<td>
-					<input type="checkbox" name="stats" id="stats_check"> <label for="stats_check">', $txt['install_settings_stats_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['install_settings_stats_info'], '</div>
+					<label><input type="checkbox" name="stats"> ', $txt['install_settings_stats_title'], '</label><br>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_stats_info'], '</div>
 				</td>
 			</tr>
 		</table>';
@@ -2382,18 +2382,16 @@ function template_delete_install()
 	// Don't show the box if it's like 99% sure it won't work :P.
 	if ($incontext['probably_delete_install'])
 		echo '
-		<div style="margin: 1ex; font-weight: bold;">
-			<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete();"> ', $txt['delete_installer'], !isset($_SESSION['installer_temp_ftp']) ? ' ' . $txt['delete_installer_maybe'] : '', '</label>
+		<div style="margin: 1ex; font-weight: bold">
+			<label><input type="checkbox" id="delete_self" onclick="doTheDelete();"> ', $txt['delete_installer'], !isset($_SESSION['installer_temp_ftp']) ? ' ' . $txt['delete_installer_maybe'] : '', '</label>
 		</div>
 		<script><!-- // --><![CDATA[
 			function doTheDelete()
 			{
-				var theCheck = document.getElementById ? document.getElementById("delete_self") : document.all.delete_self;
 				var tempImage = new Image();
-
 				tempImage.src = "', $installurl, '?delete=1&ts_" + (new Date().getTime());
 				tempImage.width = 0;
-				theCheck.disabled = true;
+				$("#delete_self").attr("disabled", true);
 			}
 		// ]]></script>
 		<br>';
