@@ -13,12 +13,12 @@ $latest_news = array(
 
 		'subject_english' => 'Wedge Project Started',
 		'message_english' => 'Nao and Arantor are very pleased to announce they started working on Wedge, a fork of SMF. This spot will be updated as soon as a usable version is out.',
-		'href_english' => 'http://www.wedgeforum.com/',
+		'href_english' => 'http://wedge.org/',
 		'author_english' => 'Nao',
 
 		'subject_french' => 'Projet Wedge lancé',
 		'message_french' => 'Nao et Arantor sont fiers de vous annoncer le lancement du projet Wedge, un fork de SMF. Cette zone sera mise à jour dès qu\'une version publique sera disponible.',
-		'href_french' => 'http://www.wedgeforum.com/',
+		'href_french' => 'http://wedge.org/',
 		'author_french' => 'Nao',
 	),
 

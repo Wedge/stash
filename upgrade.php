@@ -41,7 +41,7 @@ $timeLimitThreshold = 3;
 $upgrade_path = dirname(__FILE__);
 $upgradeurl = $_SERVER['PHP_SELF'];
 // Where the SMF images etc are kept.
-$smfsite = 'http://www.wedgeforum.com/files';
+$smfsite = 'http://wedge.org/files';
 // Disable the need for admins to login?
 $disable_security = 0;
 // How long, in seconds, must admin be inactive to allow someone else to run?
@@ -863,7 +863,7 @@ function initialize_inputs()
 	if (!isset($_GET['xml']))
 	{
 		$upcontext['remote_files_available'] = false;
-		$test = @fsockopen('www.wedgeforum.com', 80, $errno, $errstr, 1);
+		$test = @fsockopen('wedge.org', 80, $errno, $errstr, 1);
 		if ($test)
 			$upcontext['remote_files_available'] = true;
 		@fclose($test);
@@ -1174,11 +1174,11 @@ function UpgradeOptions()
 	if (!empty($_POST['stats']) && substr($boardurl, 0, 16) != 'http://localhost' && empty($modSettings['allow_sm_stats']))
 	{
 		// Attempt to register the site etc.
-		$fp = @fsockopen('www.wedgeforum.com', 80, $errno, $errstr);
+		$fp = @fsockopen('wedge.org', 80, $errno, $errstr);
 		if ($fp)
 		{
 			$out = 'GET /files/stats/register_stats.php?site=' . base64_encode($boardurl) . ' HTTP/1.1' . "\r\n";
-			$out .= 'Host: www.wedgeforum.com' . "\r\n";
+			$out .= 'Host: wedge.org' . "\r\n";
 			$out .= 'Connection: Close' . "\r\n\r\n";
 			fwrite($fp, $out);
 
@@ -1919,7 +1919,7 @@ function cli_scheduled_fetchSMfiles()
 	foreach ($js_files as $id_file => $file)
 	{
 		// Create the url
-		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://www.wedgeforum.com' : '';
+		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://wedge.org' : '';
 		$url = $server . (!empty($file['path']) ? $file['path'] : $file['path']) . $file['filename'] . (!empty($file['parameters']) ? '?' . $file['parameters'] : '');
 
 		// Get the file
@@ -3458,7 +3458,7 @@ function template_upgrade_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
 	</div></div>
 	</body>
 </html>';
@@ -3528,7 +3528,7 @@ function template_welcome_message()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $txt;
 
 	echo '
-		<script src="http://www.wedgeforum.com/files/current-version.js?version=' . WEDGE_VERSION . '"></script>
+		<script src="http://wedge.org/files/current-version.js?version=' . WEDGE_VERSION . '"></script>
 		<script src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
 			<h3>', sprintf($txt['upgrade_ready_proceed'], WEDGE_VERSION), '</h3>
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>

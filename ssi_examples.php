@@ -525,7 +525,7 @@ function template_ssi_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame">
-		<div class="smalltext"><a href="http://www.wedgeforum.com">WedgeForum.com</a></div>
+		<div class="smalltext"><a href="http://wedge.org">Wedge.org</a></div>
 	</div></div>
 </body>
 </html>';

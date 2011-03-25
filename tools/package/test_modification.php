@@ -213,7 +213,7 @@ function show_header()
 </head>
 <body>
 	<div id="header">
-		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" style="float: right;" alt="Wedge" /></a>
+		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" style="float: right;" alt="Wedge" /></a>
 		<div>Wedge Package SDK</div>
 	</div>
 	<div id="content">';

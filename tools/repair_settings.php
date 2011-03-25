@@ -199,7 +199,7 @@ echo '<!DOCTYPE html>
 </head>
 <body>
 	<div id="header">
-		<a href="http://www.wedgeforum.com/" target="_blank"><img id="wedgelogo" src="' . $wedgelogo . '" style="width: 150px; float: right" alt="Wedge" /></a>
+		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="' . $wedgelogo . '" style="width: 150px; float: right" alt="Wedge" /></a>
 		<div>', $txt['smf_repair_settings'], '</div>
 	</div>
 	<div id="content">';

@@ -49,7 +49,7 @@ load_lang_file();
 // This is what we are.
 $installurl = $_SERVER['PHP_SELF'];
 // This is where Wedge is.
-$wedgesite = 'http://www.wedgeforum.com/files';
+$wedgesite = 'http://wedge.org/files';
 
 // All the steps in detail.
 // Number,Name,Function,Progress Weight.
@@ -2024,7 +2024,7 @@ function template_install_below()
 	echo '
 	</div></div></div></div></div></div>
 	<div id="footer"><div class="frame" style="height: 40px">
-		<div class="smalltext"><a href="http://www.wedgeforum.com/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
 	</div></div>
 	</div></body>
 </html>';
@@ -2036,7 +2036,7 @@ function template_welcome_message()
 	global $incontext, $installurl, $txt;
 
 	echo '
-	<script src="http://www.wedgeforum.com/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
+	<script src="http://wedge.org/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
 		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
