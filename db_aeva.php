@@ -124,7 +124,7 @@ $newsettings = array(
 	'total_contests' => '0',
 	'show_sub_albums_on_index' => '1',
 	'enable_re-rating' => '0',
-	'use_exif_date' => '1',
+	'use_metadata_date' => '1',
 	'max_thumb_width' => '120',
 	'max_thumb_height' => '120',
 	'max_preview_width' => '500',
@@ -234,7 +234,7 @@ wedbPackages::create_table(
 		array('name' => 'directory', 'type' => 'TEXT'),
 		array('name' => 'id_album', 'type' => 'INT', 'default' => '0', 'size' => '20'),
 		array('name' => 'transparency', 'type' => 'ENUM(\'\', \'transparent\', \'opaque\')', 'default' => ''),
-		array('name' => 'exif', 'type' => 'TEXT'),
+		array('name' => 'meta', 'type' => 'TEXT'),
 	),
 	array(
 		array(
@@ -646,10 +646,10 @@ if (!in_array('media_unseen', $mem_columns))
 	$altered_mem[3] = true;
 }
 
-// I'd rather use a TEXT field, but if SELECT @@sql_mode returns a strict mode, it may cause issues outside the mod itself...
-if (!in_array('aeva', $mem_columns))
+// I'd rather use a TEXT field, but if SELECT @@sql_mode returns a strict mode, it may cause issues...
+if (!in_array('misc', $mem_columns))
 {
-	wedbPackages::add_column($db_prefix . 'members', array('name' => 'aeva', 'type' => 'VARCHAR', 'size' => '255', 'null' => null, 'default' => ''), $no_prefix);
+	wedbPackages::add_column($db_prefix . 'members', array('name' => 'misc', 'type' => 'VARCHAR', 'size' => '255', 'null' => null, 'default' => ''), $no_prefix);
 	$altered_mem[4] = true;
 }
 
@@ -659,8 +659,8 @@ if (!in_array('transparency', $file_columns))
 	wesql::query('
 		UPDATE {db_prefix}media_files SET transparency = {string:transparent} WHERE id_file < 5', array('transparent' => 'transparent'));
 }
-if (!in_array('exif', $file_columns))
-	wedbPackages::add_column('{db_prefix}media_files', array('name' => 'exif', 'type' => 'TEXT'), $no_prefix);
+if (!in_array('meta', $file_columns))
+	wedbPackages::add_column('{db_prefix}media_files', array('name' => 'meta', 'type' => 'TEXT'), $no_prefix);
 if (!in_array('options', $album_columns))
 	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'options', 'type' => 'TEXT'), $no_prefix);
 if (!in_array('id_preview', $media_columns))
@@ -800,22 +800,22 @@ wesql::query('DELETE FROM {db_prefix}media_settings WHERE name = \'version\'');
 
 wesql::insert('',
 	'{db_prefix}media_files',
-	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'exif' => 'string-255'),
+	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
 	array(1, 'music.png', 4118, 'generic_images', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
-	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'exif' => 'string-255'),
+	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
 	array(2, 'film.png', 2911, 'generic_images', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
-	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'exif' => 'string-255'),
+	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
 	array(3, 'camera.png', 2438, 'generic_images', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
-	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'exif' => 'string-255'),
+	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
 	array(4, 'folder.png', 2799, 'generic_images', 48, 48, 0, '')
 );
 
