@@ -1879,30 +1879,6 @@ ALTER TABLE {$db_prefix}log_polls
 ADD INDEX id_poll (id_poll, id_member, id_choice);
 ---#
 
----# Implementing admin feature toggles.
----{
-if (!isset($modSettings['admin_features']))
-{
-	// Work out what they used to have enabled.
-	$enabled_features = array('rg');
-	if (!empty($modSettings['cal_enabled']))
-		$enabled_features[] = 'cd';
-	if (!empty($modSettings['modlog_enabled']))
-		$enabled_features[] = 'ml';
-	if (!empty($modSettings['paid_enabled']))
-		$enabled_features[] = 'ps';
-
-	$enabled_features = implode(',', $enabled_features);
-
-	upgrade_query("
-		INSERT INTO {$db_prefix}settings
-			(variable, value)
-		VALUES
-			('admin_features', '$enabled_features')");
-}
----}
----#
-
 ---# Adding advanced password brute force protection to "members" table...
 ALTER TABLE {$db_prefix}members
 ADD passwd_flood varchar(12) NOT NULL default '';
