@@ -135,6 +135,7 @@ $newsettings = array(
 	'max_title_length' => '30',
 	'show_extra_info' => '1',
 	'entities_convert' => '0',
+	'clear_thumbnames' => '1',
 	'image_handler' => 1,
 	'enable_cache' => 0,
 	'use_lightbox' => 1,
