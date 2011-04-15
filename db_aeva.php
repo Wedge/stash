@@ -57,8 +57,8 @@ if ($doing_manual_install)
 
 // Step 1 -- Install Aeva auto-embedder variables
 $update = array(
-	'autoembed' => 1, // Auto-embedding enabled by default
-	'enable_gallery' => 1, // Gallery enabled by default
+	'embed_enabled' => 1, // Auto-embedding enabled by default
+	'media_enabled' => 1, // Gallery enabled by default
 	'aeva_lookups' => 1,
 	'aeva_max_per_post' => 12,
 	'aeva_max_per_page' => 12,
