@@ -497,7 +497,7 @@ wedbPackages::create_table(
 		array('name' => 'id_playlist', 'type' => 'int', 'unsigned' => true, 'size' => 11, 'auto' => true),
 		array('name' => 'id_member', 'type' => 'int', 'unsigned' => true, 'size' => 10, 'default' => 0),
 		array('name' => 'name', 'type' => 'varchar', 'size' => 80, 'default' => ''),
-		array('name' => 'description', 'type' => 'text', 'default' => ''),
+		array('name' => 'description', 'type' => 'text'),
 		array('name' => 'views', 'type' => 'int', 'unsigned' => true, 'size' => 11, 'default' => 0),
 	),
 	array(
@@ -528,7 +528,7 @@ wedbPackages::create_table(
 		array('name' => 'id_playlist', 'type' => 'int', 'unsigned' => true, 'size' => 11, 'default' => 0),
 		array('name' => 'id_media', 'type' => 'int', 'unsigned' => true, 'size' => 10, 'default' => 0),
 		array('name' => 'play_order', 'type' => 'int', 'unsigned' => true, 'size' => 5, 'auto' => true),
-		array('name' => 'description', 'type' => 'text', 'default' => ''),
+		array('name' => 'description', 'type' => 'text'),
 	),
 	array(
 		array(
