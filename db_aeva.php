@@ -918,9 +918,7 @@ if ($doing_manual_install && (is_writable(dirname(__FILE__)) || is_writable(__FI
 	<script><!-- // --><![CDATA[
 		function doTheDelete(theCheck)
 		{
-			var theImage = document.getElementById ? document.getElementById("delete_upgrader") : document.all.delete_upgrader;
-
-			theImage.src = "', $_SERVER['PHP_SELF'], '?delete=1&ts_" + (new Date().getTime());
+			document.getElementById("delete_upgrader").src = "', $_SERVER['PHP_SELF'], '?delete=1&ts_" + (new Date().getTime());
 			theCheck.disabled = true;
 		}
 	// ]]></script>
