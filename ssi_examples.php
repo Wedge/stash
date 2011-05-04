@@ -515,8 +515,6 @@ function template_ssi_above()
 
 function template_ssi_below()
 {
-	global $time_start;
-
 	echo '
 				<script><!-- // --><![CDATA[
 					showSSIBlock("ssi_recentTopics");
