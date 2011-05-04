@@ -241,7 +241,7 @@ function action_resort()
 	$table = $_GET['sa'];
 	$table_data = $tables[$table];
 
-	$start_time = microtime();
+	$start_time = microtime(true);
 
 	$_GET['step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
 	$_GET['start'] = isset($_GET['start']) ? (int) $_GET['start'] : 0;
@@ -556,7 +556,7 @@ function protectTimeOut($request)
 
 	@set_time_limit(300);
 
-	if (array_sum(explode(' ', microtime())) - array_sum(explode(' ', $startTime)) < 10)
+	if (microtime(true) - $startTime < 10)
 		return;
 
 	echo '

@@ -195,15 +195,15 @@ function run_test($test)
 
 	$temp = $test['text'];
 
-	$st = microtime();
+	$st = microtime(true);
 	for ($i = 0; $i < $results['times']; $i++)
 		preparsecode($temp);
-	$results['preparse_time'] = array_sum(explode(' ', microtime())) - array_sum(explode(' ', $st));
+	$results['preparse_time'] = microtime(true) - $st;
 
-	$st = microtime();
+	$st = microtime(true);
 	for ($i = 0; $i < $results['times']; $i++)
 		parse_bbc($temp, empty($test['no_smileys']));
-	$results['parse_time'] = array_sum(explode(' ', microtime())) - array_sum(explode(' ', $st));
+	$results['parse_time'] = microtime(true) - $st;
 
 	return $results;
 }

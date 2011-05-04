@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/SSI.php');
 db_extend('packages');
 set_time_limit(300);
 
-$startTime = microtime();
+$startTime = microtime(true);
 
 // Validate inputs.
 $_GET['step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
@@ -164,7 +164,7 @@ function protectTimeOut($request)
 
 	@set_time_limit(300);
 
-	if (array_sum(explode(' ', microtime())) - array_sum(explode(' ', $startTime)) < 10)
+	if (microtime(true) - $startTime < 10)
 		return;
 
 	echo '
