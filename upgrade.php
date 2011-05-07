@@ -3328,7 +3328,7 @@ function template_upgrade_above()
 		<title>', $txt['upgrade_upgrade_utility'], '</title>
 		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
 		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/install.css">
-		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.6.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 		<script><!-- // --><![CDATA[
 			var smf_scripturl = \'', $upgradeurl, '\';

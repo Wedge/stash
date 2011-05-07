@@ -101,7 +101,7 @@ echo '<!DOCTYPE html>
 	<meta name="robots" content="noindex" />
 	<title>', $txt['smf_repair_settings'], '</title>
 	<link rel="stylesheet" href="Themes/default/css/index.css" />
-	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.6.min.js"></script>
 	<script src="Themes/default/scripts/script.js"></script>
 	<style>
 		body

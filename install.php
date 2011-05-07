@@ -1938,7 +1938,7 @@ function template_install_above()
 		<meta name="robots" content="noindex">
 		<title>', $txt['smf_installer'], '</title>
 		<link rel="stylesheet" href="', add_css_file(array('index', 'install')), '">
-		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.6.min.js"></script>
 		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
 	</head>
 	<body><div id="wedge">
