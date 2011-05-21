@@ -13,7 +13,7 @@
 			t = $(this.cloneNode(true)).hide().css({
 				position: 'absolute',
 				overflow: 'visible',
-				'max-width': 'inherit'
+				maxWidth: 'inherit'
 			});
 		t.css(t.css('width') == 'auto' ? 'height' : 'width', 'auto');
 
