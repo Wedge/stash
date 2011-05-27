@@ -903,7 +903,7 @@ echo '
 	<span style="font-weight: bold; color: green">Your database update has been completed successfully!</span>
 
 	<br><br><strong>If this is the first time you install the gallery</strong>, you should now go to the Admin area, Members section, and head to the
-	<a href="', $scripturl, '?action=admin;area=media_perms;', $context['session_var'], '=', $context['session_id'], '" style="text-decoration: underline">Aeva Media Permissions</a>
+	<a href="', $scripturl, '?action=admin;area=media_perms;', $context['session_query'], '" style="text-decoration: underline">Aeva Media Permissions</a>
 	section. Create and manage your permission profiles and apply them to your albums. No one will be able to access the gallery until you enable permissions.
 
 	<br><br><strong>If you\'re experiencing errors</strong> "Method Not Implemented", "403" or "406" when using Aeva Media, you probably need to disable mod_security (an Apache module). Please open your package file and read the instructions in the <strong>mod_security.htaccess</strong> file.
