@@ -1,28 +1,17 @@
 <?php
-/**********************************************************************************
-* ssi_examples.php                                                                *
-***********************************************************************************
-* SMF: Simple Machines Forum                                                      *
-* Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
-* =============================================================================== *
-* Software Version:           SMF 2.0 RC5                                         *
-* Software by:                Simple Machines (http://www.simplemachines.org)     *
-* Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
-*           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
-* Support, News, Updates at:  http://www.simplemachines.org                       *
-***********************************************************************************
-* This program is free software; you may redistribute it and/or modify it under   *
-* the terms of the provided license as published by Simple Machines LLC.          *
-*                                                                                 *
-* This program is distributed in the hope that it is and will be useful, but      *
-* WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY    *
-* or FITNESS FOR A PARTICULAR PURPOSE.                                            *
-*                                                                                 *
-* See the "license.txt" file for details of the Simple Machines license.          *
-* The latest version can always be found at http://www.simplemachines.org.        *
-**********************************************************************************/
-/* Special thanks to Spaceman-Spiff for his contributions to this page.           *
-**********************************************************************************/
+/**
+ * Wedge
+ *
+ * Display various examples of using SSI functionality.
+ *
+ * @package wedge
+ * @copyright 2010-2011 Wedgeward, wedge.org
+ * @license http://wedge.org/license/
+ *
+ * @version 0.1
+ */
+
+/* Special thanks to Spaceman-Spiff for his contributions to this page. */
 
 // Include the SSI file.
 require(dirname(__FILE__) . '/SSI.php');
@@ -39,7 +28,7 @@ template_ssi_above();
 ?>
 
 	<h2>Wedge SSI.php Functions</h2>
-	<p><strong>Current Version:</strong> 2.0 RC5</p>
+	<p><strong>Current Version:</strong> 2.0</p>
 	<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
 
 	<h2>Include Code</h2>
