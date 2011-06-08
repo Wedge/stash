@@ -356,7 +356,7 @@ if (!class_exists('ftp_connection'))
 			// Seems logical enough, so far...
 			fwrite($this->connection, 'STOR ' . $ftp_file . "\r\n");
 
-			// Okay, now we connect to the data port.  If it doesn't work out, it's probably "file already exists", etc.
+			// Okay, now we connect to the data port. If it doesn't work out, it's probably "file already exists", etc.
 			$fp = @fsockopen($this->pasv['ip'], $this->pasv['port'], $err, $err, 5);
 			if (!$fp || !$this->check_response(150))
 			{
@@ -811,7 +811,7 @@ function initialize_inputs()
 
 	umask(0);
 
-	// Fun.  Low PHP version...
+	// Fun. Low PHP version...
 	if (!isset($_GET))
 	{
 		$GLOBALS['_GET']['step'] = 0;
@@ -858,7 +858,7 @@ function initialize_inputs()
 		@fclose($test);
 	}
 
-	// Something is causing this to happen, and it's annoying.  Stop it.
+	// Something is causing this to happen, and it's annoying. Stop it.
 	$temp = 'upgrade_php?step';
 	while (strlen($temp) > 4)
 	{
@@ -892,7 +892,7 @@ function WelcomeLogin()
 
 	// Do they meet the install requirements?
 	if (!php_version_check())
-		return throw_error('Warning!  You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br><br>Please ask your host to upgrade.');
+		return throw_error('Warning! You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br><br>Please ask your host to upgrade.');
 
 	if (!db_version_check())
 		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br><br>Please ask your host to upgrade.');
@@ -1228,7 +1228,7 @@ function UpgradeOptions()
 		else
 		{
 			$changes['mtitle'] = '\'Upgrading the forum...\'';
-			$changes['mmessage'] = '\'Don\\\'t worry, we will be back shortly with an updated forum.  It will only be a minute ;).\'';
+			$changes['mmessage'] = '\'Don\\\'t worry, we will be back shortly with an updated forum. It will only be a minute ;).\'';
 		}
 	}
 
@@ -2051,7 +2051,7 @@ function changeSettings($config_vars)
 		}
 		if (isset($settingsArray[$i]) && trim(substr($settingsArray[$i], 0, 2)) == '?' . '>')
 			$end = $i;
-    }
+	}
 
 	// Assume end-of-file if the end wasn't found.
 	if (empty($end) || $end < 10)
@@ -2166,7 +2166,7 @@ function parse_sql($filename)
 		- is only ---#, it is "done." and then a break - only shown in debug.
 		- begins with ---{ it is a code block terminating at ---}.
 
-	Every block of between "--- ..."s is a step.  Every "---#" section represents a substep.
+	Every block of between "--- ..."s is a step. Every "---#" section represents a substep.
 
 	Replaces the following variables:
 		- {$boarddir}
@@ -2268,7 +2268,7 @@ function parse_sql($filename)
 		if (substr(trim($line), 0, 2) === '/*')
 			$line = preg_replace('~/\*.+?\*/~', '', $line);
 
-		// Always flush.  Flush, flush, flush.  Flush, flush, flush, flush!  FLUSH!
+		// Always flush. Flush, flush, flush. Flush, flush, flush, flush! FLUSH!
 		if ($is_debug && !$support_js && $command_line)
 			flush();
 
@@ -2441,17 +2441,17 @@ function upgrade_query($string, $unbuffered = false)
 	$error_query = in_array(substr(trim($string), 0, 11), array('INSERT INTO', 'UPDATE IGNO', 'ALTER TABLE', 'DROP TABLE ', 'ALTER IGNOR'));
 
 	// Error numbers:
-	//    1016: Can't open file '....MYI'
-	//    1050: Table already exists.
-	//    1054: Unknown column name.
-	//    1060: Duplicate column name.
-	//    1061: Duplicate key name.
-	//    1062: Duplicate entry for unique key.
-	//    1068: Multiple primary keys.
-	//    1072: Key column '%s' doesn't exist in table.
-	//    1091: Can't drop key, doesn't exist.
-	//    1146: Table doesn't exist.
-	//    2013: Lost connection to server during query.
+	//		1016: Can't open file '....MYI'
+	//		1050: Table already exists.
+	//		1054: Unknown column name.
+	//		1060: Duplicate column name.
+	//		1061: Duplicate key name.
+	//		1062: Duplicate entry for unique key.
+	//		1068: Multiple primary keys.
+	//		1072: Key column '%s' doesn't exist in table.
+	//		1091: Can't drop key, doesn't exist.
+	//		1146: Table doesn't exist.
+	//		2013: Lost connection to server during query.
 
 	if ($mysql_errno == 1016)
 	{
@@ -2512,7 +2512,7 @@ function upgrade_query($string, $unbuffered = false)
 
 	if ($command_line)
 	{
-		echo 'Unsuccessful!  Database error message:', "\n", $db_error_message, "\n";
+		echo 'Unsuccessful! Database error message:', "\n", $db_error_message, "\n";
 		die;
 	}
 
@@ -3021,7 +3021,7 @@ function makeFilesWritable(&$files)
 				unset($files[$k]);
 		}
 	}
-	// Windows is trickier.  Let's try opening for r+...
+	// Windows is trickier. Let's try opening for r+...
 	else
 	{
 		foreach ($files as $k => $file)
@@ -3203,7 +3203,7 @@ function template_chmod()
 	//!!! Temporary!
 	$txt['error_ftp_no_connect'] = 'Unable to connect to FTP server with this combination of details.';
 	$txt['ftp_login'] = 'Your FTP connection information';
-	$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you.  Please note that none of this information is saved in your installation, it is just used to setup SMF.';
+	$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you. Please note that none of this information is saved in your installation, it is just used to setup SMF.';
 	$txt['ftp_server'] = 'Server';
 	$txt['ftp_server_info'] = 'The address (often localhost) and port for your FTP server.';
 	$txt['ftp_port'] = 'Port';
@@ -3214,7 +3214,7 @@ function template_chmod()
 	$txt['ftp_path'] = 'Install Path';
 	$txt['ftp_path_info'] = 'This is the <em>relative</em> path you use in your FTP client <a href="' . $_SERVER['PHP_SELF'] . '?ftphelp" onclick="window.open(this.href, \'\', \'width=450,height=250\');return false;" target="_blank">(more help)</a>.';
 	$txt['ftp_path_found_info'] = 'The path in the box above was automatically detected.';
-	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client.  It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;.  It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it\'s correct.';
+	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client. It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;. It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it\'s correct.';
 	$txt['ftp_path_help_close'] = 'Close';
 	$txt['ftp_connect'] = 'Connect';
 
@@ -4257,7 +4257,7 @@ function template_upgrade_complete()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
 
 	echo '
-	<h3>That wasn\'t so hard, was it?  Now you are ready to use <a href="', $boardurl, '/index.php">your installation of SMF</a>.  Hope you like it!</h3>
+	<h3>That wasn\'t so hard, was it? Now you are ready to use <a href="', $boardurl, '/index.php">your installation of SMF</a>. Hope you like it!</h3>
 	<form action="', $boardurl, '/index.php">';
 
 	if (!empty($upcontext['can_delete_script']))
