@@ -2,7 +2,7 @@
 /**
  * Wedge
  *
- * Payment gateway for paid subscritions through Authorize.net
+ * Pluggable payment gateway for subscriptions paid through Authorize.net.
  *
  * @package wedge
  * @copyright 2010-2011 Wedgeward, wedge.org

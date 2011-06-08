@@ -1382,7 +1382,7 @@ function DatabaseChanges()
 	// All possible files.
 	// Name, <version, insert_on_complete
 	$files = array(
-		array('upgrade.sql', '1.0', WEDGE_VERSION),
+		array('upgrade.sql', '0.1', WEDGE_VERSION),
 	);
 
 	// How many files are there in total?

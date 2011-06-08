@@ -1218,7 +1218,7 @@ function show_footer()
 	   red.  It also contains the function, swapOption, that toggles showing the detailed information for each of the
 	   file categories. (sources, languages, and templates.) */
 	echo '
-		<script type="text/javascript" src="', $boardurl, '/Themes/default/', (strpos($context['forum_version'], '2.') !== false ? 'scripts/' : ''), 'script.js"></script>
+		<script type="text/javascript" src="', $boardurl, '/Themes/default/scripts/script.js"></script>
 		<script type="text/javascript" src="http://www.simplemachines.org/smf/detailed-version.js?version=', $context['forum_version'], '"></script>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var swaps = {};
@@ -1434,7 +1434,7 @@ function get_file_versions($core = false)
 	fclose($fp);
 
 	// The version looks rougly like... that.
-	if (preg_match('~\$forum_version\s=\s\'SMF (.+)\'~i', $header, $match) == 1)
+	if (preg_match('~\$forum_version\s*=\s*\'Wedge (.+?)\'~i', $header, $match) == 1)
 		$context['forum_version'] = $match[1];
 	// Not found!  This is bad.
 	else
@@ -1618,10 +1618,7 @@ function generate_password()
 {
 	global $sourcedir, $smfInfo, $forum_version, $boardurl;
 
-	if (substr($forum_version, 0, 2) == '1.')
-		require_once($sourcedir . '/Admin.php');
-	else
-		require_once($sourcedir . '/Subs-Admin.php');
+	require_once($sourcedir . '/Subs-Admin.php');
 
 	$password = '';
 	$possible = 'abcdfghjkmnpqrstvwxyz0123456789ABCDEFGHJKLMNOPQRSTUVXYZ';

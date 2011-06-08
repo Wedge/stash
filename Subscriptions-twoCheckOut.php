@@ -2,7 +2,7 @@
 /**
  * Wedge
  *
- * Pluggable payment gateway for the subscriptions system through 2CheckOut.
+ * Pluggable payment gateway for subscriptions paid through 2CheckOut.
  *
  * @package wedge
  * @copyright 2010-2011 Wedgeward, wedge.org

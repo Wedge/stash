@@ -11,11 +11,11 @@
  * @version 0.1
  */
 
-$GLOBALS['current_wedge_version'] = '0.1 (based on SMF 2.0)';
+$GLOBALS['current_wedge_version'] = '0.1';
 $GLOBALS['required_php_version'] = '5.1.2';
 
 // Don't have PHP support, do you?
-// ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none;">
+// ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none">
 
 // Database info.
 $db = array(
@@ -207,14 +207,14 @@ function load_lang_file()
 	<head>
 		<title>Wedge Installer: Error!</title>
 	</head>
-	<body style="font-family: sans-serif;"><div style="width: 600px;">
-		<h1 style="font-size: 14pt;">A critical error has occurred.</h1>
+	<body style="font-family: sans-serif"><div style="width: 600px">
+		<h1 style="font-size: 14pt">A critical error has occurred.</h1>
 
 		<p>This installer was unable to find the installer\'s language file or files.  They should be found under:</p>
 
-		<div style="margin: 1ex; font-family: monospace; font-weight: bold;">', dirname($_SERVER['PHP_SELF']) != '/' ? dirname($_SERVER['PHP_SELF']) : '', '/Themes/default/languages</div>
+		<div style="margin: 1ex; font-family: monospace; font-weight: bold">', dirname($_SERVER['PHP_SELF']) != '/' ? dirname($_SERVER['PHP_SELF']) : '', '/Themes/default/languages</div>
 
-		<p>In some cases, FTP clients do not properly upload files with this many folders.  Please double check to make sure you <span style="font-weight: 600;">have uploaded all the files in the distribution</span>.</p>
+		<p>In some cases, FTP clients do not properly upload files with this many folders.  Please double check to make sure you <span style="font-weight: 600">have uploaded all the files in the distribution</span>.</p>
 		<p>If that doesn\'t help, please make sure this install.php file is in the same place as the Themes folder.</p>
 
 		<p>If you continue to get this error message, feel free to <a href="http://support.simplemachines.org/">look to us for support</a>.</p>
@@ -475,7 +475,7 @@ function CheckFilesWritable()
 	if ($failure && substr(__FILE__, 1, 2) == ':\\')
 	{
 		$incontext['error'] = $txt['error_windows_chmod'] . '
-					<ul style="margin: 2.5ex; font-family: monospace;">
+					<ul style="margin: 2.5ex; font-family: monospace">
 						<li>' . implode('</li>
 						<li>', $failed_files) . '</li>
 					</ul>';
@@ -699,7 +699,7 @@ function DatabaseSettings()
 		// Still no connection?  Big fat error message :P.
 		if (!$db_connection)
 		{
-			$incontext['error'] = $txt['error_db_connect'] . '<div style="margin: 2.5ex; font-family: monospace;"><strong>' . $db_error . '</strong></div>';
+			$incontext['error'] = $txt['error_db_connect'] . '<div style="margin: 2.5ex; font-family: monospace"><strong>' . $db_error . '</strong></div>';
 			return false;
 		}
 
@@ -1976,8 +1976,8 @@ function template_install_above()
 				</ul>
 			</div>
 			<div style="font-size: 12pt; height: 25pt; border: 1px solid black; background: white; float: left; margin: 42px 0 0 12%; width: 25%">
-				<div id="overall_text" style="padding-top: 8pt; z-index: 2; color: black; margin-left: -4em; position: absolute; text-align: center; font-weight: bold;">', $incontext['overall_percent'], '%</div>
-				<div id="overall_progress" style="width: ', $incontext['overall_percent'], '%; height: 25pt; z-index: 1; background-color: lime;">&nbsp;</div>
+				<div id="overall_text" style="padding-top: 8pt; z-index: 2; color: black; margin-left: -4em; position: absolute; text-align: center; font-weight: bold">', $incontext['overall_percent'], '%</div>
+				<div id="overall_progress" style="width: ', $incontext['overall_percent'], '%; height: 25pt; z-index: 1; background-color: lime">&nbsp;</div>
 				<div class="overall_progress">', $txt['upgrade_overall_progress'], '</div>
 			</div>
 			<div id="main_screen" class="clear">
@@ -1993,7 +1993,7 @@ function template_install_below()
 	if (!empty($incontext['continue']) || !empty($incontext['skip']))
 	{
 		echo '
-		<div class="righttext" style="margin: 1ex;">';
+		<div class="righttext" style="margin: 1ex">';
 
 		if (!empty($incontext['continue']))
 			echo '
@@ -2028,11 +2028,11 @@ function template_welcome_message()
 	<script src="http://wedge.org/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
 		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
-		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
-			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['error_warning_notice'], '</strong><br>
-			<div style="padding-left: 6ex;">
-				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . $GLOBALS['current_wedge_version'] . '</em>'), '
+		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none">
+			<div style="float: left; width: 2ex; font-size: 2em; color: red">!!</div>
+			<strong style="text-decoration: underline">', $txt['error_warning_notice'], '</strong><br>
+			<div style="padding-left: 6ex">
+				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap">??</em>', '<em id="yourVersion" style="white-space: nowrap">' . $GLOBALS['current_wedge_version'] . '</em>'), '
 			</div>
 		</div>';
 
@@ -2081,20 +2081,20 @@ function template_warning_divs()
 	// Errors are very serious..
 	if (!empty($incontext['error']))
 		echo '
-		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
-			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_critical_error'], '</strong><br>
-			<div style="padding-left: 6ex;">
+		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9">
+			<div style="float: left; width: 2ex; font-size: 2em; color: red">!!</div>
+			<strong style="text-decoration: underline">', $txt['upgrade_critical_error'], '</strong><br>
+			<div style="padding-left: 6ex">
 				', $incontext['error'], '
 			</div>
 		</div>';
 	// A warning message?
 	elseif (!empty($incontext['warning']))
 		echo '
-		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9;">
-			<div style="float: left; width: 2ex; font-size: 2em; color: red;">!!</div>
-			<strong style="text-decoration: underline;">', $txt['upgrade_warning'], '</strong><br>
-			<div style="padding-left: 6ex;">
+		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #cc3344; color: black; background-color: #ffe4e9">
+			<div style="float: left; width: 2ex; font-size: 2em; color: red">!!</div>
+			<strong style="text-decoration: underline">', $txt['upgrade_warning'], '</strong><br>
+			<div style="padding-left: 6ex">
 				', $incontext['warning'], '
 			</div>
 		</div>';
@@ -2108,7 +2108,7 @@ function template_chmod_files()
 
 	echo '
 		<p>', $txt['ftp_setup_why_info'], '</p>
-		<ul style="margin: 2.5ex; font-family: monospace;">
+		<ul style="margin: 2.5ex; font-family: monospace">
 			<li>', implode('</li>
 			<li>', $incontext['failed_files']), '</li>
 		</ul>';
@@ -2124,7 +2124,7 @@ function template_chmod_files()
 	if (!empty($incontext['ftp_errors']))
 		echo '
 		<div class="error_message">
-			<div style="color: red;">
+			<div style="color: red">
 				', $txt['error_ftp_no_connect'], '<br>
 				<br>
 				<code>', implode('<br>', $incontext['ftp_errors']), '</code>
@@ -2138,7 +2138,7 @@ function template_chmod_files()
 				<tr>
 					<td style="width: 26%; vertical-align: top" class="textbox"><label for="ftp_server">', $txt['ftp_server'], ':</label></td>
 					<td>
-						<div style="float: ', empty($txt['lang_rtl']) ? 'right' : 'left', '; margin-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 1px;"><label class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong> <input type="text" size="3" name="ftp_port" value="', $incontext['ftp']['port'], '"></label></div>
+						<div style="float: ', empty($txt['lang_rtl']) ? 'right' : 'left', '; margin-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 1px"><label class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong> <input type="text" size="3" name="ftp_port" value="', $incontext['ftp']['port'], '"></label></div>
 						<input type="text" size="30" name="ftp_server" id="ftp_server" value="', $incontext['ftp']['server'], '" style="width: 70%">
 						<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_server_info'], '</div>
 					</td>
@@ -2146,23 +2146,23 @@ function template_chmod_files()
 					<td style="vertical-align: top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
 					<td>
 						<input type="text" size="50" name="ftp_username" id="ftp_username" value="', $incontext['ftp']['username'], '" style="width: 99%">
-						<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_username_info'], '</div>
+						<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_username_info'], '</div>
 					</td>
 				</tr><tr>
 					<td style="vertical-align: top" class="textbox"><label for="ftp_password">', $txt['ftp_password'], ':</label></td>
 					<td>
 						<input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 99%">
-						<div style="font-size: smaller; margin-bottom: 3ex;">', $txt['ftp_password_info'], '</div>
+						<div style="font-size: smaller; margin-bottom: 3ex">', $txt['ftp_password_info'], '</div>
 					</td>
 				</tr><tr>
 					<td style="vertical-align: top" class="textbox"><label for="ftp_path">', $txt['ftp_path'], ':</label></td>
-					<td style="padding-bottom: 1ex;">
+					<td style="padding-bottom: 1ex">
 						<input type="text" size="50" name="ftp_path" id="ftp_path" value="', $incontext['ftp']['path'], '" style="width: 99%">
-						<div style="font-size: smaller; margin-bottom: 2ex;">', $incontext['ftp']['path_msg'], '</div>
+						<div style="font-size: smaller; margin-bottom: 2ex">', $incontext['ftp']['path_msg'], '</div>
 					</td>
 				</tr>
 			</table>
-			<div style="margin: 1ex; margin-top: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', ';"><input type="submit" value="', $txt['ftp_connect'], '" onclick="return submitThisOnce(this);" class="submit"></div>
+			<div style="margin: 1ex; margin-top: 1ex; text-align: ', empty($txt['lang_rtl']) ? 'right' : 'left', '"><input type="submit" value="', $txt['ftp_connect'], '" onclick="return submitThisOnce(this);" class="submit"></div>
 		</form>
 		<a href="', $incontext['form_url'], '">', $txt['error_message_click'], '</a> ', $txt['ftp_setup_again'];
 }
@@ -2228,7 +2228,7 @@ function template_forum_settings()
 	template_warning_divs();
 
 	echo '
-		<table class="w100 cp0 cs0" style="margin: 1em 0;">
+		<table class="w100 cp0 cs0" style="margin: 1em 0">
 			<tr>
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="mbname_input">', $txt['install_settings_name'], ':</label></td>
 				<td>
@@ -2284,7 +2284,7 @@ function template_populate_database()
 	if (!empty($incontext['failures']))
 	{
 		echo '
-		<div style="color: red;">', $txt['error_db_queries'], '</div>
+		<div style="color: red">', $txt['error_db_queries'], '</div>
 		<ul>';
 
 		foreach ($incontext['failures'] as $line => $fail)
@@ -2321,25 +2321,25 @@ function template_admin_account()
 				<td style="width: 18%; vertical-align: top" class="textbox"><label for="username">', $txt['user_settings_username'], ':</label></td>
 				<td>
 					<input type="text" name="username" id="username" value="', $incontext['username'], '" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['user_settings_username_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_username_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="password1">', $txt['user_settings_password'], ':</label></td>
 				<td>
 					<input type="password" name="password1" id="password1" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['user_settings_password_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_password_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="password2">', $txt['user_settings_again'], ':</label></td>
 				<td>
 					<input type="password" name="password2" id="password2" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['user_settings_again_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_again_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="email">', $txt['user_settings_email'], ':</label></td>
 				<td>
 					<input type="text" name="email" id="email" value="', $incontext['email'], '" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['user_settings_email_info'], '</div>
+					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_email_info'], '</div>
 				</td>
 			</tr>
 		</table>
@@ -2347,7 +2347,7 @@ function template_admin_account()
 		<h2>', $txt['user_settings_database'], '</h2>
 		<p>', $txt['user_settings_database_info'], '</p>
 
-		<div style="margin-bottom: 2ex; padding-', empty($txt['lang_rtl']) ? 'left' : 'right', ': 50px;">
+		<div style="margin-bottom: 2ex; padding-', empty($txt['lang_rtl']) ? 'left' : 'right', ': 50px">
 			<input type="password" name="password3" size="30">
 		</div>';
 }
