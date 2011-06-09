@@ -1157,49 +1157,6 @@ function UpgradeOptions()
 	if (empty($_POST['upcont']))
 		return false;
 
-// !!! Disabled for now.
-/*
-	// Firstly, if they're enabling SM stat collection just do it.
-	if (!empty($_POST['stats']) && substr($boardurl, 0, 16) != 'http://localhost' && empty($modSettings['allow_sm_stats']))
-	{
-		// Attempt to register the site etc.
-		$fp = @fsockopen('wedge.org', 80, $errno, $errstr);
-		if ($fp)
-		{
-			$out = 'GET /files/stats/register_stats.php?site=' . base64_encode($boardurl) . ' HTTP/1.1' . "\r\n";
-			$out .= 'Host: wedge.org' . "\r\n";
-			$out .= 'Connection: Close' . "\r\n\r\n";
-			fwrite($fp, $out);
-
-			$return_data = '';
-			while (!feof($fp))
-				$return_data .= fgets($fp, 128);
-
-			fclose($fp);
-
-			// Get the unique site ID.
-			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $id);
-
-			if (!empty($id[1]))
-				$smcFunc['db_insert']('replace',
-					$db_prefix . 'settings',
-					array('variable' => 'string', 'value' => 'string'),
-					array('allow_sm_stats', $id[1]),
-					array('variable')
-				);
-		}
-	}
-	else
-*/
-	$smcFunc['db_query']('', '
-		DELETE FROM {db_prefix}settings
-		WHERE variable = {string:allow_sm_stats}',
-		array(
-			'allow_sm_stats' => 'allow_sm_stats',
-			'db_error_skip' => true,
-		)
-	);
-
 	// Emptying the error log?
 	if (!empty($_POST['empty_error']))
 		$smcFunc['db_query']('', '
@@ -1824,14 +1781,14 @@ function DeleteUpgrade()
 	// Can we delete the file?
 	$upcontext['can_delete_script'] = is_writable(dirname(__FILE__)) || is_writable(__FILE__);
 
-	// Now is the perfect time to fetch the SM files.
+	// Now is the perfect time to fetch the Wedge files.
 	if ($command_line)
-		cli_scheduled_fetchSMfiles();
+		cli_scheduled_fetchRemoteFiles();
 	else
 	{
 		require_once($sourcedir . '/ScheduledTasks.php');
 		$forum_version = WEDGE_VERSION; // The variable is usually defined in index.php so let's just use the constant to do it for us.
-		scheduled_fetchSMfiles(); // Now go get those files!
+		scheduled_fetchRemoteFiles(); // Now go get those files!
 	}
 
 	// Log what we've done.
@@ -1875,8 +1832,8 @@ function DeleteUpgrade()
 	return false;
 }
 
-// Just like the built in one, but setup for CLI to not use themes.
-function cli_scheduled_fetchSMfiles()
+// Just like the built-in one, but setup for CLI to not use themes.
+function cli_scheduled_fetchRemoteFiles()
 {
 	global $sourcedir, $txt, $language, $settings, $forum_version, $modSettings;
 
@@ -3737,17 +3694,6 @@ function template_upgrade_options()
 						</td>
 						<td width="100%">
 							<label for="empty_error">Empty error log before upgrading</label>
-						</td>
-					</tr>
-					<tr valign="top">
-						<td width="2%">
-							<input type="checkbox" name="stats" id="stats" value="1"', empty($modSettings['allow_sm_stats']) ? '' : ' checked', '>
-						</td>
-						<td width="100%">
-							<label for="stats">
-								Allow Simple Machines to Collect Basic Stats Monthly.<br>
-								<span class="smalltext">If enabled, this will allow Simple Machines to visit your site once a month to collect basic statistics. This will help us make decisions as to which configurations to optimise the software for. For more information please visit our <a href="http://www.simplemachines.org/about/stats.php" target="_blank">info page</a>.</span>
-							</label>
 						</td>
 					</tr>
 				</table>

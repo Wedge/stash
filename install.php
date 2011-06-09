@@ -986,44 +986,6 @@ function DatabasePopulation()
 		}
 	}
 
-// !!! Disabling this for now. We don't really need any stats, we have work to do.
-/*
-	// Are we allowing stat collection?
-	if (isset($_POST['stats']) && substr($_POST['boardurl'], 0, 16) != 'http://localhost')
-	{
-		// Attempt to register the site etc.
-		$fp = @fsockopen("www.simplemachines.org", 80, $errno, $errstr);
-		if ($fp)
-		{
-			$out = "GET /smf/stats/register_stats.php?site=" . base64_encode($_POST['boardurl']) . " HTTP/1.1\r\n";
-			$out .= "Host: www.simplemachines.org\r\n";
-			$out .= "Connection: Close\r\n\r\n";
-			fwrite($fp, $out);
-
-			$return_data = '';
-			while (!feof($fp))
-				$return_data .= fgets($fp, 128);
-
-			fclose($fp);
-
-			// Get the unique site ID.
-			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $id);
-
-			if (!empty($id[1]))
-				wesql::insert('',
-					$db_prefix . 'settings',
-					array(
-						'variable' => 'string-255', 'value' => 'string-65534',
-					),
-					array(
-						'allow_sm_stats', $id[1],
-					),
-					array('variable')
-				);
-		}
-	}
-*/
-
 	// As of PHP 5.1, setting a timezone is required.
 	if (!isset($modSettings['default_timezone']))
 	{
@@ -1395,13 +1357,13 @@ function DeleteInstall()
 		updateStats('subject', 1, htmlspecialchars($txt['default_topic_subject']));
 	wesql::free_result($request);
 
-	// Now is the perfect time to fetch the SM files.
+	// Now is the perfect time to fetch the Wedge files.
 	require_once($sourcedir . '/ScheduledTasks.php');
 	// Sanity check that they loaded earlier!
 	if (isset($modSettings['recycle_board']))
 	{
 		$forum_version = $current_wedge_version; // The variable is usually defined in index.php so let's just use our variable to do it for us.
-		scheduled_fetchSMfiles(); // Now go get those files!
+		scheduled_fetchRemoteFiles(); // Now go get those files!
 
 		// We've just installed!
 		$user_info['ip'] = $_SERVER['REMOTE_ADDR'];
