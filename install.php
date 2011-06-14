@@ -1875,6 +1875,7 @@ function template_install_above()
 	$settings['default_theme_dir'] = $boarddir . '/Themes/default';
 	$settings['theme_url'] = $boardurl . '/Themes/default';
 	$settings['images_url'] = $boardurl . '/Themes/default/images';
+	$context['css_folders'] = array();
 	$context['css_generic_files'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
@@ -1889,7 +1890,7 @@ function template_install_above()
 		<meta name="robots" content="noindex">
 		<title>', $txt['smf_installer'], '</title>
 		<link rel="stylesheet" href="', add_css_file(array('index', 'install')), '">
-		<script src="http://code.jquery.com/jquery-1.6.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
 	</head>
 	<body><div id="wedge">
@@ -2214,13 +2215,6 @@ function template_forum_settings()
 				<td>
 					<label><input type="checkbox" name="dbsession" checked> ', $txt['install_settings_dbsession_title'], '</label><br>
 					<div style="font-size: smaller; margin-bottom: 2ex">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
-				</td>
-			</tr>
-			<tr>
-				<td style="vertical-align: top" class="textbox">', $txt['install_settings_stats'], ':</td>
-				<td>
-					<label><input type="checkbox" name="stats"> ', $txt['install_settings_stats_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_stats_info'], '</div>
 				</td>
 			</tr>
 		</table>';

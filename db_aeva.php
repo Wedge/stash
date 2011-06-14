@@ -703,7 +703,7 @@ if (!in_array($db_prefix . 'media_perms', $tables) && !in_array($db_prefix . 'mg
 			'Default',
 		)
 	);
-	$id_profile = wesql::insert_id('{db_prefix}media_variables');
+	$id_profile = wesql::insert_id();
 
 	// Bypass to a small issue
 	if ($id_profile == 1)
