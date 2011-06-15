@@ -1,29 +1,22 @@
 <?php
-/****************************************************************
-* Aeva Media													*
-* © Noisen.com & SMF-Media.com									*
-*****************************************************************
-* db_aeva.php - database installer								*
-*****************************************************************
-* Users of this software are bound by the terms of the			*
-* Aeva Media license. You can view it in the license_am.txt		*
-* file, or online at http://noisen.com/license-am2.php			*
-*																*
-* For support and updates, go to http://aeva.noisen.com			*
-****************************************************************/
+/**
+ * Wedge
+ *
+ * Creation of media-related database tables.
+ * Original code by Dragoooon and Nao.
+ *
+ * @package wedge
+ * @copyright 2010-2011 Wedgeward, wedge.org
+ * @license http://wedge.org/license/
+ *
+ * @version 0.1
+ */
 
-// This is the DB installer/upgrader for Aeva Media
-// This runs standalone if it's in the same directory as SSI.php. It may also run via the Package Manager
-// Does edits for both SMF 1.1 and SMF 2.0
-
-// OK, first load the stuff
 global
-	$smcFunc, $db_prefix, $db_type, $db_name, $db_passwd, $db_user, $db_server,
-	$context, $boarddir, $modSettings, $scripturl, $boardurl, $boarddir, $sourcedir;
+	$db_prefix, $db_name, $context, $boarddir, $modSettings, $scripturl, $boardurl, $boarddir;
 
 $doing_manual_install = false;
 $no_prefix = array('no_prefix' => true);
-$primary_groups = array(0 => 0);
 
 if (!defined('SMF') && file_exists(dirname(__FILE__) . '/SSI.php'))
 {
@@ -31,13 +24,12 @@ if (!defined('SMF') && file_exists(dirname(__FILE__) . '/SSI.php'))
 	$doing_manual_install = true;
 }
 elseif (!defined('SMF'))
-	die('The installer wasn\'t able to connect to SMF! Make sure that you are either installing this via the Package Manager or the SSI.php file is in the same directory.');
+	die('The installer wasn\'t able to connect to Wedge! Make sure that you are either installing this via the Package Manager or the SSI.php file is in the same directory.');
 
 if (isset($_GET['delete']))
 {
 	@unlink(__FILE__);
 
-	// From SMF
 	header('Location: http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']) . dirname($_SERVER['PHP_SELF']) . '/Themes/default/images/blank.gif');
 	exit;
 }
@@ -49,7 +41,7 @@ if ($doing_manual_install)
 	echo '<!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
-	<title>Aeva Media Database Installer</title>',
+	<title>Media Database Installer</title>',
 	theme_base_css(), '
 </head>
 <body>
@@ -87,10 +79,6 @@ $update = array(
 foreach ($update as $name => $value)
 	wesql::insert('ignore', '{db_prefix}settings', array('variable' => 'string', 'value' => 'string'), array($name, $value));
 
-// wesql::query("DELETE FROM {db_prefix}settings WHERE (variable LIKE 'aevac_%') OR (variable IN ('aeva_quicktime', 'aeva_windowsmedia', 'aeva_realmedia', 'aeva_flash', 'aeva_youtube', 'aeva_ytitles', 'aeva_hq', 'aeva_quality', 'aeva_nossi', 'aeva_copyright', 'aeva_latest_version', 'aeva_version_test'))");
-
-// Some variables
-$aevaprefix = '{db_prefix}media_';
 // The new settings
 $newsettings = array(
 	'installed_on' => time(),
@@ -147,39 +135,10 @@ $newsettings = array(
 	'disable_ratings' => 0,
 	'my_docs' => 'txt,rtf,pdf,xls,doc,ppt,docx,xlsx,pptx,xml,html,htm,php,css,js,zip,rar,ace,arj,7z,gz,tar,tgz,bz,bzip2,sit',
 );
-$altered_mem = array();
-$table_names = array('albums', 'comments', 'fields', 'field_data', 'files', 'log_media', 'log_ratings', 'media', 'perms', 'quotas', 'settings', 'variables');
-
-// Get the table list
-$tables = array();
-wesql::extend();
-wesql::extend('packages');
-$tmp = wedbExtra::list_tables();
-foreach ($tmp as $t)
-	if (substr($db_prefix, 0, strlen($db_name) + 3) != '`' . $db_name . '`.')
-		$tables[] = $t;
-	else
-		$tables[] = '`' . $db_name . '`.' . $t;
-
-foreach ($table_names as $name)
-	if (!in_array($db_prefix . 'media_' . $name, $tables) && in_array($db_prefix . 'aeva_' . $name, $tables))
-		wesql::query('ALTER TABLE {db_prefix}aeva_' . $name . ' RENAME TO {db_prefix}media_' . $name, array());
-foreach ($table_names as $name)
-	if (!in_array($db_prefix . 'media_' . $name, $tables) && in_array($db_prefix . 'mgallery_' . $name, $tables))
-		wesql::query('ALTER TABLE {db_prefix}mgallery_' . $name . ' RENAME TO {db_prefix}media_' . $name, array());
-if (!in_array($db_prefix . 'media_playlists', $tables) && in_array($db_prefix . 'mgallery_playlists', $tables))
-	wesql::query('ALTER TABLE {db_prefix}mgallery_playlists RENAME TO {db_prefix}media_playlists', array());
-if (!in_array($db_prefix . 'media_playlist_data', $tables) && in_array($db_prefix . 'mgallery_playlist_data', $tables))
-	wesql::query('ALTER TABLE {db_prefix}mgallery_playlist_data RENAME TO {db_prefix}media_playlist_data', array());
-
-wesql::query('
-	UPDATE IGNORE {db_prefix}permissions
-	SET permission = REPLACE(permission, {string:mgallery}, {string:aeva})
-', array('mgallery' => 'mgallery_', 'aeva' => 'aeva_'));
 
 // Create the tables
 
-// The media_items table
+// Media items
 wedbPackages::create_table(
 	'{db_prefix}media_items',
 	array(
@@ -219,9 +178,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_items';
 
-// The media_files table
+// Media files
 wedbPackages::create_table(
 	'{db_prefix}media_files',
 	array(
@@ -244,9 +202,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_files';
 
-// The media_albums table
+// Media albums
 wedbPackages::create_table(
 	'{db_prefix}media_albums',
 	array(
@@ -276,6 +233,7 @@ wedbPackages::create_table(
 		array('name' => 'allowed_write', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''),
 		array('name' => 'denied_members', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''),
 		array('name' => 'denied_write', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''),
+		// Linked topics... Maybe it's pointless storing them in here?
 		array('name' => 'id_topic', 'type' => 'INT', 'default' => '0'),
 	),
 	array(
@@ -293,7 +251,6 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_albums';
 
 // The media_settings table
 wedbPackages::create_table(
@@ -311,7 +268,6 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_settings';
 
 // The media_variables table
 wedbPackages::create_table(
@@ -338,9 +294,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_variables';
 
-// The media_comments table
+// Item comments
 wedbPackages::create_table(
 	'{db_prefix}media_comments',
 	array(
@@ -364,7 +319,6 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_comments';
 
 // The media_log_media table
 wedbPackages::create_table(
@@ -383,7 +337,6 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_log_media';
 
 // The media_log_ratings table
 wedbPackages::create_table(
@@ -403,9 +356,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_log_ratings';
 
-// The permissions table
+// Permissions
 wedbPackages::create_table(
 	'{db_prefix}media_perms',
 	array(
@@ -422,9 +374,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_perms';
 
-// The member group quotas table
+// Membergroup quotas
 wedbPackages::create_table(
 	'{db_prefix}media_quotas',
 	array(
@@ -442,9 +393,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_quotas';
 
-// The custom fields table
+// Custom fields
 wedbPackages::create_table(
 	'{db_prefix}media_fields',
 	array(
@@ -467,9 +417,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_fields';
 
-// The custom field's data table
+// Data table for custom fields
 wedbPackages::create_table(
 	'{db_prefix}media_field_data',
 	array(
@@ -486,9 +435,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_field_data';
 
-// Foxy! playlists
+// Playlists
 wedbPackages::create_table(
 	'{db_prefix}media_playlists',
 	array(
@@ -517,9 +465,8 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_playlists';
 
-// Foxy! playlist contents
+// Playlist contents
 wedbPackages::create_table(
 	'{db_prefix}media_playlist_data',
 	array(
@@ -539,156 +486,17 @@ wedbPackages::create_table(
 	$no_prefix,
 	'ignore'
 );
-$created_tables[] = '{db_prefix}media_playlist_data';
 
-$mem_columns = wedbPackages::list_columns($db_prefix . 'members', false, $no_prefix);
-$file_columns = wedbPackages::list_columns('{db_prefix}media_files', false, $no_prefix);
-$album_columns = wedbPackages::list_columns('{db_prefix}media_albums', false, $no_prefix);
-$media_columns = wedbPackages::list_columns('{db_prefix}media_items', false, $no_prefix);
-$field_columns = wedbPackages::list_columns('{db_prefix}media_fields', false, $no_prefix);
-$quota_columns = wedbPackages::list_columns('{db_prefix}media_quotas', false, $no_prefix);
-
-if (!in_array('description', $field_columns))
-	wesql::query('ALTER TABLE {db_prefix}media_fields CHANGE `desc` description TEXT NOT NULL', array());
-if (!in_array('quota', $quota_columns))
-	wesql::query('ALTER TABLE {db_prefix}media_quotas CHANGE `limit` quota INT NOT NULL DEFAULT 0', array());
-
-if (!in_array('id_perm_profile', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'id_perm_profile', 'type' => 'INT', 'default' => 0), $no_prefix);
-if (!in_array('id_quota_profile', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'id_quota_profile', 'type' => 'INT', 'default' => 0), $no_prefix);
-if (!in_array('hidden', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'hidden', 'type' => 'TINYINT', 'size' => '1', 'default' => 0), $no_prefix);
-if (!in_array('allowed_members', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'allowed_members', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''), $no_prefix);
-if (!in_array('allowed_write', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'allowed_write', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''), $no_prefix);
-if (!in_array('denied_members', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'denied_members', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''), $no_prefix);
-if (!in_array('denied_write', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'denied_write', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''), $no_prefix);
-if (!in_array('id_topic', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'id_topic', 'type' => 'INT', 'default' => 0), $no_prefix);
-if (!in_array('bigicon', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'bigicon', 'type' => 'INT', 'default' => 0), $no_prefix);
-if (!in_array('access_write', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'access_write', 'type' => 'VARCHAR', 'size' => '255', 'default' => ''), $no_prefix);
-if (!in_array('master', $album_columns))
-{
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'master', 'type' => 'INT', 'default' => 0), $no_prefix);
-	wedbPackages::add_index('{db_prefix}media_albums', array('name' => 'id_master', 'columns' => array('master')), $no_prefix);
-	wesql::query('UPDATE {db_prefix}media_albums SET master = id_album WHERE parent = 0', array());
-	$alb = array();
-	$continue = true;
-	$unstick = 0;
-	while ($continue)
-	{
-		// This may very well crash on SQLite and maybe PGSQL... Ah, who cares?
-		wesql::query('
-			UPDATE {db_prefix}media_albums AS a1, {db_prefix}media_albums AS a2
-			SET a1.master = a2.master
-			WHERE (a1.parent = a2.id_album) AND (a1.master = 0) AND (a2.master != 0)',
-			array());
-		$continue = (wesql::affected_rows() > 0) && ($unstick++ < 100);
-	}
-}
-if (!in_array('featured', $album_columns))
-{
-	// Retrieve all non-admin primary groups used by members...
-	$request = wesql::query('SELECT id_group FROM {db_prefix}members GROUP BY id_group ORDER BY id_group', array());
-	while ($row = wesql::fetch_row($request))
-		$primary_groups[(int) $row[0]] = (int) $row[0];
-	wesql::free_result($request);
-	unset($primary_groups[1]);
-
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'featured', 'type' => 'TINYINT', 'size' => '1', 'default' => '0'), $no_prefix);
-	wesql::query('
-		UPDATE {db_prefix}media_albums
-		SET featured = 1, album_of = 1, access_write = {string:write}
-		WHERE type = {string:general}',
-		array(
-			'general' => 'general',
-			'write' => implode(',', array_keys($primary_groups)),
-		)
-	);
-	wedbPackages::add_index('{db_prefix}media_albums', array('name' => 'id_of', 'columns' => array('id_album', 'album_of', 'featured')), $no_prefix);
-	wedbPackages::remove_column('{db_prefix}media_albums', 'type', $no_prefix);
-}
-else
-	wesql::query('UPDATE {db_prefix}media_albums SET album_of = 1 WHERE album_of = 0', array());
-if (in_array('member_name', $album_columns))
-	wedbPackages::remove_column('{db_prefix}media_albums', 'member_name', $no_prefix);
-
-// If mgal_* fields are in there, rename them. Otherwise, just create the media_* fields.
-if (!in_array('media_items', $mem_columns))
-{
-	if (in_array('mgal_total_items', $mem_columns))
-		wedbPackages::change_column($db_prefix . 'members', 'mgal_total_items', array('name' => 'media_items', 'type' => 'INT', 'null' => null, 'default' => 0), $no_prefix);
-	else
-		wedbPackages::add_column($db_prefix . 'members', array('name' => 'media_items', 'type' => 'INT', 'null' => null, 'default' => '0'), $no_prefix);
-	$altered_mem[1] = true;
-}
-if (!in_array('media_comments', $mem_columns))
-{
-	if (in_array('mgal_total_comments', $mem_columns))
-		wedbPackages::change_column($db_prefix . 'members', 'mgal_total_comments', array('name' => 'media_comments', 'type' => 'INT', 'null' => null, 'default' => 0), $no_prefix);
-	else
-		wedbPackages::add_column($db_prefix . 'members', array('name' => 'media_comments', 'type' => 'INT', 'null' => null, 'default' => '0'), $no_prefix);
-	$altered_mem[2] = true;
-}
-if (!in_array('media_unseen', $mem_columns))
-{
-	if (in_array('mgal_unseen', $mem_columns))
-		wedbPackages::change_column($db_prefix . 'members', 'mgal_unseen', array('name' => 'media_unseen', 'type' => 'INT', 'null' => null, 'default' => -1), $no_prefix);
-	else
-		wedbPackages::add_column($db_prefix . 'members', array('name' => 'media_unseen', 'type' => 'INT', 'null' => null, 'default' => '-1'), $no_prefix);
-	$altered_mem[3] = true;
-}
-
-// I'd rather use a TEXT field, but if SELECT @@sql_mode returns a strict mode, it may cause issues...
-if (!in_array('misc', $mem_columns))
-{
-	wedbPackages::add_column($db_prefix . 'members', array('name' => 'misc', 'type' => 'VARCHAR', 'size' => '255', 'null' => null, 'default' => ''), $no_prefix);
-	$altered_mem[4] = true;
-}
-
-if (!in_array('transparency', $file_columns))
-{
-	wedbPackages::add_column('{db_prefix}media_files', array('name' => 'transparency', 'type' => 'ENUM(\'\', \'transparent\', \'opaque\')', 'default' => ''), $no_prefix);
-	wesql::query('
-		UPDATE {db_prefix}media_files SET transparency = {string:transparent} WHERE id_file < 5', array('transparent' => 'transparent'));
-}
-if (!in_array('meta', $file_columns))
-	wedbPackages::add_column('{db_prefix}media_files', array('name' => 'meta', 'type' => 'TEXT'), $no_prefix);
-if (!in_array('options', $album_columns))
-	wedbPackages::add_column('{db_prefix}media_albums', array('name' => 'options', 'type' => 'TEXT'), $no_prefix);
-if (!in_array('id_preview', $media_columns))
-{
-	wedbPackages::add_column('{db_prefix}media_items', array('name' => 'id_preview', 'type' => 'INT', 'default' => '0'), $no_prefix);
-	wedbPackages::change_column('{db_prefix}media_items', 'type', array('type' => 'VARCHAR', 'size' => '10', 'default' => 'image'), $no_prefix);
-}
-if (!in_array('downloads', $media_columns))
-{
-	wedbPackages::add_column('{db_prefix}media_items', array('name' => 'downloads', 'type' => 'INT', 'default' => '0'), $no_prefix);
-	wedbPackages::change_column('{db_prefix}media_albums', 'access', array('size' => 255), $no_prefix);
-}
-if (!in_array('weighted', $media_columns))
-	wedbPackages::add_column('{db_prefix}media_items', array('name' => 'weighted', 'type' => 'FLOAT', 'default' => '0'), $no_prefix);
-wedbPackages::change_column('{db_prefix}media_items', 'title', array('size' => 255), $no_prefix);
-wedbPackages::change_column('{db_prefix}media_albums', 'name', array('size' => 255), $no_prefix);
-wedbPackages::change_column('{db_prefix}media_settings', 'value', array('type' => 'TEXT'), $no_prefix);
-
-$media_keys = wedbPackages::list_indexes('{db_prefix}media_items', false, $no_prefix);
-// id_thumb index is needed for the Check Orphans maintenance task.
-if (!in_array('id_thumb', $media_keys))
-	wedbPackages::add_index('{db_prefix}media_items', array('name' => 'id_thumb', 'columns' => array('id_thumb')), $no_prefix);
-if (!in_array('time_added', $media_keys))
-	wedbPackages::add_index('{db_prefix}media_items', array('name' => 'time_added', 'columns' => array('time_added')), $no_prefix);
-if (!in_array('album_id', $media_keys))
-	wedbPackages::add_index('{db_prefix}media_items', array('name' => 'album_id', 'columns' => array('album_id')), $no_prefix);
+// Get the table list
+$tables = array();
+wesql::extend();
+wesql::extend('packages');
+$tmp = wedbExtra::list_tables();
+foreach ($tmp as $t)
+	$tables[] = substr($db_prefix, 0, strlen($db_name) + 3) != '`' . $db_name . '`.' ? $t : '`' . $db_name . '`.' . $t;
 
 // Permissions processing...
-if (!in_array($db_prefix . 'media_perms', $tables) && !in_array($db_prefix . 'mgallery_perms', $tables))
+if (!in_array($db_prefix . 'media_perms', $tables))
 {
 	// Insert a brand new profile
 	wesql::insert(
@@ -715,10 +523,8 @@ if (!in_array($db_prefix . 'media_perms', $tables) && !in_array($db_prefix . 'mg
 			WHERE id = 1',
 			array()
 		);
-		// I think only MySQL supports the AUTO_INCREMENT setting.
-		if (!empty($db_type) && $db_type === 'mysql')
-			wesql::query('
-				ALTER TABLE {db_prefix}media_variables AUTO_INCREMENT = 3', array());
+		wesql::query('
+			ALTER TABLE {db_prefix}media_variables AUTO_INCREMENT = 3', array());
 	}
 
 	// Get existing permissions
@@ -793,117 +599,37 @@ foreach ($newsettings as $name => $value)
 }
 
 // Insert the mandatory data
-wesql::query('DELETE FROM {db_prefix}media_files WHERE id_file <= 4');
-wesql::query('DELETE FROM {db_prefix}media_settings WHERE name = \'doc_files\'');
-wesql::query('DELETE FROM {db_prefix}media_settings WHERE name = \'version\'');
-
 wesql::insert('',
 	'{db_prefix}media_files',
 	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
-	array(1, 'music.png', 4118, 'generic_images', 48, 48, 0, '')
+	array(1, 'music.png', 4118, 'icons', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
 	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
-	array(2, 'film.png', 2911, 'generic_images', 48, 48, 0, '')
+	array(2, 'film.png', 2911, 'icons', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
 	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
-	array(3, 'camera.png', 2438, 'generic_images', 48, 48, 0, '')
+	array(3, 'camera.png', 2438, 'icons', 48, 48, 0, '')
 );
 wesql::insert('',
 	'{db_prefix}media_files',
 	array('id_file' => 'int', 'filename' => 'string-255', 'filesize' => 'int', 'directory' => 'string-255', 'width' => 'int', 'height' => 'int', 'id_album' => 'int', 'meta' => 'string-255'),
-	array(4, 'folder.png', 2799, 'generic_images', 48, 48, 0, '')
+	array(4, 'folder.png', 2799, 'icons', 48, 48, 0, '')
 );
 
-$request = wesql::query('
-	SELECT value FROM {db_prefix}media_settings WHERE name = {string:data_dir}',
-	array('data_dir' => 'data_dir_path'));
-list ($data_dir) = wesql::fetch_row($request);
-$data_dir .= '/generic_images/';
-$ex_data_dir = $boarddir . '/media/generic_images/';
-$cam = $data_dir . 'camera.png';
-if ((!file_exists($cam) || filesize($cam) == 665) && filesize($ex_data_dir . 'camera.png') == 2438)
-{
-	@copy($ex_data_dir . 'camera.png', $data_dir . 'camera.png');
-	@copy($ex_data_dir . 'film.png', $data_dir . 'film.png');
-	@copy($ex_data_dir . 'music.png', $data_dir . 'music.png');
-	@copy($ex_data_dir . 'folder.png', $data_dir . 'folder.png');
-}
-wesql::free_result($request);
-
-if (file_exists($sourcedir . '/Aeva-Subs-Vital.php'))
-{
-	require_once($sourcedir . '/Aeva-Subs-Vital.php');
-	if (function_exists('media_allowed_types'))
-	{
-		$aty = media_allowed_types();
-		$aty['do'][] = 'default';
-		foreach ($aty['do'] as $ty)
-			if (!file_exists($data_dir . $ty . '.png') && file_exists($ex_data_dir . $ty . '.png'))
-				@copy($ex_data_dir . $ty . '.png', $data_dir . $ty . '.png');
-	}
-}
-
-// OK, time to report, output all the stuff to be shown to the user
 echo '
 <table class="center tborder" style="width: 550px"><tr><td>
 <div class="titlebg" style="padding: 1ex">
 	Aeva Media Database Installer
 </div>
-<div class="windowbg2 wrc">';
-
-// Tell them what has been done
-echo '<b>Creating / Updating Tables</b>
-<br>
-<ul class="normallist">';
-$my_db_prefix = preg_replace('/`[^`]+`\./', '', $db_prefix);
-foreach ($created_tables as $table_name)
-{
-	$table_name = str_replace('{db_prefix}', $db_prefix, $table_name);
-	if (in_array($table_name, $tables))
-		echo '
-	<li>Table <i>'.$table_name.'</i> already exists.</li>';
-	else
-		echo '
-	<li>Table <i>'.$table_name.'</i> created.</li>';
-}
-if (isset($altered_mem[1]))
-	echo '
-	<li>Altered '.$my_db_prefix.'members table, added field "media_items".</li>';
-if (isset($altered_mem[2]))
-	echo '
-	<li>Altered '.$my_db_prefix.'members table, added field "media_comments".</li>';
-if (isset($altered_mem[3]))
-	echo '
-	<li>Altered '.$my_db_prefix.'members table, added field "media_unseen".</li>';
-if (isset($altered_mem[4]))
-	echo '
-	<li>Altered '.$my_db_prefix.'members table, added field "aeva" (stores user settings).</li>';
-
-echo '
-</ul>
-
-<b>Initializing settings</b><br>
-<ul class="normallist">';
-
-if (count($setting_entries) == count($newsettings))
-	echo '
-	<li>All ', count($setting_entries), ' records have been inserted into the settings table.</li>';
-else
-	echo '
-	<li>', empty($setting_entries) ? 'No' : count($setting_entries), ' new record(s) have been inserted into the settings table.</li>', !empty($setting_entries) ? '
-	<li>Full list: <span style="color: #888">' . implode(', ', $setting_entries) . '</span></li>' : '';
-
-echo '
-</ul>
-<div style="padding-top: 25px">
+<div class="windowbg2 wrc">
 	<span style="font-weight: bold; color: green">Your database update has been completed successfully!</span>
 
 	<br><br><strong>If this is the first time you install the gallery</strong>, you should now go to the Admin area, Members section, and head to the
-	<a href="', $scripturl, '?action=admin;area=media_perms;', $context['session_query'], '" style="text-decoration: underline">Aeva Media Permissions</a>
+	<a href="', $scripturl, '?action=admin;area=media_perms;', $context['session_query'], '" style="text-decoration: underline">Media Permissions</a>
 	section. Create and manage your permission profiles and apply them to your albums. No one will be able to access the gallery until you enable permissions.
 
 	<br><br><strong>If you\'re experiencing errors</strong> "Method Not Implemented", "403" or "406" when using Aeva Media, you probably need to disable mod_security (an Apache module). Please open your package file and read the instructions in the <strong>mod_security.htaccess</strong> file.
@@ -923,11 +649,6 @@ if ($doing_manual_install && (is_writable(dirname(__FILE__)) || is_writable(__FI
 	<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader">';
 
 echo '
-	<br><br><b>Thank you for trying out Aeva Media!</b>
-</div>
-<div style="font-size: 9px; margin-top: 20px;" class="centertext">
-	Aeva Media &copy; <a href="http://noisen.com/">noisen</a> / <a href="http://smf-media.com">smf-media</a>
-</div>
 </div>
 </td></tr></table>
 <br>';
