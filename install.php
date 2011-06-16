@@ -1991,8 +1991,8 @@ function template_welcome_message()
 	echo '
 	<script src="http://wedge.org/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
-		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_wedge_version']), '</p>
-		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none">
+		<p>', sprintf($txt['install_welcome_desc'], 'Wedge ' . $GLOBALS['current_wedge_version']), '</p>
+		<div id="version_warning">
 			<div style="float: left; width: 2ex; font-size: 2em; color: red">!!</div>
 			<strong style="text-decoration: underline">', $txt['error_warning_notice'], '</strong><br>
 			<div style="padding-left: 6ex">

@@ -47,38 +47,6 @@ if ($doing_manual_install)
 <body>
 	<br><br>';
 
-// Step 1 -- Install Aeva auto-embedder variables
-$update = array(
-	'embed_enabled' => 1, // Auto-embedding enabled by default
-	'media_enabled' => 1, // Gallery enabled by default
-	'embed_lookups' => 1,
-	'embed_max_per_post' => 12,
-	'embed_max_per_page' => 12,
-	'embed_yq' => 0,
-	'embed_titles' => 0,
-	'embed_inlinetitles' => 1,
-	'embed_noscript' => 0,
-	'embed_expins' => 1,
-	'embed_quotes' => 0,
-	'embed_incontext' => 1,
-	'embed_fix_html' => 1,
-	'embed_includeurl' => 1,
-	'embed_debug' => 0,
-	'embed_adult' => 0,
-	'embed_nonlocal' => 0,
-	'embed_mp3' => 0,
-	'embed_flv' => 0,
-	'embed_avi' => 0,
-	'embed_divx' => 0,
-	'embed_mov' => 0,
-	'embed_wmp' => 0,
-	'embed_real' => 0,
-	'embed_swf' => 0,
-);
-
-foreach ($update as $name => $value)
-	wesql::insert('ignore', '{db_prefix}settings', array('variable' => 'string', 'value' => 'string'), array($name, $value));
-
 // The new settings
 $newsettings = array(
 	'installed_on' => time(),
@@ -137,6 +105,8 @@ $newsettings = array(
 );
 
 // Create the tables
+wesql::extend();
+wesql::extend('packages');
 
 // Media items
 wedbPackages::create_table(
@@ -489,8 +459,6 @@ wedbPackages::create_table(
 
 // Get the table list
 $tables = array();
-wesql::extend();
-wesql::extend('packages');
 $tmp = wedbExtra::list_tables();
 foreach ($tmp as $t)
 	$tables[] = substr($db_prefix, 0, strlen($db_name) + 3) != '`' . $db_name . '`.' ? $t : '`' . $db_name . '`.' . $t;
