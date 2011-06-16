@@ -664,7 +664,7 @@ CREATE TABLE {$db_prefix}boards (
 
 INSERT INTO {$db_prefix}boards
 	(id_board, id_cat, board_order, id_last_msg, id_msg_updated, name, description, url, urllen, num_topics, num_posts, member_groups)
-VALUES (1, 1, 1, 1, 1, '{$default_board_name}', '{$default_board_description}', '{$default_board_url}', CHAR_LENGTH('{$default_board_url}'), 1, 1, '-1,0,2'),
+VALUES (1, 1, 1, 1, 1, '{$default_board_name}', '{$default_board_description}', '{$boarddomain}/{$default_board_url}', CHAR_LENGTH('{$boarddomain}/{$default_board_url}'), 1, 1, '-1,0,2'),
 	(2, 1, 2, 0, 0, '{$default_recycling_board_name}', '{$default_recycling_board_description}', '{$default_recycling_board_url}', CHAR_LENGTH('{$default_recycling_board_url}'), 0, 0, '2');
 # --------------------------------------------------------
 
