@@ -13,7 +13,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 }
 
 ?>window.smfVersions = {
-	'SMF': '0.1 (SMF 2.0 RC5)',
+	'SMF': 'Wedge 0.1',
 	'SourcesAdmin.php': 'Wedge 0.1',
 	'SourcesBoardIndex.php': 'Wedge 0.1',
 	'SourcesCalendar.php': 'Wedge 0.1',

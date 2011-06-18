@@ -29,6 +29,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	}
 }
 
-echo 'window.smfVersion = "Wedge 0.1 (SMF 2.0 RC5)";';
+echo 'window.smfVersion = "Wedge 0.1";';
 
 ?>
