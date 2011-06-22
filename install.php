@@ -12,7 +12,7 @@
  */
 
 $GLOBALS['current_wedge_version'] = '0.1';
-$GLOBALS['required_php_version'] = '5.1.2';
+$GLOBALS['required_php_version'] = '5.2';
 
 // Don't have PHP support, do you?
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none">
@@ -987,7 +987,7 @@ function DatabasePopulation()
 		}
 	}
 
-	// As of PHP 5.1, setting a timezone is required.
+	// Setting a timezone is required.
 	if (!isset($modSettings['default_timezone']))
 	{
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);

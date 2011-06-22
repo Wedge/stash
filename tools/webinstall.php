@@ -24,7 +24,7 @@
 
 // !!! On upgrade, warn about installed.list!
 
-$GLOBALS['required_php_version'] = '5.1.2';
+$GLOBALS['required_php_version'] = '5.2';
 $GLOBALS['required_mysql_version'] = '4.1.2';
 
 // Initialize everything and load the language files.
@@ -252,7 +252,7 @@ function doStep0()
 		$_SERVER['PHP_SELF'] = isset($GLOBALS['HTTP_SERVER_VARS']['PHP_SELF']) ? $GLOBALS['HTTP_SERVER_VARS']['PHP_SELF'] : basename(__FILE__);
 
 	// Check the PHP version.
-	if ((!function_exists('version_compare') || version_compare($GLOBALS['required_php_version'], PHP_VERSION) > 0) && !isset($_GET['overphp']))
+	if (version_compare($GLOBALS['required_php_version'], PHP_VERSION) > 0 && !isset($_GET['overphp']))
 	{
 		echo '
 				<div class="error_message">
