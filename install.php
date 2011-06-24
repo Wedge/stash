@@ -1027,40 +1027,21 @@ function DatabasePopulation()
 	}
 
 	// Default pretty URL filters
-	$prettyFilters = array(
-		'boards' => array(
-			'id' => 'boards',
-			'enabled' => 0,
-			'priority' => 45,
-		),
-		'topics' => array(
-			'id' => 'topics',
-			'enabled' => 0,
-			'priority' => 40,
-			'requires' => 'boards',
-		),
-		'actions' => array(
-			'id' => 'actions',
-			'enabled' => 0,
-			'priority' => 90,
-		),
-		'profiles' => array(
-			'id' => 'profiles',
-			'enabled' => 0,
-			'priority' => 80,
-		),
+	$modSettings['pretty_filters'] = array(
+		'topics' => 0,
+		'boards' => 0,
+		'profiles' => 0,
+		'actions' => 0,
 	);
 
 	// Update the settings table
-	$filters = $modSettings['pretty_filters'] = serialize($prettyFilters);
 	wesql::insert('replace',
 		'{db_prefix}settings',
 		array('variable' => 'string-255', 'value' => 'string-65534'),
-		array('pretty_filters', $filters),
+		array('pretty_filters', serialize($modSettings['pretty_filters'])),
 		array('variable')
 	);
 
-	// Update the filter callbacks
 	require_once($sourcedir . '/Subs.php');
 	require_once($sourcedir . '/Subs-PrettyUrls.php');
 	pretty_update_filters();
