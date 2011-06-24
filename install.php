@@ -129,7 +129,7 @@ function initialize_inputs()
 	if (!isset($_GET['xml']))
 	{
 		$incontext['remote_files_available'] = false;
-		$test = @fsockopen('www.simplemachines.org', 80, $errno, $errstr, 1);
+		$test = @fsockopen('wedge.org', 80, $errno, $errstr, 1);
 		if ($test)
 			$incontext['remote_files_available'] = true;
 		@fclose($test);
@@ -210,14 +210,14 @@ function load_lang_file()
 	<body style="font-family: sans-serif"><div style="width: 600px">
 		<h1 style="font-size: 14pt">A critical error has occurred.</h1>
 
-		<p>This installer was unable to find the installer\'s language file or files.  They should be found under:</p>
+		<p>This installer was unable to find the installer\'s language file or files. They should be found under:</p>
 
 		<div style="margin: 1ex; font-family: monospace; font-weight: bold">', dirname($_SERVER['PHP_SELF']) != '/' ? dirname($_SERVER['PHP_SELF']) : '', '/Themes/default/languages</div>
 
-		<p>In some cases, FTP clients do not properly upload files with this many folders.  Please double check to make sure you <span style="font-weight: 600">have uploaded all the files in the distribution</span>.</p>
+		<p>In some cases, FTP clients do not properly upload files with this many folders. Please double check to make sure you <strong>have uploaded all the files in the distribution</strong>.</p>
 		<p>If that doesn\'t help, please make sure this install.php file is in the same place as the Themes folder.</p>
 
-		<p>If you continue to get this error message, feel free to <a href="http://support.simplemachines.org/">look to us for support</a>.</p>
+		<p>If you continue to get this error message, feel free to <a href="http://wedge.org/">look to us for support</a>.</p>
 	</div></body>
 </html>';
 		die;
@@ -235,7 +235,7 @@ function load_lang_file()
 		// Use the first one...
 		list ($_SESSION['installer_temp_lang']) = array_keys($incontext['detected_languages']);
 
-		// If we have english and some other language, use the other language.  We Americans hate english :P.
+		// If we have an additional language pack installed, it's likely the admin wants to use it, so do it now.
 		if ($_SESSION['installer_temp_lang'] == 'Install.english.php' && count($incontext['detected_languages']) > 1)
 			list (, $_SESSION['installer_temp_lang']) = array_keys($incontext['detected_languages']);
 	}
@@ -367,7 +367,7 @@ function Welcome()
 
 	if (!$mysql_supported)
 		$error = empty($notFoundSQLFile) ? 'error_db_missing' : 'error_db_script_missing';
-	// How about session support?  Some crazy sysadmin remove it?
+	// How about session support? Did some crazy sysadmin remove it?
 	elseif (!function_exists('session_start'))
 		$error = 'error_session_missing';
 	// Make sure they uploaded all the files.
@@ -437,7 +437,7 @@ function CheckFilesWritable()
 		foreach ($extra_files as $file)
 			@chmod(dirname(__FILE__) . (empty($file) ? '' : '/' . $file), 0777);
 	}
-	// Windows is trickier.  Let's try opening for r+...
+	// Windows is trickier. Let's try opening for r+...
 	else
 	{
 		foreach ($writable_files as $file)
@@ -683,7 +683,7 @@ function DatabaseSettings()
 		// Attempt a connection.
 		$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'dont_select_db' => true));
 
-		// No dice?  Let's try adding the prefix they specified, just in case they misread the instructions ;)
+		// No dice? Let's try adding the prefix they specified, just in case they misread the instructions ;)
 		if ($db_connection == null)
 		{
 			$db_error = @wesql::error();
@@ -696,7 +696,7 @@ function DatabaseSettings()
 			}
 		}
 
-		// Still no connection?  Big fat error message :P.
+		// Still no connection? Big fat error message. :P
 		if (!$db_connection)
 		{
 			$incontext['error'] = $txt['error_db_connect'] . '<div style="margin: 2.5ex; font-family: monospace"><strong>' . $db_error . '</strong></div>';
@@ -844,7 +844,7 @@ function DatabasePopulation()
 			$modSettings[$row['variable']] = $row['value'];
 		wesql::free_result($result);
 
-		// Do they match?  If so, this is just a refresh so charge on!
+		// Do they match? If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
 		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != $GLOBALS['current_wedge_version'])
 		{
@@ -883,7 +883,7 @@ function DatabasePopulation()
 	// Add UTF-8 to the table definitions. We do this so that if we need to modify the syntax later, we can do it once instead of per table!
 	$replaces[') ENGINE=MyISAM;'] = ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
-	// Read in the SQL.  Turn this on and that off... internationalize... etc.
+	// Read in the SQL. Turn this on and that off... internationalize... etc.
 	$sql_lines = explode("\n", strtr(implode(' ', file(dirname(__FILE__) . '/install.sql')), $replaces));
 
 	// Execute the SQL.
@@ -906,7 +906,7 @@ function DatabasePopulation()
 		if (empty($current_statement) || (preg_match('~;[\s]*$~s', $line) == 0 && $count != count($sql_lines)))
 			continue;
 
-		// Does this table already exist?  If so, don't insert more data into it!
+		// Does this table already exist? If so, don't insert more data into it!
 		if (preg_match('~^\s*INSERT INTO ([^\s\n\r]+?)~', $current_statement, $match) != 0 && in_array($match[1], $exists))
 		{
 			$incontext['sql_results']['insert_dups']++;
@@ -963,7 +963,7 @@ function DatabasePopulation()
 		$localCookies = false;
 		$globalCookies = false;
 
-		// Okay... let's see.  Using a subdomain other than www.? (not a perfect check.)
+		// Okay... let's see. Using a subdomain other than www? (Not a perfect check.)
 		if ($matches[2] != '' && (strpos(substr($matches[2], 1), '.') === false || in_array($matches[1], array('forum', 'board', 'community', 'forums', 'support', 'chat', 'help', 'talk', 'boards', 'www'))))
 			$globalCookies = true;
 		// If there's a / in the middle of the path, or it starts with ~... we want local.
@@ -1026,6 +1026,46 @@ function DatabasePopulation()
 		return false;
 	}
 
+	// Default pretty URL filters
+	$prettyFilters = array(
+		'boards' => array(
+			'id' => 'boards',
+			'enabled' => 0,
+			'priority' => 45,
+		),
+		'topics' => array(
+			'id' => 'topics',
+			'enabled' => 0,
+			'priority' => 40,
+			'requires' => 'boards',
+		),
+		'actions' => array(
+			'id' => 'actions',
+			'enabled' => 0,
+			'priority' => 90,
+		),
+		'profiles' => array(
+			'id' => 'profiles',
+			'enabled' => 0,
+			'priority' => 80,
+		),
+	);
+
+	// Update the settings table
+	$filters = $modSettings['pretty_filters'] = serialize($prettyFilters);
+	wesql::insert('replace',
+		'{db_prefix}settings',
+		array('variable' => 'string-255', 'value' => 'string-65534'),
+		array('pretty_filters', $filters),
+		array('variable')
+	);
+
+	// Update the filter callbacks
+	require_once($sourcedir . '/Subs.php');
+	require_once($sourcedir . '/Subs-PrettyUrls.php');
+	pretty_update_filters();
+
+	// We're done.
 	if (!empty($exists))
 	{
 		$incontext['page_title'] = $txt['user_refresh_install'];
@@ -1390,13 +1430,13 @@ class ftp_connection
 	var $connection = 'no_connection', $error = false, $last_message, $pasv = array();
 
 	// Create a new FTP connection...
-	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if ($ftp_server !== null)
 			$this->connect($ftp_server, $ftp_port, $ftp_user, $ftp_pass);
 	}
 
-	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if (substr($ftp_server, 0, 6) == 'ftp://')
 			$ftp_server = substr($ftp_server, 6);
@@ -1554,7 +1594,7 @@ class ftp_connection
 		// Seems logical enough, so far...
 		fwrite($this->connection, 'STOR ' . $ftp_file . "\r\n");
 
-		// Okay, now we connect to the data port.  If it doesn't work out, it's probably "file already exists", etc.
+		// Okay, now we connect to the data port. If it doesn't work out, it's probably "file already exists", etc.
 		$fp = @fsockopen($this->pasv['ip'], $this->pasv['port'], $err, $err, 5);
 		if (!$fp || !$this->check_response(150))
 		{
@@ -1863,7 +1903,7 @@ function template_install_above()
 	// !!! I dunno if we have to load all of these, but better safe than sorry.
 	loadSource(array(
 		'QueryString', 'Subs', 'Errors',
-		'Security', 'Subs-Auth', 'Class-String'
+		'Security', 'Subs-Auth', 'Class-String',
 	));
 	detectBrowser();
 
