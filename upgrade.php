@@ -3202,7 +3202,7 @@ function template_chmod()
 					content.write(\'<!DOCTYPE html>\n\');
 					content.write(\'<html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>\n\t<head>\n\t\t<meta name="robots" content="noindex">\n\t\t\');
 					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
-					content.write(\'<div class="windowbg wrc description">\n\t\t\t<h4>The following files needs to be made writable to continue:</h4>\n\t\t\t\');
+					content.write(\'<div class="description wrc">\n\t\t\t<h4>The following files needs to be made writable to continue:</h4>\n\t\t\t\');
 					content.write(\'<p>', implode('<br>\n\t\t\t', $upcontext['chmod']['files']), '</p>\n\t\t\t\');
 					content.write(\'<a href="javascript:self.close();">close</a>\n\t\t</div>\n\t</body>\n</html>\');
 					content.close();
