@@ -33,17 +33,25 @@ $latest_news = array(
 );
 
 echo '
-window.smfAnnouncements = [';
+window.wedgeAnnouncements = [';
+
+$format = isset($_GET['format']) ? $_GET['format'] : '%e %B %Y';
+$language = isset($_GET['language']) ? $_GET['language'] : 'english';
+$format = str_replace(
+	array('%b',				'%h',				'%B',			'%a',			'%A'),
+	array('$shortmonth-%m',	'$shortmonth-%m',	'$month-%m',	'$shortday-%w',	'$day-%w'),
+	$format
+);
 
 for ($i = 0, $n = count($latest_news); $i < $n; $i++)
 {
 	echo '
 	{
-		subject: \'', addslashes(isset($latest_news[$i]['subject_' . @$_GET['language']]) ? $latest_news[$i]['subject_' . @$_GET['language']] : $latest_news[$i]['subject_english']), '\',
-		href: \'', addslashes(isset($latest_news[$i]['href_' . @$_GET['language']]) ? $latest_news[$i]['href_' . @$_GET['language']] : $latest_news[$i]['href_english']), '\',
-		time: \'', addslashes(strftime(@$_GET['format'], $latest_news[$i]['time'])), '\',
-		author: \'', addslashes(isset($latest_news[$i]['author_' . @$_GET['language']]) ? $latest_news[$i]['author_' . @$_GET['language']] : $latest_news[$i]['author_english']), '\',
-		message: \'', addslashes(isset($latest_news[$i]['message_' . @$_GET['language']]) ? $latest_news[$i]['message_' . @$_GET['language']] : $latest_news[$i]['message_english']), '\'
+		subject: \'', addslashes(isset($latest_news[$i]['subject_' . $language]) ? $latest_news[$i]['subject_' . $language] : $latest_news[$i]['subject_english']), '\',
+		href: \'', addslashes(isset($latest_news[$i]['href_' . $language]) ? $latest_news[$i]['href_' . $language] : $latest_news[$i]['href_english']), '\',
+		time: \'', addslashes(strftime($format, $latest_news[$i]['time'])), '\',
+		author: \'', addslashes(isset($latest_news[$i]['author_' . $language]) ? $latest_news[$i]['author_' . $language] : $latest_news[$i]['author_english']), '\',
+		message: \'', addslashes(isset($latest_news[$i]['message_' . $language]) ? $latest_news[$i]['message_' . $language] : $latest_news[$i]['message_english']), '\'
 	}';
 
 	if ($i != $n - 1)
