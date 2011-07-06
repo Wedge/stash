@@ -1905,7 +1905,6 @@ function convertSettingsToTheme()
 		'show_member_bar' => @$GLOBALS['Show_MemberBar'],
 		'linktree_link' => @$GLOBALS['curposlinks'],
 		'show_profile_buttons' => @$GLOBALS['profilebutton'],
-		'show_mark_read' => @$GLOBALS['showmarkread'],
 		'show_board_desc' => @$GLOBALS['ShowBDescrip'],
 		'newsfader_time' => @$GLOBALS['fadertime'],
 		'use_image_buttons' => empty($GLOBALS['MenuType']) ? 1 : 0,
