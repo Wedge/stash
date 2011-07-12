@@ -290,7 +290,7 @@ function smf_setLoginCookie($cookie_length, $id, $password = '', $encrypted = tr
 		if (isset($array[3]) && $array[3] != $cookie_state)
 		{
 			$cookie_url = smf_cookie_url($array[3] & 1 > 0, $array[3] & 2 > 0);
-			setcookie($smf_settings['cookiename'], serialize(array(0, '', 0)), time() - 3600, $parsed_url['path'] . '/', $parsed_url['host'], 0);
+			setcookie($smf_settings['cookiename'], serialize(array(0, '', 0)), time() - 3600, $parsed_url['path'] . '/', $parsed_url['host'], 0, true);
 		}
 	}
 
@@ -299,7 +299,7 @@ function smf_setLoginCookie($cookie_length, $id, $password = '', $encrypted = tr
 	$parsed_url = smf_cookie_url(!empty($smf_settings['localCookies']), !empty($smf_settings['globalCookies']));
 
 	// Set the cookie, $_COOKIE, and session variable.
-	setcookie($smf_settings['cookiename'], $data, time() + $cookie_length, $parsed_url['path'] . '/', $parsed_url['host'], 0);
+	setcookie($smf_settings['cookiename'], $data, time() + $cookie_length, $parsed_url['path'] . '/', $parsed_url['host'], 0, true);
 	$_COOKIE[$smf_settings['cookiename']] = $data;
 	$_SESSION['login_' . $smf_settings['cookiename']] = $data;
 
