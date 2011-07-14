@@ -468,7 +468,7 @@ function template_ssi_above()
 	</style>',
 	theme_base_js(1), '
 	<script><!-- // --><![CDATA[
-		var smf_scripturl = "', $scripturl, '", smf_iso_case_folding = false;
+		var we_script = "', $scripturl, '", we_iso_case_folding = false;
 
 		// Sets all ssi_preview class to hidden, then shows the one requested.
 		function showSSIBlock(elementID)

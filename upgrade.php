@@ -3276,7 +3276,7 @@ function template_upgrade_above()
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 		<script><!-- // --><![CDATA[
-			var smf_scripturl = \'', $upgradeurl, '\';
+			var we_script = \'', $upgradeurl, '\';
 			var startPercent = ', $upcontext['overall_percent'], ';
 
 			// This function dynamically updates the step progress bar - and overall one as required.
