@@ -41,7 +41,7 @@ $installurl = $_SERVER['PHP_SELF'];
 $wedgesite = 'http://wedge.org/files';
 
 // All the steps in detail.
-// Number,Name,Function,Progress Weight.
+// Number, Name, Function, Progress Weight.
 $incontext['steps'] = array(
 	0 => array(1, $txt['install_step_welcome'], 'Welcome', 0),
 	1 => array(2, $txt['install_step_writable'], 'CheckFilesWritable', 10),
@@ -874,10 +874,8 @@ function DatabasePopulation()
 	);
 
 	foreach ($txt as $key => $value)
-	{
 		if (substr($key, 0, 8) == 'default_')
 			$replaces['{$' . $key . '}'] = wesql::escape_string($value);
-	}
 	$replaces['{$default_reserved_names}'] = strtr($replaces['{$default_reserved_names}'], array('\\\\n' => '\\n'));
 
 	// Add UTF-8 to the table definitions. We do this so that if we need to modify the syntax later, we can do it once instead of per table!
@@ -2204,7 +2202,7 @@ function template_database_settings()
 // Stick in their forum settings.
 function template_forum_settings()
 {
-	global $incontext, $installurl, $txt;
+	global $incontext, $installurl, $txt, $boardurl;
 
 	echo '
 	<form action="', $incontext['form_url'], '" method="post">
@@ -2212,12 +2210,14 @@ function template_forum_settings()
 
 	template_warning_divs();
 
+	$default_name = ucwords(preg_replace(array('~^.*://|\.[a-z]{2,4}(?:/|$)|[^a-z]~i', '~ +~'), array(' ', ' '), $boardurl));
+
 	echo '
 		<table class="w100 cp0 cs0" style="margin: 1em 0">
 			<tr>
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="mbname_input">', $txt['install_settings_name'], ':</label></td>
 				<td>
-					<input type="text" name="mbname" id="mbname_input" value="', $txt['install_settings_name_default'], '" size="65">
+					<input type="text" name="mbname" id="mbname_input" value="', $default_name, '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_name_info'], '</div>
 				</td>
 			</tr><tr>
