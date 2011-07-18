@@ -33,7 +33,7 @@ $latest_news = array(
 );
 
 echo '
-window.wedgeAnnouncements = [';
+window.wedge_news = [';
 
 $format = isset($_GET['format']) ? $_GET['format'] : '%e %B %Y';
 $language = isset($_GET['language']) ? $_GET['language'] : 'english';
