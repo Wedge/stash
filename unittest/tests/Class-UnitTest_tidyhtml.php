@@ -973,7 +973,7 @@
 				'SendTopic_3' => array(
 					'name' => 'Send topic (3)',
 					'description' => "Send topic",
-					'url' => $scripturl . '?action=reporttm;topic=' . $this->_id_topic . '.0;msg=' . $this->_id_msg,
+					'url' => $scripturl . '?action=report;topic=' . $this->_id_topic . '.0;msg=' . $this->_id_msg,
 				),
 				'SplitTopics_1' => array(
 					'name' => 'Split topic (1)',
