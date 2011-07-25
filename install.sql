@@ -939,20 +939,6 @@ CREATE TABLE {$db_prefix}log_activity (
 ) ENGINE=MyISAM;
 
 #
-# Table structure for table `log_banned`
-#
-
-CREATE TABLE {$db_prefix}log_banned (
-  id_ban_log mediumint(8) unsigned NOT NULL auto_increment,
-  id_member mediumint(8) unsigned NOT NULL default '0',
-  ip int(10) NOT NULL default '0',
-  email varchar(255) NOT NULL default '',
-  log_time int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY (id_ban_log),
-  KEY log_time (log_time)
-) ENGINE=MyISAM;
-
-#
 # Table structure for table `log_boards`
 #
 
@@ -1938,7 +1924,6 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('autoFixDatabase', '1'),
 	('allow_guestAccess', '1'),
 	('time_format', '{$default_time_format}'),
-	('number_format', '1234.00'),
 	('enableBBC', '1'),
 	('max_messageLength', '20000'),
 	('signature_settings', '1,300,0,0,0,0,0,0:'),
@@ -1994,7 +1979,7 @@ VALUES ('smfVersion', '{$wedge_version}'),
 	('modlog_enabled', '1'),
 	('postmod_enabled', '1'),
 	('last_mod_report_action', '0'),
-	('pruningOptions', '30,180,180,180,30,0'),
+	('pruningOptions', '30,180,180,30,0'),
 	('cache_enable', '1'),
 	('reg_verification', '1'),
 	('use_captcha_images', '1'),

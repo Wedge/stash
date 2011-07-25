@@ -180,7 +180,6 @@ function action_resort()
 				'calendar' => array('id_member'),
 				'collapsed_categories' => array('id_member'),
 				'log_actions' => array('id_member'),
-				'log_banned' => array('id_member'),
 				'log_boards' => array('id_member'),
 				'log_errors' => array('id_member'),
 				'log_mark_read' => array('id_member'),
