@@ -168,8 +168,8 @@ function initialize_inputs()
 		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 	}
 
-	$server_offset = mktime(0, 0, 0, 1, 1, 1970);
-	date_default_timezone_set('Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600));
+	// Make sure a timezone is set, it isn't always. But let's use the system derived one as much as possible.
+	date_default_timezone_set(@date_default_timezone_get());
 
 	// Force an integer step, defaulting to 0.
 	$_GET['step'] = (int) @$_GET['step'];
@@ -988,8 +988,7 @@ function DatabasePopulation()
 	// Setting a timezone is required.
 	if (!isset($modSettings['default_timezone']))
 	{
-		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
-		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);
+		$timezone_id = @date_default_timezone_get();
 		if (date_default_timezone_set($timezone_id))
 			wesql::insert('',
 				$db_prefix . 'settings',
