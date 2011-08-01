@@ -1399,6 +1399,7 @@ CREATE TABLE {$db_prefix}members (
   time_format varchar(80) NOT NULL default '',
   signature text NOT NULL,
   time_offset float NOT NULL default '0',
+  timezone varchar(50) NOT NULL default '',
   avatar varchar(255) NOT NULL default '',
   pm_email_notify tinyint(4) NOT NULL default '0',
   usertitle varchar(255) NOT NULL default '',

@@ -2209,7 +2209,7 @@ function template_forum_settings()
 
 	template_warning_divs();
 
-	$default_name = ucwords(preg_replace(array('~^.*://|\.[a-z]{2,4}(?:/|$)|[^a-z]~i', '~ +~'), array(' ', ' '), $boardurl));
+	$default_name = trim(ucwords(preg_replace(array('~^.*://|\.[a-z]{2,4}(?:/|$)|[^a-z]~i', '~ +~'), array(' ', ' '), $boardurl)));
 
 	echo '
 		<table class="w100 cp0 cs0" style="margin: 1em 0">
