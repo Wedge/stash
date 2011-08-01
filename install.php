@@ -12,7 +12,7 @@
  */
 
 $GLOBALS['current_wedge_version'] = '0.1';
-$GLOBALS['required_php_version'] = '5.2';
+$GLOBALS['required_php_version'] = '5.2.3';
 
 // Don't have PHP support, do you?
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none">
