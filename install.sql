@@ -636,7 +636,7 @@ CREATE TABLE {$db_prefix}boards (
   id_theme tinyint(4) unsigned NOT NULL default '0',
   override_theme tinyint(4) unsigned NOT NULL default '0',
   skin varchar(255) NOT NULL DEFAULT 'skins',
-  wedge_type enum('board','blog','site') NOT NULL DEFAULT 'board',
+  board_type enum('board','blog','site') NOT NULL DEFAULT 'board',
   unapproved_posts smallint(5) NOT NULL default '0',
   unapproved_topics smallint(5) NOT NULL default '0',
   redirect varchar(255) NOT NULL default '',
