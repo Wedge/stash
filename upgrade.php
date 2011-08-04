@@ -1903,13 +1903,11 @@ function convertSettingsToTheme()
 		'show_newsfader' => @$GLOBALS['shownewsfader'],
 		'display_recent_bar' => @$GLOBALS['Show_RecentBar'],
 		'show_member_bar' => @$GLOBALS['Show_MemberBar'],
-		'linktree_link' => @$GLOBALS['curposlinks'],
 		'show_profile_buttons' => @$GLOBALS['profilebutton'],
 		'show_board_desc' => @$GLOBALS['ShowBDescrip'],
 		'newsfader_time' => @$GLOBALS['fadertime'],
 		'use_image_buttons' => empty($GLOBALS['MenuType']) ? 1 : 0,
 		'enable_news' => @$GLOBALS['enable_news'],
-		'linktree_inline' => @$modSettings['enableInlineLinks'],
 		'return_to_post' => @$modSettings['returnToPost'],
 	);
 
