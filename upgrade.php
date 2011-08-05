@@ -3625,10 +3625,10 @@ function template_welcome_message()
 				if (currentVersion < window.smfVersion)
 					document.getElementById(\'version_warning\').style.display = \'\';
 			}
-			addLoadEvent(smfCurrentVersion);
+			$(window).load(smfCurrentVersion);
 
 			// This checks that the script file even exists!
-			if (typeof(smfSelectText) == \'undefined\')
+			if (typeof smfSelectText == \'undefined\')
 				document.getElementById(\'js_script_missing_error\').style.display = \'\';
 
 		// ]]></script>';

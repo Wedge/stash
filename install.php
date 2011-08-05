@@ -2014,7 +2014,7 @@ function template_welcome_message()
 			<div style="float: left; width: 2ex; font-size: 2em; color: red">!!</div>
 			<strong style="text-decoration: underline">', $txt['error_warning_notice'], '</strong><br>
 			<div style="padding-left: 6ex">
-				', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap">??</em>', '<em id="yourVersion" style="white-space: nowrap">' . $GLOBALS['current_wedge_version'] . '</em>'), '
+				', sprintf($txt['error_script_outdated'], '<em id="wedgeVersion" style="white-space: nowrap">??</em>', '<em id="yourVersion" style="white-space: nowrap">' . $GLOBALS['current_wedge_version'] . '</em>'), '
 			</div>
 		</div>';
 
@@ -2033,25 +2033,14 @@ function template_welcome_message()
 	// For the latest version stuff.
 	echo '
 		<script><!-- // --><![CDATA[
-			// Latest version?
-			function smfCurrentVersion()
-			{
-				var smfVer, yourVer;
-
-				if (!(\'smfVersion\' in window))
+			$(window).load(function () {
+				if (!("smfVersion" in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/Wedge\s?/g, \'\');
-
-				smfVer = document.getElementById("smfVersion");
-				yourVer = document.getElementById("yourVersion");
-				smfVer.innerHTML = window.smfVersion;
-
-				var currentVersion = yourVer.innerHTML;
-				if (currentVersion < window.smfVersion)
-					document.getElementById(\'version_warning\').style.display = \'\';
-			}
-			addLoadEvent(smfCurrentVersion);
+				window.smfVersion = window.smfVersion.replace(/Wedge\s?/g, "");
+				$("#wedgeVersion").html(window.smfVersion);
+				$("#version_warning").toggle($("#yourVersion").text() < window.smfVersion);
+			});
 		// ]]></script>';
 }
 
