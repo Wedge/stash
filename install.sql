@@ -1322,6 +1322,244 @@ CREATE TABLE {$db_prefix}mail_queue (
   KEY time_sent (time_sent),
   KEY mail_priority (priority, id_mail)
 ) ENGINE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `media_albums`
+#
+
+CREATE TABLE {$db_prefix}media_albums (
+  id_album int(11) NOT NULL auto_increment,
+  album_of int(11) NOT NULL default '0',
+  featured tinyint(1) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  description text NOT NULL,
+  master int(11) NOT NULL default '0',
+  icon int(11) NOT NULL default '0',
+  bigicon int(11) NOT NULL default '0',
+  passwd varchar(64) NOT NULL default '',
+  directory text NOT NULL,
+  parent int(11) NOT NULL default '0',
+  access varchar(255) NOT NULL default '',
+  access_write varchar(255) NOT NULL default '',
+  approved tinyint(1) NOT NULL default '0',
+  a_order int(11) NOT NULL default '0',
+  child_level int(11) NOT NULL default '0',
+  id_last_media int(11) NOT NULL default '0',
+  num_items int(11) NOT NULL default '0',
+  options text NOT NULL,
+  id_perm_profile int(11) NOT NULL default '0',
+  id_quota_profile int(11) NOT NULL default '0',
+  hidden tinyint(1) NOT NULL default '0',
+  allowed_members varchar(255) NOT NULL default '',
+  allowed_write varchar(255) NOT NULL default '',
+  denied_members varchar(255) NOT NULL default '',
+  denied_write varchar(255) NOT NULL default '',
+  id_topic int(11) NOT NULL default '0',
+  PRIMARY KEY (id_album),
+  KEY album_of (album_of),
+  KEY id_album_album_of_featured (id_album, album_of, featured)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_comments`
+#
+
+CREATE TABLE {$db_prefix}media_comments (
+  id_comment int(11) NOT NULL auto_increment,
+  id_member int(11) NOT NULL default '0',
+  id_media int(11) NOT NULL default '0',
+  id_album int(11) NOT NULL default '0',
+  message text NOT NULL,
+  posted_on int(11) NOT NULL default '0',
+  last_edited int(11) NOT NULL default '0',
+  last_edited_by int(11) NOT NULL default '0',
+  last_edited_name varchar(25) NOT NULL default '',
+  approved tinyint(1) NOT NULL default '0',
+  PRIMARY KEY (id_comment)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_fields`
+#
+
+CREATE TABLE {$db_prefix}media_fields (
+  id_field int(11) NOT NULL auto_increment,
+  name varchar(100) NOT NULL default '',
+  type varchar(20) NOT NULL default 'text',
+  options text NOT NULL,
+  required tinyint(1) NOT NULL default '0',
+  searchable tinyint(1) NOT NULL default '0',
+  description text NOT NULL,
+  bbc tinyint(1) NOT NULL default '0',
+  albums text NOT NULL,
+  PRIMARY KEY (id_field)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_field_data`
+#
+
+CREATE TABLE {$db_prefix}media_field_data (
+  id_field int(11) NOT NULL default '0',
+  id_media int(11) NOT NULL default '0',
+  value text NOT NULL,
+  PRIMARY KEY (id_field, id_media)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_files`
+#
+
+CREATE TABLE {$db_prefix}media_files (
+  id_file int(11) NOT NULL auto_increment,
+  filesize int(20) NOT NULL default '0',
+  filename text NOT NULL,
+  width int(4) NOT NULL default '1',
+  height int(4) NOT NULL default '1',
+  directory text NOT NULL,
+  id_album int(20) NOT NULL default '0',
+  transparency enum('','transparent','opaque') NOT NULL default '',
+  meta text NOT NULL,
+  PRIMARY KEY (id_file)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_items`
+#
+
+CREATE TABLE {$db_prefix}media_items (
+  id_media int(11) NOT NULL auto_increment,
+  id_member int(11) NOT NULL default '0',
+  member_name varchar(25) NOT NULL default '',
+  last_edited int(11) NOT NULL default '0',
+  last_edited_by int(11) NOT NULL default '0',
+  last_edited_name text NOT NULL,
+  id_file int(11) NOT NULL default '0',
+  id_thumb int(11) NOT NULL default '0',
+  id_preview int(11) NOT NULL default '0',
+  type varchar(10) NOT NULL default 'image',
+  album_id int(11) NOT NULL default '0',
+  rating int(11) NOT NULL default '0',
+  voters mediumint(9) NOT NULL default '0',
+  weighted float NOT NULL default '0',
+  title varchar(255) NOT NULL default '(No title)',
+  description text NOT NULL,
+  approved tinyint(1) NOT NULL default '0',
+  time_added int(11) NOT NULL default '0',
+  views int(11) NOT NULL default '0',
+  downloads int(11) NOT NULL default '0',
+  last_viewed tinyint(1) NOT NULL default '0',
+  keywords text NOT NULL,
+  embed_url text NOT NULL,
+  id_last_comment int(11) NOT NULL default '0',
+  log_last_access_time int(11) NOT NULL default '0',
+  num_comments int(11) NOT NULL default '0',
+  PRIMARY KEY (id_media)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_log_media`
+#
+
+CREATE TABLE {$db_prefix}media_log_media (
+  id_media int(11) NOT NULL default '0',
+  id_member int(11) NOT NULL default '0',
+  time int(11) NOT NULL default '0',
+  PRIMARY KEY (id_media, id_member)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_log_ratings`
+#
+
+CREATE TABLE {$db_prefix}media_log_ratings (
+  id_media int(11) NOT NULL default '0',
+  id_member int(11) NOT NULL default '0',
+  rating int(11) NOT NULL default '0',
+  time int(11) NOT NULL default '0',
+  PRIMARY KEY (id_media, id_member)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_perms`
+#
+
+CREATE TABLE {$db_prefix}media_perms (
+  id_group int(11) NOT NULL default '0',
+  id_profile int(11) NOT NULL default '0',
+  permission varchar(255) NOT NULL default '',
+  PRIMARY KEY (id_group, id_profile, permission)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_playlists`
+#
+
+CREATE TABLE {$db_prefix}media_playlists (
+  id_playlist int(11) unsigned NOT NULL auto_increment,
+  id_member int(10) unsigned NOT NULL default '0',
+  name varchar(80) NOT NULL default '',
+  description text NOT NULL,
+  views int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (id_playlist),
+  KEY name (name),
+  KEY views (views)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_playlist_data`
+#
+
+CREATE TABLE {$db_prefix}media_playlist_data (
+  id_playlist int(11) unsigned NOT NULL default '0',
+  id_media int(10) unsigned NOT NULL default '0',
+  play_order int(5) unsigned NOT NULL auto_increment,
+  description text NOT NULL,
+  PRIMARY KEY (id_playlist, play_order, id_media)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_quotas`
+#
+
+CREATE TABLE {$db_prefix}media_quotas (
+  id_profile int(11) NOT NULL default '0',
+  id_group int(11) NOT NULL default '0',
+  type varchar(10) NOT NULL default '',
+  quota int(11) NOT NULL default '0',
+  PRIMARY KEY (id_profile, id_group, type)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_settings`
+#
+
+CREATE TABLE {$db_prefix}media_settings (
+  name varchar(30) NOT NULL default '',
+  value text NOT NULL,
+  PRIMARY KEY (name)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `media_variables`
+#
+
+CREATE TABLE {$db_prefix}media_variables (
+  id int(11) NOT NULL auto_increment,
+  type varchar(15) NOT NULL default '',
+  val1 text NOT NULL,
+  val2 text NOT NULL,
+  val3 text NOT NULL,
+  val4 text NOT NULL,
+  val5 text NOT NULL,
+  val6 text NOT NULL,
+  val7 text NOT NULL,
+  val8 text NOT NULL,
+  val9 text NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM;
+# --------------------------------------------------------
 
 #
 # Table structure for table `membergroups`
