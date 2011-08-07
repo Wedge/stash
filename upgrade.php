@@ -1739,7 +1739,7 @@ function CleanupMods()
 // Delete the damn thing!
 function DeleteUpgrade()
 {
-	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $forum_version, $user_info, $maintenance;
+	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $user_info, $maintenance;
 
 	// Now it's nice to have some of the basic SMF source files.
 	if (!isset($_GET['ssi']) && !$command_line)
@@ -1787,7 +1787,6 @@ function DeleteUpgrade()
 	else
 	{
 		require_once($sourcedir . '/ScheduledTasks.php');
-		$forum_version = WEDGE_VERSION; // The variable is usually defined in index.php so let's just use the constant to do it for us.
 		scheduled_fetchRemoteFiles(); // Now go get those files!
 	}
 
@@ -1804,7 +1803,7 @@ function DeleteUpgrade()
 		),
 		array(
 			time(), 3, $user_info['id'], $command_line ? '127.0.0.1' : $user_info['ip'], 'upgrade',
-			0, 0, 0, serialize(array('version' => $forum_version, 'member' => $user_info['id'])),
+			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => $user_info['id'])),
 		),
 		array('id_action')
 	);
@@ -1835,7 +1834,7 @@ function DeleteUpgrade()
 // Just like the built-in one, but setup for CLI to not use themes.
 function cli_scheduled_fetchRemoteFiles()
 {
-	global $sourcedir, $txt, $language, $settings, $forum_version, $modSettings;
+	global $sourcedir, $txt, $language, $settings, $modSettings;
 
 	if (empty($modSettings['time_format']))
 		$modSettings['time_format'] = '%B %e, %Y, %I:%M:%S %p';
@@ -1850,13 +1849,11 @@ function cli_scheduled_fetchRemoteFiles()
 
 	$js_files = array();
 	while ($row = $smcFunc['db_fetch_assoc']($request))
-	{
 		$js_files[$row['id_file']] = array(
 			'filename' => $row['filename'],
 			'path' => $row['path'],
-			'parameters' => sprintf($row['parameters'], $language, urlencode($modSettings['time_format']), urlencode($forum_version)),
+			'parameters' => sprintf($row['parameters'], $language, urlencode($modSettings['time_format']), urlencode(WEDGE_VERSION)),
 		);
-	}
 	$smcFunc['db_free_result']($request);
 
 	// We're gonna need fetch_web_data() to pull this off.

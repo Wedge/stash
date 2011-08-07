@@ -1269,7 +1269,7 @@ function AdminAccount()
 function DeleteInstall()
 {
 	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename, $cachedir;
-	global $current_wedge_version, $sourcedir, $forum_version, $modSettings, $user_info;
+	global $current_wedge_version, $sourcedir, $modSettings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['sub_template'] = 'delete_install';
@@ -1381,13 +1381,13 @@ function DeleteInstall()
 	// Sanity check that they loaded earlier!
 	if (isset($modSettings['recycle_board']))
 	{
-		$forum_version = $current_wedge_version; // The variable is usually defined in index.php so let's just use our variable to do it for us.
+		define('WEDGE_VERSION', $current_wedge_version); // The variable is usually defined in index.php so let's just use our variable to do it for us.
 		scheduled_fetchRemoteFiles(); // Now go get those files!
 
 		// We've just installed!
 		$user_info['ip'] = $_SERVER['REMOTE_ADDR'];
 		$user_info['id'] = isset($incontext['member_id']) ? $incontext['member_id'] : 0;
-		logAction('install', array('version' => $forum_version), 'admin');
+		logAction('install', array('version' => WEDGE_VERSION), 'admin');
 	}
 
 	// Check if we need some stupid MySQL fix.
@@ -2001,7 +2001,7 @@ function template_install_below()
 </html>';
 }
 
-// Welcome them to the wonderful world of Wedge!
+// Welcome winners to the wonderful world of Wedge!
 function template_welcome_message()
 {
 	global $incontext, $installurl, $txt;
@@ -2037,7 +2037,6 @@ function template_welcome_message()
 				if (!("smfVersion" in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/Wedge\s?/g, "");
 				$("#wedgeVersion").html(window.smfVersion);
 				$("#version_warning").toggle($("#yourVersion").text() < window.smfVersion);
 			});

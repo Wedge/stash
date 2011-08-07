@@ -150,7 +150,7 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 }
 // Otherwise we split the data up.
 else
-	list($mods, $mod_site['smf_versions'], $context['cust_packs']) = $data;
+	list ($mods, $mod_site['smf_versions'], $context['cust_packs']) = $data;
 
 foreach ($mods as $mod)
 	echo '

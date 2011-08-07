@@ -21,7 +21,7 @@ header('Content-Type: text/javascript');
 
 if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 {
-	list($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
+	list ($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
 	if (strtotime($modified_since) >= filemtime(__FILE__))
 	{
 		header('HTTP/1.1 304 Not Modified');
@@ -29,6 +29,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	}
 }
 
-echo 'window.smfVersion = "Wedge 0.1";';
+echo 'window.smfVersion = "0.1";';
 
 ?>

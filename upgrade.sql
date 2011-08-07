@@ -1415,7 +1415,7 @@ ADD line mediumint(8) unsigned NOT NULL default '0';
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}log_errors");
-list($totalActions) = mysql_fetch_row($request);
+list ($totalActions) = mysql_fetch_row($request);
 mysql_free_result($request);
 
 $_GET['m'] = !empty($_GET['m']) ? (int) $_GET['m'] : '0';
@@ -1907,7 +1907,7 @@ ADD KEY id_log (id_log);
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}log_actions");
-list($totalActions) = mysql_fetch_row($request);
+list ($totalActions) = mysql_fetch_row($request);
 mysql_free_result($request);
 
 $_GET['m'] = !empty($_GET['m']) ? (int) $_GET['m'] : '0';
@@ -1955,7 +1955,7 @@ while ($_GET['m'] < $totalActions)
 					WHERE id_topic=$topic_id
 					LIMIT 1");
 				if (mysql_num_rows($trequest))
-					list($board_id) = mysql_fetch_row($trequest);
+					list ($board_id) = mysql_fetch_row($trequest);
 				mysql_free_result($trequest);
 			}
 		}
@@ -1974,7 +1974,7 @@ while ($_GET['m'] < $totalActions)
 					WHERE id_msg=$msg_id
 					LIMIT 1");
 				if (mysql_num_rows($trequest))
-					list($board_id, $topic_id) = mysql_fetch_row($trequest);
+					list ($board_id, $topic_id) = mysql_fetch_row($trequest);
 				mysql_free_result($trequest);
 			}
 		}

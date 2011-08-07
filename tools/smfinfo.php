@@ -502,7 +502,7 @@ function show_password_form()
 
 function show_system_info()
 {
-	global $txt, $context, $smfInfo, $modSettings, $forum_version;
+	global $txt, $context, $smfInfo, $modSettings;
 	global $db_persist, $maintenance, $cookiename, $db_last_error, $db_show_debug;
 
 	get_database_version();
@@ -514,7 +514,7 @@ function show_system_info()
 				<table border="0" width="100%" cellpadding="2" cellspacing="2">
 					<tr>
 						<td width="25%"><strong>', $txt['smf_version'], '</strong></td>
-						<td>', $forum_version, '</td>
+						<td>', WEDGE_VERSION, '</td>
 					</tr>
 					<tr>
 						<td valign="top"><strong>', $txt['smf_relevant'], '</strong></td>
@@ -621,7 +621,7 @@ function show_detailed_file()
 							<td width="50%"><strong>', $txt['file_version'], '</strong></td><td width="25%"><strong>', $txt['your_version'], '</strong></td><td width="25%"><strong>', $txt['current_version'], '</strong></td>
 						</tr>
 						<tr>
-							<td>', $txt['smf_version'], '</td><td><em id="yourSMF">SMF ', $context['forum_version'], '</em></td><td><em id="currentSMF">??</em></td>
+							<td>', $txt['smf_version'], '</td><td><em id="yourWedge">Wedge ', $context['forum_version'], '</em></td><td><em id="currentWedge">??</em></td>
 						</tr>';
 
 	// Now list all the source file versions, starting with the overall version (if all match!).
@@ -1204,12 +1204,12 @@ function show_status()
 
 function show_footer()
 {
-	global $context, $boardurl, $forum_copyright, $forum_version;
+	global $context, $boardurl, $forum_copyright;
 
 	echo '
 			</div>
 			<div style="clear: left">
-				', sprintf($forum_copyright, $forum_version),' | <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/">CSS</a>
+				', sprintf($forum_copyright, WEDGE_VERSION),' | <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/">CSS</a>
 			</div>
 		</div>';
 
@@ -1369,12 +1369,12 @@ function show_footer()
 
 function initialize()
 {
-	global $txt, $context, $smfInfo, $sourcedir, $forum_version, $db_show_debug, $db_last_error, $modSettings;
+	global $txt, $context, $smfInfo, $sourcedir, $db_show_debug, $db_last_error, $modSettings;
 
 	// Set this to true so we get the correct forum value
 	$ssi_gzip = true;
 
-	$forum_version = get_file_versions(true);
+	define('WEDGE_VERSION', get_file_versions(true));
 
 	$smfInfo = !empty($modSettings['smfInfo']) ? $modSettings['smfInfo'] : '';
 
@@ -1434,7 +1434,7 @@ function get_file_versions($core = false)
 	fclose($fp);
 
 	// The version looks rougly like... that.
-	if (preg_match('~\$forum_version\s*=\s*\'Wedge (.+?)\'~i', $header, $match) == 1)
+	if (preg_match('~\define\(\'WEDGE_VERSION\',\s*\'(.+?)\'\)~i', $header, $match) == 1)
 		$context['forum_version'] = $match[1];
 	// Not found!  This is bad.
 	else
@@ -1616,7 +1616,7 @@ function get_smf_setting($val, $rec = '')
 
 function generate_password()
 {
-	global $sourcedir, $smfInfo, $forum_version, $boardurl;
+	global $sourcedir, $smfInfo, $boardurl;
 
 	require_once($sourcedir . '/Subs-Admin.php');
 

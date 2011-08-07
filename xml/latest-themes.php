@@ -147,7 +147,7 @@ if (($data = cache_get_data('site_latest_themes', 3600)) == null)
 		cache_put_data('site_latest_themes', array($themes, $featured, $latest_ids, $random_id), 86400);
 }
 else
-	list($themes, $featured, $latest_ids, $random_id) = $data;
+	list ($themes, $featured, $latest_ids, $random_id) = $data;
 
 header('Content-Type: text/javascript');
 echo '
