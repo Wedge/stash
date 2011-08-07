@@ -397,7 +397,7 @@ function show_header()
 				var oldOnload = window.onload;
 
 				// Was the old event really an event?
-				if (typeof(oldOnload) != \'function\')
+				if (typeof oldOnload != \'function\')
 				{
 					// Since we don\'t have anything at this point just add it stright in.
 					window.onload = func;
@@ -444,7 +444,7 @@ function show_header()
 			{
 				var smfVer, yourVer;
 
-				if (typeof(window.smfInfoVersion) != "string")
+				if (typeof window.smfInfoVersion != "string")
 					return;
 
 				smfVer = document.getElementById("smfInfoVersion");
@@ -457,7 +457,7 @@ function show_header()
 					setInnerHTML(yourVer, "<span style=\"color: red;\">" + currentVersion + "</span>");
 			}
 			var oldonload;
-			if (typeof(window.onload) != "undefined")
+			if (typeof window.onload != "undefined")
 				oldonload = window.onload;
 
 			window.onload = function ()
@@ -1247,10 +1247,10 @@ function show_footer()
 				if (document.getElementById(\'Templates\'))
 					document.getElementById(\'Templates\').style.display = \'none\';
 
-				if (!(\'smfVersions\' in window))
-					window.smfVersions = {};
+				if (!(\'weVersions\' in window))
+					window.weVersions = {};
 
-				for (var filename in window.smfVersions)
+				for (var filename in window.weVersions)
 				{
 					if (!document.getElementById(\'current\' + filename))
 						continue;
@@ -1265,23 +1265,23 @@ function show_footer()
 							break;
 						}
 
-					if (typeof(versionType) != \'undefined\')
+					if (typeof versionType != \'undefined\')
 					{
 						if ((highYour[versionType] < yourVersion || highYour[versionType] == \'??\') && !lowVersion[versionType])
 							highYour[versionType] = yourVersion;
-						if (highCurrent[versionType] < smfVersions[filename] || highCurrent[versionType] == \'??\')
-							highCurrent[versionType] = smfVersions[filename];
+						if (highCurrent[versionType] < weVersions[filename] || highCurrent[versionType] == \'??\')
+							highCurrent[versionType] = weVersions[filename];
 
-						if (yourVersion < smfVersions[filename])
+						if (yourVersion < weVersions[filename])
 						{
 							lowVersion[versionType] = yourVersion;
 							document.getElementById(\'your\' + filename).style.color = \'red\';
 						}
 					}
-					else if (yourVersion < smfVersions[filename])
+					else if (yourVersion < weVersions[filename])
 						lowVersion[versionType] = yourVersion;
 
-					document.getElementById(\'current\' + filename).innerHTML = smfVersions[filename];
+					document.getElementById(\'current\' + filename).innerHTML = weVersions[filename];
 					document.getElementById(\'your\' + filename).innerHTML = yourVersion;
 				}
 

@@ -21,7 +21,7 @@
 		// Get the releases!
 		$result = $smcFunc['db_query']('', "
 			SELECT ver.ver_name, ver.file_name, ver.public, IFNULL(pkg.access,1) AS access
-			FROM {$customize_prefix}smfVersions AS ver
+			FROM {$customize_prefix}weVersions AS ver
 			LEFT JOIN {$download_prefix}packages AS pkg ON ( pkg.filename LIKE CONCAT( ver.file_name, 'install', '%' ) )
 			WHERE obsolete !=1
 			ORDER BY display_order DESC", __FILE__, __LINE__);
@@ -38,7 +38,7 @@
 		// Finally get the languages!
 		$result = $smcFunc['db_query']('', $query = "
 			SELECT ver.ver_name, ver.file_name, pkg.filename
-			FROM customize.smfVersions AS ver
+			FROM customize.weVersions AS ver
 			LEFT JOIN downloads.download_packages AS pkg ON ( pkg.filename LIKE CONCAT( ver.file_name, '%' ) AND pkg.release_type =1 )
 			WHERE obsolete != 1
 				AND public != 0

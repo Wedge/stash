@@ -76,7 +76,7 @@ echo '
 */
 
 /*
-if (false && window.smfVersion < "1.0") // !!!
+if (false && window.weVersion < "1.0") // !!!
 {
 	window.smfUpdateNotice = 'Wedge 1.0 Final has now been released. To take advantage of the improvements available in Wedge 1.0, we recommend upgrading as soon as possible.';
 	window.smfUpdateCritical = false;

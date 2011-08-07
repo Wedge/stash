@@ -12,7 +12,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	}
 }
 
-?>window.smfVersions = {
+?>window.weVersions = {
 	'Wedge': '0.1',
 
 	'SourcesActivate.php': '0.1',

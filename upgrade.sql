@@ -553,7 +553,7 @@ upgrade_query("
 
 ---# Enable cache if upgrading from 1.1 and lower.
 ---{
-if (isset($modSettings['smfVersion']) && $modSettings['smfVersion'] <= '2.0 Beta 1')
+if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '2.0 Beta 1')
 {
 	$request = upgrade_query("
 		SELECT value
@@ -843,14 +843,14 @@ CHANGE COLUMN default_value default_value varchar(255) NOT NULL default '';
 
 ---# Enhancing privacy settings for custom fields.
 ---{
-if (isset($modSettings['smfVersion']) && $modSettings['smfVersion'] <= '2.0 Beta 1')
+if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '2.0 Beta 1')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
 	SET private = 2
 	WHERE private = 1");
 }
-if (isset($modSettings['smfVersion']) && $modSettings['smfVersion'] < '2.0 Beta 4')
+if (isset($modSettings['weVersion']) && $modSettings['weVersion'] < '2.0 Beta 4')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
@@ -862,7 +862,7 @@ upgrade_query("
 
 ---# Checking display fields setup correctly..
 ---{
-if (isset($modSettings['smfVersion'], $modSettings['displayFields']) && $modSettings['smfVersion'] <= '2.0 Beta 1' && @unserialize($modSettings['displayFields']) == false)
+if (isset($modSettings['weVersion'], $modSettings['displayFields']) && $modSettings['weVersion'] <= '2.0 Beta 1' && @unserialize($modSettings['displayFields']) == false)
 {
 $request = upgrade_query("
 	SELECT col_name, field_name, bbc
@@ -1046,7 +1046,7 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_reported_comments (
 ---# Adding moderator center permissions...
 ---{
 // Don't do this twice!
-if (@$modSettings['smfVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '2.0')
 {
 	// Try find people who probably should see the moderation center.
 	$request = upgrade_query("
@@ -1207,7 +1207,7 @@ WHERE attachment_type = 3
 ---# Calculating attachment mime types.
 ---{
 // Don't ever bother doing this twice.
-if (@$modSettings['smfVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '2.0')
 {
 	$request = upgrade_query("
 		SELECT MAX(id_attach)
@@ -1374,7 +1374,7 @@ ADD unapproved_topics smallint(5) NOT NULL default '0';
 ---# Adding post moderation permissions...
 ---{
 // We *cannot* do this twice!
-if (@$modSettings['smfVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '2.0')
 {
 	// Anyone who can currently edit posts we assume can approve them...
 	$request = upgrade_query("
@@ -2071,7 +2071,7 @@ ADD COLUMN is_new tinyint(3) NOT NULL default '0';
 ---# Set the new status to be correct....
 ---{
 // Don't do this twice!
-if (@$modSettings['smfVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '2.0')
 {
 	// Set all unread messages as new.
 	upgrade_query("

@@ -846,7 +846,7 @@ function DatabasePopulation()
 
 		// Do they match? If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
-		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != $GLOBALS['current_wedge_version'])
+		if (!isset($modSettings['weVersion']) || $modSettings['weVersion'] != $GLOBALS['current_wedge_version'])
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
@@ -2034,11 +2034,11 @@ function template_welcome_message()
 	echo '
 		<script><!-- // --><![CDATA[
 			$(window).load(function () {
-				if (!("smfVersion" in window))
+				if (!("weVersion" in window))
 					return;
 
-				$("#wedgeVersion").html(window.smfVersion);
-				$("#version_warning").toggle($("#yourVersion").text() < window.smfVersion);
+				$("#wedgeVersion").html(window.weVersion);
+				$("#version_warning").toggle($("#yourVersion").text() < window.weVersion);
 			});
 		// ]]></script>';
 }

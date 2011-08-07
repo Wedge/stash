@@ -2,15 +2,15 @@
 
 /*	To make this work, we just need to do a few things.
 
-	- check window.smfThemes_writable. If it's false, they can't install
+	- check window.weThemes_writable. If it's false, they can't install
 	  anything, just look.
 	- load basic information for several themes, such that they can
 	  "navigate" around to look at them in the panel.
 	- remember that we need to have control on the color scheme
 	  (white on black, etc.); we've got the element, so we can change it.
 	- the url to install is:
-window.smfForum_scripturl + '?action=theme=sa=install;theme_gz=' + url_to_package + ';sesc=' + window.smfForum_sessionid
-	- only packages from the .simplemachines.org domain will be accepted.
+window.we_script + '?action=theme=sa=install;theme_gz=' + url_to_package + ';' + window.weSessionQuery
+	- only packages from the .wedge.org domain will be accepted.
 	- we've got their language in $_GET['language'].
 
 */
@@ -172,9 +172,9 @@ var smf_latestThemes = [', implode(', ', $latest_ids), '];';
 
 function smf_themesMoreInfo(id)
 {
-	window.smfLatestThemes_temp = document.getElementById("smfLatestThemesWindow").innerHTML;
-	document.getElementById("smfLatestThemesWindow").style.overflow = 'auto';
-	document.getElementById('smfLatestThemesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + smf_themeInfo[id].name + '</h3>\
+	window.weLatestThemes_temp = document.getElementById("weLatestThemesWindow").innerHTML;
+	document.getElementById("weLatestThemesWindow").style.overflow = 'auto';
+	document.getElementById('weLatestThemesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + smf_themeInfo[id].name + '</h3>\
 		<h4 style="margin: 0;padding: 4px;"><a href="http://custom.simplemachines.org/themes/index.php?lemma=' + id + '">View Theme Now!</a></h4>\
 		<div style="overflow: auto;">\
 			<img src="http://custom.simplemachines.org/themes/index.php?action=download;lemma='+id+';image=thumb" alt="" style="float: right; margin: 10px;" />\
@@ -185,54 +185,54 @@ function smf_themesMoreInfo(id)
 
 function smf_themesBack()
 {
-	document.getElementById("smfLatestThemesWindow").style.overflow = '';
-	document.getElementById("smfLatestThemesWindow").innerHTML = window.smfLatestThemes_temp;
-	window.scrollTo(0, findTop(document.getElementById("smfLatestThemesWindow")) - 10);
+	document.getElementById("weLatestThemesWindow").style.overflow = '';
+	document.getElementById("weLatestThemesWindow").innerHTML = window.weLatestThemes_temp;
+	window.scrollTo(0, findTop(document.getElementById("weLatestThemesWindow")) - 10);
 }
 
-window.smfLatestThemes = '\
-	<div id="smfLatestThemesWindow">\
+window.weLatestThemes = '\
+	<div id="weLatestThemesWindow">\
 		<div>\
 			<img src="http://www.simplemachines.org/smf/images/themes.png" width="102" height="98" style="float: right; margin: 0 0 10px 10px;" alt="(package)" />\
 			<ul style="list-style: none; padding: 0; margin: 0 0 0 5px;">';
 for(var i=0; i < smf_latestThemes.length; i++)
 {
 	var id_theme = smf_latestThemes[i];
-	window.smfLatestThemes += '\
+	window.weLatestThemes += '\
 				<li style="list-style: none;"><a href="javascript:smf_themesMoreInfo(' + id_theme + ');void(0);">' + smf_themeInfo[id_theme].name + ' by ' + smf_themeInfo[id_theme].author + '</a></li>';
 }
 
-window.smfLatestThemes += '\
+window.weLatestThemes += '\
 			</ul>';
 if (smf_featured !=0 || smf_random != 0)
 {
 
 	if (smf_featured != 0)
-		window.smfLatestThemes += '\
+		window.weLatestThemes += '\
 				<h4 style="padding: 4px 4px 0 4px; margin: 0;">Featured Theme</h4>\
 				<p style="padding: 0 4px; margin: 0;">\
 					<a href="javascript:smf_themesMoreInfo('+smf_featured+');void(0);">'+smf_themeInfo[smf_featured].name + ' by ' + smf_themeInfo[smf_featured].author+'</a>\
 				</p>';
 	if (smf_random != 0)
-		window.smfLatestThemes += '\
+		window.weLatestThemes += '\
 				<h4 style="padding: 4px 4px 0 4px;margin: 0;">Theme of the Moment</h4>\
 				<p style="padding: 0 4px; margin: 0;">\
 					<a href="javascript:smf_themesMoreInfo('+smf_random+');void(0);">'+smf_themeInfo[smf_random].name + ' by ' + smf_themeInfo[smf_random].author+'</a>\
 				</p>';
 }
-window.smfLatestThemes += '\
+window.weLatestThemes += '\
 		</div>\
 	</div>';
 
 function findTop(el)
 {
-	if (typeof(el.tagName) == "undefined")
+	if (typeof el.tagName == "undefined")
 		return 0;
 
 	var skipMe = in_array(el.tagName.toLowerCase(), el.parentNode ? ["tr", "tbody", "form"] : []);
 	var coordsParent = el.parentNode ? "parentNode" : "offsetParent";
 
-	if (el[coordsParent] == null || typeof(el[coordsParent].offsetTop) == "undefined")
+	if (el[coordsParent] == null || typeof el[coordsParent].offsetTop == "undefined")
 		return skipMe ? 0 : el.offsetTop;
 	else
 		return (skipMe ? 0 : el.offsetTop) + findTop(el[coordsParent]);

@@ -6,15 +6,15 @@
 
 	- load basic information for several packages, such that they can
 	  "navigate" around to look at them in the panel.
-	- give a better offering by checking window.smfInstalledPackages
+	- give a better offering by checking window.weInstalledPackages
 	  which holds the ids of all installed packages.
 	- remember that we need to have control on the color scheme
 	  (white on black, etc.); we've got the element, so we can change it.
 	- the url to install is:
-window.smfForum_scripturl . '?action=pgdownload;auto;package=' + url_to_package + ';sesc=' + window.smfForum_sessionid
+window.we_script . '?action=pgdownload;auto;package=' + url_to_package + ';' + window.weSessionQuery
 	- only packages from the .simplemachines.org domain will be accepted.
-	- we've got their langauge in $_GET['language'].
-	- we know their forum version in window.smfVersion.
+	- we've got their language in $_GET['language'].
+	- we know their forum version in window.weVersion.
 
 */
 
@@ -57,12 +57,12 @@ if (($mod_site['smf_versions'] = cache_get_data('site_smf_versions', 86400)) == 
 // This is javascript and nothing else.
 header('Content-Type: text/javascript');
 ?>
-if (typeof(window.smfForum_sessionvar) == "undefined")
+if (typeof window.smfForum_sessionvar == "undefined")
 	window.smfForum_sessionvar = 'sesc';
 
-// if (typeof(window.smfVersion) != "undefined" && window.smfVersion == "1.0")
-//	window.smfLatestPackages = 'A few small problems have been found in 1.0. You can install <a href="' + window.smfForum_scripturl + actionurl + 'http://custom.simplemachines.org/mods/downloads/smf_1-0-1_update.tar.gz;' + window.smfForum_sessionvar + '=' + window.smfForum_sessionid + '">this patch (click here to install)</a> to easily update yourself to the latest version.<br /><br />If you have any problems applying it, you can use the version posted on the downloads page - although, any modifications you have installed will need to be uninstalled.  Please post on the <a href="http://www.simplemachines.org/community/index.php">forum</a> if you need more help.';
-// else if (typeof(window.wedgeVersion) == "undefined")
+// if (typeof window.weVersion != "undefined" && window.weVersion == "1.0")
+//	window.weLatestPackages = 'A few small problems have been found in 1.0. You can install <a href="' + window.smfForum_scripturl + actionurl + 'http://custom.simplemachines.org/mods/downloads/smf_1-0-1_update.tar.gz;' + window.smfForum_sessionvar + '=' + window.smfForum_sessionid + '">this patch (click here to install)</a> to easily update yourself to the latest version.<br /><br />If you have any problems applying it, you can use the version posted on the downloads page - although, any modifications you have installed will need to be uninstalled.  Please post on the <a href="http://www.simplemachines.org/community/index.php">forum</a> if you need more help.';
+// else if (typeof window.wedgeVersion == "undefined")
 //	window.wedgeLatestPackages = 'For the package manager to function properly, please upgrade to the latest version of Wedge.';
 // else
 {
@@ -167,9 +167,9 @@ var smf_latestModifications = [<?php echo implode(', ', $context['cust_packs']['
 
 function smf_packagesMoreInfo(id)
 {
-	window.smfLatestPackages_temp = document.getElementById("smfLatestPackagesWindow").innerHTML;
+	window.weLatestPackages_temp = document.getElementById("weLatestPackagesWindow").innerHTML;
 
-	document.getElementById('smfLatestPackagesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + smf_modificationInfo[id].name + '</h3>\
+	document.getElementById('weLatestPackagesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + smf_modificationInfo[id].name + '</h3>\
 		<h4 style="padding: 4px; margin: 0;"><a href="' + window.smfForum_scripturl + actionurl + 'http://custom.simplemachines.org/mods/downloads/' + id + '/' + smf_modificationInfo[id].file + ';' + window.smfForum_sessionvar + '=' + window.smfForum_sessionid + '">Install Now!</a></h4>\
 		<div style="margin: 4px;">' + smf_modificationInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
 		<div class="title" style="padding: 4px; margin: 0"><a href="javascript:smf_packagesBack();void(0);">(go back)</a></div>');
@@ -177,12 +177,12 @@ function smf_packagesMoreInfo(id)
 
 function smf_packagesBack()
 {
-	document.getElementById('smfLatestPackagesWindow').innerHTML = window.smfLatestPackages_temp;
-	window.scrollTo(0, findTop(document.getElementById("smfLatestPackagesWindow")) - 10);
+	document.getElementById('weLatestPackagesWindow').innerHTML = window.weLatestPackages_temp;
+	window.scrollTo(0, findTop(document.getElementById("weLatestPackagesWindow")) - 10);
 }
 
-window.smfLatestPackages = '\
-	<div id="smfLatestPackagesWindow"style="overflow: auto;">\
+window.weLatestPackages = '\
+	<div id="weLatestPackagesWindow"style="overflow: auto;">\
 		<h3 style="margin: 0; padding: 4px;">New Packages:</h3>\
 		<img src="http://www.simplemachines.org/smf/images/package.png" width="102" height="98" style="float: right; margin: 4px;" alt="(package)" />\
 		<ul style="list-style: none; margin-top: 3px; padding: 0 4px;">';
@@ -191,31 +191,31 @@ for (var i = 0; i < smf_latestModifications.length; i++)
 {
 	var id_mod = smf_latestModifications[i];
 
-	window.smfLatestPackages += '<li><a href="javascript:smf_packagesMoreInfo(' + id_mod + ');void(0);">' + smf_modificationInfo[id_mod].name + '</a></li>';
+	window.weLatestPackages += '<li><a href="javascript:smf_packagesMoreInfo(' + id_mod + ');void(0);">' + smf_modificationInfo[id_mod].name + '</a></li>';
 }
 
-window.smfLatestPackages += '\
+window.weLatestPackages += '\
 		</ul>';
 
-window.smfLatestPackages += '\
+window.weLatestPackages += '\
 		<h3 style="margin: 0; padding: 4px;">Package of the Moment:</h3>\
 		<div style="padding: 0 4px;">\
 			<a href="javascript:smf_packagesMoreInfo(<?php echo $context['cust_packs']['moment_id']; ?>);void(0);"><?php echo addcslashes($mods[$context['cust_packs']['moment_id']]['name'], "'"), ' ', addcslashes($mods[$context['cust_packs']['moment_id']]['version'], "'"); ?></a>\
 		</div>';
 
-window.smfLatestPackages += '\
+window.weLatestPackages += '\
 	</div>';
 }
 
 function findTop(el)
 {
-	if (typeof(el.tagName) == "undefined")
+	if (typeof el.tagName == "undefined")
 		return 0;
 
 	var skipMe = in_array(el.tagName.toLowerCase(), el.parentNode ? ["tr", "tbody", "form"] : []);
 	var coordsParent = el.parentNode ? "parentNode" : "offsetParent";
 
-	if (el[coordsParent] == null || typeof(el[coordsParent].offsetTop) == "undefined")
+	if (el[coordsParent] == null || typeof el[coordsParent].offsetTop == "undefined")
 		return skipMe ? 0 : el.offsetTop;
 	else
 		return (skipMe ? 0 : el.offsetTop) + findTop(el[coordsParent]);

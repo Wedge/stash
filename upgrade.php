@@ -1057,7 +1057,7 @@ function checkLogin()
 
 		// Note down the version we are coming from.
 		if (empty($upcontext['user']['version']))
-			$upcontext['user']['version'] = $modSettings['smfVersion'];
+			$upcontext['user']['version'] = $modSettings['weVersion'];
 
 		// Didn't get anywhere?
 		if ((empty($sha_passwd) || $password != $sha_passwd) && empty($upcontext['username_incorrect']) && !$disable_security)
@@ -1349,7 +1349,7 @@ function DatabaseChanges()
 	{
 		$upcontext['file_count'] = 0;
 		foreach ($files as $file)
-			if ($modSettings['smfVersion'] < $file[1])
+			if ($modSettings['weVersion'] < $file[1])
 				$upcontext['file_count']++;
 	}
 
@@ -1366,7 +1366,7 @@ function DatabaseChanges()
 			$upcontext['cur_file_num']++;
 			$upcontext['cur_file_name'] = $file[0];
 			// Do we actually need to do this still?
-			if ($modSettings['smfVersion'] < $file[1])
+			if ($modSettings['weVersion'] < $file[1])
 			{
 				$nextFile = parse_sql(dirname(__FILE__) . '/' . $file[0]);
 				if ($nextFile)
@@ -1375,11 +1375,11 @@ function DatabaseChanges()
 					$smcFunc['db_insert']('replace',
 						$db_prefix . 'settings',
 						array('variable' => 'string', 'value' => 'string'),
-						array('smfVersion', $file[2]),
+						array('weVersion', $file[2]),
 						array('variable')
 					);
 
-					$modSettings['smfVersion'] = $file[2];
+					$modSettings['weVersion'] = $file[2];
 				}
 
 				// If this is XML we only do this stuff once.
@@ -3609,17 +3609,15 @@ function template_welcome_message()
 			{
 				var smfVer, yourVer;
 
-				if (!(\'smfVersion\' in window))
+				if (!(\'weVersion\' in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/SMF\s?/g, \'\');
-
-				smfVer = document.getElementById(\'smfVersion\');
+				smfVer = document.getElementById(\'wedgeVersion\');
 				yourVer = document.getElementById(\'yourVersion\');
-				smfVer.innerHTML = window.smfVersion;
+				smfVer.innerHTML = window.weVersion;
 
 				var currentVersion = yourVer.innerHTML;
-				if (currentVersion < window.smfVersion)
+				if (currentVersion < window.weVersion)
 					document.getElementById(\'version_warning\').style.display = \'\';
 			}
 			$(window).load(smfCurrentVersion);
