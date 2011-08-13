@@ -2313,13 +2313,13 @@ VALUES (':)', 'smiley.gif', '{$default_smiley_smiley}', 0, 0),
 	(':-\\', 'undecided.gif', '{$default_undecided_smiley}', 13, 0),
 	(':-*', 'kiss.gif', '{$default_kiss_smiley}', 14, 0),
 	(':\'(', 'cry.gif', '{$default_cry_smiley}', 15, 0),
-	('>:D', 'evil.gif', '{$default_evil_smiley}', 16, 1),
-	('^-^', 'azn.gif', '{$default_azn_smiley}', 17, 1),
-	('O0', 'afro.gif', '{$default_afro_smiley}', 18, 1),
-	(':))', 'laugh.gif', '{$default_laugh_smiley}', 19, 1),
-	('C:-)', 'police.gif', '{$default_police_smiley}', 20, 1),
-	('O:-)', 'angel.gif', '{$default_angel_smiley}', 21, 1),
-	(':edit:', 'edit.gif', '{$default_edit_smiley}', 22, 1);
+	('>:D', 'evil.gif', '{$default_evil_smiley}', 16, 2),
+	('^-^', 'azn.gif', '{$default_azn_smiley}', 17, 2),
+	('O0', 'afro.gif', '{$default_afro_smiley}', 18, 2),
+	(':))', 'laugh.gif', '{$default_laugh_smiley}', 19, 2),
+	('C:-)', 'police.gif', '{$default_police_smiley}', 20, 2),
+	('O:-)', 'angel.gif', '{$default_angel_smiley}', 21, 2),
+	(':edit:', 'edit.gif', '{$default_edit_smiley}', 22, 2);
 # --------------------------------------------------------
 
 #

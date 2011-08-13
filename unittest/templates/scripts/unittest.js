@@ -74,7 +74,7 @@ UnitTest.prototype.checkTest = function()
 			if (this.iThreadsOpen == 0 || in_array(aTestParts[0], this.aMultiThreadedTests))
 			{
 				var oImage = document.getElementById('img_placeholder_' + aTestParts[0] + '-' + aTestParts[1]);
-				oImage.innerHTML = '<img src="' + we_images_url + '/icons/field_check.gif" alt="" />';
+				oImage.innerHTML = '<img src="' + we_theme_url + '/images/icons/field_check.gif" alt="" />';
 
 				this.tmpMethod = getXMLDocument;
 				this.tmpMethod(we_script + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1] + ';xml', this.onTestReady);
@@ -107,12 +107,12 @@ UnitTest.prototype.onTestReady = function (oXmlDoc)
 
 		if (bResult)
 		{
-			oImage.innerHTML = '<img src="' + we_images_url + '/icons/field_valid.gif" alt="" />';
+			oImage.innerHTML = '<img src="' + we_theme_url + '/images/icons/field_valid.gif" alt="" />';
 			oErrorDiv.style.display = 'none';
 		}
 		else
 		{
-			oImage.innerHTML = '<img src="' + we_images_url + '/icons/field_invalid.gif" alt="" />';
+			oImage.innerHTML = '<img src="' + we_theme_url + '/images/icons/field_invalid.gif" alt="" />';
 
 			oErrorDiv.style.display = 'block';
 			var sError = '';
