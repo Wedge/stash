@@ -149,7 +149,7 @@ function action_resort()
 {
 	global $db_prefix;
 
-	smc_compat_database();
+	we_compat_database();
 
 	$tables = array(
 		'topics' => array(
@@ -585,7 +585,7 @@ function protectTimeOut($request)
 }
 
 // Compat mode!
-function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_options = array())
+function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $db_options = array())
 {
 	global $mysql_set_mod, $sourcedir, $db_connection, $db_prefix;
 
@@ -812,7 +812,7 @@ function smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pre
 	return $db_connection;
 }
 
-function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
+function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
 	global $db_connection, $modSettings;
 
@@ -845,10 +845,10 @@ function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 		if (!file_exists($sourcedir . '/Subs-Database.php'))
 		{
 			// First try a persistent connection.
-			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
+			$db_connection = we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)
-				$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
+				$db_connection = we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 		}
 		else
 		{
@@ -861,10 +861,10 @@ function smc_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	}
 	else
 	{
-		$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
+		$db_connection = we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 		if (!$db_connection)
-			$db_connection = smc_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
+			$db_connection = we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 	}
 
 	// No version?

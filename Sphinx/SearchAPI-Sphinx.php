@@ -148,10 +148,10 @@ class sphinx_search
 				}
 				//Sorting by number of replies?
 				elseif ($search_params['sort'] == 'num_replies')
-					uasort($request['matches'], 'smc_replies_compare_' . $search_params['sort_dir']);
+					uasort($request['matches'], 'we_replies_compare_' . $search_params['sort_dir']);
 				//Sorting by relevance
 				else
-					uasort($request['matches'], 'smc_relevance_compare');
+					uasort($request['matches'], 'we_relevance_compare');
 
 				foreach ($request['matches'] as $msgID => $match)
 					$cached_results['matches'][$msgID] = array(
@@ -183,7 +183,7 @@ class sphinx_search
 }
 
 // Sort by "relevance".
-function smc_relevance_compare($match1, $match2)
+function we_relevance_compare($match1, $match2)
 {
 	if ($match1['attrs']['relevance'] == $match2['attrs']['relevance'])
 		return $match1['attrs']['poster_time'] > $match2['attrs']['poster_time'] ? -1 : 1;
@@ -191,7 +191,7 @@ function smc_relevance_compare($match1, $match2)
 }
 
 // Sort by number of topic replies, in descending order.
-function smc_replies_compare_desc($match1, $match2)
+function we_replies_compare_desc($match1, $match2)
 {
 	if ($match1['attrs']['num_replies'] == $match2['attrs']['num_replies'])
 		return relevance_compare($match1, $match2);
@@ -199,7 +199,7 @@ function smc_replies_compare_desc($match1, $match2)
 }
 
 // Sort by number of topic replies, in ascending order.
-function smc_replies_compare_asc($match1, $match2)
+function we_replies_compare_asc($match1, $match2)
 {
 	return replies_compare_desc($match2, $match1);
 }
