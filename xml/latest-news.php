@@ -87,7 +87,7 @@ if (document.getElementById("yourVersion"))
 	var yourVersion = document.getElementById("yourVersion").innerHTML;
 	if (yourVersion == "1.0.4")
 	{
-		window.smfUpdatePackage = "http://custom.simplemachines.org/mods/downloads/smf_1-0-5_package.tar.gz";
+		window.smfUpdatePackage = "http://custom.wedge.org/downloads/wedge_1-0-5_package.tar.gz";
 	}
 }
 

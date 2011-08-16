@@ -3623,7 +3623,7 @@ function template_welcome_message()
 			$(window).load(smfCurrentVersion);
 
 			// This checks that the script file even exists!
-			if (typeof smfSelectText == \'undefined\')
+			if (typeof weSelectText == \'undefined\')
 				document.getElementById(\'js_script_missing_error\').style.display = \'\';
 
 		// ]]></script>';
