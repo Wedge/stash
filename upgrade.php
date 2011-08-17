@@ -19,10 +19,7 @@ $GLOBALS['required_php_version'] = '5.2.3';
 $GLOBALS['required_mysql_version'] = '5.1.0';
 
 $db = array(
-	'version' => '5.1.0',
-	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
-	'utf8_version' => '5.1.0',
-	'utf8_version_check' => 'return mysql_get_server_info();',
+	'required_version' => '5.1.0',
 );
 
 // General options for the script.
@@ -2045,10 +2042,10 @@ function db_version_check()
 {
 	global $db;
 
-	$curver = eval($db['version_check']);
+	$curver = min(mysql_get_server_info(), mysql_get_client_info());
 	$curver = preg_replace('~\-.+?$~', '', $curver);
 
-	return version_compare($db['version'], $curver) <= 0;
+	return version_compare($db['required_version'], $curver) <= 0;
 }
 
 function getMemberGroups()
@@ -2147,7 +2144,7 @@ function parse_sql($filename)
 	set_error_handler('sql_error_handler');
 
 	// Let's find out what the members table uses and put it in a global var - to allow upgrade script to match collations!
-	if (version_compare($db['utf8_version'], eval($db['utf8_version_check'])) != 1)
+	if (version_compare($db['required_version'], mysql_get_server_info()) != 1)
 	{
 		$request = $smcFunc['db_query']('', '
 			SHOW TABLE STATUS
@@ -2769,9 +2766,9 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	}
 
 	if (!php_version_check())
-		print_error('Error: PHP ' . PHP_VERSION . ' does not match version requirements.', true);
+		print_error('Error: PHP ' . PHP_VERSION . ' does not match the minimum requirements of Wedge.', true);
 	if (!db_version_check())
-		print_error('Error: MySQL ' . $db['version'] . ' does not match minimum requirements.', true);
+		print_error('Error: Your MySQL version does not meet the minimum requirements (' . $db['required_version'] . ') of Wedge. Please ask your host to upgrade.', true);
 
 	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
 		print_error('Error: the MySQL account in Settings.php does not have sufficient privileges.', true);

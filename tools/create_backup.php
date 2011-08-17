@@ -229,10 +229,6 @@ function step2()
 	}
 	$smcFunc['db_free_result'](result);
 
-	$result = $smcFunc['db_get_version']();
-	list ($database_version) = $smcFunc['db_fetch_row']($result);
-	$smcFunc['db_free_result']($result);
-
 	// At first, this says "memory hog", but second it says "you can hit F5 if something goes wrong + no constant file access."
 	$write_data = '';
 
