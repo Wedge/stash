@@ -33,8 +33,8 @@ if (!isset($_REQUEST['version']) || in_array(substr($_REQUEST['version'], 0, 7),
 else
 	echo "var actionurl = '?action=admin;area=packages;sa=download;get;package=';";
 
-// Pull the smf versions out of the table.
-if (($mod_site['smf_versions'] = cache_get_data('site_smf_versions', 86400)) == null)
+// Pull the Wedge versions out of the table.
+if (($mod_site['wedge_versions'] = cache_get_data('site_wedge_versions', 86400)) == null)
 {
 	$result = $smcFunc['db_query']('', "
 		SELECT id_ver, ver_name
@@ -45,13 +45,13 @@ if (($mod_site['smf_versions'] = cache_get_data('site_smf_versions', 86400)) == 
 		)
 	);
 
-	$mod_site['smf_versions'] = array();
+	$mod_site['wedge_versions'] = array();
 	while ($row = $smcFunc['db_fetch_assoc']($result))
-		$mod_site['smf_versions'][$row['id_ver']] = $row['vername'];
+		$mod_site['wedge_versions'][$row['id_ver']] = $row['vername'];
 	$smcFunc['db_free_result']($result);
 
 	if (!empty($modSettings['cache_enable']))
-		cache_put_data('site_smf_versions', $mod_site['smf_versions'], 86400);
+		cache_put_data('site_wedge_versions', $mod_site['wedge_versions'], 86400);
 }
 
 // This is javascript and nothing else.
@@ -81,7 +81,7 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 		(
 			SELECT
 				ms.id_mod, ms.mod_name, ms.modified_time, ms.downloads, ms.submit_time, 1 AS type,
-				ms.smf_versions, ms.id_attach_package, a.filename, ms.description, ms.latest_version
+				ms.wedge_versions, ms.id_attach_package, a.filename, ms.description, ms.latest_version
 			FROM {raw:mod_prefix}mods AS ms
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_attach = ms.id_attach_package)
 			WHERE ms.approved = 1
@@ -94,7 +94,7 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 		(
 			SELECT
 				ms.id_mod, ms.mod_name, ms.modified_time, ms.downloads, ms.submit_time, 2 AS type,
-				ms.smf_versions, ms.id_attach_package, a.filename, ms.description, ms.latest_version
+				ms.wedge_versions, ms.id_attach_package, a.filename, ms.description, ms.latest_version
 			FROM {raw:mod_prefix}mods AS ms
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_attach = ms.id_attach_package)
 			WHERE ms.approved = 1
@@ -124,7 +124,7 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 			'modify_time' => timeformat($row['modified_time']),
 			'description' => parse_bbc($row['description']),
 			'downloads' => $row['downloads'],
-			'smf_versions' => explode(',', $row['smf_versions']),
+			'wedge_versions' => explode(',', $row['wedge_versions']),
 			'is_latest' => $row['type'] == 1,
 			'is_last' => $row['type'] == 2,
 		);
@@ -137,26 +137,26 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 	}
 	$smcFunc['db_free_result']($request);
 
-	foreach ($mod_site['smf_versions'] as $i => $ver)
+	foreach ($mod_site['wedge_versions'] as $i => $ver)
 	{
-		if (isset($mod_site['smf_versions'][trim($ver)]))
-			$context['mod']['smf_versions'][$i] = $mod_site['smf_versions'][trim($ver)];
+		if (isset($mod_site['wedge_versions'][trim($ver)]))
+			$context['mod']['wedge_versions'][$i] = $mod_site['wedge_versions'][trim($ver)];
 		else
-			unset($context['mod']['smf_versions'][$i]);
+			unset($context['mod']['wedge_versions'][$i]);
 	}
 
 	if (!empty($modSettings['cache_enable']))
-		cache_put_data('site_latest_packages', array($mods, $mod_site['smf_versions'], $context['cust_packs']), 86400);
+		cache_put_data('site_latest_packages', array($mods, $mod_site['wedge_versions'], $context['cust_packs']), 86400);
 }
 // Otherwise we split the data up.
 else
-	list ($mods, $mod_site['smf_versions'], $context['cust_packs']) = $data;
+	list ($mods, $mod_site['wedge_versions'], $context['cust_packs']) = $data;
 
 foreach ($mods as $mod)
 	echo '
 	', $mod['id'], ': {
 		name: \'', addcslashes($mod['name'], "'"), ' ', addcslashes($mod['version'], "'"), '\',
-		versions: [\'', implode('\', \'', $mod['smf_versions']), '\'],
+		versions: [\'', implode('\', \'', $mod['wedge_versions']), '\'],
 		desc: \'', addcslashes($mod['description'], "'"), '\',
 		file: \'', addcslashes($mod['attach_filename'], "'"), '\'
 	}', empty($mod['is_last']) ? ',' : '';

@@ -56,7 +56,7 @@ function load_txt_strings()
 
 	// Main info
 	$txt['smfinfo_pass'] = 'Below is the password to access this file.  Please share it wisely as this page contains a lot of information about your forum and host.<br /><br />Password: %s <a href="' . $boardurl . '/smfinfo.php?regenerate">(Regenerate)</a><br /><br /><a href="' . $boardurl . '/smfinfo.php?delete">Delete File</a> (This attempts to remove this file from your server)';
-	$txt['smf_version'] = 'SMF Version';
+	$txt['wedge_version'] = 'Wedge Version';
 	$txt['php_version'] = 'PHP Version';
 	$txt['database_version'] = 'Database Version';
 	$txt['webserver_version'] = 'Web Server';
@@ -165,23 +165,23 @@ load_txt_strings();
 // Makes for easy adding of extra info, or deleting
 $context['smfinfo'] = array (
 	'db_last_error' => !empty($db_last_error) ? date(DATE_RFC822, $db_last_error) : $txt['none'],
-	'auto_fix_db' => get_smf_setting('autoFixDatabase', 'on'),
-	'db_persist' => get_smf_setting('db_persist', 'off'),
-	'db_debug' => get_smf_setting('db_show_debug', 'off'),
-	'enable_error' => get_smf_setting('enableErrorLogging', 'on'),
-	'database_sessions' => get_smf_setting('databaseSession_enable'),
-	'database_loose' => get_smf_setting('databaseSession_loose'),
+	'auto_fix_db' => get_wedge_setting('autoFixDatabase', 'on'),
+	'db_persist' => get_wedge_setting('db_persist', 'off'),
+	'db_debug' => get_wedge_setting('db_show_debug', 'off'),
+	'enable_error' => get_wedge_setting('enableErrorLogging', 'on'),
+	'database_sessions' => get_wedge_setting('databaseSession_enable'),
+	'database_loose' => get_wedge_setting('databaseSession_loose'),
 	'session_timeout' => !empty($modSettings['databaseSession_lifetime']) ? $modSettings['databaseSession_lifetime'] . ' ' . $txt['seconds'] : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': >300)</strong>',
-	'maintenance_mode' => get_smf_setting('maintenance'),
-	'time_load' => get_smf_setting('timeLoadPageEnable'),
-	'hostname_lookup' => get_smf_setting('disableHostnameLookup'),
+	'maintenance_mode' => get_wedge_setting('maintenance'),
+	'time_load' => get_wedge_setting('timeLoadPageEnable'),
+	'hostname_lookup' => get_wedge_setting('disableHostnameLookup'),
 	'cache' => (!empty($modSettings['cache_enable']) ? $txt['cache_level'] . ' ' . $modSettings['cache_enable'] : $txt['off']) . ($modSettings['cache_enable'] != '1' ? '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt['cache_level'] . ' 1)</strong>' : ''),
 	'memcached_settings' => isset($modSettings['cache_memcached']) && trim($modSettings['cache_memcached']) != '' ? trim($modSettings['cache_memcached']) : '<i>' . $txt['empty'] . '</i>',
 	'cookie_name' => !empty($cookiename) ? $cookiename : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': WedgeCookie' . rand(100,999) . ')</strong>',
-	'local_cookies' => get_smf_setting('localCookies', 'off'),
-	'global_cookies' => get_smf_setting('globalCookies'),
-	'log_pruning' => get_smf_setting('pruningOptions', 'on'),
-	'compressed_output' => get_smf_setting('enableCompressedOutput'),
+	'local_cookies' => get_wedge_setting('localCookies', 'off'),
+	'global_cookies' => get_wedge_setting('globalCookies'),
+	'log_pruning' => get_wedge_setting('pruningOptions', 'on'),
+	'compressed_output' => get_wedge_setting('enableCompressedOutput'),
 );
 
 $context['phpinfo'] = array (
@@ -513,7 +513,7 @@ function show_system_info()
 				<script type="text/javascript">addSection("main", "', $txt['maininfo'], '" );</script>
 				<table border="0" width="100%" cellpadding="2" cellspacing="2">
 					<tr>
-						<td width="25%"><strong>', $txt['smf_version'], '</strong></td>
+						<td width="25%"><strong>', $txt['wedge_version'], '</strong></td>
 						<td>', WEDGE_VERSION, '</td>
 					</tr>
 					<tr>
@@ -621,7 +621,7 @@ function show_detailed_file()
 							<td width="50%"><strong>', $txt['file_version'], '</strong></td><td width="25%"><strong>', $txt['your_version'], '</strong></td><td width="25%"><strong>', $txt['current_version'], '</strong></td>
 						</tr>
 						<tr>
-							<td>', $txt['smf_version'], '</td><td><em id="yourWedge">Wedge ', $context['forum_version'], '</em></td><td><em id="currentWedge">??</em></td>
+							<td>', $txt['wedge_version'], '</td><td><em id="yourWedge">Wedge ', $context['forum_version'], '</em></td><td><em id="currentWedge">??</em></td>
 						</tr>';
 
 	// Now list all the source file versions, starting with the overall version (if all match!).
@@ -1604,7 +1604,7 @@ function get_php_setting($val, $rec = '')
 	return $r;
 }
 
-function get_smf_setting($val, $rec = '')
+function get_wedge_setting($val, $rec = '')
 {
 	global $txt;
 	global $modSettings, $settings;
