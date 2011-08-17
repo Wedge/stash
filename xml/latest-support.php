@@ -3,14 +3,11 @@
 /*
 	It should be noted that:
 
-	- their smf version is available with smfSupportVersions.forum.
+	- their Wedge version is available with weSupportVersions.forum.
 	- more information is available in that array.
 	- we've got their language in $_GET['language'].
 */
 
 header('Content-Type: text/javascript');
 
-?>window.weLatestSupport = '<div style="font-size: 0.85em;"><div style="font-weight: bold;">SMF 1.1.8, SMF 1.0.17</div>Vulnerabilities have been fixed in these new releases.  Please <a href="http://download.simplemachines.org/">try them</a> before requesting support.</div>';
-
-if (document.getElementById('credits'))
-	document.getElementById('credits').innerHTML = document.getElementById('credits').innerHTML.replace(/thank you!/, '<span onclick="alert(\'Kupo!\');">thank you!</span>');
+?>window.weLatestSupport = '<div style="font-size: 0.85em"><strong>Wedge 1.0</strong>The server admin is in Heaven. All is right in the World.</div>';

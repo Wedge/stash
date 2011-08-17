@@ -29,7 +29,7 @@ $db = array(
 $timeLimitThreshold = 3;
 $upgrade_path = dirname(__FILE__);
 $upgradeurl = $_SERVER['PHP_SELF'];
-// Where the SMF images etc are kept.
+// Where the Wedge images etc. are kept
 $smfsite = 'http://wedge.org/files';
 // Disable the need for admins to login?
 $disable_security = 0;
@@ -662,7 +662,7 @@ function upgradeExit($fallThrough = false)
 		{
 			debug_print_backtrace();
 
-			echo "\n" . 'Error: Unexpected call to use the ' . (isset($upcontext['sub_template']) ? $upcontext['sub_template'] : '') . ' template. Please copy and paste all the text above and visit the SMF support forum to tell the Developers that they\'ve made a boo boo; they\'ll get you up and running again.';
+			echo "\n" . 'Error: Unexpected call to use the ' . (isset($upcontext['sub_template']) ? $upcontext['sub_template'] : '') . ' template. Please copy and paste all the text above and visit the Wedge support forum to tell the Developers that they\'ve made a boo boo; they\'ll get you up and running again.';
 			flush();
 			die();
 		}
@@ -892,10 +892,10 @@ function WelcomeLogin()
 
 	// Do they meet the install requirements?
 	if (!php_version_check())
-		return throw_error('Warning! You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br><br>Please ask your host to upgrade.');
+		return throw_error('Warning! You do not appear to have a version of PHP installed on your webserver that meets Wedge\'s minimum installations requirements.<br><br>Please ask your host to upgrade.');
 
 	if (!db_version_check())
-		return throw_error('Your MySQL version does not meet the minimum requirements of SMF.<br><br>Please ask your host to upgrade.');
+		return throw_error('Your MySQL version does not meet the minimum requirements of Wedge.<br><br>Please ask your host to upgrade.');
 
 	// Do they have ALTER privileges?
 	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
@@ -1030,7 +1030,7 @@ function checkLogin()
 				foreach ($groups as $k => $v)
 					$groups[$k] = (int) $v;
 
-				// Figure out the password using SMF's encryption - if what they typed is right.
+				// Figure out the password using Wedge's encryption - if what they typed is right.
 				if (isset($_REQUEST['hash_passwrd']) && strlen($_REQUEST['hash_passwrd']) == 40)
 				{
 					// Challenge passed.
@@ -1741,7 +1741,7 @@ function DeleteUpgrade()
 {
 	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $user_info, $maintenance;
 
-	// Now it's nice to have some of the basic SMF source files.
+	// Now it's nice to have some of the basic Wedge source files.
 	if (!isset($_GET['ssi']) && !$command_line)
 		redirectLocation('&ssi=1');
 
@@ -2375,7 +2375,7 @@ function upgrade_query($string, $unbuffered = false)
 	global $db_connection, $db_server, $db_user, $db_passwd, $command_line, $upcontext, $upgradeurl, $modSettings;
 	global $db_name, $db_unbuffered;
 
-	// Get the query result - working around some SMF specific security - just this once!
+	// Get the query result - working around some Wedge specific security - just this once!
 	$modSettings['disableQueryCheck'] = true;
 	$db_unbuffered = $unbuffered;
 	$result = $smcFunc['db_query']('', $string, 'security_override');
@@ -2838,7 +2838,7 @@ function cmdStep0()
 			$_GET['conv'] = 1;
 		elseif ($i != 0)
 		{
-			echo 'SMF Command-line Upgrader
+			echo 'Wedge Command-line Upgrader
 Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 
     --language=LANG         Reset the forum\'s language to LANG.
@@ -3154,7 +3154,7 @@ function template_chmod()
 	//!!! Temporary!
 	$txt['error_ftp_no_connect'] = 'Unable to connect to FTP server with this combination of details.';
 	$txt['ftp_login'] = 'Your FTP connection information';
-	$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you. Please note that none of this information is saved in your installation, it is just used to setup SMF.';
+	$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you. Please note that none of this information is saved in your installation, it is just used to setup Wedge.';
 	$txt['ftp_server'] = 'Server';
 	$txt['ftp_server_info'] = 'The address (often localhost) and port for your FTP server.';
 	$txt['ftp_port'] = 'Port';
@@ -3165,7 +3165,7 @@ function template_chmod()
 	$txt['ftp_path'] = 'Install Path';
 	$txt['ftp_path_info'] = 'This is the <em>relative</em> path you use in your FTP client <a href="' . $_SERVER['PHP_SELF'] . '?ftphelp" onclick="window.open(this.href, \'\', \'width=450,height=250\');return false;" target="_blank">(more help)</a>.';
 	$txt['ftp_path_found_info'] = 'The path in the box above was automatically detected.';
-	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client. It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;. It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it\'s correct.';
+	$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client. It commonly starts with &quot;<tt>www</tt>&quot;, &quot;<tt>public_html</tt>&quot;, or &quot;<tt>httpdocs</tt>&quot; - but it should include the directory Wedge is in too, such as &quot;/public_html/forum&quot;. It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it\'s correct.';
 	$txt['ftp_path_help_close'] = 'Close';
 	$txt['ftp_connect'] = 'Connect';
 
@@ -4118,7 +4118,7 @@ function template_clean_mods()
 	$upcontext['chmod_in_form'] = true;
 
 	echo '
-	<h3>SMF has detected some packages which were installed but not fully removed prior to upgrade. We recommend you remove the following mods and reinstall upon completion of the upgrade.</h3>
+	<h3>Wedge has detected some packages which were installed but not fully removed prior to upgrade. We recommend you remove the following mods and reinstall upon completion of the upgrade.</h3>
 	<form action="', $upcontext['form_url'], '&amp;ssi=1" name="upform" id="upform" method="post">';
 
 	// In case it's required.
@@ -4168,7 +4168,7 @@ function template_cleanup_done()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
 
 	echo '
-	<h3>SMF has attempted to fix and reinstall mods as required. We recommend you visit the package manager upon completing upgrade to check the status of your modifications.</h3>
+	<h3>Wedge has attempted to fix and reinstall mods as required. We recommend you visit the package manager upon completing upgrade to check the status of your modifications.</h3>
 	<form action="', $upcontext['form_url'], '&amp;ssi=1" name="upform" id="upform" method="post">
 		<table width="90%" align="center" cellspacing="1" cellpadding="2" style="background-color: black">
 			<tr style="background-color: #eeeeee">
@@ -4195,7 +4195,7 @@ function template_upgrade_complete()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
 
 	echo '
-	<h3>That wasn\'t so hard, was it? Now you are ready to use <a href="', $boardurl, '/index.php">your installation of SMF</a>. Hope you like it!</h3>
+	<h3>That wasn\'t so hard, was it? Now you are ready to use <a href="', $boardurl, '/index.php">your installation of Wedge</a>. Hope you like it!</h3>
 	<form action="', $boardurl, '/index.php">';
 
 	if (!empty($upcontext['can_delete_script']))
@@ -4213,7 +4213,7 @@ function template_upgrade_complete()
 			<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
 
 	echo '<br>
-			If you had any problems with this upgrade, or have any problems using SMF, please don\'t hesitate to <a href="http://www.simplemachines.org/community/index.php">look to us for assistance</a>.<br>
+			If you had any problems with this upgrade, or have any problems using Wedge, please don\'t hesitate to <a href="http://www.simplemachines.org/community/index.php">look to us for assistance</a>.<br>
 			<br>
 			Best of luck,<br>
 			Simple Machines';

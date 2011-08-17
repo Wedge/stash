@@ -28,7 +28,7 @@
 
 		while ( $row = $smcFunc['db_fetch_assoc']($result) )
 			$data['releases'][] = array(
-				'name' => 'SMF ' . $row['ver_name'],
+				'name' => 'Wedge ' . $row['ver_name'],
 				'file' => $row['file_name'],
 				'access' => $row['access'],
 			);

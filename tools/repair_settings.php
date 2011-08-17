@@ -29,7 +29,7 @@ if (file_exists(dirname(__FILE__) . '/Settings.php'))
 // Initialize everything and load the language files.
 initialize_inputs();
 
-$txt['smf_repair_settings'] = 'SMF 2.0 Settings Repair Tool';
+$txt['smf_repair_settings'] = 'Wedge Settings Repair Tool';
 $txt['no_value'] = '<em style="font-weight: normal; color: red;">Value not found!</em>';
 $txt['default_value'] = 'Recommended value';
 $txt['save_settings'] = 'Save Settings';
@@ -68,7 +68,7 @@ $txt['db_persist0'] = 'Standard (recommended)';
 $txt['db_persist1'] = 'Persistent (might cause problems)';
 
 $txt['path_url_settings'] = 'Paths &amp; URLs';
-$txt['path_url_settings_info'] = 'These are the paths and URLs to your SMF installation, and can cause big problems when they are wrong.  Sorry, there are a lot of them.';
+$txt['path_url_settings_info'] = 'These are the paths and URLs to your Wedge installation, and can cause big problems when they are wrong.  Sorry, there are a lot of them.';
 $txt['boardurl'] = 'Forum URL';
 $txt['boarddir'] = 'Forum Directory';
 $txt['sourcedir'] = 'Sources Directory';
@@ -83,7 +83,7 @@ $txt['images_url'] = 'Default Theme Images URL';
 $txt['theme_dir'] = 'Default Theme Directory';
 
 $txt['theme_path_url_settings'] = 'Paths &amp; URLs For Themes';
-$txt['theme_path_url_settings_info'] = 'These are the paths and URLs to your SMF themes.';
+$txt['theme_path_url_settings_info'] = 'These are the paths and URLs to your Wedge themes.';
 
 if (isset($_POST['submit']))
 	set_settings();

@@ -257,7 +257,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'Templatesindex.template.php': '0.1'
 };
 
-window.smfLanguageVersions = {
+window.weLanguageVersions = {
 	'Admin': '0.1',
 	'EmailTemplates': '0.1',
 	'Errors': '0.1',

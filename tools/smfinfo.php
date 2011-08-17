@@ -23,13 +23,13 @@
 * The latest version can always be found at http://www.simplemachines.org.        *
 **********************************************************************************/
 
-// If SSI.php is in the same place as this file, and SMF isn't defined, this is being run standalone.
+// If SSI.php is in the same place as this file, and Wedge isn't defined, this is being run standalone.
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 	require_once(dirname(__FILE__) . '/SSI.php');
 
-// Hmm... no SSI.php and no SMF?
+// Hmm... no SSI.php and no Wedge?
 elseif(!defined('WEDGE'))
-	die('<b>Error:</b> Cannot start - please verify you put this in the same place as SMF\'s SSI.php.');
+	die('<b>Error:</b> Cannot start - please verify you put this in the same place as Wedge\'s SSI.php.');
 
 $smfinfo_version = '1.0';
 
@@ -40,7 +40,7 @@ function load_txt_strings()
 	global $txt, $boardurl;
 
 	// Tabs
-	$txt['title'] = 'SMF Info Support Tool';
+	$txt['title'] = 'Wedge Info Support Tool';
 	$txt['maininfo'] = 'System Info';
 	$txt['phpinfo'] = 'PHP Info';
 	$txt['detailedinfo'] = 'Detailed File Check';
@@ -64,8 +64,8 @@ function load_txt_strings()
 	$txt['db_table_info'] = 'Detailed Table Information';
 
 
-	// SMF Specific Info
-	$txt['smf_relevant'] = 'Relevant SMF Settings';
+	// Wedge Specific Info
+	$txt['wedge_relevant'] = 'Relevant Wedge Settings';
 	$txt['sef_urls'] = 'SEF URLs';
 	$txt['time_load'] = 'Display Load Times';
 	$txt['hostname_lookup'] = 'Disable Hostname Lookups';
@@ -86,8 +86,8 @@ function load_txt_strings()
 	$txt['cache'] = 'Caching';
 	$txt['memcached_settings'] = 'Memcached Settings';
 	$txt['cache_level'] = 'Level';
-	$txt['support_versions_current'] = 'Current SMF Info version';
-	$txt['support_versions_forum'] = 'Your SMF Info version';
+	$txt['support_versions_current'] = 'Current Wedge Info version';
+	$txt['support_versions_forum'] = 'Your Wedge Info version';
 
 
 	// PHP Specific Info
@@ -110,7 +110,7 @@ function load_txt_strings()
 	$txt['template_version'] = 'Default Templates';
 	$txt['language_version'] = 'Language Files';
 	$txt['custom_template_version'] = 'Custom Templates';
-	$txt['file_version'] = 'SMF File';
+	$txt['file_version'] = 'Wedge File';
 	$txt['your_version'] = 'Your Version';
 	$txt['current_version'] = 'Current Version';
 
@@ -444,16 +444,16 @@ function show_header()
 			{
 				var smfVer, yourVer;
 
-				if (typeof window.smfInfoVersion != "string")
+				if (typeof window.weInfoVersion != "string")
 					return;
 
 				smfVer = document.getElementById("smfInfoVersion");
 				yourVer = document.getElementById("yourVersion");
 
-				setInnerHTML(smfVer, window.smfInfoVersion);
+				setInnerHTML(smfVer, window.weInfoVersion);
 
 				var currentVersion = getInnerHTML(yourVer);
-				if (currentVersion != window.smfInfoVersion)
+				if (currentVersion != window.weInfoVersion)
 					setInnerHTML(yourVer, "<span style=\"color: red;\">" + currentVersion + "</span>");
 			}
 			var oldonload;
@@ -517,7 +517,7 @@ function show_system_info()
 						<td>', WEDGE_VERSION, '</td>
 					</tr>
 					<tr>
-						<td valign="top"><strong>', $txt['smf_relevant'], '</strong></td>
+						<td valign="top"><strong>', $txt['wedge_relevant'], '</strong></td>
 						<td>
 							<table width="100%" cellpadding="2" cellspacing="2">';
 
@@ -614,7 +614,7 @@ function show_detailed_file()
 
 	get_file_versions();
 
-	// The current version of the core SMF package.
+	// The current version of the core Wedge package.
 	echo '
 					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
 						<tr>
@@ -1219,7 +1219,7 @@ function show_footer()
 	   file categories. (sources, languages, and templates.) */
 	echo '
 		<script type="text/javascript" src="', $boardurl, '/Themes/default/scripts/script.js"></script>
-		<script type="text/javascript" src="http://www.simplemachines.org/smf/detailed-version.js?version=', $context['forum_version'], '"></script>
+		<script type="text/javascript" src="http://wedge.org/files/detailed-version.js?version=', $context['forum_version'], '"></script>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var swaps = {};
 
@@ -1285,27 +1285,27 @@ function show_footer()
 					document.getElementById(\'your\' + filename).innerHTML = yourVersion;
 				}
 
-				if (!(\'smfLanguageVersions\' in window))
-					window.smfLanguageVersions = {};
+				if (!(\'weLanguageVersions\' in window))
+					window.weLanguageVersions = {};
 
-				for (filename in window.smfLanguageVersions)
+				for (filename in window.weLanguageVersions)
 				{
 					for (var i = 0; i < knownLanguages.length; i++)
 					{
 						if (!document.getElementById(\'current\' + filename + knownLanguages[i]))
 							continue;
 
-						document.getElementById(\'current\' + filename + knownLanguages[i]).innerHTML = smfLanguageVersions[filename];
+						document.getElementById(\'current\' + filename + knownLanguages[i]).innerHTML = weLanguageVersions[filename];
 
 						yourVersion = document.getElementById(\'your\' + filename + knownLanguages[i]).innerHTML;
 						document.getElementById(\'your\' + filename + knownLanguages[i]).innerHTML = yourVersion;
 
 						if ((highYour[\'Languages\'] < yourVersion || highYour[\'Languages\'] == \'??\') && !lowVersion[\'Languages\'])
 							highYour[\'Languages\'] = yourVersion;
-						if (highCurrent[\'Languages\'] < smfLanguageVersions[filename] || highCurrent[\'Languages\'] == \'??\')
-							highCurrent[\'Languages\'] = smfLanguageVersions[filename];
+						if (highCurrent[\'Languages\'] < weLanguageVersions[filename] || highCurrent[\'Languages\'] == \'??\')
+							highCurrent[\'Languages\'] = weLanguageVersions[filename];
 
-						if (yourVersion < smfLanguageVersions[filename])
+						if (yourVersion < weLanguageVersions[filename])
 						{
 							lowVersion[\'Languages\'] = yourVersion;
 							document.getElementById(\'your\' + filename + knownLanguages[i]).style.color = \'red\';
@@ -1467,7 +1467,7 @@ function get_file_versions($core = false)
 		fclose($fp);
 
 		// The comment looks rougly like... that.
-		if (preg_match('~\*\s*Software\s+Version:\s+SMF\s+(.+?)[\s]{2}~i', $header, $match) == 1)
+		if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
 			$version_info['file_versions']['SSI.php'] = $match[1];
 		// Not found!  This is bad.
 		else
@@ -1482,7 +1482,7 @@ function get_file_versions($core = false)
 		fclose($fp);
 
 		// Found it?
-		if (preg_match('~\*\s*Software\s+Version:\s+SMF\s+(.+?)[\s]{2}~i', $header, $match) == 1)
+		if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
 			$version_info['file_versions']['subscriptions.php'] = $match[1];
 		// If we haven't how do we all get paid?
 		else
@@ -1501,7 +1501,7 @@ function get_file_versions($core = false)
 			fclose($fp);
 
 			// Look for the version comment in the file header.
-			if (preg_match('~\*\s*Software\s+Version:\s+SMF\s+(.+?)[\s]{2}~i', $header, $match) == 1)
+			if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
 				$version_info['file_versions'][$entry] = $match[1];
 			// It wasn't found, but the file was... show a '??'.
 			else

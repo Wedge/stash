@@ -587,7 +587,7 @@ if (mysql_num_rows($request) != 0)
 	list ($oldValue) = mysql_fetch_row($request);
 	if ($oldValue != 0)
 	{
-		// We have changed the medium setting from SMF 1.1.2.
+		// Converting from SMF 1.1.2?
 		if ($oldValue == 4)
 			$oldValue = 5;
 
@@ -780,7 +780,7 @@ mysql_free_result($request);
 
 foreach ($themeLayerChanges as $id_theme => $data)
 {
-	// Has to be a SMF provided theme and have custom layers defined.
+	// Has to be a Wedge-provided theme and have custom layers defined.
 	if (!isset($data['theme_layers']) || !isset($data['theme_dir']) || substr($data['theme_dir'], -7) != 'default')
 		continue;
 
@@ -945,12 +945,6 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_packages (
 ---# Adding extra "log_packages" columns...
 ALTER TABLE {$db_prefix}log_packages
 ADD db_changes text NOT NULL AFTER themes_installed;
----#
-
----# Changing URL to SMF package server...
-UPDATE {$db_prefix}package_servers
-SET url = 'http://custom.simplemachines.org/packages/mods'
-WHERE url = 'http://mods.simplemachines.org';
 ---#
 
 /******************************************************************************/

@@ -25,7 +25,7 @@
 // THIS SCRIPT IS INTENDED TO BE CALLED BY A CRON TASK!
 // We let the server admin control how often this script is called, we will just respect the limit.
 
-// Oh where, oh where, has SMF gone? Oh where can it be?
+// Oh where, oh where, has Wedge gone? Oh where can it be?
 require_once('SSI.php');
 
 // Are we not supposed to use the cron?

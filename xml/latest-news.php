@@ -64,12 +64,12 @@ echo '
 /*
 	Area for putting possible future update information, you can set the following variables.
 
-		window.smfUpdateNotice: Override the default window notice.
-		window.smfUpdatePackage: Name of the update package to use.
-		window.smfUpdateTitle: Override default title display in window.
-		window.smfUpdateCritical: If set will make the notice displayed red (or critical for the theme.)
+		window.weUpdateNotice: Override the default window notice.
+		window.weUpdatePackage: Name of the update package to use.
+		window.weUpdateTitle: Override default title display in window.
+		window.weUpdateCritical: If set will make the notice displayed red (or critical for the theme.)
 
-	Note: In the smfUpdateNotice message, an element should exist with the id update-link.
+	Note: In the weUpdateNotice message, an element should exist with the id update-link.
 
 	Example:
 
@@ -78,17 +78,15 @@ echo '
 /*
 if (false && window.weVersion < "1.0") // !!!
 {
-	window.smfUpdateNotice = 'Wedge 1.0 Final has now been released. To take advantage of the improvements available in Wedge 1.0, we recommend upgrading as soon as possible.';
-	window.smfUpdateCritical = false;
+	window.weUpdateNotice = 'Wedge 1.0 Final has now been released. To take advantage of the improvements available in Wedge 1.0, we recommend upgrading as soon as possible.';
+	window.weUpdateCritical = false;
 }
 
 if (document.getElementById("yourVersion"))
 {
 	var yourVersion = document.getElementById("yourVersion").innerHTML;
 	if (yourVersion == "1.0.4")
-	{
-		window.smfUpdatePackage = "http://custom.wedge.org/downloads/wedge_1-0-5_package.tar.gz";
-	}
+		window.weUpdatePackage = "http://custom.wedge.org/downloads/wedge_1-0-5_package.tar.gz";
 }
 
 */

@@ -12,7 +12,7 @@
  */
 
 if (!file_exists(dirname(__FILE__) . '/SSI.php'))
-	die('Please move this file to the main SMF directory and make sure SSI.php is part of that directory.');
+	die('Please move this file to the main Wedge directory and make sure SSI.php is part of that directory.');
 
 $sphinx_ver = '0.9.7-rc2';
 
@@ -41,7 +41,7 @@ function step_0()
 
 	echo '
 	<p>
-		This configuration tool is designed to guide you through the installation of the Sphinx full-text search engine, specifically for Simple Machines Forum. Following the steps in this tool will tell how to install Sphinx, will configure SMF for using Sphinx, and will create a configuration file that will be needed for Sphinx based on SMF\'s settings. Make sure you have the latest version of this tool, so that the latest improvements have been implemented.
+		This configuration tool is designed to guide you through the installation of the Sphinx full-text search engine, specifically for Simple Machines Forum. Following the steps in this tool will tell how to install Sphinx, will configure Wedge for using Sphinx, and will create a configuration file that will be needed for Sphinx based on Wedge\'s settings. Make sure you have the latest version of this tool, so that the latest improvements have been implemented.
 	</p>
 	<h4>What is Sphinx?</h4>
 	<p>
@@ -141,7 +141,7 @@ function step_2()
 {
 	global $context, $modSettings, $txt;
 
-	template_sphinx_config_above('Configure SMF for Sphinx');
+	template_sphinx_config_above('Configure Wedge for Sphinx');
 
 	echo '
 	A few settings can be configured allowing to customize the search engine. Generally all options can be left untouched.<br>
@@ -222,7 +222,7 @@ function step_3()
 			'sphinx_indexed_msg_until' => '1',
 		));
 
-	template_sphinx_config_above('Configure SMF for Sphinx');
+	template_sphinx_config_above('Configure Wedge for Sphinx');
 	echo '
 	Your configuration has been saved successfully. The next time you run this tool, your configuration will automatically be loaded.
 	<h4>Generating a configuration file</h4>
@@ -234,7 +234,7 @@ function step_3()
 	</form><br>
 
 	<h4>Some file actions</h4>
-	Move Sphinx\' PHP API file to the Sources directory of your SMF installation (the path used here is merely an example):<br>
+	Move Sphinx\' PHP API file to the Sources directory of your Wedge installation (the path used here is merely an example):<br>
 	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br>
 	<br>
 	Create directories for storing the indexes:<br>', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
@@ -253,10 +253,10 @@ function step_3()
 	If that went successful, we can test run the search deamon. Start it by typing:<br>
 	<tt>[~]#  searchd --config /usr/local/etc/sphinx.conf</tt><br>
 	<br>
-	If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying SMF\'s search to work with Sphinx.
+	If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying Wedge\'s search to work with Sphinx.
 
-	<h4>Configuring SMF</h4>
-	Upload the package file to the \'Packages\' directory and apply it in SMF\'s package manager.<br><br>
+	<h4>Configuring Wedge</h4>
+	Upload the package file to the \'Packages\' directory and apply it in Wedge\'s package manager.<br><br>
 	Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br>
 	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
@@ -336,7 +336,7 @@ function step_999()
 	}
 
 	echo '#
-# Sphinx configuration file (sphinx.conf), configured for SMF 1.1
+# Sphinx configuration file (sphinx.conf), configured for Wedge.
 #
 # By default the location of this file would probably be:
 # /usr/local/etc/sphinx.conf

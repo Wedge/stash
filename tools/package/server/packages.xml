@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/package-list">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	This is a package server listing file of SMF packages.
+	This is a package server listing file of Wedge packages.
 
 	If you are trying to install packages, please try pointing the package
 	manager in your forum to this link, instead of accessing it directly.
 
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<package-list xmlns="http://www.simplemachines.org/xml/package-list" xmlns:smf="http://www.simplemachines.org/">
+<package-list xmlns="http://www.simplemachines.org/xml/package-list" xmlns:wedge="http://wedge.org/">
 	<!-- This is the title of your package server list itself. -->
 	<list-title>My Package Server</list-title>
 
 	<!-- Sections are grouped off only for organization really. -->
 	<section>
 		<!-- This is shown as the section's title. -->
-		<title>SMF 1.0 RC1</title>
+		<title>Wedge 1.0</title>
 
 		<!-- A modification!  These are great!! -->
 		<modification>

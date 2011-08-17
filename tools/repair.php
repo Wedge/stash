@@ -393,7 +393,7 @@ function action_spell()
 		<div class="panel">
 			<h2>Unable to continue!</h2>
 
-			<p>The spell checking library required by SMF\'s spell checker has not been compiled into PHP. Please contact your host and tell them that they need to get Aspell and then compile PHP with <tt>--with-pspell</tt>.</p>
+			<p>The spell checking library required by Wedge\'s spell checker has not been compiled into PHP. Please contact your host and tell them that they need to get Aspell and then compile PHP with <tt>--with-pspell</tt>.</p>
 
 			<a href="', $_SERVER['PHP_SELF'], '">Go back</a>
 		</div>';
@@ -606,7 +606,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 				require_once($sourcedir . '/Subs-Auth.php');
 				show_db_error();
 			}
-			exit('Sorry, SMF was unable to connect to database.');
+			exit('Sorry, Wedge was unable to connect to database.');
 		}
 	}
 
@@ -618,7 +618,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			require_once($sourcedir . '/Subs-Auth.php');
 			show_db_error();
 		}
-		exit('Sorry, SMF was unable to connect to database.');
+		exit('Sorry, Wedge was unable to connect to database.');
 	}
 	else
 		$db_prefix = is_numeric(substr($db_prefix, 0, 1)) ? $db_name . '.' . $db_prefix : '`' . $db_name . '`.' . $db_prefix;
@@ -710,7 +710,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			break;
 
 			case 'identifier':
-				// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for SMF.
+				// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for Wedge.
 				return '`' . strtr($replacement, array('`' => '', '.' => '')) . '`';
 			break;
 
