@@ -248,7 +248,7 @@ function initialize_inputs()
 	$db_connection = false;
 	if (isset($sourcedir))
 	{
-		define('SMF', 1);
+		define('WEDGE', 1);
 
 		require_once($sourcedir . '/Errors.php');
 		require_once($sourcedir . '/Subs.php');

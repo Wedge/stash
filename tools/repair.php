@@ -830,7 +830,7 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 		require_once(dirname(__FILE__) . '/Settings.php');
 	if (isset($sourcedir))
 	{
-		define('SMF', 1);
+		define('WEDGE', 1);
 
 		if (empty($smcFunc))
 			$smcFunc = array();

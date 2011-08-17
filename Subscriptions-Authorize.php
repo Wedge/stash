@@ -12,9 +12,9 @@
  */
 
 // This won't be dedicated without this - this must exist in each gateway!
-// SMF Payment Gateway: authorize
+// Wedge Payment Gateway: authorize
 
-if (!defined('SMF'))
+if (!defined('WEDGE'))
 	die('Hacking attempt...');
 
 class authorize_display

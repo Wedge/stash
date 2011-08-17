@@ -164,7 +164,7 @@ global $smf_settings, $smf_user_info, $smf_connection;
 // If $maintenance is set to 2, don't connect to the database at all.
 if ($maintenance != 2)
 {
-	define('SMF', 1);
+	define('WEDGE', 1);
 
 	if (empty($smcFunc))
 		$smcFunc = array();

@@ -12,9 +12,9 @@
  */
 
 // This won't be dedicated without this - this must exist in each gateway!
-// SMF Payment Gateway: twocheckout
+// Wedge Payment Gateway: twocheckout
 
-if (!defined('SMF'))
+if (!defined('WEDGE'))
 	die('Hacking attempt...');
 
 class twocheckout_display

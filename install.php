@@ -254,8 +254,8 @@ function load_database()
 
 	// Need this to check whether we need the database password.
 	require(dirname(__FILE__) . '/Settings.php');
-	if (!defined('SMF'))
-		define('SMF', 1);
+	if (!defined('WEDGE'))
+		define('WEDGE', 1);
 
 	$modSettings['disableQueryCheck'] = true;
 
@@ -675,8 +675,8 @@ function DatabaseSettings()
 		}
 
 		// Now include it for database functions!
-		if (!defined('SMF'))
-			define('SMF', 1);
+		if (!defined('WEDGE'))
+			define('WEDGE', 1);
 		$modSettings['disableQueryCheck'] = true;
 		require_once($sourcedir . '/Class-DB.php');
 
@@ -1070,8 +1070,8 @@ function AdminAccount()
 	require(dirname(__FILE__) . '/Settings.php');
 
 	// We need this for some of the IP stuff.
-	if (!defined('SMF'))
-		define('SMF', 1);
+	if (!defined('WEDGE'))
+		define('WEDGE', 1);
 	@include(dirname(__FILE__) . '/Sources/QueryString.php');
 	if (!defined('INVALID_IP'))
 		define('INVALID_IP', '00000000000000000000000000000000');
@@ -1872,8 +1872,8 @@ function template_install_above()
 		$sourcedir, $wedgesite, $settings, $context, $modSettings;
 
 	// Load Wedge's default paths and pray that it works...
-	if (!defined('SMF'))
-		define('SMF', 1);
+	if (!defined('WEDGE'))
+		define('WEDGE', 1);
 	$boarddir = dirname(__FILE__);
 	$cachedir = $boarddir . '/cache';
 	$sourcedir = $boarddir . '/Sources';

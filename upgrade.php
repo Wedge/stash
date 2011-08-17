@@ -744,7 +744,7 @@ function loadEssentialData()
 	// Do the non-SSI stuff...
 	@set_magic_quotes_runtime(0);
 	error_reporting(E_ALL);
-	define('SMF', 1);
+	define('WEDGE', 1);
 
 	// Start the session.
 	if (@ini_get('session.save_handler') == 'user')
@@ -1892,7 +1892,7 @@ function convertSettingsToTheme()
 
 	$values = array(
 		'show_latest_member' => @$GLOBALS['showlatestmember'],
-		'show_bbc' => isset($GLOBALS['showyabbcbutt']) ? $GLOBALS['showyabbcbutt'] : @$GLOBALS['showbbcbutt'],
+		'show_bbc' => @$GLOBALS['showbbcbutt'],
 		'show_modify' => @$GLOBALS['showmodify'],
 		'show_user_images' => @$GLOBALS['showuserpic'],
 		'show_blurb' => @$GLOBALS['showusertext'],

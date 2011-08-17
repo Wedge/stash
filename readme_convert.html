@@ -130,20 +130,20 @@
 		<div id="main_content">
 			<div id="liftup">
 				<div class="panel">
-					<h2 id="contents">Converting to SMF</h2>
-					<p>Thank you for deciding to convert to, or at least test the conversion to, <a href="http://www.simplemachines.org/smf/">SMF</a>.  Before you get started, please remember that the conversion will not overwrite or change your existing forum, and that there is <a href="http://www.simplemachines.org/community/index.php">a place for help at www.simplemachines.org</a> if you run into any problems at all.</p>
+					<h2 id="contents">Converting to Wedge</h2>
+					<p>Thank you for deciding to convert to, or at least test the conversion to, <a href="http://wedge.org/">Wedge</a>. Before you get started, please remember that the conversion will not overwrite or change your existing forum, and that there is <a href="http://wedge.org/">a place for help at wedge.org</a> if you run into any problems at all.</p>
 					<p>You can find the following information in this file:</p>
 					<ul style="list-style-type: none">
 						<li>&raquo; <a href="#requirements">Minimum installation requirements.</a></li>
 						<li>&raquo; <a href="#recommendations">Recommendations for best performance</a></li>
-						<li>&raquo; <a href="#installing">Installing SMF on your webserver.</a></li>
+						<li>&raquo; <a href="#installing">Installing Wedge on your webserver.</a></li>
 						<li>&raquo; <a href="#convert">Beginning the conversion process.</a></li>
 						<li>&raquo; <a href="#finishing">Finishing the upgrade and cleaning up.</a></li>
 					</ul>
 				</div>
 				<div class="panel">
-					<h2 id="requirements">What's required to run SMF?</h2>
-					<p>Your server must meet a few requirements to be able to run SMF. If you're unsure as to whether your webserver meets these, please try the installation and conversion anyway - it should detect any problems.</p>
+					<h2 id="requirements">What's required to run Wedge?</h2>
+					<p>Your server must meet a few requirements to be able to run Wedge. If you're unsure as to whether your webserver meets these, please try the installation and conversion anyway - it should detect any problems.</p>
 					<ul>
 						<li>Any webserver that properly supports PHP, such as <a href="http://httpd.apache.org/" target="_blank">Apache</a> or <a href="http://www.microsoft.com/iis" target="_blank">Internet Information Services (IIS)</a>.</li>
 						<li>
@@ -179,21 +179,21 @@
 						<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 4.1.2 or higher with query caching enabled.</li>
 						<li><a href="http://www.boutell.com/gd/" target="_blank">GD Graphics Library</a> 2.0 or higher.</li>
 					</ul>
-					<p>If your server does not meet these requirements, SMF may not work properly.</p>
+					<p>If your server does not meet these requirements, Wedge may not work properly.</p>
 				</div>
 				<div class="panel">
-					<h2 id="installing">Installing SMF</h2>
-					<p>The first thing you need to do, before you can convert, is upload all of the files in the installation package found on <a href="http://www.simplemachines.org/download.php">the downloads page</a> to your server in, preferably, a directory other than your current software.  You can upload it to any directory accessible by URL, but if you're not sure where to put it, a directory named &quot;forum&quot; or &quot;smf&quot; is a good choice.  You may wish to make sure that all of the folders were uploaded, such as <tt>Themes/default/languages</tt>, because some FTP clients have been known to drop files.</p>
-					<p>If you want or need to install any languages other than English, download the corresponding versions from the download page, and upload them to the same directory you uploaded SMF to.  This should put additional files in <tt>Themes/default/languages</tt> and, in most cases, <tt>Themes/default/images</tt>.</p>
+					<h2 id="installing">Installing Wedge</h2>
+					<p>The first thing you need to do, before you can convert, is upload all of the files in the installation package found on <a href="http://wedge.org/">the downloads page</a> to your server in, preferably, a directory other than your current software.  You can upload it to any directory accessible by URL, but if you're not sure where to put it, a directory named &quot;forum&quot; or &quot;wedge&quot; is a good choice.  You may wish to make sure that all of the folders were uploaded, such as <tt>Themes/default/languages</tt>, because some FTP clients have been known to drop files.</p>
+					<p>If you want or need to install any languages other than English, download the corresponding versions from the download page, and upload them to the same directory you uploaded Wedge to.  This should put additional files in <tt>Themes/default/languages</tt> and, in most cases, <tt>Themes/default/images</tt>.</p>
 					<p>After you have finished uploading the files, point your browser to http://www.yourdomain.tld/forum/install.php - where www.yourdomain.tld/forum is the URL to where you uploaded it.  You should then see an installer interface.</p>
-					<p>The first page you see may request your FTP information.  If you see this screen, it is because the installer found some files or folders with inadequate permissions for SMF to run properly.  If you enter your FTP information here, the installer can automatically fix these permissions for you.  Please note that the path should be the same path you see in your FTP client.  For example, it might be &quot;public_html/forum&quot;.  And remember, the installer will not save your FTP password anywhere.</p>
+					<p>The first page you see may request your FTP information.  If you see this screen, it is because the installer found some files or folders with inadequate permissions for Wedge to run properly.  If you enter your FTP information here, the installer can automatically fix these permissions for you.  Please note that the path should be the same path you see in your FTP client.  For example, it might be &quot;public_html/forum&quot;.  And remember, the installer will not save your FTP password anywhere.</p>
 					<p>When you are asked for database login information, make sure the user you specify has access to the database your current software is using (if it uses MySQL.)  Often, the easiest way to do this is to install with the same database name, username, and password as your other software (but with a prefix like &quot;wedge_&quot;.)</p>
 				</div>
 				<div class="panel">
 					<h2 id="convert">Converting from your current software</h2>
 					<p>After you have finished with the installer (it should walk you through the rest of the process) and deleted the install.php file, you're ready to get the conversion process going.  Be warned, however, that the process can take some time for larger forums, because it has been engineered not to disrupt the server's normal operations.</p>
-					<p>To begin, download the converter you want from <a href="http://download.simplemachines.org/?converters">the download page</a>.  If there is no converter available for the software or version you're using, please check our forum for information about one.  Otherwise, download the file (for example, it might be yoursoftware_to_wedge.zip) and upload its contents to the same folder as SMF.</p>
-					<p>Once that's done, use your browser to go to http://www.example.com/forum/convert.php, where www.example.com/forum is the URL to where you have installed SMF.  For most converters, you should be presented with two boxes - one the path to SMF, which should already be correct, and another for your software.  The converters will detect if the path is correct for you, so if it takes a few tries, don't worry.  You will also see a box for the current password - this should be the password for the database account you installed SMF with.</p>
+					<p>To begin, download the converter you want from <a href="http://download.simplemachines.org/?converters">the download page</a>.  If there is no converter available for the software or version you're using, please check our forum for information about one.  Otherwise, download the file (for example, it might be yoursoftware_to_wedge.zip) and upload its contents to the same folder as Wedge.</p>
+					<p>Once that's done, use your browser to go to http://www.example.com/forum/convert.php, where www.example.com/forum is the URL to where you have installed Wedge.  For most converters, you should be presented with two boxes - one the path to Wedge, which should already be correct, and another for your software.  The converters will detect if the path is correct for you, so if it takes a few tries, don't worry.  You will also see a box for the current password - this should be the password for the database account you installed Wedge with.</p>
 					<p>After you hit continue, the conversion process will begin.  Depending on the size of your forum, it may take quite some time, but it will continue for you automatically.  You may, near the end, be prompted to specify whether you wish for some extra feature converted, but that is very converter-specific.</p>
 				</div>
 				<div class="panel">
@@ -208,7 +208,7 @@
 	</div></div>
 	<div id="footer"><div class="frame">
 		<div class="smalltext padding"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width: 0; margin-bottom: 0.7em" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
-		<div class="smalltext"><a href="http://www.simplemachines.org">Simple Machines Forum</a></div>
+		<div class="smalltext"><a href="http://wedge.org">Wedge</a></div>
 	</div></div>
 </body>
 </html>

@@ -143,7 +143,7 @@ function define_testcases()
 		),
 
 		'quote01' => array(
-			'desc' => 'YaBB SE quotes',
+			'desc' => 'Quotes',
 			'text' => '[quote author=name link=board=123;threadid=1234;start=30#12345 date=1019005435]test[/quote]',
 			'preparsed_check' => '~' . preg_quote('[quote author=name link=board=123;threadid=1234;start=30#12345 date=1019005435]test[/quote]', '~') . '~',
 			'parsed_check' => '~<div class="bbc_quote"><header><a href=".+?/index.php\?threadid=1234;start=30#12345">.+?name.+?</a></header><blockquote>test</blockquote><footer></footer></div>~',

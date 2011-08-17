@@ -18,12 +18,12 @@ global
 $doing_manual_install = false;
 $no_prefix = array('no_prefix' => true);
 
-if (!defined('SMF') && file_exists(dirname(__FILE__) . '/SSI.php'))
+if (!defined('WEDGE') && file_exists(dirname(__FILE__) . '/SSI.php'))
 {
 	require_once(dirname(__FILE__) . '/SSI.php');
 	$doing_manual_install = true;
 }
-elseif (!defined('SMF'))
+elseif (!defined('WEDGE'))
 	die('The installer wasn\'t able to connect to Wedge! Make sure that you are either installing this via the Package Manager or the SSI.php file is in the same directory.');
 
 if (isset($_GET['delete']))
