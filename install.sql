@@ -855,6 +855,7 @@ CREATE TABLE {$db_prefix}custom_fields (
   show_display tinyint(3) NOT NULL default '0',
   show_profile varchar(20) NOT NULL default 'forumprofile',
   private tinyint(3) NOT NULL default '0',
+  guest_access tinyint(3) NOT NULL default '0',
   active tinyint(3) NOT NULL default '1',
   bbc tinyint(3) NOT NULL default '0',
   can_search tinyint(3) NOT NULL default '0',
