@@ -19,7 +19,7 @@ $GLOBALS['required_php_version'] = '5.2.3';
 
 // Database info.
 $db = array(
-	'version' => '4.1.2',
+	'version' => '5.1.0',
 	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',

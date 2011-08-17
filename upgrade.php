@@ -16,12 +16,12 @@ define('WEDGE_VERSION', '0.1');
 define('WEDGE_LANG_VERSION', '0.1');
 
 $GLOBALS['required_php_version'] = '5.2.3';
-$GLOBALS['required_mysql_version'] = '4.1.2';
+$GLOBALS['required_mysql_version'] = '5.1.0';
 
 $db = array(
-	'version' => '3.23.28',
+	'version' => '5.1.0',
 	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
-	'utf8_version' => '4.1.0',
+	'utf8_version' => '5.1.0',
 	'utf8_version_check' => 'return mysql_get_server_info();',
 );
 
@@ -2602,78 +2602,30 @@ function textfield_alter($change, $substep)
 {
 	global $db_prefix, $db;
 
-	// Versions of MySQL < 4.1 wouldn't benefit from character set detection.
-	if (version_compare($db['utf8_version'], eval($db['utf8_version_check'])) > 0)
-	{
-		$column_fix = true;
-		$null_fix = !$change['null_allowed'];
-	}
-	else
-	{
-		$request = $smcFunc['db_query']('', '
-			SHOW FULL COLUMNS
-			FROM {db_prefix}' . $change['table'] . '
-			LIKE {string:column}',
-			array(
-				'column' => $change['column'],
-				'db_error_skip' => true,
-			)
-		);
-		if ($smcFunc['db_num_rows']($request) === 0)
-			die('Unable to find column ' . $change['column'] . ' inside table ' . $db_prefix . $change['table']);
-		$table_row = $smcFunc['db_fetch_assoc']($request);
-		$smcFunc['db_free_result']($request);
+	// If we're here, we only need to concern ourselves with updating the column type; we don't need to worry about collation since everything's UTF-8!
 
-		// If something of the current column definition is different, fix it.
-		$column_fix = $table_row['Type'] !== $change['type'] || (strtolower($table_row['Null']) === 'yes') !== $change['null_allowed'] || ($table_row['Default'] == NULL) !== !isset($change['default']) || (isset($change['default']) && $change['default'] !== $table_row['Default']);
-
-		// Columns that previously allowed null, need to be converted first.
-		$null_fix = strtolower($table_row['Null']) === 'yes' && !$change['null_allowed'];
-
-		// Get the character set that goes with the collation of the column.
-		if ($column_fix && !empty($table_row['Collation']))
-		{
-			$request = $smcFunc['db_query']('', '
-				SHOW COLLATION
-				LIKE {string:collation}',
-				array(
-					'collation' => $table_row['Collation'],
-					'db_error_skip' => true,
-				)
-			);
-			// No results? Just forget it all together.
-			if ($smcFunc['db_num_rows']($request) === 0)
-				unset($table_row['Collation']);
-			else
-				$collation_info = $smcFunc['db_fetch_assoc']($request);
-			$smcFunc['db_free_result']($request);
-		}
-	}
-
-	if ($column_fix)
-	{
-		// Make sure there are no NULL's left.
-		if ($null_fix)
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}' . $change['table'] . '
-				SET ' . $change['column'] . ' = {string:default}
-				WHERE ' . $change['column'] . ' IS NULL',
-				array(
-					'default' => isset($change['default']) ? $change['default'] : '',
-					'db_error_skip' => true,
-				)
-			);
-
-		// Do the actual alteration.
+	// Make sure there are no NULL's left.
+	if (!$change['null_allowed'])
 		$smcFunc['db_query']('', '
-			ALTER TABLE {db_prefix}' . $change['table'] . '
-			CHANGE COLUMN ' . $change['column'] . ' ' . $change['column'] . ' ' . $change['type'] . (isset($collation_info['Charset']) ? ' CHARACTER SET ' . $collation_info['Charset'] . ' COLLATE ' . $collation_info['Collation'] : '') . ($change['null_allowed'] ? '' : ' NOT NULL') . (isset($change['default']) ? ' default {string:default}' : ''),
+			UPDATE {db_prefix}' . $change['table'] . '
+			SET ' . $change['column'] . ' = {string:default}
+			WHERE ' . $change['column'] . ' IS NULL',
 			array(
 				'default' => isset($change['default']) ? $change['default'] : '',
 				'db_error_skip' => true,
 			)
 		);
-	}
+
+	// Do the actual alteration.
+	$smcFunc['db_query']('', '
+		ALTER TABLE {db_prefix}' . $change['table'] . '
+		CHANGE COLUMN ' . $change['column'] . ' ' . $change['column'] . ' ' . $change['type'] . ($change['null_allowed'] ? '' : ' NOT NULL') . (isset($change['default']) ? ' default {string:default}' : ''),
+		array(
+			'default' => isset($change['default']) ? $change['default'] : '',
+			'db_error_skip' => true,
+		)
+	);
+
 	nextSubstep($substep);
 }
 
@@ -2681,14 +2633,6 @@ function textfield_alter($change, $substep)
 function checkChange(&$change)
 {
 	global $db;
-	static $database_version, $where_field_support;
-
-	// Attempt to find a database_version.
-	if (empty($database_version))
-	{
-		$database_version = $db['version_check'];
-		$where_field_support = version_compare('5.0', $database_version) <= 0;
-	}
 
 	// Not a column we need to check on?
 	if (!in_array($change['name'], array('memberGroups', 'passwordSalt')))
@@ -2697,46 +2641,21 @@ function checkChange(&$change)
 	// Break it up you (six|seven).
 	$temp = explode(' ', str_replace('NOT NULL', 'NOT_NULL', $change['text']));
 
-	// Can we support a shortcut method?
-	if ($where_field_support)
-	{
-		// Get the details about this change.
-		$request = $smcFunc['db_query']('', '
-			SHOW FIELDS
-			FROM {db_prefix}{raw:table}
-			WHERE Field = {string:old_name} OR Field = {string:new_name}',
-			array(
-				'table' => $change['table'],
-				'old_name' => $temp[1],
-				'new_name' => $temp[2],
-		));
-		if ($smcFunc['db_num_rows'] != 1)
-			return;
+	// Get the details about this change.
+	$request = $smcFunc['db_query']('', '
+		SHOW FIELDS
+		FROM {db_prefix}{raw:table}
+		WHERE Field = {string:old_name} OR Field = {string:new_name}',
+		array(
+			'table' => $change['table'],
+			'old_name' => $temp[1],
+			'new_name' => $temp[2],
+	));
+	if ($smcFunc['db_num_rows'] != 1)
+		return;
 
-		list (, $current_type) = $smcFunc['db_fetch_assoc']($request);
-		$smcFunc['db_free_result']($request);
-	}
-	else
-	{
-		// Do this the old fashion, sure method way.
-		$request = $smcFunc['db_query']('', '
-			SHOW FIELDS
-			FROM {db_prefix}{raw:table}',
-			array(
-				'table' => $change['table'],
-		));
-		// Mayday!
-		if ($smcFunc['db_num_rows'] == 0)
-			return;
-
-		// Oh where, oh where has my little field gone. Oh where can it be...
-		while ($row = $smcFunc['db_query']($request))
-			if ($row['Field'] == $temp[1] || $row['Field'] == $temp[2])
-			{
-				$current_type = $row['Type'];
-				break;
-			}
-	}
+	list (, $current_type) = $smcFunc['db_fetch_assoc']($request);
+	$smcFunc['db_free_result']($request);
 
 	// If this doesn't match, the column may of been altered for a reason.
 	if (trim($current_type) != trim($temp[3]))

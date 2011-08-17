@@ -247,10 +247,7 @@ function step2()
 		if ($table < $_GET['table'])
 			continue;
 
-		if (version_compare($database_version, '4.1.8') >= 0)
-			$smcFunc['db_query']('', 'START TRANSACTION WITH CONSISTENT SNAPSHOT');
-		else
-			$smcFunc['db_query']('', '/*!32317 BEGIN */');
+		$smcFunc['db_query']('', 'START TRANSACTION WITH CONSISTENT SNAPSHOT');
 		$smcFunc['db_query']('', "/*!32317 SET AUTOCOMMIT = 0 */", array());
 
 		if (empty($_GET['row']))
