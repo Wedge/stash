@@ -29,7 +29,7 @@ if (file_exists(dirname(__FILE__) . '/Settings.php'))
 // Initialize everything and load the language files.
 initialize_inputs();
 
-$txt['smf_repair_settings'] = 'Wedge Settings Repair Tool';
+$txt['wedge_repair_settings'] = 'Wedge Settings Repair Tool';
 $txt['no_value'] = '<em style="font-weight: normal; color: red;">Value not found!</em>';
 $txt['default_value'] = 'Recommended value';
 $txt['save_settings'] = 'Save Settings';
@@ -99,7 +99,7 @@ echo '<!DOCTYPE html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="robots" content="noindex" />
-	<title>', $txt['smf_repair_settings'], '</title>
+	<title>', $txt['wedge_repair_settings'], '</title>
 	<link rel="stylesheet" href="Themes/default/css/index.css" />
 	<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 	<script src="Themes/default/scripts/script.js"></script>
@@ -200,7 +200,7 @@ echo '<!DOCTYPE html>
 <body>
 	<div id="header">
 		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="' . $wedgelogo . '" style="width: 150px; float: right" alt="Wedge" /></a>
-		<div>', $txt['smf_repair_settings'], '</div>
+		<div>', $txt['wedge_repair_settings'], '</div>
 	</div>
 	<div id="content">';
 

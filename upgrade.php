@@ -757,40 +757,39 @@ function loadEssentialData()
 	// Initialize everything...
 	initialize_inputs();
 
-	// Get the database going!
-	if (file_exists($sourcedir . '/Subs-Database.php'))
+	// Connect the database.
+	if (!$db_connection)
 	{
-		require_once($sourcedir . '/Subs-Database.php');
+		require_once($sourcedir . '/Class-DB.php');
+		wesql::getInstance();
 
-		// Make the connection...
-		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
-
-		// Oh dear god!!
-		if ($db_connection === null)
-			die('Unable to connect to database - please check username and password are correct in Settings.php');
-
-		$smcFunc['db_query']('', '
-			SET NAMES utf8',
-			array(
-				'db_error_skip' => true,
-			)
-		);
-
-		// Load the modSettings data...
-		$request = $smcFunc['db_query']('', '
-			SELECT variable, value
-			FROM {db_prefix}settings',
-			array(
-				'db_error_skip' => true,
-			)
-		);
-		$modSettings = array();
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-			$modSettings[$row['variable']] = $row['value'];
-		$smcFunc['db_free_result']($request);
+		if (!$db_connection)
+			$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('persist' => $db_persist));
 	}
-	else
-		return throw_error('Cannot find ' . $sourcedir . '/Subs-Database.php. Please check you have uploaded all source files and have the correct paths set.');
+
+	// Oh dear god!!
+	if ($db_connection === null)
+		die('Unable to connect to database - please check username and password are correct in Settings.php');
+
+	$smcFunc['db_query']('', '
+		SET NAMES utf8',
+		array(
+			'db_error_skip' => true,
+		)
+	);
+
+	// Load the modSettings data...
+	$request = $smcFunc['db_query']('', '
+		SELECT variable, value
+		FROM {db_prefix}settings',
+		array(
+			'db_error_skip' => true,
+		)
+	);
+	$modSettings = array();
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+		$modSettings[$row['variable']] = $row['value'];
+	$smcFunc['db_free_result']($request);
 
 	// If they don't have the file, they're going to get a warning anyway so we won't need to clean request vars.
 	if (file_exists($sourcedir . '/QueryString.php'))

@@ -120,7 +120,7 @@ class sphinx_search
 				$query = '@(subject) ' . $query;
 
 			// Execute the search query.
-			$request = $mySphinx->Query($query, 'smf_index');
+			$request = $mySphinx->Query($query, 'wedge_index');
 
 			// Can a connection to the daemon be made?
 			if ($request === false)

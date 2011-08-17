@@ -272,12 +272,12 @@ function step_3()
 	<br>
 
 	<h4>Creating a cron job for the indexer</h4>
-	In order to keep the full-text index up to date, you need to add a cron job that will update the index from time to time. The configuration file defines two indexes: <tt>smf_delta_index</tt>, an index that only stores the recent changes and can be called frequently.  <tt>smf_base_index</tt>, an index that stores the full database and should be called less frequently.
+	In order to keep the full-text index up to date, you need to add a cron job that will update the index from time to time. The configuration file defines two indexes: <tt>wedge_delta_index</tt>, an index that only stores the recent changes and can be called frequently.  <tt>wedge_base_index</tt>, an index that stores the full database and should be called less frequently.
 
 	Adding the following lines to /etc/crontab would let the index rebuild every day (at 3 am) and update the most recently changed messages each hour:<br>
 	<tt># search indexer<br>
-	10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_base_index<br>
-	0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate smf_delta_index</tt><br>';
+	10 3 * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate wedge_base_index<br>
+	0 * * * * /usr/local/bin/indexer --config /usr/local/etc/sphinx.conf --rotate wedge_delta_index</tt><br>';
 
 	template_sphinx_config_below();
 }
@@ -341,7 +341,7 @@ function step_999()
 # By default the location of this file would probably be:
 # /usr/local/etc/sphinx.conf
 
-source smf_source
+source wedge_source
 {
 	type = mysql
 	strip_html = 1
@@ -385,7 +385,7 @@ source smf_source
 		WHERE ID_MSG = $id
 }
 
-source smf_delta_source : smf_source
+source wedge_delta_source : wedge_source
 {
 	sql_query_pre = SET NAMES utf8
 	sql_query_range = \
@@ -395,27 +395,27 @@ source smf_delta_source : smf_source
 			AND s2.variable = \'maxMsgID\'
 }
 
-index smf_base_index
+index wedge_base_index
 {
-	source = smf_source
-	path = ', $modSettings['sphinx_data_path'], '/smf_sphinx_base.index', empty($modSettings['sphinx_stopword_path']) ? '' : '
+	source = wedge_source
+	path = ', $modSettings['sphinx_data_path'], '/wedge_sphinx_base.index', empty($modSettings['sphinx_stopword_path']) ? '' : '
 	stopwords = ' . $modSettings['sphinx_stopword_path'], '
 	min_word_len = 2
 	charset_type = utf-8
 	charset_table = 0..9, A..Z->a..z, _, a..z
 }
 
-index smf_delta_index : smf_base_index
+index wedge_delta_index : wedge_base_index
 {
-	source = smf_delta_source
-	path = ', $modSettings['sphinx_data_path'], '/smf_sphinx_delta.index
+	source = wedge_delta_source
+	path = ', $modSettings['sphinx_data_path'], '/wedge_sphinx_delta.index
 }
 
-index smf_index
+index wedge_index
 {
 	type = distributed
-	local = smf_base_index
-	local = smf_delta_index
+	local = wedge_base_index
+	local = wedge_delta_index
 }
 
 indexer

@@ -53,7 +53,7 @@ $incontext['steps'] = array(
 );
 
 // Default title...
-$incontext['page_title'] = $txt['smf_installer'];
+$incontext['page_title'] = $txt['wedge_installer'];
 
 // What step are we on?
 $incontext['current_step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
@@ -1907,7 +1907,7 @@ function template_install_above()
 	<head>
 		<meta charset="utf-8">
 		<meta name="robots" content="noindex">
-		<title>', $txt['smf_installer'], '</title>
+		<title>', $txt['wedge_installer'], '</title>
 		<link rel="stylesheet" href="', add_css_file(array('index', 'install')), '">
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
@@ -1940,7 +1940,7 @@ function template_install_above()
 			</div>
 		</div></div>
 		<div id="upper_section" class="middletext flow_hidden"><div class="frame">
-			<h1 class="forumtitle"><a>', $txt['smf_installer'], '</a></h1>
+			<h1 class="forumtitle"><a>', $txt['wedge_installer'], '</a></h1>
 			<div id="wedgelogo"></div>
 		</div></div>
 	</div></div>

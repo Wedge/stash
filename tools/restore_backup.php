@@ -813,7 +813,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 		$db_prefix = is_numeric(substr($db_prefix, 0, 1)) ? $db_name . '.' . $db_prefix : '`' . $db_name . '`.' . $db_prefix;
 
 	// Some core functions.
-	function smf_db_replacement__callback($matches)
+	function wesql_replacement__callback($matches)
 	{
 		global $db_callback, $user_info, $db_prefix;
 
@@ -829,10 +829,10 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			return $user_info['query_wanna_see_board'];
 
 		if (!isset($matches[2]))
-			smf_db_error_backtrace('Invalid value inserted or no type specified.', '', E_USER_ERROR, __FILE__, __LINE__);
+			wesql_error_backtrace('Invalid value inserted or no type specified.', '', E_USER_ERROR, __FILE__, __LINE__);
 
 		if (!isset($values[$matches[2]]))
-			smf_db_error_backtrace('The database value you\'re trying to insert does not exist: ' . htmlspecialchars($matches[2]), '', E_USER_ERROR, __FILE__, __LINE__);
+			wesql_error_backtrace('The database value you\'re trying to insert does not exist: ' . htmlspecialchars($matches[2]), '', E_USER_ERROR, __FILE__, __LINE__);
 
 		$replacement = $values[$matches[2]];
 
@@ -840,7 +840,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 		{
 			case 'int':
 				if (!is_numeric($replacement) || (string) $replacement !== (string) (int) $replacement)
-					smf_db_error_backtrace('Wrong value type sent to the database. Integer expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+					wesql_error_backtrace('Wrong value type sent to the database. Integer expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 				return (string) (int) $replacement;
 			break;
 
@@ -853,12 +853,12 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 				if (is_array($replacement))
 				{
 					if (empty($replacement))
-						smf_db_error_backtrace('Database error, given array of integer values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+						wesql_error_backtrace('Database error, given array of integer values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 					foreach ($replacement as $key => $value)
 					{
 						if (!is_numeric($value) || (string) $value !== (string) (int) $value)
-							smf_db_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+							wesql_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 						$replacement[$key] = (string) (int) $value;
 					}
@@ -866,7 +866,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 					return implode(', ', $replacement);
 				}
 				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+					wesql_error_backtrace('Wrong value type sent to the database. Array of integers expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 			break;
 
@@ -874,7 +874,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 				if (is_array($replacement))
 				{
 					if (empty($replacement))
-						smf_db_error_backtrace('Database error, given array of string values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+						wesql_error_backtrace('Database error, given array of string values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 					foreach ($replacement as $key => $value)
 						$replacement[$key] = sprintf('\'%1$s\'', mysql_real_escape_string($value, $connection));
@@ -882,19 +882,19 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 					return implode(', ', $replacement);
 				}
 				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Array of strings expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+					wesql_error_backtrace('Wrong value type sent to the database. Array of strings expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 			break;
 
 			case 'date':
 				if (preg_match('~^(\d{4})-([0-1]?\d)-([0-3]?\d)$~', $replacement, $date_matches) === 1)
 					return sprintf('\'%04d-%02d-%02d\'', $date_matches[1], $date_matches[2], $date_matches[3]);
 				else
-					smf_db_error_backtrace('Wrong value type sent to the database. Date expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+					wesql_error_backtrace('Wrong value type sent to the database. Date expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 			break;
 
 			case 'float':
 				if (!is_numeric($replacement))
-					smf_db_error_backtrace('Wrong value type sent to the database. Floating point number expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
+					wesql_error_backtrace('Wrong value type sent to the database. Floating point number expected. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 				return (string) (float) $replacement;
 			break;
 
@@ -908,13 +908,13 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			break;
 
 			default:
-				smf_db_error_backtrace('Undefined type used in the database query. (' . $matches[1] . ':' . $matches[2] . ')', '', false, __FILE__, __LINE__);
+				wesql_error_backtrace('Undefined type used in the database query. (' . $matches[1] . ':' . $matches[2] . ')', '', false, __FILE__, __LINE__);
 			break;
 		}
 	}
 
 	// Because this is just compat mode, this is good enough.
-	function smf_db_query($execute = true, $db_string, $db_values)
+	function wesql_query($execute = true, $db_string, $db_values)
 	{
 		global $db_callback, $db_connection;
 
@@ -925,7 +925,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			$db_callback = array($db_values, $db_connection);
 
 			// Do the quoting and escaping
-			$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
+			$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'wesql_replacement__callback', $db_string);
 
 			// Clear this global variable.
 			$db_callback = array();
@@ -938,7 +938,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 	}
 
 	// Insert some data...
-	function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false)
+	function wesql_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false)
 	{
 		global $db_connection, $db_prefix;
 
@@ -971,7 +971,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 		// Here's where the variables are injected to the query.
 		$insertRows = array();
 		foreach ($data as $dataRow)
-			$insertRows[] = smf_db_query(true, $insertData, array_combine($indexed_columns, $dataRow));
+			$insertRows[] = wesql_query(true, $insertData, array_combine($indexed_columns, $dataRow));
 
 		// Determine the method of insertion.
 		$queryTitle = $method == 'replace' ? 'REPLACE' : ($method == 'ignore' ? 'INSERT IGNORE' : 'INSERT');
@@ -993,9 +993,9 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 	$smcFunc['db_fetch_row'] = 'mysql_fetch_row';
 	$smcFunc['db_fetch_assoc'] = 'mysql_fetch_assoc';
 	$smcFunc['db_num_rows'] = 'mysql_num_rows';
-	$smcFunc['db_insert'] = 'smf_db_insert';
-	$smcFunc['db_query'] = 'smf_db_query';
-	$smcFunc['db_quote'] = 'smf_db_query';
+	$smcFunc['db_insert'] = 'wesql_insert';
+	$smcFunc['db_query'] = 'wesql_query';
+	$smcFunc['db_quote'] = 'wesql_query';
 	$smcFunc['db_error'] = 'mysql_error';
 
 	return $db_connection;
@@ -1042,10 +1042,10 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 		else
 		{
 			require_once($sourcedir . '/Subs-Database.php');
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
+			$db_connection = wesql_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true, 'persist' => true));
 
 			if (!$db_connection)
-				$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
+				$db_connection = wesql_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 		}
 	}
 	else
