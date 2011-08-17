@@ -2065,6 +2065,7 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('compactTopicPagesEnable', '1'),
 	('todayMod', '2'),
 	('enablePreviousNext', '1'),
+	('password_strength', '1'),
 	('pollMode', '1'),
 	('enableVBStyleLogin', '1'),
 	('enableCompressedOutput', '{$enableCompressedOutput}'),
@@ -2262,7 +2263,8 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('embed_mov', '0'),
 	('embed_wmp', '0'),
 	('embed_real', '0'),
-	('embed_swf', '0');
+	('embed_swf', '0'),
+	('disableTemplateEval', '1');
 # --------------------------------------------------------
 
 #

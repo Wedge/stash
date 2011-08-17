@@ -526,7 +526,7 @@
 				'ManageSettings_6' => array(
 					'name' => 'Manage settings (6)',
 					'description' => "Log Pruning",
-					'url' => $scripturl . '?action=admin;area=featuresettings;sa=pruning',
+					'url' => $scripturl . '?action=admin;area=logs;sa=settings',
 				),
 				'ManageSettings_7' => array(
 					'name' => 'Manage settings (7)',
