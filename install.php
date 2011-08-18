@@ -398,6 +398,11 @@ function CheckFilesWritable()
 	$incontext['page_title'] = $txt['ftp_checking_writable'];
 	$incontext['sub_template'] = 'chmod_files';
 
+	// This file is special... We only want to be able to read it.
+	if (file_exists(dirname(__FILE__) . '/MGalleryItem.php'))
+		@chmod(dirname(__FILE__) . '/MGalleryItem.php', 0644);
+
+	// Now for the files and folders we want to make writable.
 	$writable_files = array(
 		'attachments',
 		'avatars',

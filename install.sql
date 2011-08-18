@@ -1424,6 +1424,18 @@ CREATE TABLE {$db_prefix}media_files (
   meta text NOT NULL,
   PRIMARY KEY (id_file)
 ) ENGINE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Dumping data for table `media_files`
+#
+
+INSERT INTO {$db_prefix}media_files
+	(id_file, filename, filesize, directory, width, height, id_album, meta)
+VALUES ('1', 'music.png', '4118', 'icons', '48', '48', '0', ''),
+	('2', 'film.png', '2911', 'icons', '48', '48', '0', ''),
+	('3', 'camera.png', '2438', 'icons', '48', '48', '0', ''),
+	('4', 'folder.png', '2799', 'icons', '48', '48', '0', '');
 
 #
 # Table structure for table `media_items`
