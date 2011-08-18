@@ -279,10 +279,10 @@ function step2()
 	}
 
 	echo '
-					If you had any problems, please <a href="http://www.simplemachines.org/community/index.php">tell us about them</a> so that we can help you get them resolved.
+					If you had any problems, please <a href="http://wedge.org/">tell us about them</a> so that we can help you get them resolved.
 					<br>
 					Good luck!<br>
-					Simple Machines
+					The Wedge Team.
 				</div>';
 
 	return false;
@@ -486,9 +486,9 @@ function show_header()
 		</style>
 	</head>
 	<body>
-		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right" alt="Simple Machines" border="0"></a>
-			' : '', '<div title="Vandole">Backup Restoration Tool</div>
+		<div id="header">', file_exists(dirname(__FILE__) . '/Themes/default/images/wedgelogo.png') ? '
+			<a href="http://wedge.org/" target="_blank"><img src="Themes/default/images/wedgelogo.png" style="width: 140px; float: right" alt="Wedge" border="0" /></a>' : '', '
+			<div>Backup Restoration Tool</div>
 		</div>
 		<div id="content">';
 }

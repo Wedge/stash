@@ -1,7 +1,7 @@
 <!-- This is the root profile element ;). -->
-<!ELEMENT smf:xml-feed (profile*)>
-	<!ATTLIST smf:xml-feed xmlns CDATA "http://www.simplemachines.org/xml/profile">
-	<!ATTLIST smf:xml-feed xmlns:smf CDATA "http://www.simplemachines.org/">
+<!ELEMENT we:xml-feed (profile*)>
+	<!ATTLIST we:xml-feed xmlns CDATA "http://wedge.org/files/xml/profile.dtd">
+	<!ATTLIST we:xml-feed xmlns:we CDATA "http://wedge.org/">
 
 	<!-- A members profile... -->
 	<!ELEMENT profile (username, name, link, post, post-group, language, last-login, registered, signature, website, postition)>

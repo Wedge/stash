@@ -1,7 +1,7 @@
 <!-- This is the root news element ;). -->
-<!ELEMENT smf:xml-feed (news*)>
-	<!ATTLIST smf:xml-feed xmlns CDATA "http://www.simplemachines.org/xml/news">
-	<!ATTLIST smf:xml-feed xmlns:smf CDATA "http://www.simplemachines.org/">
+<!ELEMENT we:xml-feed (news*)>
+	<!ATTLIST we:xml-feed xmlns CDATA "http://wedge.org/files/xml/news.dtd">
+	<!ATTLIST we:xml-feed xmlns:we CDATA "http://wedge.org/">
 
 	<!-- Some news... -->
 	<!ELEMENT news (time, id, subject, body, poster, board, link)>

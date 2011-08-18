@@ -456,7 +456,7 @@ function doStep1()
 	{
 		$pass_data = 'web_user=' . base64_encode($_POST['member_username']) . '&check&web_pass=' . sha1(sha1(strtolower($_POST['member_username']) . $_POST['member_password']) . 'w$--IN5~2a');
 
-		$data = (int) fetch_web_data('http://download.simplemachines.org/index.php', $pass_data . '&verify=1');
+		$data = (int) fetch_web_data('http://wedge.org/files/webinstall.php', $pass_data . '&verify=1');
 
 		$_SESSION['webinstall_state']['is_logged_in'] = !empty($data);
 		$_SESSION['webinstall_state']['is_charter'] = $data === 2;
@@ -554,7 +554,7 @@ function doStep1()
 			$_POST['filename_unmodified'] = $_POST['filename'];
 			$_POST['filename'] = $match[1] . '-dev' . strftime('%Y%m%d') . '_';
 
-			$_POST['mirror'] = 'https://devel.simplemachines.org/mkbuild/release/';
+			$_POST['mirror'] = 'https://dev.wedge.org/mkbuild/release/';
 		}
 
 		$files_to_download[] = $_POST['mirror'] . $_POST['filename'] . $type . $ext;
@@ -976,7 +976,7 @@ function fetch_web_data($url, $post_data = '', $keep_alive = false, $redirection
 	elseif ($match[1] == 'ftp')
 	{
 		// Establish a connection and attempt to enable passive mode.
-		$ftp = new ftp_connection(($match[2] ? 'ssl://' : '') . $match[3], empty($match[5]) ? 21 : $match[5], 'anonymous', 'installer@simplemachines.org');
+		$ftp = new ftp_connection(($match[2] ? 'ssl://' : '') . $match[3], empty($match[5]) ? 21 : $match[5], 'anonymous', 'installer@wedge.org');
 		if ($ftp->error !== false || !$ftp->passive())
 			return false;
 
@@ -1038,7 +1038,7 @@ function fetch_web_data($url, $post_data = '', $keep_alive = false, $redirection
 		if (!empty($_SESSION['webinstall_state']['can_svn']) && strpos($match[6], '-dev') !== false && !empty($_SESSION['webinstall_state']['member_info']))
 		{
 			// Don't go giving this to the wrong places.
-			if ($origin === 'devel.simplemachines.org:443')
+			if ($origin === 'dev.wedge.org:443')
 				fwrite($fp, 'Authorization: Basic ' . base64_encode(strtolower($_SESSION['webinstall_state']['member_info'][0]) . ':' . $_SESSION['webinstall_state']['member_info'][1]) . "\r\n");
 		}
 
@@ -1412,13 +1412,13 @@ class ftp_connection
 	var $connection = 'no_connection', $error = false, $last_message, $pasv = array();
 
 	// Create a new FTP connection...
-	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if ($ftp_server !== null)
 			$this->connect($ftp_server, $ftp_port, $ftp_user, $ftp_pass);
 	}
 
-	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if (substr($ftp_server, 0, 6) == 'ftp://')
 			$ftp_server = substr($ftp_server, 6);

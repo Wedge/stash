@@ -1,7 +1,7 @@
 <!-- The root package-list element. -->
 <!ELEMENT package-list (list-title, default-author?, default-website?, section+)>
-	<!ATTLIST package-list xmlns CDATA "http://www.simplemachines.org/xml/package-list">
-	<!ATTLIST package-list xmlns:smf CDATA "http://www.simplemachines.org/">
+	<!ATTLIST package-list xmlns CDATA "http://wedge.org/files/xml/package-list.dtd">
+	<!ATTLIST package-list xmlns:we CDATA "http://wedge.org/">
 
 	<!-- The package list's name. -->
 	<!ELEMENT list-title (#PCDATA)>
@@ -46,7 +46,7 @@
 
 			<!-- Package version. -->
 			<!ELEMENT version (#PCDATA)>
-				<!-- Optional "for" attribute specifies for which version of SMF. -->
+				<!-- Optional "for" attribute specifies for which version of Wedge. -->
 				<!ATTLIST version for CDATA #IMPLIED>
 
 			<!-- Author and email. -->

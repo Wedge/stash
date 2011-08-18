@@ -533,9 +533,9 @@ function show_header()
 		</style>
 	</head>
 	<body>
-		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0"></a>
-			' : '', '<div title="Ta-Kumsaw">Repair Tool</div>
+		<div id="header">', file_exists(dirname(__FILE__) . '/Themes/default/images/wedgelogo.png') ? '
+			<a href="http://wedge.org/" target="_blank"><img src="Themes/default/images/wedgelogo.png" style="width: 140px; float: right" alt="Wedge" border="0" /></a>' : '', '
+			<div>Repair Tool</div>
 		</div>
 		<div id="content">';
 }

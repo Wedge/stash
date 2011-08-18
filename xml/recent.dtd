@@ -1,7 +1,7 @@
 <!-- This is the root recent element ;). -->
-<!ELEMENT smf:xml-feed (recent-post*)>
-	<!ATTLIST smf:xml-feed xmlns CDATA "http://www.simplemachines.org/xml/recent">
-	<!ATTLIST smf:xml-feed xmlns:smf CDATA "http://www.simplemachines.org/">
+<!ELEMENT we:xml-feed (recent-post*)>
+	<!ATTLIST we:xml-feed xmlns CDATA "http://wedge.org/files/xml/recent.dtd">
+	<!ATTLIST we:xml-feed xmlns:we CDATA "http://wedge.org/">
 
 	<!-- A file to modify... -->
 	<!ELEMENT recent (time, id, subject, body)>

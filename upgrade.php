@@ -27,7 +27,7 @@ $timeLimitThreshold = 3;
 $upgrade_path = dirname(__FILE__);
 $upgradeurl = $_SERVER['PHP_SELF'];
 // Where the Wedge images etc. are kept
-$smfsite = 'http://wedge.org/files';
+$wedgesite = 'http://wedge.org/files';
 // Disable the need for admins to login?
 $disable_security = 0;
 // How long, in seconds, must admin be inactive to allow someone else to run?
@@ -189,13 +189,13 @@ if (!class_exists('ftp_connection'))
 		var $connection = 'no_connection', $error = false, $last_message, $pasv = array();
 
 		// Create a new FTP connection...
-		function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+		function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 		{
 			if ($ftp_server !== null)
 				$this->connect($ftp_server, $ftp_port, $ftp_user, $ftp_pass);
 		}
 
-		function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+		function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 		{
 			if (substr($ftp_server, 0, 6) == 'ftp://')
 				$ftp_server = substr($ftp_server, 6);
@@ -955,7 +955,7 @@ function WelcomeLogin()
 				<li>Source Directory: ' . $boarddir . '</li>
 				<li>Cache Directory: ' . $cachedir_temp . '</li>
 			</ul>
-			If these seem incorrect please open Settings.php in a text editor before proceeding with this upgrade. If they are incorrect due to you moving your forum to a new location please download and execute the <a href="http://download.simplemachines.org/?tools">Repair Settings</a> tool from the Simple Machines website before continuing.';
+			If these seem incorrect please open Settings.php in a text editor before proceeding with this upgrade. If they are incorrect due to you moving your forum to a new location please <a href="http://wedge.org/">download</a> and execute the Repair Settings tool from the Wedge website before continuing.';
 
 	// Either we're logged in or we're going to present the login.
 	if (checkLogin())
@@ -3173,7 +3173,7 @@ function template_chmod()
 
 function template_upgrade_above()
 {
-	global $modSettings, $txt, $smfsite, $settings, $upcontext, $upgradeurl;
+	global $modSettings, $txt, $wedgesite, $settings, $upcontext, $upgradeurl;
 
 	echo '<!DOCTYPE html>
 <html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>
@@ -3212,7 +3212,7 @@ function template_upgrade_above()
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">', $txt['upgrade_upgrade_utility'], '</h1>
-			<img id="smflogo" src="Themes/default/images/smflogo.png" alt="Simple Machines Forum" title="Simple Machines Forum">
+			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
 		</div>
 		<div id="upper_section" class="middletext flow_hidden">
 			<div class="user"></div>
@@ -3348,7 +3348,7 @@ function template_xml_above()
 	global $upcontext;
 
 	echo '<', '?xml version="1.0" encoding="ISO-8859-1"?', '>
-	<smf>';
+	<we>';
 
 	if (!empty($upcontext['get_data']))
 		foreach ($upcontext['get_data'] as $k => $v)
@@ -3361,7 +3361,7 @@ function template_xml_below()
 	global $upcontext;
 
 	echo '
-		</smf>';
+	</we>';
 }
 
 function template_error_message()
@@ -3520,22 +3520,22 @@ function template_welcome_message()
 				document.getElementById(\'js_works\').value = 1;
 
 			// Latest version?
-			function smfCurrentVersion()
+			function wedgeCurrentVersion()
 			{
-				var smfVer, yourVer;
+				var weVer, yourVer;
 
 				if (!(\'weVersion\' in window))
 					return;
 
-				smfVer = document.getElementById(\'wedgeVersion\');
+				weVer = document.getElementById(\'wedgeVersion\');
 				yourVer = document.getElementById(\'yourVersion\');
-				smfVer.innerHTML = window.weVersion;
+				weVer.innerHTML = window.weVersion;
 
 				var currentVersion = yourVer.innerHTML;
 				if (currentVersion < window.weVersion)
 					document.getElementById(\'version_warning\').style.display = \'\';
 			}
-			$(window).load(smfCurrentVersion);
+			$(window).load(wedgeCurrentVersion);
 
 			// This checks that the script file even exists!
 			if (typeof weSelectText == \'undefined\')
@@ -4128,7 +4128,7 @@ function template_upgrade_complete()
 			<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
 
 	echo '<br>
-			If you had any problems with this upgrade, or have any problems using Wedge, please don\'t hesitate to <a href="http://www.simplemachines.org/community/index.php">look to us for assistance</a>.<br>
+			If you had any problems with this upgrade, or have any problems using Wedge, please don\'t hesitate to <a href="http://wedge.org/">look to us for assistance</a>.<br>
 			<br>
 			Best of luck,<br>
 			Simple Machines';

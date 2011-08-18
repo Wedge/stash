@@ -31,8 +31,6 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 elseif(!defined('WEDGE'))
 	die('<b>Error:</b> Cannot start - please verify you put this in the same place as Wedge\'s SSI.php.');
 
-$smfinfo_version = '1.0';
-
 initialize();
 
 function load_txt_strings()
@@ -86,8 +84,6 @@ function load_txt_strings()
 	$txt['cache'] = 'Caching';
 	$txt['memcached_settings'] = 'Memcached Settings';
 	$txt['cache_level'] = 'Level';
-	$txt['support_versions_current'] = 'Current Wedge Info version';
-	$txt['support_versions_forum'] = 'Your Wedge Info version';
 
 
 	// PHP Specific Info
@@ -218,7 +214,7 @@ show_footer();
 
 function show_header()
 {
-	global $txt, $smfInfo, $context, $smfinfo_version;
+	global $txt, $smfInfo, $context;
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -424,49 +420,15 @@ function show_header()
 	</head>
 	<body>
 		<div id="header">
-			<a href="http://www.simplemachines.org/" target="_blank"><img src="./Themes/default/images/smflogo.gif" style="width: 258px; float: right;" alt="Simple Machines" border="0" /></a>
+			<a href="http://wedge.org/" target="_blank"><img src="Themes/default/images/wedgelogo.png" style="width: 140px; float: right" alt="Wedge" border="0" /></a>
 			<div>', $txt['title'], '</div>
 		</div>
 		<div id="content">';
 
 	if (allowedTo('admin_forum'))
 		echo '
-		<div class="windowbg" style="margin: 1ex; padding: 1ex 2ex; border: 1px dashed green; color: green;">
-			', sprintf($txt['smfinfo_pass'], $smfInfo), '<br /><br />
-			', $txt['support_versions_forum'], ':
-			<i id="yourVersion" style="white-space: nowrap;">', $smfinfo_version, '</i><br />
-			', $txt['support_versions_current'], ':
-			<i id="smfInfoVersion" style="white-space: nowrap;">??</i><br />
-
-		<script language="JavaScript" type="text/javascript" src="http://www.simplemachines.org/smf/current-smfinfo.js"></script>
-		<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
-			function smfInfoCurrentVersion()
-			{
-				var smfVer, yourVer;
-
-				if (typeof window.weInfoVersion != "string")
-					return;
-
-				smfVer = document.getElementById("smfInfoVersion");
-				yourVer = document.getElementById("yourVersion");
-
-				setInnerHTML(smfVer, window.weInfoVersion);
-
-				var currentVersion = getInnerHTML(yourVer);
-				if (currentVersion != window.weInfoVersion)
-					setInnerHTML(yourVer, "<span style=\"color: red;\">" + currentVersion + "</span>");
-			}
-			var oldonload;
-			if (typeof window.onload != "undefined")
-				oldonload = window.onload;
-
-			window.onload = function ()
-			{
-				smfInfoCurrentVersion();
-				if (oldonload)
-					oldonload();
-			}
-		// ]]></script>
+		<div class="windowbg" style="margin: 1ex; padding: 1ex 2ex; border: 1px dashed green; color: green">
+			', sprintf($txt['smfinfo_pass'], $smfInfo), '
 		</div>';
 	echo '
 		<select id="menuDropdown" onchange="swapSection(this[this.selectedIndex].value); return true;">
@@ -1214,8 +1176,8 @@ function show_footer()
 		</div>';
 
 	/* Below is the hefty javascript for this. Upon opening the page it checks the current file versions with ones
-	   held at simplemachines.org and works out if they are up to date.  If they aren't it colors that files number
-	   red.  It also contains the function, swapOption, that toggles showing the detailed information for each of the
+	   held at wedge.org and works out if they are up to date. If they aren't it colors that file's number red.
+	   It also contains the function, swapOption, that toggles showing the detailed information for each of the
 	   file categories. (sources, languages, and templates.) */
 	echo '
 		<script type="text/javascript" src="', $boardurl, '/Themes/default/scripts/script.js"></script>

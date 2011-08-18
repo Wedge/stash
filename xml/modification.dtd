@@ -19,8 +19,8 @@
 
 <!-- This is the root modification element ;). -->
 <!ELEMENT modification (id, version, file*)>
-	<!ATTLIST modification xmlns CDATA "http://www.simplemachines.org/xml/modification">
-	<!ATTLIST modification xmlns:smf CDATA "http://www.simplemachines.org/">
+	<!ATTLIST modification xmlns CDATA "http://wedge.org/files/xml/modification.dtd">
+	<!ATTLIST modification xmlns:we CDATA "http://wedge.org/">
 
 	<!-- This package's id and version. -->
 	<!ELEMENT id (#PCDATA)>

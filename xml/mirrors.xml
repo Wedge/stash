@@ -14,8 +14,8 @@
 
 		// Get the mirrors!
 		$data['mirrors'][] = array(
-			'name' => 'www.simplemachines.org',
-			'url' => 'http://download.simplemachines.org/index.php/',
+			'name' => 'wedge.org',
+			'url' => 'http://wedge.org/files/index.php/',
 		);
 
 		// Get the releases!

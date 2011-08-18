@@ -5,8 +5,8 @@
 
 <!-- The root package-info element. -->
 <!ELEMENT package-info (id, name, type?, version, install*, uninstall*, upgrade*)>
-	<!ATTLIST package-info xmlns CDATA "http://www.simplemachines.org/xml/package-info">
-	<!ATTLIST package-info xmlns:smf CDATA "http://www.simplemachines.org/">
+	<!ATTLIST package-info xmlns CDATA "http://wedge.org/files/xml/package-info.dtd">
+	<!ATTLIST package-info xmlns:we CDATA "http://wedge.org/">
 
 	<!-- This package's id, name, type, and version. -->
 	<!ELEMENT id (#PCDATA)>
@@ -16,17 +16,17 @@
 
 	<!-- Installation, uninstallation..  Note that more than one mod file can be used. -->
 	<!ELEMENT install (readme?, code*, modification*, create-dir*, create-file*, require-dir*, require-file*, move-dir*, move-file*, remove-dir*, remove-file*)>
-		<!-- Optional "for" attribute specifies for which version of SMF. -->
+		<!-- Optional "for" attribute specifies for which version of Wedge. -->
 		<!ATTLIST install for CDATA #IMPLIED>
 
 	<!ELEMENT uninstall (readme?, code*, modification*, create-dir*, create-file*, require-dir*, require-file*, move-dir*, move-file*, remove-dir*, remove-file*)>
-		<!-- Optional "for" attribute specifies for which version of SMF. -->
+		<!-- Optional "for" attribute specifies for which version of Wedge. -->
 		<!ATTLIST uninstall for CDATA #IMPLIED>
 
 	<!-- Upgrade from another version. -->
 	<!ELEMENT upgrade (readme?, code*, modification*, create-dir*, create-file*, require-dir*, require-file*, move-dir*, move-file*, remove-dir*, remove-file*)>
 		<!ATTLIST upgrade from CDATA #IMPLIED>
-		<!-- Optional "for" attribute specifies for which version of SMF. -->
+		<!-- Optional "for" attribute specifies for which version of Wedge. -->
 		<!ATTLIST upgrade for CDATA #IMPLIED>
 
 		<!-- A readme for important information. -->
@@ -41,7 +41,7 @@
 			<!-- Inline or in a file? -->
 			<!ATTLIST code type (inline|file) "file">
 
-		<!-- Database code... Note: THIS ONLY EXISTS IN SMF 2.0+ -->
+		<!-- Database code... -->
 		<!ELEMENT database (#PCDATA)>
 			<!-- Inline or in a file? -->
 			<!ATTLIST database type (inline|file) "file">

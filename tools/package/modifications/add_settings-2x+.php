@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
-	This is a simplified script to add settings into SMF.
+	This is a simplified script to add settings into Wedge.
 
 	ATTENTION: If you are trying to INSTALL this package, please access
 	it directly, with a URL like the following:
@@ -9,7 +9,7 @@
 ================================================================================
 
 	This script can be used to add new settings into the database for use
-	with SMF's $modSettings array.  It is meant to be run either from the
+	with Wedge's $modSettings array. It is meant to be run either from the
 	package manager or directly by URL.
 
 *******************************************************************************/
@@ -17,7 +17,7 @@
 // Set the below to true to overwrite already existing settings with the defaults. (not recommended.)
 $overwrite_old_settings = false;
 
-// List settings here in the format: setting_key => default_value.  Escape any "s. (" => \")
+// List settings here in the format: setting_key => default_value. Escape any "s. (" => \")
 $mod_settings = array(
 	'example_setting' => '1',
 	'example_setting2' => '0',
@@ -25,12 +25,12 @@ $mod_settings = array(
 
 /******************************************************************************/
 
-// If SSI.php is in the same place as this file, and SMF isn't defined, this is being run standalone.
+// If SSI.php is in the same place as this file, and Wedge isn't defined, this is being run standalone.
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 	require_once(dirname(__FILE__) . '/SSI.php');
-// Hmm... no SSI.php and no SMF?
+// Hmm... no SSI.php and no Wedge?
 elseif (!defined('WEDGE'))
-	die('<strong>Error:</strong> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
+	die('<strong>Error:</strong> Cannot install - please verify you put this in the same place as Wedge\'s index.php.');
 
 // Sorted out the array defined above - now insert the data!
 $result = $smcFunc['db_insert']($overwrite_old_settings ? 'replace' : 'ignore'),

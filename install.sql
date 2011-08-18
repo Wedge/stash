@@ -1541,6 +1541,67 @@ CREATE TABLE {$db_prefix}media_settings (
   value text NOT NULL,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Dumping data for table `media_settings`
+#
+
+INSERT INTO {$db_prefix}media_settings
+	(name, value)
+VALUES ('installed_on', UNIX_TIMESTAMP()),
+	('data_dir_path', '{$boarddir}/media'),
+	('data_dir_url', '{$boardurl}/media'),
+	('max_dir_files', '150'),
+	('num_items_per_page', '15'),
+	('max_dir_size', '51400'),
+	('max_file_size', '1024'),
+	('max_width', '2048'),
+	('max_height', '1536'),
+	('allow_over_max', '1'),
+	('upload_security_check', '0'),
+	('jpeg_compression', '80'),
+	('num_unapproved_items', '0'),
+	('num_unapproved_albums', '0'),
+	('num_unapproved_comments', '0'),
+	('num_unapproved_item_edits', '0'),
+	('num_unapproved_album_edits', '0'),
+	('num_reported_items', '0'),
+	('num_reported_comments', '0'),
+	('recent_item_limit', '5'),
+	('random_item_limit', '5'),
+	('recent_comments_limit', '10'),
+	('recent_albums_limit', '10'),
+	('total_items', '0'),
+	('total_comments', '0'),
+	('total_albums', '0'),
+	('total_contests', '0'),
+	('show_sub_albums_on_index', '1'),
+	('enable_re-rating', '0'),
+	('use_metadata_date', '1'),
+	('max_thumb_width', '120'),
+	('max_thumb_height', '120'),
+	('max_preview_width', '500'),
+	('max_preview_height', '500'),
+	('max_bigicon_width', '200'),
+	('max_bigicon_height', '200'),
+	('max_thumbs_per_page', '100'),
+	('max_title_length', '30'),
+	('show_extra_info', '1'),
+	('entities_convert', '0'),
+	('clear_thumbnames', '1'),
+	('image_handler', '1'),
+	('enable_cache', '0'),
+	('use_zoom', '1'),
+	('show_linking_code', '1'),
+	('album_edit_unapprove', '1'),
+	('item_edit_unapprove', '1'),
+	('album_columns', '1'),
+	('disable_feed', '0'),
+	('disable_playlists', '0'),
+	('disable_comments', '0'),
+	('disable_ratings', '0'),
+	('my_docs', 'txt,rtf,pdf,xls,doc,ppt,docx,xlsx,pptx,odt,ods,odp,xml,html,htm,php,css,js,zip,rar,ace,arj,7z,gz,tar,tgz,bz,bzip2,sit');
 
 #
 # Table structure for table `media_variables`
@@ -1798,7 +1859,7 @@ CREATE TABLE {$db_prefix}package_servers (
 
 INSERT INTO {$db_prefix}package_servers
 	(name, url)
-VALUES ('Simple Machines Third-party Mod Site', 'http://custom.simplemachines.org/packages/mods');
+VALUES ('Wedge Third-party Mod Site', 'http://wedge.org/mods');
 # --------------------------------------------------------
 
 #

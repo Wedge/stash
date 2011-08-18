@@ -1,7 +1,7 @@
 <!-- This is the root member element ;). -->
-<!ELEMENT smf:xml-feed (member*)>
-	<!ATTLIST smf:xml-feed xmlns CDATA "http://www.simplemachines.org/xml/member">
-	<!ATTLIST smf:xml-feed xmlns:smf CDATA "http://www.simplemachines.org/">
+<!ELEMENT we:xml-feed (member*)>
+	<!ATTLIST we:xml-feed xmlns CDATA "http://wedge.org/files/xml/members.dtd">
+	<!ATTLIST we:xml-feed xmlns:we CDATA "http://wedge.org/">
 
 	<!-- A file to modify... -->
 	<!ELEMENT member (name, time, id, link)>

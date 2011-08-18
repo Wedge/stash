@@ -1,26 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE addon-info SYSTEM "http://www.simplemachines.org/xml/addon-info">
+<!DOCTYPE addon-info SYSTEM "http://wedge.org/files/xml/package-info.dtd">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	This is a simplified add-on manifest for Wedge add-ons.
 
-	ATTENTION: If you are trying to install this manually, you should try
-	the add-on manager. If it will not work for you, please take a look
-	at the following for information on this format:
-		http://www.simplemachines.org/redirect/manual_mod_install
-
-================================================================================
-
-	This script can be used to make your add-on do many different things.
-	The following documentation should be available on the format of this
-	file and the things you can do with it:
-		http://www.simplemachines.org/redirect/mod_addon_sdk
-
 	Please see the other included file, addon-info_advanced.xml, for
 	a more detailed description of what you can do with this file.
-
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-<addon-info xmlns="http://www.simplemachines.org/xml/addon-info" xmlns:smf="http://www.simplemachines.org/">
+<addon-info xmlns="http://wedge.org/files/xml/package-info.dtd" xmlns:we="http://wedge.org/">
 	<!-- For the id, always use something unique - put your name, a colon, and then the add-on name. -->
 	<id>username:testing123</id>
 	<!-- Below should be the name of this add-on. -->

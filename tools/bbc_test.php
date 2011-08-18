@@ -75,14 +75,14 @@ function define_testcases()
 	$testcases = array(
 		'link01' => array(
 			'desc' => 'autolinks inside of links',
-			'text' => '[url=http://www.google.com/]test www.simplemachines.org test[/url]',
-			'preparsed_check' => '~' . preg_quote('[url=http://www.google.com/]test www.simplemachines.org test[/url]', '~') . '~',
-			'parsed_check' => '~<a href="http://www.google.com/"[^>]*>test www.simplemachines.org test</a>~',
+			'text' => '[url=http://www.google.com/]test wedge.org test[/url]',
+			'preparsed_check' => '~' . preg_quote('[url=http://www.google.com/]test wedge.org test[/url]', '~') . '~',
+			'parsed_check' => '~<a href="http://www.google.com/"[^>]*>test wedge.org test</a>~',
 		),
 		'link02' => array(
 			'desc' => 'links inside links',
-			'text' => '[url=http://www.google.com/]this url has [email=unknown@simplemachines.org]an email[/email] and [url=http://www.yahoo.com]another URL[/url] in it![/url]',
-			'preparsed_check' => '~' . preg_quote('[url=http://www.google.com/]this url has [email=unknown@simplemachines.org]an email[/email] and [url=http://www.yahoo.com]another URL[/url] in it![/url]', '~') . '~',
+			'text' => '[url=http://www.google.com/]this url has [email=noreply@wedge.org]an email[/email] and [url=http://www.yahoo.com]another URL[/url] in it![/url]',
+			'preparsed_check' => '~' . preg_quote('[url=http://www.google.com/]this url has [email=noreply@wedge.org]an email[/email] and [url=http://www.yahoo.com]another URL[/url] in it![/url]', '~') . '~',
 			'parsed_check' => '~<a href="http://www.google.com/"[^>]*>this url has [^ <>"]*an email[^ <>"]* and [^ <>"]*another URL</a> in it!~',
 		),
 		'link03' => array(
@@ -376,9 +376,9 @@ function show_header()
 		</style>
 	</head>
 	<body>
-		<div id="header">
-			<a href="http://www.simplemachines.org/" target="_blank"><img src="', $settings['default_images_url'], '/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0" /></a>
-			<div title="Grr, arg.">BBC Testcases</div>
+		<div id="header">', file_exists(dirname(__FILE__) . '/Themes/default/images/wedgelogo.png') ? '
+			<a href="http://wedge.org/" target="_blank"><img src="Themes/default/images/wedgelogo.png" style="width: 140px; float: right" alt="Wedge" border="0" /></a>' : '', '
+			<div>BBC Testcases</div>
 		</div>
 		<div id="content">';
 }

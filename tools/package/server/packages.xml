@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/package-list">
+<!DOCTYPE modification SYSTEM "http://wedge.org/files/xml/package-list.dtd">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	This is a package server listing file of Wedge packages.
 
@@ -7,7 +7,7 @@
 	manager in your forum to this link, instead of accessing it directly.
 
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<package-list xmlns="http://www.simplemachines.org/xml/package-list" xmlns:wedge="http://wedge.org/">
+<package-list xmlns="http://wedge.org/files/xml/package-list.dtd" xmlns:we="http://wedge.org/">
 	<!-- This is the title of your package server list itself. -->
 	<list-title>My Package Server</list-title>
 

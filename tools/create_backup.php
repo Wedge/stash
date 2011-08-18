@@ -355,10 +355,10 @@ function step2()
 					<br>';
 
 	echo '
-					If you had any problems, please <a href="http://www.simplemachines.org/community/index.php">tell us about them</a> so that we can help you get them resolved.
+					If you had any problems, please <a href="http://wedge.org/">tell us about them</a> so that we can help you get them resolved.
 					<br>
 					Good luck!<br>
-					Simple Machines
+					The Wedge Team.
 				</div>';
 }
 
@@ -583,9 +583,9 @@ function show_header()
 		</style>
 	</head>
 	<body>
-		<div id="header">
-			', file_exists(dirname(__FILE__) . '/Themes/default/images/smflogo.gif') ? '<a href="http://www.simplemachines.org/" target="_blank"><img src="Themes/default/images/smflogo.gif" style="width: 250px; float: right;" alt="Simple Machines" border="0"></a>
-			' : '', '<div title="Belthasar">Backup Creation Tool</div>
+		<div id="header">', file_exists(dirname(__FILE__) . '/Themes/default/images/wedgelogo.png') ? '
+			<a href="http://wedge.org/" target="_blank"><img src="Themes/default/images/wedgelogo.png" style="width: 140px; float: right" alt="Wedge" border="0" /></a>' : '', '
+			<div>Backup Creation Tool</div>
 		</div>
 		<div id="content">';
 }
@@ -794,13 +794,13 @@ class ftp_connection
 	var $connection = 'no_connection', $error = false, $last_message, $pasv = array();
 
 	// Create a new FTP connection...
-	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function ftp_connection($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if ($ftp_server !== null)
 			$this->connect($ftp_server, $ftp_port, $ftp_user, $ftp_pass);
 	}
 
-	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@simplemachines.org')
+	function connect($ftp_server, $ftp_port = 21, $ftp_user = 'anonymous', $ftp_pass = 'ftpclient@wedge.org')
 	{
 		if (substr($ftp_server, 0, 6) == 'ftp://')
 			$ftp_server = substr($ftp_server, 6);

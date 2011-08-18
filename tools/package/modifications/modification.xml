@@ -1,21 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<!DOCTYPE modification SYSTEM "http://wedge.org/files/xml/modification.dtd">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	This is an example modification file for SMF packages.
-
-	ATTENTION: If you are trying to install this manually, you should try
-	the package manager.  If it will not work for you, please take a look
-	at the following for information on this format:
-		http://www.simplemachines.org/redirect/manual_mod_install
-
-================================================================================
-
-	Modification files can be used to modify files so that they do what
-	your package needs them to do to work properly.
-
+	This is an example modification file for Wedge packages.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<modification xmlns="http://wedge.org/files/xml/modification.dtd" xmlns:we="http://wedge.org/">
 	<!-- This information needs to be the same as that in the addon-info.xml. -->
 	<id>username:testing123</id>
 	<version>1.0</version>
