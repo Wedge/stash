@@ -977,7 +977,7 @@ function checkLogin()
 		if (empty($_POST['user']))
 			$_POST['user'] = 'Administrator';
 
-		// Before 2.0 these column names were different!
+		// In ancient pre-fork versions, these column names were different.
 		$oldDB = false;
 		$request = $smcFunc['db_query']('', '
 			SHOW COLUMNS
@@ -4115,23 +4115,22 @@ function template_upgrade_complete()
 
 	if (!empty($upcontext['can_delete_script']))
 		echo '
-			<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete(this);"> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
-			<script><!-- // --><![CDATA[
-				function doTheDelete(theCheck)
-				{
-					var theImage = document.getElementById ? document.getElementById("delete_upgrader") : document.all.delete_upgrader;
-
-					theImage.src = "', $upgradeurl, '?delete=1&ts_" + (new Date().getTime());
-					theCheck.disabled = true;
-				}
-			// ]]></script>
-			<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
+		<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete(this);"> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
+		<script><!-- // --><![CDATA[
+			function doTheDelete(theCheck)
+			{
+				var theImage = document.getElementById ? document.getElementById("delete_upgrader") : document.all.delete_upgrader;
+				theImage.src = "', $upgradeurl, '?delete=1&ts_" + (new Date().getTime());
+				theCheck.disabled = true;
+			}
+		// ]]></script>
+		<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
 
 	echo '<br>
 			If you had any problems with this upgrade, or have any problems using Wedge, please don\'t hesitate to <a href="http://wedge.org/">look to us for assistance</a>.<br>
 			<br>
 			Best of luck,<br>
-			Simple Machines';
+			The Wedge Team.';
 }
 
 ?>

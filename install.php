@@ -19,8 +19,7 @@ $GLOBALS['required_php_version'] = '5.2.3';
 
 // Database info.
 $db = array(
-	'version' => '5.1.0',
-	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
+	'required_version' => '5.1.0',
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',
 	'default_host' => 'mysql.default_host',
@@ -710,7 +709,7 @@ function DatabaseSettings()
 
 		// Do they meet the install requirements?
 		// !!! Old client, new server?
-		if (version_compare($db['version'], preg_replace('~^\D*|\-.+?$~', '', eval($db['version_check']))) > 0)
+		if (version_compare($db['required_version'], preg_replace('~^\D*|\-.+?$~', '', min(mysql_get_server_info(), mysql_get_client_info()))) > 0)
 		{
 			$incontext['error'] = $txt['error_db_too_low'];
 			return false;
@@ -1777,12 +1776,14 @@ function updateSettingsFile($vars)
 		$settingsArray[$i] = rtrim($settingsArray[$i]) . "\n";
 
 		foreach ($vars as $var => $val)
-			if (strncasecmp($settingsArray[$i], '$' . $var, 1 + strlen($var)) == 0)
-			{
-				$comment = strstr($settingsArray[$i], '#');
-				$settingsArray[$i] = '$' . $var . ' = \'' . $val . '\';' . ($comment != '' ? "\t\t" . $comment : "\n");
-				unset($vars[$var]);
-			}
+		{
+			if (strncasecmp($settingsArray[$i], '$' . $var, 1 + strlen($var)) != 0)
+				continue;
+
+			$comment = strstr($settingsArray[$i], '#');
+			$settingsArray[$i] = '$' . $var . ' = \'' . $val . '\';' . ($comment != '' ? "\t\t" . $comment : "\n");
+			unset($vars[$var]);
+		}
 	}
 
 	// Uh oh... the file wasn't empty... was it?
@@ -1807,11 +1808,9 @@ function updateSettingsFile($vars)
 
 	$lines = count($settingsArray);
 	for ($i = 0; $i < $lines - 1; $i++)
-	{
-		// Don't just write a bunch of blank lines.
-		if ($settingsArray[$i] != '' || @$settingsArray[$i - 1] != '')
+		if ($settingsArray[$i] !== '' || @$settingsArray[$i - 1] !== '') // Skip multiple blank lines
 			fwrite($fp, strtr($settingsArray[$i], "\r", ''));
-	}
+
 	fwrite($fp, $settingsArray[$i] . '?' . '>');
 	fclose($fp);
 

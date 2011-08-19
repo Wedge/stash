@@ -1,26 +1,15 @@
 <?php
-/**********************************************************************************
-* create_backup.php                                                               *
-***********************************************************************************
-* SMF: Simple Machines Forum                                                      *
-* Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
-* =============================================================================== *
-* Software Version:           SMF 2.0 RC5                                         *
-* Software by:                Simple Machines (http://www.simplemachines.org)     *
-* Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
-*           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
-* Support, News, Updates at:  http://www.simplemachines.org                       *
-***********************************************************************************
-* This program is free software; you may redistribute it and/or modify it under   *
-* the terms of the provided license as published by Simple Machines LLC.          *
-*                                                                                 *
-* This program is distributed in the hope that it is and will be useful, but      *
-* WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY    *
-* or FITNESS FOR A PARTICULAR PURPOSE.                                            *
-*                                                                                 *
-* See the "license.txt" file for details of the Simple Machines license.          *
-* The latest version can always be found at http://www.simplemachines.org.        *
-**********************************************************************************/
+/**
+ * Wedge
+ *
+ * create_backup.php
+ *
+ * @package wedge
+ * @copyright 2010-2011 Wedgeward, wedge.org
+ * @license http://wedge.org/license/
+ *
+ * @version 0.1
+ */
 
 if (function_exists('set_magic_quotes_runtime'))
 	@set_magic_quotes_runtime(0);
@@ -80,36 +69,36 @@ function step1($error_message = '')
 						<h2>MySQL connection details</h2>
 						<h3>Please enter your database details below to create the backup.</h3>
 
-						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex">
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="db_server">Database server name:</label></td>
 								<td>
 									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">This is nearly always localhost - so if you don\'t know, try localhost.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">This is nearly always localhost - so if you don\'t know, try localhost.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_user">Database username:</label></td>
 								<td>
 									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the username you need to connect to your database here.<br>If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">Fill in the username you need to connect to your database here.<br>If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_passwd">Database password:</label></td>
 								<td>
 									<input type="password" name="db_passwd" id="db_passwd" value="', $db_passwd, '" size="30"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">Here, put the password you need to connect to your database.<br>If you don\'t know this, you should try the password to your ftp account.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">Here, put the password you need to connect to your database.<br>If you don\'t know this, you should try the password to your ftp account.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_name">database name:</label></td>
 								<td>
-									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'smf' : $db_name, '" size="30"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in the name of the database you want to backup.</div>
+									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'wedge' : $db_name, '" size="30"><br>
+									<div style="font-size: smaller; margin-bottom: 2ex">Fill in the name of the database you want to backup.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_prefix">Table prefix:</label></td>
 								<td>
 									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">Fill in a prefix to only backup tables that start with this prefix.<br>Normally, you can leave this blank to get a full backup.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">Fill in a prefix to only backup tables that start with this prefix.<br>Normally, you can leave this blank to get a full backup.</div>
 								</td>
 							</tr>
 						</table>
@@ -117,12 +106,12 @@ function step1($error_message = '')
 						<h2>Database backup file</h2>
 						<h3>The database backup will be created as a file on your server.  Please specify where you want it saved.<br>', !function_exists('gzencode') ? '<strong>Warning</strong>: To create a compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : '', '</h3>
 
-						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex;">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex">
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="path">Path to backup file:</label></td>
 								<td>
 									<input type="text" name="path" id="path" value="', $_POST['path'], '" size="60" style="width: 90%"><br>
-									<div style="font-size: smaller; margin-bottom: 2ex;">The default value for this field is a file in this script\'s directory.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">The default value for this field is a file in this script\'s directory.</div>
 								</td>';
 
 	if (function_exists('gzencode'))
@@ -139,14 +128,14 @@ function step1($error_message = '')
 												el.form.path.value = el.form.path.value.substr(0, el.form.path.value.length - 3);
 										}
 									// ]]></script>
-									<label for="compress"><input type="checkbox" name="compress" id="compress" value="1"', isset($_POST['compress']) ? ' checked' : '', ' onchange="fixExtension(this);"> Compress the backup with gzip.</label><div style="font-size: smaller;">Please note that this will only compress the backup after it is complete.</div><br>
+									<label for="compress"><input type="checkbox" name="compress" id="compress" value="1"', isset($_POST['compress']) ? ' checked' : '', ' onchange="fixExtension(this);"> Compress the backup with gzip.</label><div style="font-size: smaller">Please note that this will only compress the backup after it is complete.</div><br>
 								</td>';
 
 	echo '
 							</tr>
 						</table>
 
-						<div class="righttext" style="margin: 1ex;"><input type="submit" value="Proceed" class="submit"></div>
+						<div class="righttext" style="margin: 1ex"><input type="submit" value="Proceed" class="submit"></div>
 					</form>
 				</div>';
 
@@ -431,7 +420,7 @@ function get_ftp_info()
 		if (isset($ftp_error))
 			echo '
 					<div class="error_message">
-						<div style="color: red;">
+						<div style="color: red">
 							Unable to connect to FTP server with this combination of details.<br>
 							<br>
 							<code>', $ftp_error, '</code>
@@ -442,31 +431,31 @@ function get_ftp_info()
 		echo '
 					<form action="', $_SERVER['PHP_SELF'], '?step=2" method="post">
 
-						<table width="520" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 1ex;">
+						<table width="520" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 1ex">
 							<tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_server">Server:</label></td>
 								<td>
-									<div style="float: right; margin-right: 1px;"><label for="ftp_port" class="textbox"><strong>Port:&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '"></div>
+									<div style="float: right; margin-right: 1px"><label for="ftp_port" class="textbox"><strong>Port:&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '"></div>
 									<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($_POST['ftp_server']) ? $_POST['ftp_server'] : 'localhost', '" style="width: 70%">
-									<div style="font-size: smaller; margin-bottom: 2ex;">This should be the server and port for your FTP server.</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">This should be the server and port for your FTP server.</div>
 								</td>
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_username">Username:</label></td>
 								<td>
 									<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($_POST['ftp_username']) ? $_POST['ftp_username'] : '', '" style="width: 99%">
-									<div style="font-size: smaller; margin-bottom: 2ex;">The username to login with. <em>This will not be saved anywhere.</em></div>
+									<div style="font-size: smaller; margin-bottom: 2ex">The username to login with. <em>This will not be saved anywhere.</em></div>
 								</td>
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_password">Password:</label></td>
 								<td>
 									<input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 99%">
-									<div style="font-size: smaller; margin-bottom: 3ex;">The password to login with. <em>This will not be saved anywhere.</em></div>
+									<div style="font-size: smaller; margin-bottom: 3ex">The password to login with. <em>This will not be saved anywhere.</em></div>
 								</td>
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_path">FTP Path:</label></td>
-								<td style="padding-bottom: 1ex;">
+								<td style="padding-bottom: 1ex">
 									<input type="text" size="50" name="ftp_path" id="ftp_path" value="', $_POST['ftp_path'], '" style="width: 99%">
-									<div style="font-size: smaller; margin-bottom: 2ex;">', !empty($found_path) ? 'This path was automatically detected.' : 'This is the <em>relative</em> path to this file as seen in an FTP client.', '</div>
+									<div style="font-size: smaller; margin-bottom: 2ex">', !empty($found_path) ? 'This path was automatically detected.' : 'This is the <em>relative</em> path to this file as seen in an FTP client.', '</div>
 								</td>
 							</tr>
 						</table>
@@ -479,7 +468,7 @@ function get_ftp_info()
 						<input type="hidden" name="path" value="', $_POST['path'], '">
 						<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '">
 
-						<div class="righttext" style="margin: 1ex; margin-top: 2ex;"><input type="submit" value="Connect" class="submit"></div>
+						<div class="righttext" style="margin: 1ex; margin-top: 2ex"><input type="submit" value="Connect" class="submit"></div>
 					</form>
 				</div>';
 	}
@@ -669,9 +658,9 @@ function nextRow($row, $table, $max_rows, $max_tables, $fp = null)
 				This tool has been paused to avoid overloading your server.  Don\'t worry, nothing\'s wrong - simply click the <label for="continue">continue button</label> below to keep going.
 			</h3>
 
-			<div style="font-size: 8pt; width: 60%; height: 1.2em; margin: auto; border: 1px solid black; background-color: white; padding: 1px; position: relative;">
-				<div style="width: 100%; z-index: 2; color: black; position: absolute; text-align: center; font-weight: bold;">', $percentage, '%</div>
-				<div style="width: ', $percentage, '%; height: 1.2em; z-index: 1; background-color: #6279ff;">&nbsp;</div>
+			<div style="font-size: 8pt; width: 60%; height: 1.2em; margin: auto; border: 1px solid black; background-color: white; padding: 1px; position: relative">
+				<div style="width: 100%; z-index: 2; color: black; position: absolute; text-align: center; font-weight: bold">', $percentage, '%</div>
+				<div style="width: ', $percentage, '%; height: 1.2em; z-index: 1; background-color: #6279ff">&nbsp;</div>
 			</div>
 
 			<p>Please note that this percentage only makes a rough estimate of the data to be backed up.  Especially when you have a large database, it may not seem to move quickly at times.  It is only an approximation of progress.</p>
@@ -686,7 +675,7 @@ function nextRow($row, $table, $max_rows, $max_tables, $fp = null)
 				<input type="hidden" name="path" value="', $_POST['path'], '">
 				<input type="hidden" name="compress" value="', !empty($_POST['compress']) ? '1' : '0', '">
 
-				<div class="righttext" style="margin: 1ex;"><input name="b" type="submit" value="Continue" class="submit"></div>
+				<div class="righttext" style="margin: 1ex"><input name="b" type="submit" value="Continue" class="submit"></div>
 			</form>
 			<script type="text/javascript"><!-- // --><![CDATA[
 				window.onload = doAutoSubmit;

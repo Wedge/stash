@@ -1,26 +1,15 @@
 <?php
-/**********************************************************************************
-* webinstall.php                                                                  *
-***********************************************************************************
-* SMF: Simple Machines Forum                                                      *
-* Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
-* =============================================================================== *
-* Software Version:           SMF 2.0 RC5                                         *
-* Software by:                Simple Machines (http://www.simplemachines.org)     *
-* Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
-*           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
-* Support, News, Updates at:  http://www.simplemachines.org                       *
-***********************************************************************************
-* This program is free software; you may redistribute it and/or modify it under   *
-* the terms of the provided license as published by Simple Machines LLC.          *
-*                                                                                 *
-* This program is distributed in the hope that it is and will be useful, but      *
-* WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY    *
-* or FITNESS FOR A PARTICULAR PURPOSE.                                            *
-*                                                                                 *
-* See the "license.txt" file for details of the Simple Machines license.          *
-* The latest version can always be found at http://www.simplemachines.org.        *
-**********************************************************************************/
+/**
+ * Wedge
+ *
+ * webinstall.php
+ *
+ * @package wedge
+ * @copyright 2010-2011 Wedgeward, wedge.org
+ * @license http://wedge.org/license/
+ *
+ * @version 0.1
+ */
 
 // !!! On upgrade, warn about installed.list!
 
@@ -1364,15 +1353,15 @@ function load_language_data()
 	$txt['extraction_complete_info'] = 'The download and extraction seemed to complete successfully. Please click continue to finish the rest of the installation.';
 
 	$txt['package_info'] = 'Package information';
-	$txt['package_info_info'] = 'Here you can optionally select your package, languages, and other options. If you log into your Simple Machines Community Forum account you will be able to install all packages available to you.';
-	$txt['member_login'] = 'Simple Machines Community Forum member login';
+	$txt['package_info_info'] = 'Here you can optionally select your package, languages, and other options. If you log into your wedge.org account you will be able to install all packages available to you.';
+	$txt['member_login'] = 'Wedge.org member login';
 	$txt['member_login_info'] = '<noscript>Please enable JavaScript.</noscript> (leave blank if you don\'t have a membership.)';
 	$txt['member_username'] = 'Username';
 	$txt['member_password'] = 'Password';
 	$txt['member_verify'] = 'Verify';
 	$txt['member_verify_done'] = 'Account verified.';
 	$txt['member_verify_logout'] = 'logout';
-	$txt['error_not_member'] = 'The username and password you provided were rejected.<br />Either you are not a member of Simple Machines Community Forum, your password is wrong, or you need to wait to try to login again.';
+	$txt['error_not_member'] = 'The username and password you provided were rejected.<br />Either you are not a member of wedge.org, your password is wrong, or you need to wait to try to login again.';
 	$txt['package_info_version'] = 'Version to install';
 	$txt['package_info_mirror'] = 'Mirror';
 	$txt['package_info_languages'] = 'Additional languages';
@@ -1399,7 +1388,7 @@ function load_language_data()
 	$txt['extraction_progress'] = 'Extraction Progress';
 	$txt['download_progress'] = 'Download Progress';
 
-	$txt['cant_fetch_install_info'] = 'We are sorry but the installer was unable to download the installation package details from the Simple Machines website. You may download the packages manually from the <a href="http://wedge.org/">Wedge.org</a> download page.';
+	$txt['cant_fetch_install_info'] = 'We are sorry but the installer was unable to download the installation package details from the Wedge website. You may download the packages manually from the <a href="http://wedge.org/">Wedge.org</a> download page.';
 
 	$txt['chmod_desc'] = 'Some hosts require that PHP scripts not have a file permission of 777. If you are on one of these hosts, or if you recieve an error code of 500 after the packages are downloaded and extracted, please change the file permission in the below field. A common alternate value is 755.';
 	$txt['chmod_header'] = 'File Permission';

@@ -41,7 +41,7 @@ function step_0()
 
 	echo '
 	<p>
-		This configuration tool is designed to guide you through the installation of the Sphinx full-text search engine, specifically for Simple Machines Forum. Following the steps in this tool will tell how to install Sphinx, will configure Wedge for using Sphinx, and will create a configuration file that will be needed for Sphinx based on Wedge\'s settings. Make sure you have the latest version of this tool, so that the latest improvements have been implemented.
+		This configuration tool is designed to guide you through the installation of the Sphinx full-text search engine, specifically for Wedge forums. Following the steps in this tool will tell how to install Sphinx, will configure Wedge for using Sphinx, and will create a configuration file that will be needed for Sphinx based on Wedge\'s settings. Make sure you have the latest version of this tool, so that the latest improvements have been implemented.
 	</p>
 	<h4>What is Sphinx?</h4>
 	<p>
@@ -52,7 +52,7 @@ function step_0()
 		Another important component is the search deamon (called <em>searchd</em>). This deamon runs as a process and awaits requests for information from the fulltext indexes. External processes, like the webserver, can send a query to it. The search deamon will then consult the index and return the result to the external process.
 	</p>
 
-	<h4>When should Sphinx be used for Simple Machines Forum?</h4>
+	<h4>When should Sphinx be used for Wedge?</h4>
 	<p>
 		Basically Sphinx starts to get interesting when MySQL is unable to do the job of indexing the messages properly. In most cases, a board needs to have at least 300,000 messages before that point has been reached. Also if you want to make sure the search queries don\'t affect the database performance, you can choose to put Sphinx on a different server than the database server.
 	</p>
@@ -235,7 +235,7 @@ function step_3()
 
 	<h4>Some file actions</h4>
 	Move Sphinx\' PHP API file to the Sources directory of your Wedge installation (the path used here is merely an example):<br>
-	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/smf/Sources</tt><br>
+	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/wedge/Sources</tt><br>
 	<br>
 	Create directories for storing the indexes:<br>', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
 	<tt>[~]#  mkdir /var/sphinx</tt><br>', '

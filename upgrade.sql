@@ -551,31 +551,6 @@ upgrade_query("
 ---}
 ---#
 
----# Enable cache if upgrading from 1.1 and lower.
----{
-if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '2.0 Beta 1')
-{
-	$request = upgrade_query("
-		SELECT value
-		FROM {$db_prefix}settings
-		WHERE variable = 'cache_enable'");
-	list ($cache_enable) = $smcFunc['db_fetch_row']($request);
-
-	// No cache before 1.1.
-	if ($smcFunc['db_num_rows']($request) == 0)
-		upgrade_query("
-			INSERT INTO {$db_prefix}settings
-				(variable, value)
-			VALUES ('cache_enable', '1')");
-	elseif (empty($cache_enable))
-		upgrade_query("
-			UPDATE {$db_prefix}settings
-			SET value = '1'
-			WHERE variable = 'cache_enable'");
-}
----}
----#
-
 ---# Changing visual verification setting.
 ---{
 $request = upgrade_query("
@@ -587,10 +562,6 @@ if (mysql_num_rows($request) != 0)
 	list ($oldValue) = mysql_fetch_row($request);
 	if ($oldValue != 0)
 	{
-		// Converting from SMF 1.1.2?
-		if ($oldValue == 4)
-			$oldValue = 5;
-
 		upgrade_query("
 			UPDATE {$db_prefix}settings
 			SET variable = 'visual_verification_type', value = $oldValue
@@ -843,48 +814,19 @@ CHANGE COLUMN default_value default_value varchar(255) NOT NULL default '';
 
 ---# Enhancing privacy settings for custom fields.
 ---{
-if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '2.0 Beta 1')
+if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '1.0')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
 	SET private = 2
 	WHERE private = 1");
 }
-if (isset($modSettings['weVersion']) && $modSettings['weVersion'] < '2.0 Beta 4')
+if (isset($modSettings['weVersion']) && $modSettings['weVersion'] < '1.1')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
 	SET private = 3
 	WHERE private = 2");
-}
----}
----#
-
----# Checking display fields setup correctly..
----{
-if (isset($modSettings['weVersion'], $modSettings['displayFields']) && $modSettings['weVersion'] <= '2.0 Beta 1' && @unserialize($modSettings['displayFields']) == false)
-{
-$request = upgrade_query("
-	SELECT col_name, field_name, bbc
-	FROM {$db_prefix}custom_fields
-	WHERE show_display = 1
-		AND active = 1
-		AND private != 2");
-$fields = array();
-while ($row = mysql_fetch_assoc($request))
-{
-	$fields[] = array(
-		'c' => strtr($row['col_name'], array('|' => '', ';' => '')),
-		'f' => strtr($row['field_name'], array('|' => '', ';' => '')),
-		'b' => ($row['bbc'] ? '1' : '0')
-	);
-}
-mysql_free_result($request);
-
-upgrade_query("
-	UPDATE {$db_prefix}settings
-	SET value = '" . mysql_real_escape_string(serialize($fields)) . "'
-	WHERE variable = 'displayFields'");
 }
 ---}
 ---#
@@ -1040,7 +982,7 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_reported_comments (
 ---# Adding moderator center permissions...
 ---{
 // Don't do this twice!
-if (@$modSettings['weVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '1.0')
 {
 	// Try find people who probably should see the moderation center.
 	$request = upgrade_query("
@@ -1201,7 +1143,7 @@ WHERE attachment_type = 3
 ---# Calculating attachment mime types.
 ---{
 // Don't ever bother doing this twice.
-if (@$modSettings['weVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '1.0')
 {
 	$request = upgrade_query("
 		SELECT MAX(id_attach)
@@ -1365,33 +1307,6 @@ ADD unapproved_posts smallint(5) NOT NULL default '0',
 ADD unapproved_topics smallint(5) NOT NULL default '0';
 ---#
 
----# Adding post moderation permissions...
----{
-// We *cannot* do this twice!
-if (@$modSettings['weVersion'] < '2.0')
-{
-	// Anyone who can currently edit posts we assume can approve them...
-	$request = upgrade_query("
-		SELECT id_group, id_board, add_deny, permission
-		FROM {$db_prefix}board_permissions
-		WHERE permission = 'modify_any'");
-	$inserts = array();
-	while ($row = mysql_fetch_assoc($request))
-	{
-		$inserts[] = "($row[id_group], $row[id_board], 'approve_posts', $row[add_deny])";
-	}
-	mysql_free_result($request);
-
-	if (!empty($inserts))
-		upgrade_query("
-			INSERT IGNORE INTO {$db_prefix}board_permissions
-				(id_group, id_board, permission, add_deny)
-			VALUES
-				" . implode(',', $inserts));
-}
----}
----#
-
 /******************************************************************************/
 --- Upgrading the error log.
 /******************************************************************************/
@@ -1453,118 +1368,6 @@ unset($_GET['m']);
 ---#
 
 /******************************************************************************/
---- Adding Scheduled Tasks Data.
-/******************************************************************************/
-
----# Creating Scheduled Task Table...
-CREATE TABLE IF NOT EXISTS {$db_prefix}scheduled_tasks (
-	id_task smallint(5) NOT NULL auto_increment,
-	next_time int(10) NOT NULL default '0',
-	time_offset int(10) NOT NULL default '0',
-	time_regularity smallint(5) NOT NULL default '0',
-	time_unit varchar(1) NOT NULL default 'h',
-	disabled tinyint(3) NOT NULL default '0',
-	task varchar(24) NOT NULL default '',
-	PRIMARY KEY (id_task),
-	KEY next_time (next_time),
-	KEY disabled (disabled),
-	UNIQUE task (task)
-) ENGINE=MyISAM{$db_collation};
----#
-
----# Populating Scheduled Task Table...
-INSERT IGNORE INTO {$db_prefix}scheduled_tasks
-	(next_time, time_offset, time_regularity, time_unit, disabled, task)
-VALUES
-	(0, 0, 2, 'h', 0, 'approval_notification'),
-	(0, 0, 7, 'd', 0, 'auto_optimize'),
-	(0, 60, 1, 'd', 0, 'daily_maintenance'),
-	(0, 0, 1, 'd', 0, 'daily_digest'),
-	(0, 0, 1, 'w', 0, 'weekly_digest'),
-	(0, 0, 1, 'd', 1, 'birthdayemails'),
-	(0, 120, 1, 'd', 0, 'paid_subscriptions');
----#
-
----# Adding the simple machines scheduled task.
----{
-// Randomise the time.
-$randomTime = 82800 + rand(0, 86399);
-upgrade_query("
-	INSERT IGNORE INTO {$db_prefix}scheduled_tasks
-		(next_time, time_offset, time_regularity, time_unit, disabled, task)
-	VALUES
-		(0, {$randomTime}, 1, 'd', 0, 'fetchRemoteFiles')");
----}
----#
-
----# Deleting old scheduled task items...
-DELETE FROM {$db_prefix}scheduled_tasks
-WHERE task = 'clean_cache';
----#
-
----# Moving auto optimise settings to scheduled task...
----{
-if (!isset($modSettings['next_task_time']) && isset($modSettings['autoOptLastOpt']))
-{
-	// Try move over the regularity...
-	if (isset($modSettings['autoOptDatabase']))
-	{
-		$disabled = empty($modSettings['autoOptDatabase']) ? 1 : 0;
-		$regularity = $disabled ? 7 : $modSettings['autoOptDatabase'];
-		$next_time = $modSettings['autoOptLastOpt'] + 3600 * 24 * $modSettings['autoOptDatabase'];
-
-		// Update the task accordingly.
-		upgrade_query("
-			UPDATE {$db_prefix}scheduled_tasks
-			SET disabled = $disabled, time_regularity = $regularity, next_time = $next_time
-			WHERE task = 'auto_optimize'");
-	}
-
-	// Delete the old settings!
-	upgrade_query("
-		DELETE FROM {$db_prefix}settings
-		WHERE VARIABLE IN ('autoOptLastOpt', 'autoOptDatabase')");
-}
----}
----#
-
----# Creating Scheduled Task Log Table...
-CREATE TABLE IF NOT EXISTS {$db_prefix}log_scheduled_tasks (
-	id_log mediumint(8) NOT NULL auto_increment,
-	id_task smallint(5) NOT NULL default '0',
-	time_run int(10) NOT NULL default '0',
-	time_taken float NOT NULL default '0',
-	PRIMARY KEY (id_log)
-) ENGINE=MyISAM{$db_collation};
----#
-
----# Adding new scheduled task setting...
----{
-if (!isset($modSettings['next_task_time']))
-{
-	upgrade_query("
-		INSERT INTO {$db_prefix}settings
-			(variable, value)
-		VALUES
-			('next_task_time', '0')");
-}
----}
----#
-
----# Setting the birthday email template if not set...
----{
-if (!isset($modSettings['birthday_email']))
-{
-	upgrade_query("
-		INSERT INTO {$db_prefix}settings
-			(variable, value)
-		VALUES
-			('birthday_email', 'happy_birthday')");
-}
----}
----#
-
-/******************************************************************************/
 --- Adding permission profiles for boards.
 /******************************************************************************/
 
@@ -1592,7 +1395,7 @@ ALTER TABLE {$db_prefix}board_permissions
 ADD PRIMARY KEY (id_group, id_profile, permission);
 ---#
 
----# Cleaning up some 2.0 Beta 1 permission profile bits...
+---# Cleaning up some permission profile bits...
 ---{
 $request = upgrade_query("
 	SELECT id_profile
@@ -1985,54 +1788,6 @@ unset($_GET['m']);
 ---#
 
 /******************************************************************************/
---- Create a repository for the javascript files from Simple Machines...
-/******************************************************************************/
-
----# Creating repository table ...
-CREATE TABLE IF NOT EXISTS {$db_prefix}admin_info_files (
-  id_file tinyint(4) unsigned NOT NULL auto_increment,
-  filename varchar(255) NOT NULL default '',
-  path varchar(255) NOT NULL default '',
-  parameters varchar(255) NOT NULL default '',
-  data text NOT NULL,
-  filetype varchar(255) NOT NULL default '',
-  PRIMARY KEY (id_file),
-  KEY filename (filename(30))
-) ENGINE=MyISAM{$db_collation};
----#
-
----# Add in the files to get from Simple Machines...
-INSERT IGNORE INTO {$db_prefix}admin_info_files
-	(id_file, filename, path, parameters)
-VALUES
-	(1, 'current-version.js', '/smf/', 'version=%3$s'),
-	(2, 'detailed-version.js', '/smf/', 'language=%1$s&version=%3$s'),
-	(3, 'latest-news.js', '/smf/', 'language=%1$s&format=%2$s'),
-	(4, 'latest-packages.js', '/smf/', 'language=%1$s&version=%3$s'),
-	(5, 'latest-smileys.js', '/smf/', 'language=%1$s&version=%3$s'),
-	(6, 'latest-support.js', '/smf/', 'language=%1$s&version=%3$s'),
-	(7, 'latest-themes.js', '/smf/', 'language=%1$s&version=%3$s');
----#
-
----# Ensure that the table has the filetype column
-ALTER TABLE {$db_prefix}admin_info_files
-ADD filetype varchar(255) NOT NULL default '';
----#
-
----# Set the filetype for the files
-UPDATE {$db_prefix}admin_info_files
-SET filetype='text/javascript'
-WHERE id_file IN (1,2,3,4,5,6,7);
----#
-
----# Ensure that the files from Simple Machines get updated
-UPDATE {$db_prefix}scheduled_tasks
-SET next_time = UNIX_TIMESTAMP()
-WHERE id_task = 7
-LIMIT 1;
----#
-
-/******************************************************************************/
 --- Adding new personal messaging functionality.
 /******************************************************************************/
 
@@ -2065,7 +1820,7 @@ ADD COLUMN is_new tinyint(3) NOT NULL default '0';
 ---# Set the new status to be correct....
 ---{
 // Don't do this twice!
-if (@$modSettings['weVersion'] < '2.0')
+if (@$modSettings['weVersion'] < '1.0')
 {
 	// Set all unread messages as new.
 	upgrade_query("
@@ -2161,21 +1916,7 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_subscribed(
 ) ENGINE=MyISAM{$db_collation};
 ---#
 
----# Clean up any pre-2.0 mod settings.
-UPDATE {$db_prefix}settings
-SET variable = 'paid_currency_code'
-WHERE variable = 'currency_code';
-
-UPDATE {$db_prefix}settings
-SET variable = 'paid_currency_symbol'
-WHERE variable = 'currency_symbol';
-
-DELETE FROM {$db_prefix}settings
-WHERE variable = 'currency_code'
-	OR variable = 'currency_symbol';
----#
-
----# Clean up any pre-2.0 mod settings (part 2).
+---# Clean up any pre-1.0 mod settings.
 ---{
 $request = upgrade_query("
 	SHOW COLUMNS

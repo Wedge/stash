@@ -1,27 +1,15 @@
 <?php
-/**********************************************************************************
-* smfinfo.php                                                                     *
-***********************************************************************************
-* SMF: Simple Machines Forum                                                      *
-* Open-Source Project Inspired by Zef Hemel (zef@zefhemel.com)                    *
-* =============================================================================== *
-* Software Version:           SMF 2.0 RC5                                         *
-* Software by:                Simple Machines (http://www.simplemachines.org)     *
-* Originally coded by:        SlammedDime                                         *
-* Copyright 2006-2010 by:     Simple Machines LLC (http://www.simplemachines.org) *
-*           2001-2006 by:     Lewis Media (http://www.lewismedia.com)             *
-* Support, News, Updates at:  http://www.simplemachines.org                       *
-***********************************************************************************
-* This program is free software; you may redistribute it and/or modify it under   *
-* the terms of the provided license as published by Simple Machines LLC.          *
-*                                                                                 *
-* This program is distributed in the hope that it is and will be useful, but      *
-* WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY    *
-* or FITNESS FOR A PARTICULAR PURPOSE.                                            *
-*                                                                                 *
-* See the "license.txt" file for details of the Simple Machines license.          *
-* The latest version can always be found at http://www.simplemachines.org.        *
-**********************************************************************************/
+/**
+ * Wedge
+ *
+ * smfinfo.php
+ *
+ * @package wedge
+ * @copyright 2010-2011 Wedgeward, wedge.org
+ * @license http://wedge.org/license/
+ *
+ * @version 0.1
+ */
 
 // If SSI.php is in the same place as this file, and Wedge isn't defined, this is being run standalone.
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
@@ -61,13 +49,12 @@ function load_txt_strings()
 	$txt['php_api'] = 'PHP/Server Interface';
 	$txt['db_table_info'] = 'Detailed Table Information';
 
-
 	// Wedge Specific Info
 	$txt['wedge_relevant'] = 'Relevant Wedge Settings';
 	$txt['sef_urls'] = 'SEF URLs';
 	$txt['time_load'] = 'Display Load Times';
 	$txt['hostname_lookup'] = 'Disable Hostname Lookups';
-	$txt['log_pruning'] = 'Auto Log Pruning (2.0+)';
+	$txt['log_pruning'] = 'Auto Log Pruning';
 	$txt['db_persist'] = 'Persistent DB Connection';
 	$txt['maintenance_mode'] = 'Maintenance Mode';
 	$txt['cookie_name'] = 'Cookie Name';
@@ -84,7 +71,6 @@ function load_txt_strings()
 	$txt['cache'] = 'Caching';
 	$txt['memcached_settings'] = 'Memcached Settings';
 	$txt['cache_level'] = 'Level';
-
 
 	// PHP Specific Info
 	$txt['relevant_info'] = 'Relevant PHP Settings';
