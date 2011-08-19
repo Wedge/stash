@@ -19,7 +19,8 @@ $GLOBALS['required_php_version'] = '5.2.3';
 
 // Database info.
 $db = array(
-	'required_version' => '5.1.0',
+	'version' => '5.1.0',
+	'version_check' => 'return min(mysql_get_server_info(), mysql_get_client_info());',
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',
 	'default_host' => 'mysql.default_host',
@@ -709,7 +710,7 @@ function DatabaseSettings()
 
 		// Do they meet the install requirements?
 		// !!! Old client, new server?
-		if (version_compare($db['required_version'], preg_replace('~^\D*|\-.+?$~', '', min(mysql_get_server_info(), mysql_get_client_info()))) > 0)
+		if (version_compare($db['version'], preg_replace('~^\D*|\-.+?$~', '', eval($db['version_check']))) > 0)
 		{
 			$incontext['error'] = $txt['error_db_too_low'];
 			return false;
@@ -1758,12 +1759,10 @@ function updateSettingsFile($vars)
 	for ($i = 0, $n = count($settingsArray); $i < $n; $i++)
 	{
 		// Remove the redirect...
-		if (trim($settingsArray[$i]) == 'if (file_exists(dirname(__FILE__) . \'/install.php\'))' && trim($settingsArray[$i + 1]) == '{' && trim($settingsArray[$i + 3]) == '}')
+		if (trim($settingsArray[$i]) == 'if (file_exists(dirname(__FILE__) . \'/install.php\'))')
 		{
-			// Get the four lines to nothing.
+			// Get the two lines to nothing.
 			$settingsArray[$i] = '';
-			$settingsArray[++$i] = '';
-			$settingsArray[++$i] = '';
 			$settingsArray[++$i] = '';
 			continue;
 		}
