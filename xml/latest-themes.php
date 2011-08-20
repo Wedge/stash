@@ -9,7 +9,7 @@
 	- remember that we need to have control on the color scheme
 	  (white on black, etc.); we've got the element, so we can change it.
 	- the url to install is:
-window.we_script + '?action=theme=sa=install;theme_gz=' + url_to_package + ';' + window.weSessionQuery
+		window.we_script + '?action=theme;sa=install;theme_gz=' + url_to_package + ';' + window.weSessionQuery
 	- only packages from the .wedge.org domain will be accepted.
 	- we've got their language in $_GET['language'].
 
