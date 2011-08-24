@@ -3383,8 +3383,8 @@ function template_welcome_message()
 	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $txt;
 
 	echo '
-		<script src="http://wedge.org/files/current-version.js?version=' . WEDGE_VERSION . '"></script>
-		<script src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
+		<script src="http://wedge.org/files/current-version.js?version=' . WEDGE_VERSION . '"></script>', empty($context['disable_login_hashing']) ? '
+		<script src="' . $settings['default_theme_url'] . '/scripts/sha1.js"></script>' : '', '
 			<h3>', sprintf($txt['upgrade_ready_proceed'], WEDGE_VERSION), '</h3>
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>
 		<div id="version_warning">
