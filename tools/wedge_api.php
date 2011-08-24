@@ -805,7 +805,7 @@ function we_sessionRead($session_id)
 {
 	global $we_settings;
 
-	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
+	if (preg_match('~^[a-zA-Z0-9,-]{16,32}$~', $session_id) == 0)
 		return false;
 
 	// Look for it in the database.
@@ -829,7 +829,7 @@ function we_sessionWrite($session_id, $data)
 {
 	global $we_settings, $we_connection;
 
-	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
+	if (preg_match('~^[a-zA-Z0-9,-]{16,32}$~', $session_id) == 0)
 		return false;
 
 	// First try to update an existing row...
@@ -861,7 +861,7 @@ function we_sessionDestroy($session_id)
 {
 	global $we_settings;
 
-	if (preg_match('~^[A-Za-z0-9]{16,32}$~', $session_id) == 0)
+	if (preg_match('~^[a-zA-Z0-9,-]{16,32}$~', $session_id) == 0)
 		return false;
 
 	// Just delete the row...
