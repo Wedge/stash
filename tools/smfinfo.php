@@ -420,7 +420,7 @@ function show_header()
 		<select id="menuDropdown" onchange="swapSection(this[this.selectedIndex].value); return true;">
 			<option value="0">-- Menu --</option>
 		</select>
-			<div class="dynamic-tab-pane-control tab-page" id="smfinfo" style="margin-top: 10px;">';
+			<div class="dynamic-tab-pane-control tab-page" id="smfinfo" style="margin-top: 10px">';
 }
 
 function show_password_form()
@@ -584,7 +584,7 @@ function show_detailed_file()
 	foreach ($context['file_versions'] as $filename => $version)
 		echo '
 						<tr>
-							<td width="50%" style="padding-left: 3ex;">', $filename, '</td><td width="25%"><em id="yourSources', $filename, '">', $version, '</em></td><td width="25%"><em id="currentSources', $filename, '">??</em></td>
+							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourSources', $filename, '">', $version, '</em></td><td width="25%"><em id="currentSources', $filename, '">??</em></td>
 						</tr>';
 
 	// Default template files.
@@ -600,7 +600,7 @@ function show_detailed_file()
 	foreach ($context['default_template_versions'] as $filename => $version)
 		echo '
 						<tr>
-							<td width="50%" style="padding-left: 3ex;">', $filename, '</td><td width="25%"><em id="yourDefault', $filename, '">', $version, '</em></td><td width="25%"><em id="currentDefault', $filename, '">??</em></td>
+							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourDefault', $filename, '">', $version, '</em></td><td width="25%"><em id="currentDefault', $filename, '">??</em></td>
 						</tr>';
 
 	// Now the language files...
@@ -618,7 +618,7 @@ function show_detailed_file()
 		foreach ($files as $filename => $version)
 			echo '
 						<tr>
-							<td width="50%" style="padding-left: 3ex;">', $filename, '.<em>', $language, '</em>.php</td><td width="25%"><em id="your', $filename, '.', $language, '">', $version, '</em></td><td width="25%"><em id="current', $filename, '.', $language, '">??</em></td>
+							<td width="50%" style="padding-left: 3ex">', $filename, '.<em>', $language, '</em>.php</td><td width="25%"><em id="your', $filename, '.', $language, '">', $version, '</em></td><td width="25%"><em id="current', $filename, '.', $language, '">??</em></td>
 						</tr>';
 	}
 
@@ -639,7 +639,7 @@ function show_detailed_file()
 		foreach ($context['template_versions'] as $filename => $version)
 			echo '
 						<tr>
-							<td width="50%" style="padding-left: 3ex;">', $filename, '</td><td width="25%"><em id="yourTemplates', $filename, '">', $version, '</em></td><td width="25%"><em id="currentTemplates', $filename, '">??</em></td>
+							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourTemplates', $filename, '">', $version, '</em></td><td width="25%"><em id="currentTemplates', $filename, '">??</em></td>
 						</tr>';
 
 		echo '
@@ -704,7 +704,7 @@ function show_detailed_db()
 			echo '
 								<tr id="', $table['name'], '">
 									<td colspan="7">
-										<table width="100%" cellpadding="2" cellspacing="2" style="padding-left: 10px;">
+										<table width="100%" cellpadding="2" cellspacing="2" style="padding-left: 10px">
 											<tr>
 												<td><strong>', $txt['db_column_name'], '</strong></td>
 												<td><strong>', $txt['db_column_type'], '</strong></td>
@@ -805,7 +805,7 @@ function show_error_log()
 	foreach ($context['errors'] as $error)
 	{
 		echo '
-							<table width="100%" cellspacing="2" cellpadding="2" style="padding-left: 20px;">
+							<table width="100%" cellspacing="2" cellpadding="2" style="padding-left: 20px">
 								<tr>
 									<td width="25%"><strong>&raquo; ', $txt['error_time'], '</strong></td>
 									<td>', $error['time'], '</td>
@@ -914,28 +914,28 @@ function show_status()
 	if (!empty($context['operating_system']['name']))
 		echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">Operating System:</th>
+					<th valign="top" style="text-align: left; width: 30%">Operating System:</th>
 					<td>', $context['operating_system']['name'], '</td>
 				</tr>';
 
 	if (!empty($context['cpu_info']))
 		echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">Processor:</th>
+					<th valign="top" style="text-align: left; width: 30%">Processor:</th>
 					<td>', strtr($context['cpu_info']['model'], array('(R)' => '&reg;')), ' (', $context['cpu_info']['mhz'], 'MHz)</td>
 				</tr>';
 
 	if (isset($context['load_averages']))
 		echo '
 				<tr>
-					<th style="text-align: left; width: 30%;">Load averages:</th>
+					<th style="text-align: left; width: 30%">Load averages:</th>
 					<td>', implode(', ', $context['load_averages']), '</td>
 				</tr>';
 
 	if (!empty($context['running_processes']))
 		echo '
 				<tr>
-					<th style="text-align: left; width: 30%;">Current processes:</th>
+					<th style="text-align: left; width: 30%">Current processes:</th>
 					<td>', count($context['running_processes']), ' (', !empty($context['num_sleeping_processes']) ? $context['num_sleeping_processes'] . ' sleeping, ' : '', $context['num_running_processes'], ' running, ', $context['num_zombie_processes'], ' zombie)</td>
 				</tr>';
 
@@ -943,7 +943,7 @@ function show_status()
 	{
 		echo '
 				<tr>
-					<th style="text-align: left; width: 30%;">Processes by CPU:</th>
+					<th style="text-align: left; width: 30%">Processes by CPU:</th>
 					<td>';
 
 		$temp = array();
@@ -962,7 +962,7 @@ function show_status()
 	{
 		echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">Memory usage:</th>
+					<th valign="top" style="text-align: left; width: 30%">Memory usage:</th>
 					<td>
 						', round(($context['memory_usage']['used'] * 100) / $context['memory_usage']['total'], 3), '% (', $context['memory_usage']['used'], 'k / ', $context['memory_usage']['total'], 'k)';
 		if (isset($context['memory_usage']['swap_used']))
@@ -985,7 +985,7 @@ function show_status()
 
 			<table width="100%" cellpadding="2" cellspacing="0" border="0">
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">Total processes:</th>
+					<th valign="top" style="text-align: left; width: 30%">Total processes:</th>
 					<td>', $context['mysql_num_running_processes'] + $context['mysql_num_locked_processes'] + $context['mysql_num_sleeping_processes'], ' (', $context['mysql_num_sleeping_processes'], ' sleeping, ', $context['mysql_num_running_processes'], ' running, ', $context['mysql_num_locked_processes'], ' locked)</td>
 				</tr>
 			</table>';
@@ -996,10 +996,10 @@ function show_status()
 			<br />
 			<h2>Running processes</h2>
 
-			<table width="100%" cellpadding="2" cellspacing="0" border="0" style="table-layout: fixed;">
+			<table width="100%" cellpadding="2" cellspacing="0" border="0" style="table-layout: fixed">
 				<tr>
-					<th style="width: 14ex;">State</th>
-					<th style="width: 8ex;">Time</th>
+					<th style="width: 14ex">State</th>
+					<th style="width: 8ex">Time</th>
 					<th>Query</th>
 				</tr>';
 
@@ -1008,8 +1008,8 @@ function show_status()
 				echo '
 				<tr>
 					<td>', $proc['state'], '</td>
-					<td style="text-align: center;">', $proc['time'], 's</td>
-					<td><div style="width: 100%; ', strpos($_SERVER['HTTP_USER_AGENT'], 'Gecko') !== false ? 'max-' : '', 'height: 7em; overflow: auto;"><pre style="margin: 0; border: 1px solid gray;">';
+					<td style="text-align: center">', $proc['time'], 's</td>
+					<td><div style="width: 100%; ', strpos($_SERVER['HTTP_USER_AGENT'], 'Gecko') !== false ? 'max-' : '', 'height: 7em; overflow: auto"><pre style="margin: 0; border: 1px solid gray">';
 
 				$temp = explode("\n", $proc['query']);
 				$min_indent = 0;
@@ -1089,7 +1089,7 @@ function show_status()
 
 			echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">
+					<th valign="top" style="text-align: left; width: 30%">
 						', $stat['description'], ':', isset($stat['setting']) ? '<br />
 						<em style="font-size: smaller;' . ($warning ? 'font-weight: bold;' : '') . '">(' . $stat['setting'] . ')</em>' : '', '
 					</th>
@@ -1118,7 +1118,7 @@ function show_status()
 		{
 			echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">', $var['name'], ':</th>
+					<th valign="top" style="text-align: left; width: 30%">', $var['name'], ':</th>
 					<td>', $var['value'], '</td>
 				</tr>';
 		}
@@ -1135,7 +1135,7 @@ function show_status()
 		{
 			echo '
 				<tr>
-					<th valign="top" style="text-align: left; width: 30%;">', $var['name'], ':</th>
+					<th valign="top" style="text-align: left; width: 30%">', $var['name'], ':</th>
 					<td>', $var['value'], '</td>
 				</tr>';
 		}
@@ -1152,13 +1152,11 @@ function show_status()
 
 function show_footer()
 {
-	global $context, $boardurl, $forum_copyright;
+	global $context, $boardurl;
 
 	echo '
 			</div>
-			<div style="clear: left">
-				', sprintf($forum_copyright, WEDGE_VERSION),' | <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/">CSS</a>
-			</div>
+			<div style="clear: left">Powered by Wedge, &copy; Wedgeward.</div>
 		</div>';
 
 	/* Below is the hefty javascript for this. Upon opening the page it checks the current file versions with ones
