@@ -1897,7 +1897,7 @@ function template_install_above()
 	$settings['theme_url'] = $boardurl . '/Themes/default';
 	$settings['images_url'] = $boardurl . '/Themes/default/images';
 	$context['css_folders'] = array();
-	$context['css_generic_files'] = array($context['browser']['agent']);
+	$context['css_suffixes'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
 	$modSettings['obfuscate_filenames'] = true;
