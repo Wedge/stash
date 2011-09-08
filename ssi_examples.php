@@ -627,7 +627,7 @@ $topics = ssi_recentTopics(8, null, null, \'array\');
 foreach ($topics as $topic)
 {
 	// Uncomment the following code to get a listing of array elements that Wedge provides for this function.
-	// echo \'<pre>\', print_r($topic), \'</pre>\';
+	// echo \'<pre>\', print_r($topic, true), \'</pre>\';
 
 	echo \'
 			<li><a href=\"\', $topic[\'href\'], \'\">\', $topic[\'subject\'], \'</a> \', $txt[\'by\'], \' \', $topics[$i][\'poster\'][\'link\'], \'</li>\';

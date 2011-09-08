@@ -47,7 +47,7 @@
 		}
 		$context['tests'][count($context['tests']) - 1]['isLast'] = true;
 
-		$context['sub_template'] = 'ut_index';
+		loadSubTemplate('ut_index');
 	}
 
 	function do_test()
@@ -128,7 +128,7 @@
 		$context['test_results'] = $testResults;
 
 		$context['template_layers'] = array();
-		$context['sub_template'] = 'ut_test_results';
+		loadSubTemplate('ut_test_results');
 	}
 
 	function getAllTests()
