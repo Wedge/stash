@@ -7,7 +7,6 @@
 
 	require_once('../../SSI.php');
 
-	$context['template_layers'] = array('html');
 	$context['ut_js_url'] = $jsURL;
 	$settings['template_dirs'] = array_merge($settings['template_dirs'], array($templateDir));
 	loadTemplate('UnitTest');
@@ -127,7 +126,7 @@
 
 		$context['test_results'] = $testResults;
 
-		$context['template_layers'] = array();
+		hideChrome();
 		loadSubTemplate('ut_test_results');
 	}
 
