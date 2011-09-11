@@ -659,7 +659,7 @@ function upgradeExit($fallThrough = false)
 		{
 			debug_print_backtrace();
 
-			echo "\n" . 'Error: Unexpected call to use the ' . (isset($upcontext['sub_template']) ? $upcontext['sub_template'] : '') . ' template. Please copy and paste all the text above and visit the Wedge support forum to tell the Developers that they\'ve made a boo boo; they\'ll get you up and running again.';
+			echo "\n" . 'Error: Unexpected call to use the ' . (isset($upcontext['block']) ? $upcontext['block'] : '') . ' template. Please copy and paste all the text above and visit the Wedge support forum to tell the Developers that they\'ve made a boo boo; they\'ll get you up and running again.';
 			flush();
 			die();
 		}
@@ -682,7 +682,7 @@ function upgradeExit($fallThrough = false)
 		}
 
 		// Call the template.
-		if (isset($upcontext['sub_template']))
+		if (isset($upcontext['block']))
 		{
 			$upcontext['upgrade_status']['curstep'] = $upcontext['current_step'];
 			$upcontext['form_url'] = $upgradeurl . '?step=' . $upcontext['current_step'] . '&amp;substep=' . $_GET['substep'] . '&amp;data=' . base64_encode(serialize($upcontext['upgrade_status']));
@@ -691,7 +691,7 @@ function upgradeExit($fallThrough = false)
 			if (!empty($upcontext['query_string']))
 				$upcontext['form_url'] .= $upcontext['query_string'];
 
-			call_user_func('template_' . $upcontext['sub_template']);
+			call_user_func('template_' . $upcontext['block']);
 		}
 
 		// Was there an error?
@@ -874,7 +874,7 @@ function WelcomeLogin()
 	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
 	global $upcontext, $disable_security, $txt;
 
-	$upcontext['sub_template'] = 'welcome_message';
+	$upcontext['block'] = 'welcome_message';
 
 	// Check for some key files - one template, one language, and a new and an old source file.
 	$check = @file_exists($boarddir . '/Themes/default/index.template.php')
@@ -1146,7 +1146,7 @@ function UpgradeOptions()
 	global $db_prefix, $command_line, $modSettings, $is_debug;
 	global $boarddir, $boardurl, $sourcedir, $maintenance, $mmessage, $cachedir, $upcontext;
 
-	$upcontext['sub_template'] = 'upgrade_options';
+	$upcontext['block'] = 'upgrade_options';
 	$upcontext['page_title'] = 'Upgrade Options';
 
 	// If we've not submitted then we're done.
@@ -1229,7 +1229,7 @@ function BackupDatabase()
 {
 	global $upcontext, $db_prefix, $command_line, $is_debug, $support_js, $file_steps;
 
-	$upcontext['sub_template'] = isset($_GET['xml']) ? 'backup_xml' : 'backup_database';
+	$upcontext['block'] = isset($_GET['xml']) ? 'backup_xml' : 'backup_database';
 	$upcontext['page_title'] = 'Backup Database';
 
 	// Done it already - js wise?
@@ -1329,7 +1329,7 @@ function DatabaseChanges()
 	if (!empty($_POST['database_done']))
 		return true;
 
-	$upcontext['sub_template'] = isset($_GET['xml']) ? 'database_xml' : 'database_changes';
+	$upcontext['block'] = isset($_GET['xml']) ? 'database_xml' : 'database_changes';
 	$upcontext['page_title'] = 'Database Changes';
 
 	// All possible files.
@@ -1431,7 +1431,7 @@ function CleanupMods()
 	if (!isset($_GET['ssi']) || !function_exists('mktree'))
 		redirectLocation('&ssi=1');
 
-	$upcontext['sub_template'] = 'clean_mods';
+	$upcontext['block'] = 'clean_mods';
 	$upcontext['page_title'] = 'Cleanup Modifications';
 
 	// This can be skipped.
@@ -1713,7 +1713,7 @@ function CleanupMods()
 		// Ensure we don't lose our changes!
 		package_put_contents($boarddir . '/Packages/installed.list', time());
 
-		$upcontext['sub_template'] = 'cleanup_done';
+		$upcontext['block'] = 'cleanup_done';
 		return false;
 	}
 	else
@@ -1741,7 +1741,7 @@ function DeleteUpgrade()
 	if (!isset($_GET['ssi']) && !$command_line)
 		redirectLocation('&ssi=1');
 
-	$upcontext['sub_template'] = 'upgrade_complete';
+	$upcontext['block'] = 'upgrade_complete';
 	$upcontext['page_title'] = 'Upgrade Complete';
 
 	$endl = $command_line ? "\n" : '<br>' . "\n";
@@ -2853,7 +2853,7 @@ function throw_error($message)
 	global $upcontext;
 
 	$upcontext['error_msg'] = $message;
-	$upcontext['sub_template'] = 'error_message';
+	$upcontext['block'] = 'error_message';
 
 	return false;
 }

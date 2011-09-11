@@ -284,11 +284,11 @@ function installExit($fallThrough = false)
 		template_install_above();
 
 		// Call the template.
-		if (isset($incontext['sub_template']))
+		if (isset($incontext['block']))
 		{
 			$incontext['form_url'] = $installurl . '?step=' . $incontext['current_step'];
 
-			call_user_func('template_' . $incontext['sub_template']);
+			call_user_func('template_' . $incontext['block']);
 		}
 
 		// Show the footer.
@@ -324,7 +324,7 @@ function Welcome()
 	global $incontext, $txt, $db, $installurl;
 
 	$incontext['page_title'] = $txt['install_welcome'];
-	$incontext['sub_template'] = 'welcome_message';
+	$incontext['block'] = 'welcome_message';
 
 	// Done the submission?
 	if (isset($_POST['contbutt']))
@@ -396,7 +396,7 @@ function CheckFilesWritable()
 	global $txt, $incontext;
 
 	$incontext['page_title'] = $txt['ftp_checking_writable'];
-	$incontext['sub_template'] = 'chmod_files';
+	$incontext['block'] = 'chmod_files';
 
 	// This file is special... We only want to be able to read it.
 	if (file_exists(dirname(__FILE__) . '/MGalleryItem.php'))
@@ -593,7 +593,7 @@ function DatabaseSettings()
 {
 	global $txt, $db, $incontext;
 
-	$incontext['sub_template'] = 'database_settings';
+	$incontext['block'] = 'database_settings';
 	$incontext['page_title'] = $txt['db_settings'];
 	$incontext['continue'] = 1;
 
@@ -765,7 +765,7 @@ function ForumSettings()
 {
 	global $txt, $incontext, $db;
 
-	$incontext['sub_template'] = 'forum_settings';
+	$incontext['block'] = 'forum_settings';
 	$incontext['page_title'] = $txt['install_settings'];
 
 	// What host and port are we on?
@@ -821,7 +821,7 @@ function DatabasePopulation()
 {
 	global $txt, $db_connection, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
 
-	$incontext['sub_template'] = 'populate_database';
+	$incontext['block'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
 	$incontext['continue'] = 1;
 
@@ -1062,7 +1062,7 @@ function AdminAccount()
 {
 	global $txt, $db_connection, $incontext, $db_passwd, $sourcedir;
 
-	$incontext['sub_template'] = 'admin_account';
+	$incontext['block'] = 'admin_account';
 	$incontext['page_title'] = $txt['user_settings'];
 	$incontext['continue'] = 1;
 
@@ -1276,7 +1276,7 @@ function DeleteInstall()
 	global $current_wedge_version, $sourcedir, $modSettings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
-	$incontext['sub_template'] = 'delete_install';
+	$incontext['block'] = 'delete_install';
 	$incontext['continue'] = 0;
 
 	require(dirname(__FILE__) . '/Settings.php');

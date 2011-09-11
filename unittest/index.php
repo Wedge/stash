@@ -46,7 +46,7 @@
 		}
 		$context['tests'][count($context['tests']) - 1]['isLast'] = true;
 
-		loadSubTemplate('ut_index');
+		loadBlock('ut_index');
 	}
 
 	function do_test()
@@ -127,7 +127,7 @@
 		$context['test_results'] = $testResults;
 
 		hideChrome();
-		loadSubTemplate('ut_test_results');
+		loadBlock('ut_test_results');
 	}
 
 	function getAllTests()
