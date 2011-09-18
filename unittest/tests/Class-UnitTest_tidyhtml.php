@@ -82,9 +82,9 @@
 					'description' => "Task logs",
 					'url' => $scripturl . '?action=admin;area=logs;sa=tasklog',
 				),
-				'BoardIndex_1' => array(
-					'name' => 'Board index (1)',
-					'description' => "Board index",
+				'Boards_1' => array(
+					'name' => 'Board list (1)',
+					'description' => "Board list",
 					'url' => $scripturl,
 				),
 				'Calendar_1' => array(
@@ -1043,7 +1043,7 @@
 				'Themes_9' => array(
 					'name' => 'Themes (9)',
 					'description' => "Edit template",
-					'url' => $scripturl . '?action=admin;area=theme;sa=edit;th=1;filename=BoardIndex.template.php',
+					'url' => $scripturl . '?action=admin;area=theme;sa=edit;th=1;filename=Boards.template.php',
 				),
 				'Themes_10' => array(
 					'name' => 'Themes (10)',

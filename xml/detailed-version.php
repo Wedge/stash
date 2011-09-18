@@ -19,7 +19,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'SourcesAdmin.php': '0.1',
 	'SourcesAjax.php': '0.1',
 	'SourcesAnnounce.php': '0.1',
-	'SourcesBoardIndex.php': '0.1',
+	'SourcesBoards.php': '0.1',
 	'SourcesBuddy.php': '0.1',
 	'SourcesCalendar.php': '0.1',
 	'SourcesClass-CSS.php': '0.1',
@@ -154,8 +154,8 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 
 	'DefaultAdmin.template.php': '0.1',
 	'DefaultAnnounce.template.php': '0.1',
-	'DefaultBoardIndex.template.php': '0.1',
-	'DefaultBoardIndexInfoCenter.template.php': '0.1',
+	'DefaultBoards.template.php': '0.1',
+	'DefaultInfoCenter.template.php': '0.1',
 	'DefaultCalendar.template.php': '0.1',
 	'DefaultDisplay.template.php': '0.1',
 	'DefaultErrors.template.php': '0.1',
@@ -207,7 +207,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'Defaultindex.template.php': '0.1',
 
 	'TemplatesAdmin.template.php': '0.1',
-	'TemplatesBoardIndex.template.php': '0.1',
+	'TemplatesBoards.template.php': '0.1',
 	'TemplatesCalendar.template.php': '0.1',
 	'TemplatesDisplay.template.php': '0.1',
 	'TemplatesErrors.template.php': '0.1',
