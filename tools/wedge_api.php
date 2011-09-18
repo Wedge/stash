@@ -44,9 +44,6 @@
 		- may not always log, because it delays logging if at all possible.
 		- uses the action specified as the action in the log, a good example
 		  would be "coppermine" or similar.
-		- you can add entries to the Modifications language files so as to
-		  make this action show up properly on Who's Online - see Who.php for
-		  more details.
 
 	bool we_is_online(string username or int id_member)
 		- checks if the specified member is currently online.

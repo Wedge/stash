@@ -277,7 +277,6 @@ window.weLanguageVersions = {
 	'Manual': '0.1',
 	'Media': '0.1',
 	'ModerationCenter': '0.1',
-	'Modifications': '0.1',
 	'Modlog': '0.1',
 	'Packages': '0.1',
 	'PersonalMessage': '0.1',

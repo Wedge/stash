@@ -795,6 +795,8 @@ function ForumSettings()
 			'boarddir' => addslashes(dirname(__FILE__)),
 			'sourcedir' => addslashes(dirname(__FILE__)) . '/Sources',
 			'cachedir' => addslashes(dirname(__FILE__)) . '/cache',
+			'addonsdir' => addslashes(dirname(__FILE__)) . '/Addons',
+			'addonsurl' => $_POST['boardurl'] . '/Addons',
 			'mbname' => strtr($_POST['mbname'], array('\"' => '"')),
 			'language' => substr($_SESSION['installer_temp_lang'], 8, -4),
 		);

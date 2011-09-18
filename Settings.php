@@ -18,12 +18,12 @@ $mmessage = 'Okay faithful users, we\'re attempting to restore an older backup o
 ########## Forum Info ##########
 $mbname = 'My Community';						# The name of your forum.
 $language = 'english';							# The default language file set for the forum.
-$boardurl = 'http://127.0.0.1/wedge';			# URL to your forum's folder. (without the trailing /!)
+$boardurl = 'http://smf/wedge';			# URL to your forum's folder. (without the trailing /!)
 $webmaster_email = 'noreply@myserver.com';		# Email address to send emails from. (like noreply@yourdomain.com.)
 $cookiename = 'WedgeCookie01';					# Name of the cookie to set for authentication.
 
 ########## Database Info ##########
-$db_server = 'localhost';
+$db_server = '127.0.0.1';
 $db_name = 'wedge';
 $db_user = 'root';
 $db_passwd = '';
@@ -39,6 +39,8 @@ $db_show_debug = false;
 $boarddir = dirname(__FILE__);					# The absolute path to the forum's folder. (not just '.'!)
 $sourcedir = dirname(__FILE__) . '/Sources';	# Path to the Sources directory.
 $cachedir = dirname(__FILE__) . '/cache';		# Path to the cache directory.
+$addonsdir = dirname(__FILE__) . '/Addons';		# Path to the add-ons directory.
+$addonsurl = $boardurl . '/Addons';				# URL to the Addons area root.
 
 ########## Error-Catching ##########
 # Note: You shouldn't touch these settings.
@@ -54,5 +56,7 @@ if (!file_exists($sourcedir) && file_exists($boarddir . '/Sources'))
 	$sourcedir = $boarddir . '/Sources';
 if (!file_exists($cachedir) && file_exists($boarddir . '/cache'))
 	$cachedir = $boarddir . '/cache';
+if (!file_exists($addonsdir) && file_exists($boarddir . '/Addons'))
+	$addonsdir = $boarddir . '/Addons';
 
 ?>
