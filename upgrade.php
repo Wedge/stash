@@ -3974,8 +3974,7 @@ function template_database_changes()
 				updateStepProgress(barDone, barTotal, ', $upcontext['step_weight'] * ((100 - $upcontext['step_progress']) / 100), ');
 
 				// Finally - update the time here as it shows the server is responding!
-				curTime = new Date();
-				iElapsed = (curTime.getTime() / 1000 - ', $upcontext['started'], ');
+				iElapsed = (+new Date() / 1000 - ', $upcontext['started'], ');
 				mins = parseInt(iElapsed / 60);
 				secs = parseInt(iElapsed - mins * 60);
 				document.getElementById("mins_elapsed").innerHTML = mins;
@@ -4120,7 +4119,7 @@ function template_upgrade_complete()
 			function doTheDelete(theCheck)
 			{
 				var theImage = document.getElementById ? document.getElementById("delete_upgrader") : document.all.delete_upgrader;
-				theImage.src = "', $upgradeurl, '?delete=1&ts_" + (new Date().getTime());
+				theImage.src = "', $upgradeurl, '?delete=1&ts_" + (+new Date());
 				theCheck.disabled = true;
 			}
 		// ]]></script>

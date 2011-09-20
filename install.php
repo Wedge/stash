@@ -2347,7 +2347,7 @@ function template_delete_install()
 			function doTheDelete()
 			{
 				var tempImage = new Image();
-				tempImage.src = "', $installurl, '?delete=1&ts_" + (new Date().getTime());
+				tempImage.src = "', $installurl, '?delete=1&ts_" + (+new Date());
 				tempImage.width = 0;
 				$("#delete_self").attr("disabled", true);
 			}

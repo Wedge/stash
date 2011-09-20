@@ -257,7 +257,7 @@ function step2()
 						{
 							var theImage = document.getElementById ? document.getElementById("auto_paths") : document.all.auto_paths;
 
-							theImage.src = "', $_SERVER['PHP_SELF'], '?paths&" + (new Date().getTime());
+							theImage.src = "', $_SERVER['PHP_SELF'], '?paths&" + (+new Date());
 							theImage.width = 0;
 							theCheck.disabled = true;
 						}
