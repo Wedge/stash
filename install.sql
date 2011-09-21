@@ -988,13 +988,14 @@ CREATE TABLE {$db_prefix}log_errors (
   url text NOT NULL,
   message text NOT NULL,
   session char(32) NOT NULL default '                                ',
-  error_type char(15) NOT NULL default 'general',
+  error_type varchar(255) NOT NULL default 'general',
   file varchar(255) NOT NULL default '',
   line mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY (id_error),
   KEY log_time (log_time),
   KEY id_member (id_member),
-  KEY ip (ip)
+  KEY ip (ip),
+  KEY error_type (error_type)
 ) ENGINE=MyISAM;
 
 #
