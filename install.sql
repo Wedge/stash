@@ -2134,7 +2134,6 @@ INSERT INTO {$db_prefix}settings
 VALUES ('weVersion', '{$wedge_version}'),
 	('news', '{$default_news}'),
 	('compactTopicPagesContiguous', '5'),
-	('compactTopicPagesEnable', '1'),
 	('todayMod', '2'),
 	('enablePreviousNext', '1'),
 	('password_strength', '1'),
