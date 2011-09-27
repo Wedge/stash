@@ -1564,7 +1564,7 @@ INSERT INTO {$db_prefix}media_settings
 VALUES ('installed_on', UNIX_TIMESTAMP()),
 	('data_dir_path', '{$boarddir}/media'),
 	('data_dir_url', '{$boardurl}/media'),
-	('max_dir_files', '150'),
+	('max_dir_files', '500'),
 	('num_items_per_page', '15'),
 	('max_dir_size', '51400'),
 	('max_file_size', '1024'),
