@@ -185,7 +185,7 @@ function step2()
 			if (isset($_GET['line']) && $count <= $_GET['line'])
 				continue;
 
-			$line = &$data[$count];
+			$line =& $data[$count];
 		}
 
 		// No comments allowed!

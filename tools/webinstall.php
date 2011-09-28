@@ -637,7 +637,7 @@ function doStep2()
 {
 	global $txt, $ftp;
 
-	$chmod = &$_SESSION['webinstall_state']['chmod'];
+	$chmod =& $_SESSION['webinstall_state']['chmod'];
 
 	if (isset($_POST['ftp_username']))
 	{
@@ -797,7 +797,7 @@ function doStep3()
 {
 	global $txt;
 
-	$chmod = &$_SESSION['webinstall_state']['chmod'];
+	$chmod =& $_SESSION['webinstall_state']['chmod'];
 
 	if (@ini_get('memory_limit') < 64)
 		@ini_set('memory_limit', '64M');
@@ -1167,7 +1167,7 @@ function extract_tar($data, $destination, $ftp)
 	$blocks = strlen($data) / 512 - 1;
 	$offset = 0;
 
-	$chmod = &$_SESSION['webinstall_state']['chmod'];
+	$chmod =& $_SESSION['webinstall_state']['chmod'];
 
 	$return = array();
 

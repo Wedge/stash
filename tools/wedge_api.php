@@ -352,12 +352,12 @@ function we_authenticateUser()
 	}
 
 	// A few things to make life easier...
-	$we_user_info['id'] = &$we_user_info['id_member'];
-	$we_user_info['username'] = &$we_user_info['member_name'];
-	$we_user_info['name'] = &$we_user_info['real_name'];
-	$we_user_info['email'] = &$we_user_info['email_address'];
-	$we_user_info['messages'] = &$we_user_info['instant_messages'];
-	$we_user_info['unread_messages'] = &$we_user_info['unread_messages'];
+	$we_user_info['id'] =& $we_user_info['id_member'];
+	$we_user_info['username'] =& $we_user_info['member_name'];
+	$we_user_info['name'] =& $we_user_info['real_name'];
+	$we_user_info['email'] =& $we_user_info['email_address'];
+	$we_user_info['messages'] =& $we_user_info['instant_messages'];
+	$we_user_info['unread_messages'] =& $we_user_info['unread_messages'];
 	$we_user_info['language'] = empty($we_user_info['lngfile']) || empty($we_settings['userLanguage']) ? $we_settings['language'] : $we_user_info['lngfile'];
 	$we_user_info['is_guest'] = $id_member == 0;
 	$we_user_info['is_admin'] = in_array(1, $we_user_info['groups']);
@@ -782,7 +782,7 @@ function we_loadSession()
 	// Set the randomly generated code.
 	if (!isset($_SESSION['rand_code']))
 		$_SESSION['rand_code'] = md5(session_id() . mt_rand());
-	$we_user_info['session_id'] = &$_SESSION['rand_code'];
+	$we_user_info['session_id'] =& $_SESSION['rand_code'];
 
 	if (!isset($_SESSION['USER_AGENT']))
 		$_SESSION['USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
