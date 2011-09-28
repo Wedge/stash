@@ -1359,7 +1359,8 @@ CREATE TABLE {$db_prefix}media_albums (
   id_topic int(11) NOT NULL default '0',
   PRIMARY KEY (id_album),
   KEY album_of (album_of),
-  KEY id_album_album_of_featured (id_album, album_of, featured)
+  KEY master (id_master),
+  KEY id_of (id_album, album_of, featured)
 ) ENGINE=MyISAM;
 
 #
@@ -1468,7 +1469,10 @@ CREATE TABLE {$db_prefix}media_items (
   id_last_comment int(11) NOT NULL default '0',
   log_last_access_time int(11) NOT NULL default '0',
   num_comments int(11) NOT NULL default '0',
-  PRIMARY KEY (id_media)
+  PRIMARY KEY (id_media),
+  KEY id_thumb (id_thumb),
+  KEY time_added (time_added),
+  KEY album_id (album_id)
 ) ENGINE=MyISAM;
 
 #
