@@ -39,8 +39,8 @@ $db_show_debug = false;
 $boarddir = dirname(__FILE__);					# The absolute path to the forum's folder. (not just '.'!)
 $sourcedir = dirname(__FILE__) . '/Sources';	# Path to the Sources directory.
 $cachedir = dirname(__FILE__) . '/cache';		# Path to the cache directory.
-$addonsdir = dirname(__FILE__) . '/Addons';		# Path to the add-ons directory.
-$addonsurl = $boardurl . '/Addons';				# URL to the Addons area root.
+$pluginsdir = dirname(__FILE__) . '/Plugins';	# Path to the plugins directory.
+$pluginsurl = $boardurl . '/Plugins';			# URL to the Plugins area root.
 
 ########## Error-Catching ##########
 # Note: You shouldn't touch these settings.
