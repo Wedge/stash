@@ -3,12 +3,12 @@
    - the "from" attribute of "upgrade" works the same way.
    -->
 
-<!-- The root package-info element. -->
-<!ELEMENT package-info (id, name, type?, version, install*, uninstall*, upgrade*)>
-	<!ATTLIST package-info xmlns CDATA "http://wedge.org/files/xml/package-info.dtd">
-	<!ATTLIST package-info xmlns:we CDATA "http://wedge.org/">
+<!-- The root plugin-info element. -->
+<!ELEMENT plugin-info (id, name, type?, version, install*, uninstall*, upgrade*)>
+	<!ATTLIST plugin-info xmlns CDATA "http://wedge.org/files/xml/plugin-info.dtd">
+	<!ATTLIST plugin-info xmlns:we CDATA "http://wedge.org/">
 
-	<!-- This package's id, name, type, and version. -->
+	<!-- This plugin's id, name, type, and version. -->
 	<!ELEMENT id (#PCDATA)>
 	<!ELEMENT name (#PCDATA)>
 	<!ELEMENT type (#PCDATA)>
@@ -65,14 +65,14 @@
 			<!ATTLIST create-file name CDATA #REQUIRED>
 			<!ATTLIST create-file destination CDATA #REQUIRED>
 
-		<!-- Require a directory (and all files in it!) from inside the package. -->
+		<!-- Require a directory (and all files in it!) from inside the plugin. -->
 		<!ELEMENT require-dir (#PCDATA)>
 			<!-- Put it in destination, name it name, get it from from. (or name if there's no from..) -->
 			<!ATTLIST require-dir from CDATA #IMPLIED>
 			<!ATTLIST require-dir name CDATA #REQUIRED>
 			<!ATTLIST require-dir destination CDATA #REQUIRED>
 
-		<!-- Require a file from inside the package. -->
+		<!-- Require a file from inside the plugin. -->
 		<!ELEMENT require-file (#PCDATA)>
 			<!-- Stick it in destination, name it name, and get it from from. (or name if there's no from..) -->
 			<!ATTLIST require-file from CDATA #IMPLIED>

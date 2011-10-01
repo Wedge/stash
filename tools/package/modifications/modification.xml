@@ -5,7 +5,7 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <modification xmlns="http://wedge.org/files/xml/modification.dtd" xmlns:we="http://wedge.org/">
-	<!-- This information needs to be the same as that in the addon-info.xml. -->
+	<!-- This information needs to be the same as that in the plugin-info.xml. -->
 	<id>username:testing123</id>
 	<version>1.0</version>
 

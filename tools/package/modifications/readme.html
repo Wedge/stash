@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Wedge Add-on SDK</title>
+		<title>Wedge Plugin SDK</title>
 		<style><!--
 			body
 			{
@@ -74,35 +74,35 @@
 	</head>
 	<body>
 		<div id="header">
-			<div>Wedge Add-on Software Development Kit</div>
+			<div>Wedge Plugin Software Development Kit</div>
 		</div>
 		<div id="content">
 			<div class="panel">
 				<h2 id="contents">Welcome to the world of modding!</h2>
 
-				This software development kit, for add-on developers, is here to help people quickly begin to create add-ons for Wedge. More thorough and advanced information can always be found on the <a href="http://wedge.org/">Wedge website</a>.<br />
+				This software development kit, for plugin developers, is here to help people quickly begin to create plugins for Wedge. More thorough and advanced information can always be found on the <a href="http://wedge.org/">Wedge website</a>.<br />
 				<br />
 				You can find the following information in this file:<br />
 
 				<ul type="none" style="list-style-type: none;">
 					<li>&raquo; <a href="#files">Files contained in this folder.</a></li>
 					<li>&raquo; <a href="#modification">Making a modification file.</a></li>
-					<li>&raquo; <a href="#avatars">Creating an add-on just to install avatars.</a></li>
+					<li>&raquo; <a href="#avatars">Creating an plugin just to install avatars.</a></li>
 					<li>&raquo; <a href="#language">Packaging language files for installation.</a></li>
 					<li>&raquo; <a href="#packaging">How you can distribute the files.</a></li>
 				</ul>
 
-				For more information, you can always post on <a href="http://wedge.org/">the forum</a> asking questions, exchanging ideas and comments, or just plain bragging about how much better your add-on is than anyone else's.
+				For more information, you can always post on <a href="http://wedge.org/">the forum</a> asking questions, exchanging ideas and comments, or just plain bragging about how much better your plugin is than anyone else's.
 			</div>
 
 			<div class="panel">
 				<h2 id="files">What's available in this folder?</h2>
 
-				You should notice a few files that came with this readme. They are all examples to help give you a better understanding of how to create an add-on. They are as follows:
+				You should notice a few files that came with this readme. They are all examples to help give you a better understanding of how to create an plugin. They are as follows:
 
 				<dl>
 					<dt>add_settings.php</dt>
-					<dd>An example of how to add settings to the database in an add-on. This file can be used by the add-on manager, and outside it.</dd>
+					<dd>An example of how to add settings to the database in an plugin. This file can be used by the plugin manager, and outside it.</dd>
 
 					<dt>boardmod.mod</dt>
 					<dd>A boardmod format modification file example. Note that this format's use is deprecated and should thus be avoided.</dd>
@@ -110,11 +110,11 @@
 					<dt>modification.xml</dt>
 					<dd>This is an example of a more advanced, xml based format for creating modification files.</dd>
 
-					<dt>addon-info.xml</dt>
-					<dd>An example addon-info manifest file. (It describes what files are in an add-on and what to do with them.)</dd>
+					<dt>plugin-info.xml</dt>
+					<dd>An example plugin-info manifest file. (It describes what files are in an plugin and what to do with them.)</dd>
 
-					<dt>addon-info_advanced.xml</dt>
-					<dd>A much more advanced example of a addon-info manifest, utilizing the features of the add-on system.</dd>
+					<dt>plugin-info_advanced.xml</dt>
+					<dd>A much more advanced example of a plugin-info manifest, utilizing the features of the plugin system.</dd>
 
 					<dt>readme.html</dt>
 					<dd>This file, describing the use of the above files and what you can do with them.</dd>
@@ -124,9 +124,9 @@
 			</div>
 
 			<div class="panel">
-				<h2 id="modification">Creating a code add-on</h2>
+				<h2 id="modification">Creating a code plugin</h2>
 
-				One of the most popular types of add-on is a mod, or code add-on. This is an add-on that modifies files in Wedge so they work differently - adding, removing, or changing functionality. A large part of the add-on manager's advanced functions are built just to accommodate code add-ons.<br />
+				One of the most popular types of plugin is a mod, or code plugin. This is an plugin that modifies files in Wedge so they work differently - adding, removing, or changing functionality. A large part of the plugin manager's advanced functions are built just to accommodate code plugins.<br />
 				<br />
 				However, if you're reading this... Chances are you just want a more casual description. For this, open the <tt>modification.xml</tt> file included in this kit. Inside, you will see a basic example framework for modifying a specific file. A simplified version is as follows: (blue is only for comments.)<br />
 
@@ -157,7 +157,7 @@ This is what to add.<br />
 				<br />
 				You may notice the &lt;![CDATA[...]]&gt; used there. This simply makes it so you can use &lt;, &gt;, &quot;, &amp;, and etc., without using &amp;amp; or something. And, the letters &quot;CDATA&quot; stand for &quot;character data&quot;, meaning that it takes what's inside there literally - not as html/xml. The only restriction is that you cannot have ]]&gt; inside it (because that's how it closes.)<br />
 				<br />
-				Once you have the modification file sorted out, you need to modify the addon-info file to make use of it. Open up addon-info.xml, and make sure the <tt>&lt;type&gt;</tt> part says <strong>modification</strong>. Then make <tt>&lt;install&gt;</tt> look something like this: (not the blue parts!)<br />
+				Once you have the modification file sorted out, you need to modify the plugin-info file to make use of it. Open up plugin-info.xml, and make sure the <tt>&lt;type&gt;</tt> part says <strong>modification</strong>. Then make <tt>&lt;install&gt;</tt> look something like this: (not the blue parts!)<br />
 
 				<div class="code">
 &lt;install&gt;<br />
@@ -174,15 +174,15 @@ This is what to add.<br />
 &lt;/install&gt;
 				</div>
 
-				With that done, you're ready to <a href="#packaging">package, test, and distribute your add-on</a>.
+				With that done, you're ready to <a href="#packaging">package, test, and distribute your plugin</a>.
 			</div>
 
 			<div class="panel">
-				<h2 id="avatars">Creating an avatar add-on</h2>
+				<h2 id="avatars">Creating an avatar plugin</h2>
 
 				Okay, so you have a bunch of avatars, a lot of graphical talent, and the need to let everyone see your avatars. No problem, we've got it covered ;).<br />
 				<br />
-				All you need to do is open up addon_info.xml, and change a few things. First, change the <tt>&lt;type&gt;modification&lt;/type&gt;</tt> part to say 'avatar' instead of 'modification'. Next, find the big long part that starts with <tt>&lt;install&gt;</tt> and ends with <tt>&lt;/install&gt;</tt>, and replace it with something like this:
+				All you need to do is open up plugin_info.xml, and change a few things. First, change the <tt>&lt;type&gt;modification&lt;/type&gt;</tt> part to say 'avatar' instead of 'modification'. Next, find the big long part that starts with <tt>&lt;install&gt;</tt> and ends with <tt>&lt;/install&gt;</tt>, and replace it with something like this:
 
 				<div class="code">
 &lt;install&gt;<br />
@@ -200,9 +200,9 @@ This is what to add.<br />
 			<div class="panel">
 				<h2 id="language">Packaging together some language files</h2>
 
-				Translating is a difficult and time consuming job, and for this reason making add-ons for the finished product should, by all rights, be easy. Luckily, it is!<br />
+				Translating is a difficult and time consuming job, and for this reason making plugins for the finished product should, by all rights, be easy. Luckily, it is!<br />
 				<br />
-				Just like with avatars and modifications, you will need to edit addon_info.xml to change a few things. First, change the <tt>&lt;type&gt;modification&lt;/type&gt;</tt> part to say 'language' instead of 'modification'. Next, find the big long part that starts with <tt>&lt;install&gt;</tt> and ends with <tt>&lt;/install&gt;</tt>, and replace it with something like this:
+				Just like with avatars and modifications, you will need to edit plugin_info.xml to change a few things. First, change the <tt>&lt;type&gt;modification&lt;/type&gt;</tt> part to say 'language' instead of 'modification'. Next, find the big long part that starts with <tt>&lt;install&gt;</tt> and ends with <tt>&lt;/install&gt;</tt>, and replace it with something like this:
 
 				<div class="code">
 &lt;install&gt;<br />
@@ -223,18 +223,18 @@ This is what to add.<br />
 			<div class="panel">
 				<h2 id="packaging">Putting the whole thing together</h2>
 
-				Now that you have all your files ready, there are just a few things left to do. First, we're going to edit addon-info.xml just a little more, to include information about the add-on, which makes it so everyone knows the name, version, and etc. for upgrade and support reasons.<br />
+				Now that you have all your files ready, there are just a few things left to do. First, we're going to edit plugin-info.xml just a little more, to include information about the plugin, which makes it so everyone knows the name, version, and etc. for upgrade and support reasons.<br />
 				<br />
-				Near the top, you should see three elements (tags): id, version, and name. Name is easy, just change it to the name of the add-on.... version should probably be 1.0 or similar. The id should be a specific format - your username, a colon, and then the add-on name. Ideally, the id should have no spaces in it. (don't worry, the addon-info.xml file has more details.)<br />
+				Near the top, you should see three elements (tags): id, version, and name. Name is easy, just change it to the name of the plugin.... version should probably be 1.0 or similar. The id should be a specific format - your username, a colon, and then the plugin name. Ideally, the id should have no spaces in it. (don't worry, the plugin-info.xml file has more details.)<br />
 				<br />
-				With that done, you'll want to zip it up. You can compress it with either the zip or tar.gz formats. The second is less common, but compresses more effectively. Either way you do it, compress the files into one archive - and you've got an add-on!<br />
+				With that done, you'll want to zip it up. You can compress it with either the zip or tar.gz formats. The second is less common, but compresses more effectively. Either way you do it, compress the files into one archive - and you've got an plugin!<br />
 				<br />
 				And remember - testing is everything. It's easy to make a little typo that will mess the whole thing up, so try it on a clean install of Wedge before you give it out!<br />
 				<br />
 
 				<h2>A last note on paths</h2>
 
-				As a last note, it's also very important, when writing modifications, not to use &quot;<tt>Sources/Filename</tt>&quot;. It is a common practice to store those files outside of <cite>public_html</cite>, and so you should use the special add-on manager paths: <tt>$sourcedir/filename</tt>, <tt>$boarddir/filename</tt>, etc. Others available are <tt>$themedir</tt>, <tt>$languagedir</tt>, <tt>$avatardir</tt>, and <tt>$smileysdir</tt>.<br />
+				As a last note, it's also very important, when writing modifications, not to use &quot;<tt>Sources/Filename</tt>&quot;. It is a common practice to store those files outside of <cite>public_html</cite>, and so you should use the special plugin manager paths: <tt>$sourcedir/filename</tt>, <tt>$boarddir/filename</tt>, etc. Others available are <tt>$themedir</tt>, <tt>$languagedir</tt>, <tt>$avatardir</tt>, and <tt>$smileysdir</tt>.<br />
 				<br />
 				Thanks for contributing,<br />
 				The Wedge Team.

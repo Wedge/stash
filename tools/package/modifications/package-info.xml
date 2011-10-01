@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<!DOCTYPE addon-info SYSTEM "http://wedge.org/files/xml/package-info.dtd">
+<!DOCTYPE plugin-info SYSTEM "http://wedge.org/files/xml/plugin-info.dtd">
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	This is a simplified add-on manifest for Wedge add-ons.
+	This is a simplified plugin manifest for Wedge plugins.
 
-	Please see the other included file, addon-info_advanced.xml, for
+	Please see the other included file, plugin-info_advanced.xml, for
 	a more detailed description of what you can do with this file.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-<addon-info xmlns="http://wedge.org/files/xml/package-info.dtd" xmlns:we="http://wedge.org/">
-	<!-- For the id, always use something unique - put your name, a colon, and then the add-on name. -->
+<plugin-info xmlns="http://wedge.org/files/xml/plugin-info.dtd" xmlns:we="http://wedge.org/">
+	<!-- For the id, always use something unique - put your name, a colon, and then the plugin name. -->
 	<id>username:testing123</id>
-	<!-- Below should be the name of this add-on. -->
+	<!-- Below should be the name of this plugin. -->
 	<name>Testing, 1-2-3!</name>
-	<!-- The version of this modification.  Keep it numeric so PHP can tell that old < new. -->
+	<!-- The version of this modification. Keep it numeric so PHP can tell that old < new. -->
 	<version>1.0</version>
 
 	<!-- Type, one of: modification, avatar, language. -->
@@ -29,4 +29,4 @@
 	<uninstall>
 		<modification reverse="true">install.xml</modification>
 	</uninstall>
-</addon-info>
+</plugin-info>

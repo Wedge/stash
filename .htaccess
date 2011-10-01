@@ -53,7 +53,7 @@
 	php_value session.serialize_handler "php"
 	# URL-based sessions are used if cookies aren't available to the client.
 	php_value session.use_only_cookies 0
-	# With this on, you can use the add-on manager among other things.
+	# With this on, you can use the plugin manager among other things.
 	php_value allow_url_fopen 1
 	# This is here just for validation, although it isn't really used.
 	php_value arg_separator.output "&amp;"
