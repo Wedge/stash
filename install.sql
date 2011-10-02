@@ -1359,7 +1359,7 @@ CREATE TABLE {$db_prefix}media_albums (
   id_topic int(11) NOT NULL default '0',
   PRIMARY KEY (id_album),
   KEY album_of (album_of),
-  KEY master (id_master),
+  KEY master (master),
   KEY id_of (id_album, album_of, featured)
 ) ENGINE=MyISAM;
 
