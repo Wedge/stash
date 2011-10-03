@@ -1,0 +1,462 @@
+<!-- This is the RelaxNG Schema for Wedge's plugin manifest - plugin-info.xml - files. -->
+
+<!-- Define the initial structure of the root element. Other than the first items, everything is optional (one per), and in any order. -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+	<start>
+		<element name="plugin">
+			<attribute name="id">
+				<text/>
+			</attribute>
+			<interleave>
+				<ref name="name" />
+				<ref name="author" />
+				<ref name="description" />
+				<ref name="version" />
+				<optional>
+					<ref name="website" />
+				</optional>
+				<optional>
+					<ref name="min-versions" />
+				</optional>
+				<optional>
+					<ref name="required-functions" />
+				</optional>
+				<optional>
+					<ref name="settings" />
+				</optional>
+				<optional>
+					<ref name="database" />
+				</optional>
+				<optional>
+					<ref name="hooks" />
+				</optional>
+				<optional>
+					<ref name="scheduledtasks" />
+				</optional>
+				<optional>
+					<ref name="readmes" />
+				</optional>
+				<optional>
+					<ref name="acp-url" />
+				</optional>
+			</interleave>
+		</element>
+	</start>
+
+	<!-- Now the individual elements and their content. -->
+	<!-- The plugin's name -->
+	<define name="name">
+		<element name="name">
+			<text/>
+		</element>
+	</define>
+
+	<!-- The plugin's author, plus optional details about them. -->
+	<define name="author">
+		<element name="author">
+			<text/>
+			<optional>
+				<attribute name="url">
+					<data type="string"/>
+				</attribute>
+			</optional>
+			<optional>
+				<attribute name="email">
+					<data type="string"/>
+				</attribute>
+			</optional>
+		</element>
+	</define>
+
+	<!-- The plugin's description. -->
+	<define name="description">
+		<element name="description">
+			<text/>
+		</element>
+	</define>
+
+	<define name="version">
+		<element name="version">
+			<text/>
+		</element>
+	</define>
+
+	<!-- A plugin may specify a dedicated website if it so wishes. -->
+	<define name="website">
+		<element name="website">
+			<text/>
+		</element>
+	</define>
+
+	<!-- Minimum versions for PHP and MySQL. -->
+	<define name="min-versions">
+		<element name="min-versions">
+			<interleave>
+				<optional>
+					<element name="php">
+						<text/>
+					</element>
+				</optional>
+				<optional>
+					<element name="mysql">
+						<text/>
+					</element>
+				</optional>
+			</interleave>
+		</element>
+	</define>
+
+	<!-- Required PHP functions -->
+	<define name="required-functions">
+		<element name="required-functions">
+			<oneOrMore>
+				<element name="php-function">
+					<text/>
+				</element>
+			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- A plugin defining the settings it creates/uses. -->
+	<define name="settings">
+		<element name="settings">
+			<oneOrMore>
+				<element name="setting">
+					<attribute name="name">
+						<data type="string"/>
+					</attribute>
+					<attribute name="default">
+						<data type="string"/>
+					</attribute>
+				</element>
+			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- The database changes a plugin wants to make. -->
+	<define name="database">
+		<element name="database">
+			<interleave>
+				<optional>
+					<element name="tables">
+						<oneOrMore>
+							<element name="table">
+								<interleave>
+									<attribute name="if-exists">
+										<choice>
+											<value>update</value>
+											<value>ignore</value>
+										</choice>
+									</attribute>
+									<attribute name="name">
+										<data type="string"/>
+									</attribute>
+									<element name="columns">
+										<oneOrMore>
+											<element name="column">
+												<attribute name="name">
+													<data type="string"/>
+												</attribute>
+												<attribute name="type">
+													<choice>
+														<value>tinyint</value>
+														<value>smallint</value>
+														<value>mediumint</value>
+														<value>int</value>
+														<value>bigint</value>
+														<value>float</value>
+														<value>real</value>
+														<value>double</value>
+														<value>char</value>
+														<value>varchar</value>
+														<value>text</value>
+														<value>mediumtext</value>
+														<value>set</value>
+														<value>enum</value>
+													</choice>
+												</attribute>
+												<optional>
+													<attribute name="autoincrement">
+														<choice>
+															<value>yes</value>
+															<value>no</value>
+														</choice>
+													</attribute>
+												</optional>
+												<optional>
+													<attribute name="unsigned">
+														<choice>
+															<value>yes</value>
+															<value>no</value>
+														</choice>
+													</attribute>
+												</optional>
+												<optional>
+													<attribute name="size">
+														<data type="integer"/>
+													</attribute>
+												</optional>
+												<optional>
+													<attribute name="values">
+														<data type="string"/>
+													</attribute>
+												</optional>
+												<optional>
+													<attribute name="default">
+														<data type="string"/>
+													</attribute>
+												</optional>
+												<optional>
+													<attribute name="null">
+														<choice>
+															<value>yes</value>
+															<value>no</value>
+														</choice>
+													</attribute>
+												</optional>
+											</element>
+										</oneOrMore>
+									</element>
+									<zeroOrMore>
+										<element name="index">
+											<attribute name="type">
+												<choice>
+													<value>primary</value>
+													<value>unique</value>
+													<value>index</value>
+												</choice>
+											</attribute>
+											<oneOrMore>
+												<element name="field">
+													<text/>
+												</element>
+											</oneOrMore>
+										</element>
+									</zeroOrMore>
+								</interleave>
+							</element>
+						</oneOrMore>
+					</element>
+				</optional>
+				<optional>
+					<element name="columns">
+						<oneOrMore>
+							<element name="column">
+								<attribute name="name">
+									<data type="string"/>
+								</attribute>
+								<attribute name="table">
+									<data type="string"/>
+								</attribute>
+								<attribute name="type">
+									<choice>
+										<value>tinyint</value>
+										<value>smallint</value>
+										<value>mediumint</value>
+										<value>int</value>
+										<value>bigint</value>
+										<value>float</value>
+										<value>real</value>
+										<value>double</value>
+										<value>char</value>
+										<value>varchar</value>
+										<value>text</value>
+										<value>mediumtext</value>
+										<value>set</value>
+										<value>enum</value>
+									</choice>
+								</attribute>
+								<optional>
+									<attribute name="autoincrement">
+										<choice>
+											<value>yes</value>
+											<value>no</value>
+										</choice>
+									</attribute>
+								</optional>
+								<optional>
+									<attribute name="unsigned">
+										<choice>
+											<value>yes</value>
+											<value>no</value>
+										</choice>
+									</attribute>
+								</optional>
+								<optional>
+									<attribute name="size">
+										<data type="integer"/>
+									</attribute>
+								</optional>
+								<optional>
+									<attribute name="values">
+										<data type="string"/>
+									</attribute>
+								</optional>
+								<optional>
+									<attribute name="default">
+										<data type="string"/>
+									</attribute>
+								</optional>
+								<optional>
+									<attribute name="null">
+										<choice>
+											<value>yes</value>
+											<value>no</value>
+										</choice>
+									</attribute>
+								</optional>
+							</element>
+						</oneOrMore>
+					</element>
+				</optional>
+				<optional>
+					<element name="indexes">
+						<oneOrMore>
+							<element name="index">
+								<attribute name="type">
+									<value>index</value>
+								</attribute>
+								<optional>
+									<attribute name="name">
+										<data type="string"/>
+									</attribute>
+								</optional>
+								<attribute name="table">
+									<data type="string"/>
+								</attribute>
+								<oneOrMore>
+									<element name="field">
+										<text/>
+									</element>
+								</oneOrMore>
+							</element>
+						</oneOrMore>
+					</element>
+				</optional>
+				<optional>
+					<element name="scripts">
+						<optional>
+							<element name="enable">
+								<text/>
+							</element>
+						</optional>
+						<optional>
+							<element name="disable">
+								<text/>
+							</element>
+						</optional>
+						<optional>
+							<element name="remove">
+								<text/>
+							</element>
+						</optional>
+						<optional>
+							<element name="remove-clean">
+								<text/>
+							</element>
+						</optional>
+					</element>
+				</optional>
+			</interleave>
+		</element>
+	</define>
+
+	<!-- The hooks a plugin wants to use. -->
+	<define name="hooks">
+		<element name="hooks">
+			<interleave>
+				<zeroOrMore>
+					<element name="function">
+						<attribute name="point">
+							<data type="string"/>
+						</attribute>
+						<attribute name="function">
+							<data type="string"/>
+						</attribute>
+						<optional>
+							<attribute name="filename">
+								<data type="string"/>
+							</attribute>
+						</optional>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="language">
+						<attribute name="point">
+							<data type="string"/>
+						</attribute>
+						<attribute name="filename">
+							<data type="string"/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<optional>
+					<element name="provides">
+						<oneOrMore>
+							<element name="hook">
+								<text/>
+								<attribute name="type">
+									<choice>
+										<value>function</value>
+										<value>language</value>
+									</choice>
+								</attribute>
+							</element>
+						</oneOrMore>
+					</element>
+				</optional>
+			</interleave>
+		</element>
+	</define>
+
+	<!-- Any scheduled tasks a plugin makes use of. -->
+	<define name="scheduledtasks">
+		<element name="scheduledtasks">
+			<oneOrMore>
+				<element name="task">
+					<attribute name="runevery">
+						<data type="positiveInteger"/>
+					</attribute>
+					<attribute name="runfreq">
+						<choice>
+							<value>minute</value>
+							<value>hour</value>
+							<value>day</value>
+							<value>week</value>
+						</choice>
+					</attribute>
+					<attribute name="name">
+						<data type="string"/>
+					</attribute>
+					<optional>
+						<attribute name="file">
+							<data type="string"/>
+						</attribute>
+					</optional>
+				</element>
+			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- A plugin may declare some readme files, in potentially multiple languages, but if 'readmes' is specified, at least one readme is required. -->
+	<define name="readmes">
+		<element name="readmes">
+			<oneOrMore>
+				<element name="readme">
+					<text/>
+					<attribute name="lang">
+						<text/>
+					</attribute>
+				</element>
+			</oneOrMore>
+		</element>
+	</define>
+	
+	<!-- A plugin may declare a partial URL (relative to Wedge installation's index.php) for its settings. -->
+	<define name="acp-url">
+		<element name="acp-url">
+			<text/>
+		</element>
+	</define>
+</grammar>
