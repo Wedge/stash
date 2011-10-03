@@ -35,6 +35,12 @@
 					<ref name="scheduledtasks" />
 				</optional>
 				<optional>
+					<ref name="actions" />
+				</optional>
+				<optional>
+					<ref name="file-edits" />
+				</optional>
+				<optional>
 					<ref name="readmes" />
 				</optional>
 				<optional>
@@ -108,7 +114,7 @@
 		</element>
 	</define>
 
-	<!-- Required PHP functions -->
+	<!-- Required PHP functions. -->
 	<define name="required-functions">
 		<element name="required-functions">
 			<oneOrMore>
@@ -442,6 +448,78 @@
 					</optional>
 				</element>
 			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- A plugin may declare one or more actions that it wants to use. -->
+	<define name="actions">
+		<element name="actions">
+			<oneOrMore>
+				<element name="action">
+					<attribute name="action">
+						<data type="string"/>
+					</attribute>
+					<attribute name="function">
+						<data type="string"/>
+					</attribute>
+					<optional>
+						<attribute name="filename">
+							<data type="string"/>
+						</attribute>
+					</optional>
+				</element>
+			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- Some plugins may, sadly, have to declare file edits. -->
+	<define name="file-edits">
+		<element name="file-edits">
+			<attribute name="version">
+				<text/>
+			</attribute>
+			<interleave>
+				<zeroOrMore>
+					<element name="file">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<oneOrMore>
+							<element name="change">
+								<choice>
+									<element name="find">
+										<text/>
+									</element>
+									<element name="replace">
+										<text/>
+									</element>
+								</choice>
+								<choice>
+									<element name="find">
+										<text/>
+									</element>
+									<element name="add-before">
+										<text/>
+									</element>
+								</choice>
+								<choice>
+									<element name="find">
+										<text/>
+									</element>
+									<element name="add-after">
+										<text/>
+									</element>
+								</choice>
+							</element>
+						</oneOrMore>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="ext-file">
+						<text/>
+					</element>
+				</zeroOrMore>
+			</interleave>
 		</element>
 	</define>
 
