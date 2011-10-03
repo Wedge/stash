@@ -462,11 +462,9 @@
 					<attribute name="function">
 						<data type="string"/>
 					</attribute>
-					<optional>
-						<attribute name="filename">
-							<data type="string"/>
-						</attribute>
-					</optional>
+					<attribute name="filename">
+						<data type="string"/>
+					</attribute>
 				</element>
 			</oneOrMore>
 		</element>
