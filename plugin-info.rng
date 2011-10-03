@@ -76,6 +76,7 @@
 		</element>
 	</define>
 
+	<!-- The plugin's version. -->
 	<define name="version">
 		<element name="version">
 			<text/>
@@ -140,9 +141,9 @@
 			<interleave>
 				<optional>
 					<element name="tables">
-						<oneOrMore>
-							<element name="table">
-								<interleave>
+						<interleave>
+							<oneOrMore>
+								<element name="table">
 									<attribute name="if-exists">
 										<choice>
 											<value>update</value>
@@ -227,6 +228,11 @@
 													<value>index</value>
 												</choice>
 											</attribute>
+											<optional>
+												<attribute name="name">
+													<text/>
+												</attribute>
+											</optional>
 											<oneOrMore>
 												<element name="field">
 													<text/>
@@ -234,9 +240,9 @@
 											</oneOrMore>
 										</element>
 									</zeroOrMore>
-								</interleave>
-							</element>
-						</oneOrMore>
+								</element>
+							</oneOrMore>
+						</interleave>
 					</element>
 				</optional>
 				<optional>
