@@ -364,7 +364,7 @@ function we_authenticateUser()
 
 	// This might be set to "forum default"...
 	if (empty($we_user_info['time_format']))
-		$we_user_info['time_format'] = $we_settings['time_format'];
+		$we_user_info['time_format'] = $txt['time_format'];
 
 	return !$we_user_info['is_guest'];
 }
@@ -617,7 +617,7 @@ function we_formatTime($log_time)
 	$time = max($log_time + (@$we_user_info['time_offset'] + $we_settings['time_offset']) * 3600, 0);
 
 	// Format some in caps, and then any other characters..
-	return strftime(strtr(!empty($we_user_info['time_format']) ? $we_user_info['time_format'] : $we_settings['time_format'], array('%a' => ucwords(strftime('%a', $time)), '%A' => ucwords(strftime('%A', $time)), '%b' => ucwords(strftime('%b', $time)), '%B' => ucwords(strftime('%B', $time)))), $time);
+	return strftime(strtr(!empty($we_user_info['time_format']) ? $we_user_info['time_format'] : $txt['time_format'], array('%a' => ucwords(strftime('%a', $time)), '%A' => ucwords(strftime('%A', $time)), '%b' => ucwords(strftime('%b', $time)), '%B' => ucwords(strftime('%B', $time)))), $time);
 }
 
 // Mother, may I?

@@ -1832,8 +1832,8 @@ function cli_scheduled_fetchRemoteFiles()
 {
 	global $sourcedir, $txt, $language, $settings, $modSettings;
 
-	if (empty($modSettings['time_format']))
-		$modSettings['time_format'] = '%B %e, %Y, %I:%M:%S %p';
+	if (empty($txt['time_format']))
+		$txt['time_format'] = '%B %e, %Y, %I:%M:%S %p';
 
 	// What files do we want to get
 	$request = $smcFunc['db_query']('', '
@@ -1848,7 +1848,7 @@ function cli_scheduled_fetchRemoteFiles()
 		$js_files[$row['id_file']] = array(
 			'filename' => $row['filename'],
 			'path' => $row['path'],
-			'parameters' => sprintf($row['parameters'], $language, urlencode($modSettings['time_format']), urlencode(WEDGE_VERSION)),
+			'parameters' => sprintf($row['parameters'], $language, urlencode($txt['time_format']), urlencode(WEDGE_VERSION)),
 		);
 	$smcFunc['db_free_result']($request);
 
