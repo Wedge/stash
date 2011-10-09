@@ -534,7 +534,7 @@
 			</oneOrMore>
 		</element>
 	</define>
-	
+
 	<!-- A plugin may declare a partial URL (relative to Wedge installation's index.php) for its settings. -->
 	<define name="acp-url">
 		<element name="acp-url">
