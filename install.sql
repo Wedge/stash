@@ -186,16 +186,17 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(43, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|small(?:er)?|large[r]?|x[x]?-(?:small|large)|medium|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none'),
 	(44, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 0.7, 2 => 1.0, 3 => 1.35, 4 => 1.45, 5 => 2.0, 6 => 2.65, 7 => 3.95);\r\n$data = $sizes[$data] . ''em'';', '', '', '', '', 'none', '', 'none'),
 	(45, 'spoiler', 'parsed', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="{{spoiler}}" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
-	(46, 'sub', 'parsed', '<sub>', '</sub>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(47, 'sup', 'parsed', '<sup>', '</sup>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(48, 'table', 'parsed', '<table class="bbc_table">', '</table>', '', '', '', '', 1, '', '', '', '', 'tr', '', 'none', '', 'inside'),
-	(49, 'td', 'parsed', '<td>', '</td>', '', ' ', ' ', '', 1, '', '', '', 'tr', '', '', 'none', '', 'outside'),
-	(50, 'time', 'unparsed_content', '', '', '$1', '', '', '', 0, '', 'if (is_numeric($data))\r\n	$data = timeformat($data);\r\nelse\r\n	$tag[''content''] = ''[time]$1[/time]'';', '', '', '', '', 'none', '', 'none'),
-	(51, 'tr', 'parsed', '<tr>', '</tr>', '', ' ', ' ', '', 1, '', '', '', 'table', 'td', '', 'none', '', 'both'),
-	(52, 'tt', 'parsed', '<span class="bbc_tt">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(53, 'u', 'parsed', '<span class="bbc_u">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(54, 'url', 'unparsed_content', '', '', '<a href="$1" class="bbc_link" target="_blank">$2</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none'),
-	(55, 'url', 'unparsed_equals', '<a href="$1" class="bbc_link" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none');
+	(46, 'spoiler', 'parsed_equals', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="$1" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', ' ', 'optional', '', 'none'),
+	(47, 'sub', 'parsed', '<sub>', '</sub>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
+	(48, 'sup', 'parsed', '<sup>', '</sup>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
+	(49, 'table', 'parsed', '<table class="bbc_table">', '</table>', '', '', '', '', 1, '', '', '', '', 'tr', '', 'none', '', 'inside'),
+	(50, 'td', 'parsed', '<td>', '</td>', '', ' ', ' ', '', 1, '', '', '', 'tr', '', '', 'none', '', 'outside'),
+	(51, 'time', 'unparsed_content', '', '', '$1', '', '', '', 0, '', 'if (is_numeric($data))\r\n	$data = timeformat($data);\r\nelse\r\n	$tag[''content''] = ''[time]$1[/time]'';', '', '', '', '', 'none', '', 'none'),
+	(52, 'tr', 'parsed', '<tr>', '</tr>', '', ' ', ' ', '', 1, '', '', '', 'table', 'td', '', 'none', '', 'both'),
+	(53, 'tt', 'parsed', '<span class="bbc_tt">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
+	(54, 'u', 'parsed', '<span class="bbc_u">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
+	(55, 'url', 'unparsed_content', '', '', '<a href="$1" class="bbc_link" target="_blank">$2</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none'),
+	(56, 'url', 'unparsed_equals', '<a href="$1" class="bbc_link" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none');
 # --------------------------------------------------------
 
 #
