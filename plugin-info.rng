@@ -391,6 +391,14 @@
 								<data type="string"/>
 							</attribute>
 						</optional>
+						<optional>
+							<attribute name="optioanl">
+								<choice>
+									<value>yes</value>
+									<value>no</value>
+								</choice>
+							</attribute>
+						</optional>
 					</element>
 				</zeroOrMore>
 				<zeroOrMore>
