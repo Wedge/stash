@@ -46,7 +46,7 @@
 		}
 		$context['tests'][count($context['tests']) - 1]['isLast'] = true;
 
-		loadBlock('ut_index');
+		wetem::load('ut_index');
 	}
 
 	function do_test()
@@ -127,7 +127,7 @@
 		$context['test_results'] = $testResults;
 
 		hideChrome();
-		loadBlock('ut_test_results');
+		wetem::load('ut_test_results');
 	}
 
 	function getAllTests()
