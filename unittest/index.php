@@ -126,7 +126,7 @@
 
 		$context['test_results'] = $testResults;
 
-		hideChrome();
+		wetem::hide();
 		wetem::load('ut_test_results');
 	}
 
