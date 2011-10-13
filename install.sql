@@ -2113,9 +2113,8 @@ VALUES
 	(5, 0, 0, 1, 'd', 0, 'daily_digest', ''),
 	(6, 0, 0, 1, 'w', 0, 'weekly_digest', ''),
 	(7, 0, {$sched_task_offset}, 1, 'd', 0, 'fetchRemoteFiles', ''),
-	(8, 0, 0, 1, 'd', 1, 'birthdayemails', ''),
-	(9, 0, 0, 1, 'w', 0, 'weekly_maintenance', ''),
-	(10, 0, 120, 1, 'd', 1, 'paid_subscriptions', '');
+	(8, 0, 0, 1, 'w', 0, 'weekly_maintenance', ''),
+	(9, 0, 120, 1, 'd', 1, 'paid_subscriptions', '');
 
 # --------------------------------------------------------
 
@@ -2290,7 +2289,6 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('use_captcha_images', '1'),
 	('use_animated_captcha', '1'),
 	('enable_buddylist', '1'),
-	('birthday_email', 'happy_birthday'),
 	('dont_repeat_smileys_20', '1'),
 	('dont_repeat_buddylists', '1'),
 	('attachment_image_reencode', '1'),

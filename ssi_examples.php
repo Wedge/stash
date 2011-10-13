@@ -251,12 +251,6 @@ template_ssi_above();
 			<h3>Result</h3>
 			<div class="ssi_result"><?php ssi_todaysCalendar(); flush(); ?></div>
 
-			<h2>Today's Birthdays Function</h2>
-			<h3>Code</h3>
-			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_todaysBirthdays(); ?&gt;</code></div>
-			<h3>Result</h3>
-			<div class="ssi_result"><?php ssi_todaysBirthdays(); flush(); ?></div>
-
 			<h2>Today's Holidays Function</h2>
 			<h3>Code</h3>
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_todaysHolidays(); ?&gt;</code></div>
