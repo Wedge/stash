@@ -399,6 +399,11 @@
 								</choice>
 							</attribute>
 						</optional>
+						<optional>
+							<attribute name="priority">
+								<data type="positiveInteger"/>
+							</attribute>
+						</optional>
 					</element>
 				</zeroOrMore>
 				<zeroOrMore>
