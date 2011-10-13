@@ -116,11 +116,6 @@
 
 		<hr>
 
-			<h3>Today's Birthdays Function: &lt;!--#include virtual="./SSI.php?ssi_function=todaysBirthdays" --&gt;</h3>
-			<!--#include virtual="./SSI.php?ssi_function=todaysBirthdays" -->
-
-		<hr>
-
 			<h3>Today's Holidays Function: &lt;!--#include virtual="./SSI.php?ssi_function=todaysHolidays" --&gt;</h3>
 			<!--#include virtual="./SSI.php?ssi_function=todaysHolidays" -->
 
