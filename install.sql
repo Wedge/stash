@@ -1842,21 +1842,6 @@ CREATE TABLE {$db_prefix}moderators (
 ) ENGINE=MyISAM;
 
 #
-# Table structure for table `openid_assoc`
-#
-
-CREATE TABLE {$db_prefix}openid_assoc (
-  server_url text NOT NULL,
-  handle varchar(255) NOT NULL default '',
-  secret text NOT NULL,
-  issued int(10) NOT NULL default '0',
-  expires int(10) NOT NULL default '0',
-  assoc_type varchar(64) NOT NULL,
-  PRIMARY KEY (server_url(125), handle(125)),
-  KEY expires (expires)
-) ENGINE=MyISAM;
-
-#
 # Table structure for table `package_servers`
 #
 

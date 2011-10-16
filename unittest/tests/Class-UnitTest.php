@@ -107,7 +107,6 @@
 						'email' => 'unittest_admin@example.com',
 						'password' => 'foo',
 						'password_check' => 'foo',
-						'openid' => '',
 						'auth_method' => '',
 						'check_reserved_name' => false,
 						'check_password_strength' => false,
