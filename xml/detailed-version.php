@@ -134,7 +134,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'SourcesSubs-MembersOnline.php': '0.1',
 	'SourcesSubs-Menu.php': '0.1',
 	'SourcesSubs-MessageIndex.php': '0.1',
-	'SourcesSubs-OpenID.php': '0.1',
 	'SourcesSubs-Package.php': '0.1',
 	'SourcesSubs-Post.php': '0.1',
 	'SourcesSubs-PrettyUrls.php': '0.1',

@@ -1814,28 +1814,6 @@ WHERE id_pm_head = 0;
 ---#
 
 /******************************************************************************/
---- Adding Open ID support.
-/******************************************************************************/
-
----# Adding Open ID Assocation table...
-CREATE TABLE IF NOT EXISTS {$db_prefix}openid_assoc (
-	server_url text NOT NULL,
-	handle varchar(255) NOT NULL default '',
-	secret text NOT NULL,
-	issued int(10) NOT NULL default '0',
-	expires int(10) NOT NULL default '0',
-	assoc_type varchar(64) NOT NULL,
-	PRIMARY KEY (server_url(125), handle(125)),
-	KEY expires (expires)
-) ENGINE=MyISAM{$db_collation};
----#
-
----# Adding column to hold Open ID URL...
-ALTER TABLE {$db_prefix}members
-ADD openid_uri text NOT NULL;
----#
-
-/******************************************************************************/
 --- Adding paid subscriptions.
 /******************************************************************************/
 

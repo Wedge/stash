@@ -1694,7 +1694,6 @@ CREATE TABLE {$db_prefix}members (
   mod_prefs varchar(20) NOT NULL default '',
   message_labels text NOT NULL,
   passwd varchar(64) NOT NULL default '',
-  openid_uri text NOT NULL,
   email_address varchar(255) NOT NULL default '',
   personal_text varchar(255) NOT NULL default '',
   gender tinyint(4) unsigned NOT NULL default '0',
