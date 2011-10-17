@@ -2131,9 +2131,6 @@ $nameChanges = array(
 		'poster_ip' => 'poster_ip poster_ip varchar(255) NOT NULL default \'\'',
 		'modified_name' => 'modified_name modified_name varchar(255) NOT NULL default \'\'',
 	),
-	'openid_assoc' => array(
-		'handle' => 'handle handle varchar(255) NOT NULL default \'\'',
-	),
 	'package_servers' => array(
 		'name' => 'name name varchar(255) NOT NULL default \'\'',
 		'url' => 'url url varchar(255) NOT NULL default \'\'',
