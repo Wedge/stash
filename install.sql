@@ -1662,14 +1662,14 @@ CREATE TABLE {$db_prefix}membergroups (
 
 INSERT INTO {$db_prefix}membergroups
 	(id_group, group_name, description, online_color, min_posts, stars, group_type)
-VALUES (1, '{$default_administrator_group}', '', '#FF0000', -1, '5#rankadmin.gif', 1),
-	(2, '{$default_global_moderator_group}', '', '#0000FF', -1, '5#rankgmod.gif', 0),
+VALUES (1, '{$default_administrator_group}', '', '#d2653a', -1, '5#rankadmin.gif', 1),
+	(2, '{$default_global_moderator_group}', '', '#c18933', -1, '5#rankgmod.gif', 0),
 	(3, '{$default_moderator_group}', '', '', -1, '5#rankmod.gif', 0),
 	(4, '{$default_newbie_group}', '', '', 0, '1#rank.gif', 0),
 	(5, '{$default_junior_group}', '', '', 50, '2#rank.gif', 0),
 	(6, '{$default_full_group}', '', '', 100, '3#rank.gif', 0),
 	(7, '{$default_senior_group}', '', '', 250, '4#rank.gif', 0),
-	(8, '{$default_hero_group}', '', '', 500, '5#rank.gif', 0);
+	(8, '{$default_hero_group}', '', '#5e8e75', 500, '5#rank.gif', 0);
 # --------------------------------------------------------
 
 #
