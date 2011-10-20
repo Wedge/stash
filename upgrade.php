@@ -1852,8 +1852,8 @@ function cli_scheduled_fetchRemoteFiles()
 		);
 	$smcFunc['db_free_result']($request);
 
-	// We're gonna need fetch_web_data() to pull this off.
-	require_once($sourcedir . '/Subs-Package.php');
+	// We're gonna need Class-WebGet() to pull this off.
+	require_once($sourcedir . '/Class-WebGet.php');
 
 	foreach ($js_files as $id_file => $file)
 	{
@@ -1862,7 +1862,8 @@ function cli_scheduled_fetchRemoteFiles()
 		$url = $server . (!empty($file['path']) ? $file['path'] : $file['path']) . $file['filename'] . (!empty($file['parameters']) ? '?' . $file['parameters'] : '');
 
 		// Get the file
-		$file_data = fetch_web_data($url);
+		$weget = new weget($url);
+		$file_data = $weget->get();
 
 		// If we got an error - give up - the site might be down.
 		if ($file_data === false)
