@@ -1848,6 +1848,9 @@ CREATE TABLE {$db_prefix}package_servers (
   id_server smallint(5) unsigned NOT NULL auto_increment,
   name varchar(255) NOT NULL default '',
   url varchar(255) NOT NULL default '',
+  username varchar(255) NOT NULL default '',
+  password varchar(64) NOT NULL default '',
+  status tinyint(3) NOT NULL default 0,
   PRIMARY KEY (id_server)
 ) ENGINE=MyISAM;
 
@@ -1856,8 +1859,8 @@ CREATE TABLE {$db_prefix}package_servers (
 #
 
 INSERT INTO {$db_prefix}package_servers
-	(name, url)
-VALUES ('Wedge Third-party Mod Site', 'http://wedge.org/mods');
+	(name, url, status)
+VALUES ('Wedge Third-party Mod Site', 'http://wedge.org/mods', 1);
 # --------------------------------------------------------
 
 #
