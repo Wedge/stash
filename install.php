@@ -711,7 +711,7 @@ function DatabaseSettings()
 		// !!! Old client, new server?
 		if (version_compare($db['required_version'], preg_replace('~^\D*|\-.+?$~', '', min(mysql_get_server_info(), mysql_get_client_info()))) > 0)
 		{
-			$incontext['error'] = $txt['error_db_too_low'];
+			$incontext['error'] = sprintf($txt['error_db_too_low'], 'Server: ' . mysql_get_server_info() . ' / Client: ' . mysql_get_client_info());
 			return false;
 		}
 
