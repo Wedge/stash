@@ -987,7 +987,6 @@ CREATE TABLE {$db_prefix}log_errors (
   ip int(10) NOT NULL default '0',
   url text NOT NULL,
   message text NOT NULL,
-  session char(32) NOT NULL default '                                ',
   error_type varchar(255) NOT NULL default 'general',
   file varchar(255) NOT NULL default '',
   line mediumint(8) unsigned NOT NULL default '0',
