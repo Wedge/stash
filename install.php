@@ -1178,7 +1178,7 @@ function AdminAccount()
 			$incontext['error'] = sprintf($txt['error_valid_email_needed'], $_POST['username']);
 			return false;
 		}
-		elseif ($_POST['username'] != '')
+		elseif ($_POST['username'] !== '')
 		{
 			$incontext['member_salt'] = substr(md5(mt_rand()), 0, 4);
 
@@ -1195,7 +1195,7 @@ function AdminAccount()
 					'member_ip' => 'string', 'member_ip2' => 'string', 'buddy_list' => 'string', 'pm_ignore_list' => 'string',
 					'message_labels' => 'string', 'website_title' => 'string', 'website_url' => 'string', 'location' => 'string',
 					'signature' => 'string', 'usertitle' => 'string', 'secret_question' => 'string',
-					'additional_groups' => 'string', 'ignore_boards' => 'string',
+					'additional_groups' => 'string', 'ignore_boards' => 'string', 'data' => 'string',
 				),
 				array(
 					stripslashes($_POST['username']), stripslashes($_POST['username']), sha1(strtolower(stripslashes($_POST['username'])) . stripslashes($_POST['password1'])), stripslashes($_POST['email']),
@@ -1204,7 +1204,7 @@ function AdminAccount()
 					$ip, $ip, '', '',
 					'', '', '', '',
 					'', '', '',
-					'', '',
+					'', '', '',
 				),
 				array('id_member')
 			);

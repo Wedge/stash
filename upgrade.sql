@@ -611,15 +611,6 @@ if (mysql_num_rows($request) == 0)
 ---}
 ---#
 
----# Changing default personal text setting.
-UPDATE {$db_prefix}settings
-SET variable = 'default_personal_text'
-WHERE variable = 'default_personalText';
-
-DELETE FROM {$db_prefix}settings
-WHERE variable = 'default_personalText';
----#
-
 ---# Removing allow hide email setting.
 DELETE FROM {$db_prefix}settings
 WHERE variable = 'allow_hideEmail'

@@ -396,7 +396,7 @@ function we_registerMember($username, $email, $password, $extra_fields = array()
 		'posts' => '0',
 		'date_registered' => (string) time(),
 		'is_activated' => '1',
-		'personal_text' => "'" . addslashes($we_settings['default_personal_text']) . "'",
+		'personal_text' => "''",
 		'pm_email_notify' => '1',
 		'id_theme' => '0',
 		'id_post_group' => '4',
@@ -419,6 +419,7 @@ function we_registerMember($username, $email, $password, $extra_fields = array()
 		'additional_groups' => "''",
 		'smiley_set' => "''",
 		'password_salt' => "''",
+		'data' => "''",
 	);
 
 	$register_vars = array_values($extra_fields + $register_vars);

@@ -148,7 +148,7 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(5, 'br', 'closed', '', '', '<br>', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
 	(6, 'center', 'parsed', '<div class="centertext">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(7, 'code', 'unparsed_content', '', '', '<div class="bbc_code"><header>{{code}}: <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\r\n\r\nif (!isset($disabled[''code'']))\r\n{\r\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\r\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span><footer></footer></div>'';\r\n	else\r\n 		$tag[''content''] .= ''<code>$1</code><footer></footer></div>'';\r\n\r\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data, -1, PREG_SPLIT_DELIM_CAPTURE);\r\n\r\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\r\n	{\r\n		// Do PHP code coloring?\r\n		if ($php_parts[$php_i] != ''&lt;?php'')\r\n			continue;\r\n\r\n		$php_string = '''';\r\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\r\n		{\r\n			$php_string .= $php_parts[$php_i];\r\n			$php_parts[$php_i++] = '''';\r\n		}\r\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\r\n	}\r\n\r\n	// Fix the PHP code stuff...\r\n	$data = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\r\n\r\n	// Older browsers are annoying, aren''t they?\r\n	if (!$context[''browser''][''is_gecko''])\r\n		$data = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data);\r\n\r\n	// Recent Opera bug requiring temporary fix. &nbsp; is needed before </code> to avoid broken selection.\r\n	if ($context[''browser''][''is_opera''])\r\n		$data .= ''&nbsp;'';\r\n\r\n	// Fix IE line breaks to actually be copyable.\r\n	if ($context[''browser''][''is_ie''])\r\n		$data = str_replace(''<br>'', ''&#13;'', $data);\r\n}', '', '', '', '', 'none', '', 'none'),
-	(8, 'code', 'unparsed_equals_content', '', '', '<div class="bbc_code"><header>{{code}}: ($2) <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\r\n\r\nif (!isset($disabled[''code'']))\r\n{\r\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\r\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span><footer></footer></div>'';\r\n	else\r\n 		$tag[''content''] .= ''<code>$1</code><footer></footer></div>'';\r\n\r\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data[0], -1, PREG_SPLIT_DELIM_CAPTURE);\r\n\r\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\r\n	{\r\n		// Do PHP code coloring?\r\n		if ($php_parts[$php_i] != ''&lt;?php'')\r\n			continue;\r\n\r\n		$php_string = '''';\r\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\r\n		{\r\n			$php_string .= $php_parts[$php_i];\r\n			$php_parts[$php_i++] = '''';\r\n		}\r\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\r\n	}\r\n\r\n	// Fix the PHP code stuff...\r\n	$data[0] = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\r\n\r\n	// Older browsers are annoying, aren''t they?\r\n	if (!$context[''browser''][''is_gecko''])\r\n		$data[0] = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data[0]);\r\n\r\n	// Recent Opera bug requiring temporary fix. &nsbp; is needed before </code> to avoid broken selection.\r\n	if ($context[''browser''][''is_opera''])\r\n		$data[0] .= ''&nbsp;'';\r\n\r\n	// Fix IE line breaks to actually be copyable.\r\n	if ($context[''browser''][''is_ie''])\r\n		$data[0] = str_replace(''<br>'', ''&#13;'', $data[0]);\r\n}', '', '', '', '', 'none', '', 'none'),
+	(8, 'code', 'unparsed_equals_content', '', '', '<div class="bbc_code"><header>{{code}}: ($2) <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\r\n\r\nif (!isset($disabled[''code'']))\r\n{\r\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\r\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span><footer></footer></div>'';\r\n	else\r\n 		$tag[''content''] .= ''<code>$1</code><footer></footer></div>'';\r\n\r\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data[0], -1, PREG_SPLIT_DELIM_CAPTURE);\r\n\r\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\r\n	{\r\n		// Do PHP code coloring?\r\n		if ($php_parts[$php_i] != ''&lt;?php'')\r\n			continue;\r\n\r\n		$php_string = '''';\r\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\r\n		{\r\n			$php_string .= $php_parts[$php_i];\r\n			$php_parts[$php_i++] = '''';\r\n		}\r\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\r\n	}\r\n\r\n	// Fix the PHP code stuff...\r\n	$data[0] = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\r\n\r\n	// Older browsers are annoying, aren''t they?\r\n	if (!$context[''browser''][''is_gecko''])\r\n		$data[0] = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data[0]);\r\n\r\n	// Recent Opera bug requiring temporary fix. &nbsp; is needed before </code> to avoid broken selection.\r\n	if ($context[''browser''][''is_opera''])\r\n		$data[0] .= ''&nbsp;'';\r\n\r\n	// Fix IE line breaks to actually be copyable.\r\n	if ($context[''browser''][''is_ie''])\r\n		$data[0] = str_replace(''<br>'', ''&#13;'', $data[0]);\r\n}', '', '', '', '', 'none', '', 'none'),
 	(9, 'color', 'unparsed_equals', '<span style="color: $1" class="bbc_color">', '</span>', '', '', '', '', 0, '(#[\\da-fA-F]{3}|#[\\da-fA-F]{6}|[A-Za-z]{1,20}|rgb\\(\\d{1,3}, ?\\d{1,3}, ?\\d{1,3}\\))\\]', '', '', '', '', '', 'none', '', 'none'),
 	(10, 'email', 'unparsed_content', '', '', '<a href="mailto:$1" class="bbc_email">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));', '', '', '', '', 'none', '', 'none'),
 	(11, 'email', 'unparsed_equals', '<a href="mailto:$1" class="bbc_email">', '</a>', '', '', ' ($1)', '', 0, '', '', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none'),
@@ -1684,8 +1684,8 @@ CREATE TABLE {$db_prefix}members (
   lngfile varchar(255) NOT NULL default '',
   last_login int(10) unsigned NOT NULL default '0',
   real_name varchar(255) NOT NULL default '',
-  instant_messages smallint(5) NOT NULL default 0,
-  unread_messages smallint(5) NOT NULL default 0,
+  instant_messages smallint(5) NOT NULL default '0',
+  unread_messages smallint(5) NOT NULL default '0',
   new_pm tinyint(3) unsigned NOT NULL default '0',
   buddy_list text NOT NULL,
   pm_ignore_list varchar(255) NOT NULL default '',
@@ -1734,6 +1734,7 @@ CREATE TABLE {$db_prefix}members (
   media_items int(11) NOT NULL default '0',
   media_comments int(11) NOT NULL default '0',
   media_unseen int(11) NOT NULL default '-1',
+  data text NOT NULL,
   PRIMARY KEY (id_member),
   KEY member_name (member_name),
   KEY real_name (real_name),
@@ -1849,7 +1850,7 @@ CREATE TABLE {$db_prefix}package_servers (
   url varchar(255) NOT NULL default '',
   username varchar(255) NOT NULL default '',
   password varchar(64) NOT NULL default '',
-  status tinyint(3) NOT NULL default 0,
+  status tinyint(3) NOT NULL default '0',
   PRIMARY KEY (id_server)
 ) ENGINE=MyISAM;
 
@@ -2238,7 +2239,6 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('cal_days_for_index', '7'),
 	('requireAgreement', '1'),
 	('unapprovedMembers', '0'),
-	('default_personal_text', ''),
 	('package_make_backups', '1'),
 	('databaseSession_enable', '{$databaseSession_enable}'),
 	('databaseSession_loose', '1'),
@@ -2506,6 +2506,23 @@ INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'posts_apply_ignore_list', '1');
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'return_to_post', '1');
 # --------------------------------------------------------
+
+#
+# Table structure for table `thoughts`
+#
+
+CREATE TABLE {$db_prefix}thoughts (
+  id_thought int(10) unsigned NOT NULL AUTO_INCREMENT,
+  id_parent int(10) unsigned NOT NULL,
+  id_master int(10) unsigned NOT NULL,
+  id_member mediumint(8) unsigned NOT NULL,
+  privacy tinyint(3) unsigned NOT NULL default '0',
+  updated int(10) unsigned NOT NULL,
+  thought varchar(2048) NOT NULL,
+  PRIMARY KEY (id_thought),
+  KEY mup (id_member, updated),
+  KEY privacy (privacy)
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `topics`
