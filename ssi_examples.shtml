@@ -116,26 +116,6 @@
 
 		<hr>
 
-			<h3>Today's Holidays Function: &lt;!--#include virtual="./SSI.php?ssi_function=todaysHolidays" --&gt;</h3>
-			<!--#include virtual="./SSI.php?ssi_function=todaysHolidays" -->
-
-		<hr>
-
-			<h3>Today's Events Function: &lt;!--#include virtual="./SSI.php?ssi_function=todaysEvents" --&gt;</h3>
-			<!--#include virtual="./SSI.php?ssi_function=todaysEvents" -->
-
-		<hr>
-
-			<h3>Today's Calendar Function: &lt;!--#include virtual="./SSI.php?ssi_function=todaysCalendar" --&gt;</h3>
-			<!--#include virtual="./SSI.php?ssi_function=todaysCalendar" -->
-
-		<hr>
-
-			<h3>Recent Calendar Events Function: &lt;!--#include virtual="./SSI.php?ssi_function=recentEvents" --&gt;</h3>
-			<!--#include virtual="./SSI.php?ssi_function=recentEvents" -->
-
-		<hr>
-
 			<h3>Recent Attachments Function &lt;!--#include virtual="./SSI.php?ssi_function=recentAttachments" --&gt;</h3>
 			<!--#include virtual="./SSI.php?ssi_function=recentAttachments" -->
 
