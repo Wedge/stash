@@ -1930,7 +1930,6 @@ function convertSettingstoOptions()
 
 	// Format: new_setting -> old_setting_name.
 	$values = array(
-		'calendar_start_day' => 'cal_startmonday',
 		'view_newest_first' => 'viewNewestFirst',
 		'view_newest_pm_first' => 'viewNewestFirst',
 	);

@@ -87,21 +87,6 @@
 					'description' => "Board list",
 					'url' => $scripturl,
 				),
-				'Calendar_1' => array(
-					'name' => 'Calendar (1)',
-					'description' => "Calendar main",
-					'url' => $scripturl . '?action=calendar',
-				),
-				'Calendar_2' => array(
-					'name' => 'Calendar (2)',
-					'description' => "Calendar view week",
-					'url' => $scripturl . '?action=calendar;sa=viewweek',
-				),
-				'Calendar_3' => array(
-					'name' => 'Calendar (3)',
-					'description' => "Calendar post event",
-					'url' => $scripturl . '?action=calendar;sa=post',
-				),
 				'Display_1' => array(
 					'name' => 'Display (1)',
 					'description' => "Simple display screen",
@@ -212,21 +197,6 @@
 					'name' => 'Manage boards (6)',
 					'description' => "Add board",
 					'url' => $scripturl . '?action=admin;area=manageboards;sa=newboard;cat=' . $this->_id_cat . '.0',
-				),
-				'ManageCalendar_1' => array(
-					'name' => 'Manage calendar (1)',
-					'description' => "Holiday overview",
-					'url' => $scripturl . '?action=admin;area=managecalendar',
-				),
-				'ManageCalendar_2' => array(
-					'name' => 'Manage calendar (2)',
-					'description' => "Add holiday",
-					'url' => $scripturl . '?action=admin;area=managecalendar;sa=editholiday',
-				),
-				'ManageCalendar_3' => array(
-					'name' => 'Manage calendar (3)',
-					'description' => "Calendar settings",
-					'url' => $scripturl . '?action=admin;area=managecalendar;sa=settings',
 				),
 				'ManageMail_1' => array(
 					'name' => 'Manage mail (1)',

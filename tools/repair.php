@@ -113,7 +113,6 @@ Check for orphaned boards. (by category.)
 Check for orphaned boards. (by parent.)
 Check for orphaned bans. (members don't exist, etc.)
 Check for orphaned permissions/board permissions. (groups/boards.)
-Check for orphaned calendar events.
 Check for orphaned collapsed categories.
 Check for orphaned personal messages. (from/to no one.)
 Check for orphaned mark read data. (by topics, boards, and members.)
@@ -152,7 +151,6 @@ function action_resort()
 				'messages' => array('id_topic'),
 				'log_notify' => array('id_topic'),
 				'log_topics' => array('id_topic'),
-				'calendar' => array('id_topic'),
 			),
 		),
 // Resort members: pm_ignore_list, buddies on members.
@@ -166,7 +164,6 @@ function action_resort()
 			'depends' => array(
 				'attachments' => array('id_member'),
 				'ban_items' => array('id_member'),
-				'calendar' => array('id_member'),
 				'collapsed_categories' => array('id_member'),
 				'log_actions' => array('id_member'),
 				'log_boards' => array('id_member'),
@@ -203,7 +200,6 @@ function action_resort()
 			'sort' => 'b.board_order',
 			'depends' => array(
 				'board_permissions' => array('id_board'),
-				'calendar' => array('id_board'),
 				'log_boards' => array('id_board'),
 				'log_mark_read' => array('id_board'),
 				'log_notify' => array('id_board'),

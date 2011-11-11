@@ -68,11 +68,6 @@ template_ssi_above();
 		<ul>
 			<li><a href="#" onclick="return showSSIBlock('ssi_login');">Welcome, Login &amp; Logout</a></li>
 		</ul>
-		<h3>Calendar</h3>
-		<ul>
-			<li><a href="#" onclick="return showSSIBlock('ssi_todaysCalendar');">Today's Events</a></li>
-			<li><a href="#" onclick="return showSSIBlock('ssi_recentEvents');">Recent Events</a></li>
-		</ul>
 		<h3>Miscellaneous</h3>
 		<ul>
 			<li><a href="#" onclick="return showSSIBlock('ssi_boardStats');">Forum Stats</a></li>
@@ -241,36 +236,6 @@ template_ssi_above();
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_welcome(); ?&gt;</code></div>
 			<h3>Result</h3>
 			<div class="ssi_result"><?php ssi_welcome(); flush(); ?></div>
-		</div>
-
-<!-- CALENDAR -->
-		<div class="ssi_preview" id="ssi_todaysCalendar">
-			<h2>Today's Calendar Function</h2>
-			<h3>Code</h3>
-			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_todaysCalendar(); ?&gt;</code></div>
-			<h3>Result</h3>
-			<div class="ssi_result"><?php ssi_todaysCalendar(); flush(); ?></div>
-
-			<h2>Today's Holidays Function</h2>
-			<h3>Code</h3>
-			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_todaysHolidays(); ?&gt;</code></div>
-			<h3>Result</h3>
-			<div class="ssi_result"><?php ssi_todaysHolidays(); flush(); ?></div>
-
-			<h2>Today's Events Function</h2>
-			<h3>Code</h3>
-			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_todaysEvents(); ?&gt;</code></div>
-			<h3>Result</h3>
-			<div class="ssi_result"><?php ssi_todaysEvents(); flush(); ?></div>
-		</div>
-
-		<div class="ssi_preview" id="ssi_recentEvents">
-			<h2>Recent Calendar Events Function</h2>
-
-			<h3>Code</h3>
-			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_recentEvents(); ?&gt;</code></div>
-			<h3>Result</h3>
-			<div class="ssi_result"><?php ssi_recentEvents(); flush(); ?></div>
 		</div>
 
 <!-- MISCELLANEOUS -->
