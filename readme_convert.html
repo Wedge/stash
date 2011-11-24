@@ -3,19 +3,19 @@
 <head>
 	<meta charset="utf-8">
 	<title>Wedge Conversion Guide</title>
-	<link rel="stylesheet" href="Themes/default/css/index.css">
 	<style>
+		body
+		{
+			background: #444;
+			color: #ccc;
+			font: 88%/130% Arial, sans-serif;
+			margin: 0;
+			padding: 0 6px;
+		}
 		h1.forumtitle
 		{
-			color: #346;
-		}
-		#upper_section .user
-		{
-			height: 4em;
-		}
-		#upper_section .news
-		{
-			height: 80px;
+			letter-spacing: -1px;
+			color: #fdc;
 		}
 		#main_screen
 		{
@@ -29,10 +29,9 @@
 			margin: 0 0 0.5em 0;
 			color: #d05800;
 		}
-		#content
+		h3
 		{
-			position: relative;
-			top: -20px;
+			color: #d05800;
 		}
 		#main_content .panel
 		{
@@ -45,10 +44,6 @@
 			border-bottom: solid 1px #d05800;
 			line-height: 1.5em;
 			margin: 0 2em 0.5em 0;
-			color: #d05800;
-		}
-		h3
-		{
 			color: #d05800;
 		}
 		#main_content li
@@ -68,21 +63,17 @@
 		}
 		#liftup
 		{
-			position: relative;
-			top: -70px;
+			background: #fff;
+			color: #444;
 		}
 		#footer
 		{
-			position: relative;
-			top: -60px;
+			color: #999;
+			padding: 8px;
 		}
-		tt
+		#footer a
 		{
-			font-family: verdana, sans-serif;
-			letter-spacing: 1px;
-			font-weight: bold;
-			font-size: 90%;
-			font-style: italic;
+			color: #ccc;
 		}
 		dt {
 			font-weight: bold;
@@ -104,7 +95,7 @@
 			width: 90%;
 			margin: 0 auto;
 		}
-			a:link, a:visited
+		a:link, a:visited
 		{
 			color: #3E5D8F;
 		}
@@ -118,9 +109,8 @@
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">Wedge Conversion Guide</h1>
-			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
 		</div>
-		<div id="upper_section" class="middletext" style="overflow: hidden">
+		<div id="upper_section" style="overflow: hidden">
 			<div class="user"></div>
 			<div class="news normaltext">
 			</div>
@@ -129,7 +119,8 @@
 	<div id="content"><div class="frame">
 		<div id="main_content">
 			<div id="liftup">
-				<div class="panel">
+				<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" style="float: right">
+				<div class="panel" style="clear: right">
 					<h2 id="contents">Converting to Wedge</h2>
 					<p>Thank you for deciding to convert to, or at least test the conversion to, <a href="http://wedge.org/">Wedge</a>. Before you get started, please remember that the conversion will not overwrite or change your existing forum, and that there is <a href="http://wedge.org/">a place for help at wedge.org</a> if you run into any problems at all.</p>
 					<p>You can find the following information in this file:</p>

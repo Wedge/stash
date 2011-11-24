@@ -1943,7 +1943,7 @@ function template_install_above()
 	echo '
 			</div>
 		</div></div>
-		<div id="upper_section" class="middletext flow_hidden"><div class="frame">
+		<div id="upper_section" class="flow_hidden"><div class="frame">
 			<h1 class="forumtitle"><a>', $txt['wedge_installer'], '</a></h1>
 			<div id="wedgelogo"></div>
 		</div></div>

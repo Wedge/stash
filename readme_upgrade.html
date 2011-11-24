@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Wedge Upgrade Guide</title>
-	<link rel="stylesheet" href="Themes/default/css/index.css">
 	<style>
+		body
+		{
+			background: #444;
+			color: #ccc;
+			font: 88%/130% Arial, sans-serif;
+			margin: 0;
+			padding: 0 6px;
+		}
 		h1.forumtitle
 		{
-			color: #346;
-		}
-		#upper_section .user
-		{
-			height: 4em;
-		}
-		#upper_section .news
-		{
-			height: 80px;
+			letter-spacing: -1px;
+			color: #fdc;
 		}
 		#main_screen
 		{
@@ -31,11 +32,6 @@
 		h3
 		{
 			color: #d05800;
-		}
-		#content
-		{
-			position: relative;
-			top: -20px;
 		}
 		#main_content .panel
 		{
@@ -67,21 +63,17 @@
 		}
 		#liftup
 		{
-			position: relative;
-			top: -70px;
+			background: #fff;
+			color: #444;
 		}
 		#footer
 		{
-			position: relative;
-			top: -60px;
+			color: #999;
+			padding: 8px;
 		}
-		tt
+		#footer a
 		{
-			font-family: verdana, sans-serif;
-			letter-spacing: 1px;
-			font-weight: bold;
-			font-size: 90%;
-			font-style: italic;
+			color: #ccc;
 		}
 		dt {
 			font-weight: bold;
@@ -103,7 +95,7 @@
 			width: 90%;
 			margin: 0 auto;
 		}
-			a:link, a:visited
+		a:link, a:visited
 		{
 			color: #3E5D8F;
 		}
@@ -117,9 +109,8 @@
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">Wedge Upgrade Guide</h1>
-			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
 		</div>
-		<div id="upper_section" class="middletext" style="overflow: hidden">
+		<div id="upper_section" style="overflow: hidden">
 			<div class="user"></div>
 			<div class="news normaltext">
 			</div>
@@ -128,7 +119,8 @@
 	<div id="content"><div class="frame">
 		<div id="main_content">
 			<div id="liftup">
-				<div class="panel">
+				<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" style="float: right">
+				<div class="panel" style="clear: right">
 					<h2 id="contents">Upgrading your forum</h2>
 					<p>Thank you for deciding to upgrade to <a href="http://wedge.org/">Wedge</a>. Before you get started, please remember that there is <a href="http://wedge.org/">a place for help at wedge.org</a> if you run into any problems at all.</p>
 					<p>You can find the following information in this file:</p>
@@ -195,7 +187,7 @@
 				<div class="panel">
 					<h2 id="uploadingftp">Upload files method 1: using FTP</h2>
 					<p>If your server doesn't support webinstall.php than you can use an FTP client and an FTP access to upload the files to your server.</p>
-					<p>All you need to do is upload all of the files in this package, excluding this file itself, to your server. You should upload it to the same directory as your previous installation of Wedge. If you are given the option to &quot;resume&quot; uploads, make sure you do not do that - you must upload all of the files. You may wish to make sure that all of the files were uploaded, such as those in <tt>Themes/default/languages</tt>, because some FTP clients have been known to drop files.</p>
+					<p>All you need to do is upload all of the files in this package, excluding this file itself, to your server. You should upload it to the same directory as your previous installation of Wedge. If you are given the option to &quot;resume&quot; uploads, make sure you do not do that - you must upload all of the files. You may wish to make sure that all of the files were uploaded, such as those in <code>Themes/default/languages</code>, because some FTP clients have been known to drop files.</p>
 					<h3>Language files</h3>
 					<p>If you are using additional languages it will be useful to upload also the updated versions of the language files along with the upgrading packages. Doing so all updated text strings will appear correctly after the upgrade, and will allow the upgrade to run in your selected language.</p>
 				</div>

@@ -366,18 +366,13 @@ function template_ssi_above()
 	<title>Wedge SSI.php Examples</title>',
 	theme_base_css(), '
 	<style>
-		#header {
-			margin-top: 20px;
-		}
-		#upper_section .user {
-			height: 4em;
-		}
-		#upper_section .news {
-			height: 80px;
-		}
-		#content {
-			position: relative;
-			top: -20px;
+		h1.forumtitle
+		{
+			letter-spacing: -1px;
+			color: #fdc;
+			font-size: 2em;
+			margin: 0 !important;
+			padding: 16px;
 		}
 		#main_content h2 {
 			font-size: 1.5em;
@@ -387,14 +382,8 @@ function template_ssi_above()
 			color: #d05800;
 		}
 		#liftup {
-			position: relative;
-			top: -70px;
 			padding: 0 2em 1em 1em;
 			line-height: 1.6em;
-		}
-		#footer {
-			position: relative;
-			top: -20px;
 		}
 		#sidenav {
 			width: 180px;
@@ -448,17 +437,13 @@ function template_ssi_above()
 	<div id="header"><div class="frame">
 		<div id="top_section">
 			<h1 class="forumtitle">Wedge SSI.php Examples</h1>
-			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" />
-		</div>
-		<div id="upper_section" class="middletext" style="overflow: hidden;">
-			<div class="user"></div>
-			<div class="news normaltext">
-			</div>
 		</div>
 	</div></div>
 	<div id="content"><div class="frame">
 		<div id="main_content">
-			<div id="liftup" class="flow_auto">';
+			<div id="liftup" class="flow_auto">
+				<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" style="float: right" />
+				<br class="clear" />';
 }
 
 function template_ssi_below()

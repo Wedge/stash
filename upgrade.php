@@ -3214,7 +3214,7 @@ function template_upgrade_above()
 			<h1 class="forumtitle">', $txt['upgrade_upgrade_utility'], '</h1>
 			<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge">
 		</div>
-		<div id="upper_section" class="middletext flow_hidden">
+		<div id="upper_section" class="flow_hidden">
 			<div class="user"></div>
 			<div class="news normaltext">
 			</div>
