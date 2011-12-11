@@ -173,7 +173,7 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(30, 'mergedate', 'unparsed_content', '', '', '<div class="mergedate">{{search_date_posted}} $1</div>', '', '', '', 0, '', 'if (is_numeric($data)) $data = timeformat($data);', '', '', '', '', 'none', '', 'none'),
 	(31, 'more', 'closed', '', '', ' ', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
 	(32, 'nobbc', 'unparsed_content', '', '', '$1', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
-	(33, 'php', 'unparsed_content', '', '', '<div class="php_code"><code>$1</code></div>', '', '', '$1', 0, '', '$add_begin = substr(trim($data), 0, 5) != ''&lt;'';\r\n$data = highlight_php_code($add_begin ? ''&lt;?php '' . $data . ''?&gt;'' : $data);\r\nif ($add_begin)\r\n	$data = preg_replace(array(''~^(.+?)&lt;\\?.{0,40}?php(?:&nbsp;|\\s)~'', ''~\\?&gt;((?:</(font|span)>)*)$~''), ''$1'', $data, 2);', '', '', '', '', 'none', '', 'none'),
+	(33, 'php', 'unparsed_content', '', '', '<div class="php_code"><code>$1</code></div>', '', '', '$1', 1, '', '$add_begin = substr(trim($data), 0, 5) != ''&lt;'';\r\n$data = highlight_php_code($add_begin ? ''&lt;?php '' . $data . ''?&gt;'' : $data);\r\nif ($add_begin)\r\n	$data = preg_replace(array(''~^(.+?)&lt;\\?.{0,40}?php(?:&nbsp;|\\s)~'', ''~\\?&gt;((?:</(font|span)>)*)$~''), ''$1'', $data, 2);', '', '', '', '', 'none', '', 'none'),
 	(34, 'pre', 'parsed', '<span class="bbc_pre">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
 	(35, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_noun}}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(36, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:2:{s:5:"match";s:11:"(.{1,192}?)";s:6:"quoted";b:1;}}', 'none'),
@@ -182,7 +182,7 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(39, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:1:{s:5:"match";s:11:"(.{1,192}?)";}}', 'none'),
 	(40, 'right', 'parsed', '<div class="righttext">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
 	(41, 'rtl', 'parsed', '<div dir="rtl">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
-	(42, 's', 'parsed', '<del>', '</del>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
+	(42, 's', 'parsed', '<del>', '</del>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none'),
 	(43, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|small(?:er)?|large[r]?|x[x]?-(?:small|large)|medium|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none'),
 	(44, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 0.7, 2 => 1.0, 3 => 1.35, 4 => 1.45, 5 => 2.0, 6 => 2.65, 7 => 3.95);\r\n$data = $sizes[$data] . ''em'';', '', '', '', '', 'none', '', 'none'),
 	(45, 'spoiler', 'parsed', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="{{spoiler}}" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none'),
@@ -212,7 +212,7 @@ CREATE TABLE {$db_prefix}board_groups (
 ) ENGINE=MyISAM;
 
 #
-# Dumping data for table `bbcode`
+# Dumping data for table `board_groups`
 #
 INSERT INTO {$db_prefix}board_groups
 	(`id_board`, `id_group`, `view_perm`, `enter_perm`)
