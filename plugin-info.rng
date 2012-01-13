@@ -44,6 +44,9 @@
 					<ref name="readmes" />
 				</optional>
 				<optional>
+					<ref name="bbcodes" />
+				</optional>
+				<optional>
 					<ref name="acp-url" />
 				</optional>
 			</interleave>
@@ -531,6 +534,180 @@
 					</element>
 				</zeroOrMore>
 			</interleave>
+		</element>
+	</define>
+
+	<!-- A plugin may declare some custom bbcode that it wants to use (or is, really) -->
+	<define name="bbcodes">
+		<element name="bbcodes">
+			<oneOrMore>
+				<element name="bbcode">
+					<attribute name="tag">
+						<text/>
+					</attribute>
+					<attribute name="type">
+						<choice>
+							<value>parsed</value>
+							<value>unparsed_equals</value>
+							<value>parsed_equals</value>
+							<value>unparsed_content</value>
+							<value>closed</value>
+							<value>unparsed_commas</value>
+							<value>unparsed_commas_content</value>
+							<value>unparsed_equals_content</value>
+						</choice>
+					</attribute>
+					<optional>
+						<attribute name="block-level">
+							<choice>
+								<value>yes</value>
+								<value>no</value>
+							</choice>
+						</attribute>
+					</optional>
+					<optional>
+						<attribute name="quoted">
+							<choice>
+								<value>none</value>
+								<value>optional</value>
+								<value>required</value>
+							</choice>
+						</attribute>
+					</optional>
+					<optional>
+						<attribute name="trim-wspace">
+							<choice>
+								<value>none</value>
+								<value>inside</value>
+								<value>outside</value>
+								<value>both</value>
+							</choice>
+						</attribute>
+					</optional>
+					<optional>
+						<element name="before-code">
+							<text/>
+						</element>
+					</optional>
+					<optional>
+						<element name="after-code">
+							<text/>
+						</element>
+					</optional>
+					<optional>
+						<element name="content">
+							<text/>
+						</element>
+					</optional>
+					<optional>
+						<element name="test">
+							<text/>
+						</element>
+					</optional>
+					<optional>
+						<element name="disabled">
+							<optional>
+								<element name="before-code">
+									<text/>
+								</element>
+							</optional>
+							<optional>
+								<element name="after-code">
+									<text/>
+								</element>
+							</optional>
+							<optional>
+								<element name="content">
+									<text/>
+								</element>
+							</optional>
+						</element>
+					</optional>
+					<optional>
+						<element name="validate-func">
+							<text/>
+						</element>
+					</optional>
+					<optional>
+						<element name="disallow-children">
+							<oneOrMore>
+								<element name="child">
+									<text/>
+								</element>
+							</oneOrMore>
+						</element>
+					</optional>
+					<optional>
+						<element name="require-parents">
+							<oneOrMore>
+								<element name="parent-tag">
+									<text/>
+								</element>
+							</oneOrMore>
+						</element>
+					</optional>
+					<optional>
+						<element name="require-children">
+							<oneOrMore>
+								<element name="child">
+									<text/>
+								</element>
+							</oneOrMore>
+						</element>
+					</optional>
+					<optional>
+						<element name="parsed-tags-allowed">
+							<oneOrMore>
+								<element name="bbc">
+									<text/>
+								</element>
+							</oneOrMore>
+						</element>
+					</optional>
+					<optional>
+						<element name="params">
+							<oneOrMore>
+								<element name="param">
+									<attribute name="name">
+										<text/>
+									</attribute>
+									<optional>
+										<attribute name="quoted">
+											<choice>
+												<value>yes</value>
+												<value>no</value>
+											</choice>
+										</attribute>
+									</optional>
+									<optional>
+										<attribute name="optional">
+											<choice>
+												<value>yes</value>
+												<value>no</value>
+											</choice>
+										</attribute>
+									</optional>
+									<optional>
+										<element name="match">
+											<text/>
+										</element>
+									</optional>
+									<optional>
+										<element name="validate">
+											<text/>
+										</element>
+									</optional>
+									<optional>
+										<element name="value">
+											<text/>
+										</element>
+									</optional>
+								</element>
+							</oneOrMore>
+						</element>
+					</optional>
+				</element>
+			</oneOrMore>
 		</element>
 	</define>
 

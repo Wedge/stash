@@ -1999,7 +1999,7 @@ function template_install_below()
 	echo '
 	</div></div></div></div></div></div>
 	<div id="footer"><div class="frame" style="height: 40px">
-		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2011, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2012, Wedgeward</a></div>
 	</div></div>
 	</div></body>
 </html>';
