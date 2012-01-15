@@ -2169,7 +2169,8 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('embed_wmp', '0'),
 	('embed_real', '0'),
 	('embed_swf', '0'),
-	('disableTemplateEval', '1');
+	('disableTemplateEval', '1'),
+	('default_index', 'Welcome');
 # --------------------------------------------------------
 
 #
