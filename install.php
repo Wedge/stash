@@ -1898,7 +1898,7 @@ function template_install_above()
 	$settings['default_theme_dir'] = $boarddir . '/Themes/default';
 	$settings['theme_url'] = $boardurl . '/Themes/default';
 	$settings['images_url'] = $boardurl . '/Themes/default/images';
-	$context['css_folders'] = array();
+	$context['css_folders'] = array('skins');
 	$context['css_suffixes'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
@@ -1927,14 +1927,14 @@ function template_install_above()
 		echo '
 				<div class="righttext">
 					<form action="', $installurl, '" method="get">
-						<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;"></label>';
+						<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;">';
 
 		foreach ($incontext['detected_languages'] as $lang => $name)
 			echo '
 							<option', isset($_SESSION['installer_temp_lang']) && $_SESSION['installer_temp_lang'] == $lang ? ' selected' : '', ' value="', $lang, '">', $name, '</option>';
 
 		echo '
-						</select>
+						</select></label>
 						<noscript><input type="submit" value="', $txt['installer_language_set'], '" class="submit"></noscript>
 					</form>
 				</div>';
