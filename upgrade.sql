@@ -331,7 +331,7 @@ $nameChanges = array(
 	),
 	'topics' => array(
 		'ID_TOPIC' => 'ID_TOPIC id_topic mediumint(8) unsigned NOT NULL auto_increment',
-		'isSticky' => 'isSticky is_sticky tinyint(4) NOT NULL default \'0\'',
+		'isSticky' => 'isSticky is_pinned tinyint(4) NOT NULL default \'0\'',
 		'ID_BOARD' => 'ID_BOARD id_board smallint(5) unsigned NOT NULL default \'0\'',
 		'ID_FIRST_MSG' => 'ID_FIRST_MSG id_first_msg int(10) unsigned NOT NULL default \'0\'',
 		'ID_LAST_MSG' => 'ID_LAST_MSG id_last_msg int(10) unsigned NOT NULL default \'0\'',
@@ -1501,7 +1501,7 @@ DROP COLUMN id_board;
 $mod_permissions = array(
 	'moderate_board', 'post_new', 'post_reply_own', 'post_reply_any', 'poll_post', 'poll_add_any',
 	'poll_remove_any', 'poll_view', 'poll_vote', 'poll_lock_any', 'poll_edit_any', 'report_any',
-	'lock_own', 'send_topic', 'mark_any_notify', 'mark_notify', 'delete_own', 'modify_own', 'make_sticky',
+	'lock_own', 'send_topic', 'mark_any_notify', 'mark_notify', 'delete_own', 'modify_own', 'pin_topic',
 	'lock_any', 'remove_any', 'move_any', 'merge_any', 'split_any', 'delete_any', 'modify_any', 'approve_posts',
 	'post_attachment', 'view_attachments', 'post_unapproved_replies_any', 'post_unapproved_replies_own',
 	'post_unapproved_attachments', 'post_unapproved_topics',
@@ -2410,9 +2410,9 @@ ALTER TABLE {$db_prefix}topics
 ADD INDEX member_started (id_member_started, id_board);
 ---#
 
----# Adding index last_message_sticky...
+---# Adding index last_message_pinned...
 ALTER TABLE {$db_prefix}topics
-ADD INDEX last_message_sticky (id_board, is_sticky, id_last_msg);
+ADD INDEX last_message_pinned (id_board, is_pinned, id_last_msg);
 ---#
 
 ---# Adding index board_news...

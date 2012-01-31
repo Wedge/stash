@@ -25,7 +25,7 @@ if ($_GET['step'] <= 0)
 		// Columns.
 		array(
 			array('name' => 'id_topic', 'type' => 'mediumint', 'size' => 8, 'unsigned' => true, 'auto' => true),
-			array('name' => 'is_sticky', 'type' => 'tinyint', 'size' => 4, 'default' => '0'),
+			array('name' => 'is_pinned', 'type' => 'tinyint', 'size' => 4, 'default' => '0'),
 			array('name' => 'id_board', 'type' => 'smallint', 'size' => 5, 'unsigned' => true, 'default' => '0'),
 			array('name' => 'id_first_msg', 'type' => 'int', 'size' => 10, 'unsigned' => true, 'default' => '0'),
 			array('name' => 'id_last_msg', 'type' => 'int', 'size' => 10, 'unsigned' => true, 'default' => '0'),
@@ -47,11 +47,11 @@ if ($_GET['step'] <= 0)
 			array('name' => 'last_message', 'type' => 'unique', 'columns' => array('id_last_msg', 'id_board')),
 			array('name' => 'first_message', 'type' => 'unique', 'columns' => array('id_first_msg', 'id_board')),
 			array('name' => 'poll', 'type' => 'unique', 'columns' => array('id_poll', 'id_topic')),
-			array('name' => 'is_sticky', 'columns' => array('is_sticky')),
+			array('name' => 'is_pinned', 'columns' => array('is_pinned')),
 			array('name' => 'approved', 'columns' => array('approved')),
 			array('name' => 'id_board', 'columns' => array('id_board')),
 			array('name' => 'member_started', 'columns' => array('id_member_started', 'id_board')),
-			array('name' => 'last_message_sticky', 'columns' => array('id_board', 'is_sticky', 'id_last_msg')),
+			array('name' => 'last_message_pinned', 'columns' => array('id_board', 'is_pinned', 'id_last_msg')),
 	));
 
 	// Drop the old table if it's there.
@@ -67,7 +67,7 @@ if ($_GET['step'] <= 1)
 		$smcFunc['db_query']('', '
 			INSERT INTO {db_prefix}temp_topics
 			SELECT
-				NULL, is_sticky, id_board, id_first_msg, id_last_msg, id_member_started, id_member_updated, id_poll, id_previous_board, id_previous_topic,
+				NULL, is_pinned, id_board, id_first_msg, id_last_msg, id_member_started, id_member_updated, id_poll, id_previous_board, id_previous_topic,
 				num_replies, num_views, locked, id_topic, unapproved_posts, approved, id_topic
 			FROM {db_prefix}topics
 			ORDER BY id_first_msg

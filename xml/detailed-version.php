@@ -111,7 +111,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'SourcesSpellcheck.php': '0.1',
 	'SourcesSplitTopics.php': '0.1',
 	'SourcesStats.php': '0.1',
-	'SourcesSticky.php': '0.1',
+	'SourcesPin.php': '0.1',
 	'SourcesSubs.php': '0.1',
 	'SourcesSubs-Admin.php': '0.1',
 	'SourcesSubs-Auth.php': '0.1',

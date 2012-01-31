@@ -181,7 +181,7 @@
 					'board' => $id_board,
 					'poll' => null,
 					'lock_mode' => null,
-					'sticky_mode' => null,
+					'pin_mode' => null,
 					'mark_as_read' => true,
 					'is_approved' => true,
 				);
@@ -224,7 +224,7 @@
 				'board' => $id_board,
 				'poll' => null,
 				'lock_mode' => null,
-				'sticky_mode' => null,
+				'pin_mode' => null,
 				'mark_as_read' => true,
 				'is_approved' => true,
 			);

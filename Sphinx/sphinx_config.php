@@ -314,7 +314,7 @@ function step_999()
 		'age',
 		'length',
 		'first_message',
-		'sticky',
+		'pinned',
 	);
 	$weight = array();
 	$weight_total = 0;
@@ -330,7 +330,7 @@ function step_999()
 			'age' => 25,
 			'length' => 25,
 			'first_message' => 25,
-			'sticky' => 25,
+			'pinned' => 25,
 		);
 		$weight_total = 100;
 	}
@@ -353,7 +353,7 @@ source wedge_source
 	sql_query_pre = SET NAMES utf8
 	sql_query_pre =	\
 		REPLACE INTO ', $db_prefix, 'settings (variable, value) \
-		SELECT \'sphinx_indexed_msg_until\', MAX(ID_MSG) \
+		SELECT \'sphinx_indexed_msg_until\', MAX(id_msg) \
 		FROM ', $db_prefix, 'messages
 	sql_query_range = \
 		SELECT 1, value \
@@ -362,27 +362,27 @@ source wedge_source
 	sql_range_step = 1000
 	sql_query =	\
 		SELECT \
-			m.ID_MSG, m.ID_TOPIC, m.ID_BOARD, IF(m.ID_MEMBER = 0, 4294967295, m.ID_MEMBER) AS ID_MEMBER, m.posterTime, m.body, m.subject, \
-			t.numReplies + 1 AS numReplies, CEILING(1000000 * ( \
-				IF(m.ID_MSG < 0.7 * s.value, 0, (m.ID_MSG - 0.7 * s.value) / (0.3 * s.value)) * ' . $weight['age'] . ' + \
-				IF(t.numReplies < 200, t.numReplies / 200, 1) * ' . $weight['length'] . ' + \
-				IF(m.ID_MSG = t.ID_FIRST_MSG, 1, 0) * ' . $weight['first_message'] . ' + \
-				IF(t.isSticky = 0, 0, 1) * ' . $weight['sticky'] . ' \
+			m.is_msg, m.id_topic, m.id_board, IF(m.id_member = 0, 4294967295, m.id_member) AS id_member, m.poster_time, m.body, m.subject, \
+			t.num_replies + 1 AS num_replies, CEILING(1000000 * ( \
+				IF(m.id_msg < 0.7 * s.value, 0, (m.id_msg - 0.7 * s.value) / (0.3 * s.value)) * ' . $weight['age'] . ' + \
+				IF(t.num_replies < 200, t.num_replies / 200, 1) * ' . $weight['length'] . ' + \
+				IF(m.id_msg = t.id_first_msg, 1, 0) * ' . $weight['first_message'] . ' + \
+				IF(t.is_pinned = 0, 0, 1) * ' . $weight['pinned'] . ' \
 			) / ' . $weight_total . ') AS relevance \
 		FROM ', $db_prefix, 'messages AS m, ', $db_prefix, 'topics AS t, ', $db_prefix, 'settings AS s \
-		WHERE t.ID_TOPIC = m.ID_TOPIC \
+		WHERE t.id_topic = m.id_topic \
 			AND s.variable = \'maxMsgID\' \
-			AND m.ID_MSG BETWEEN $start AND $end
-	sql_group_column = ID_TOPIC
-	sql_group_column = ID_BOARD
-	sql_group_column = ID_MEMBER
-	sql_date_column = posterTime
+			AND m.id_msg BETWEEN $start AND $end
+	sql_group_column = id_topic
+	sql_group_column = id_board
+	sql_group_column = id_member
+	sql_date_column = poster_time
 	sql_date_column = relevance
-	sql_date_column = numReplies
+	sql_date_column = num_replies
 	sql_query_info = \
 		SELECT * \
 		FROM ', $db_prefix, 'messages \
-		WHERE ID_MSG = $id
+		WHERE id_msg = $id
 }
 
 source wedge_delta_source : wedge_source
