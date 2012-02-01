@@ -374,7 +374,7 @@ function template_ssi_above()
 			margin: 0 !important;
 			padding: 16px;
 		}
-		#main_content h2 {
+		#main h2 {
 			font-size: 1.5em;
 			border-bottom: solid 1px #d05800;
 			line-height: 1.5em;
@@ -440,7 +440,7 @@ function template_ssi_above()
 		</div>
 	</div></div>
 	<div id="content"><div class="frame">
-		<div id="main_content">
+		<div id="main">
 			<div id="liftup" class="flow_auto">
 				<img id="wedgelogo" src="Themes/default/images/wedgelogo.png" alt="Wedge" title="Wedge" style="float: right" />
 				<br class="clear" />';

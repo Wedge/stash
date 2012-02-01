@@ -3221,7 +3221,7 @@ function template_upgrade_above()
 		</div>
 	</div></div>
 	<div id="content"><div class="frame">
-		<div id="main_content">
+		<div id="main">
 			<div id="main-steps">
 				<h2>', $txt['upgrade_progress'], '</h2>
 				<ul>';
