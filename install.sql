@@ -2171,7 +2171,8 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('embed_real', '0'),
 	('embed_swf', '0'),
 	('disableTemplateEval', '1'),
-	('default_index', 'Welcome');
+	('default_index', 'Welcome'),
+	('additional_options_collapsable', '1');
 # --------------------------------------------------------
 
 #
@@ -2338,7 +2339,6 @@ VALUES (1, 'name', '{$default_theme_name}'),
 	(1, 'linktree_inline', '0'),
 	(1, 'show_board_desc', '1'),
 	(1, 'newsfader_time', '5000'),
-	(1, 'additional_options_collapsable', '1'),
 	(1, 'use_image_buttons', '1'),
 	(1, 'quick_login', '1'),
 	(1, 'enable_news', '1'),
