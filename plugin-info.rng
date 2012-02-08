@@ -38,9 +38,6 @@
 					<ref name="actions" />
 				</optional>
 				<optional>
-					<ref name="file-edits" />
-				</optional>
-				<optional>
 					<ref name="readmes" />
 				</optional>
 				<optional>
@@ -483,57 +480,6 @@
 					</attribute>
 				</element>
 			</oneOrMore>
-		</element>
-	</define>
-
-	<!-- Some plugins may, sadly, have to declare file edits. -->
-	<define name="file-edits">
-		<element name="file-edits">
-			<attribute name="version">
-				<text/>
-			</attribute>
-			<interleave>
-				<zeroOrMore>
-					<element name="file">
-						<attribute name="name">
-							<text/>
-						</attribute>
-						<oneOrMore>
-							<element name="change">
-								<choice>
-									<element name="find">
-										<text/>
-									</element>
-									<element name="replace">
-										<text/>
-									</element>
-								</choice>
-								<choice>
-									<element name="find">
-										<text/>
-									</element>
-									<element name="add-before">
-										<text/>
-									</element>
-								</choice>
-								<choice>
-									<element name="find">
-										<text/>
-									</element>
-									<element name="add-after">
-										<text/>
-									</element>
-								</choice>
-							</element>
-						</oneOrMore>
-					</element>
-				</zeroOrMore>
-				<zeroOrMore>
-					<element name="ext-file">
-						<text/>
-					</element>
-				</zeroOrMore>
-			</interleave>
 		</element>
 	</define>
 
