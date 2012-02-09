@@ -583,30 +583,30 @@ $request = upgrade_query("
 if (mysql_num_rows($request) == 0)
 {
 	// Upgrade visual verification again!
-	if (!empty($modSettings['visual_verification_type']))
+	if (!empty($settings['visual_verification_type']))
 	{
 		upgrade_query("
 			UPDATE {$db_prefix}settings
 			SET value = value - 1
 			WHERE variable = 'visual_verification_type'");
-		$modSettings['visual_verification_type']--;
+		$settings['visual_verification_type']--;
 	}
 	// Never set?
-	elseif (!isset($modSettings['visual_verification_type']))
+	elseif (!isset($settings['visual_verification_type']))
 	{
 		upgrade_query("
 			INSERT INTO {$db_prefix}settings
 				(variable, value)
 			VALUES
 				('visual_verification_type', '3')");
-		$modSettings['visual_verification_type'] = 3;
+		$settings['visual_verification_type'] = 3;
 	}
 
 	upgrade_query("
 		INSERT INTO {$db_prefix}settings
 			(variable, value)
 		VALUES
-			('reg_verification', '" . (!empty($modSettings['visual_verification_type']) ? 1 : 0) . "')");
+			('reg_verification', '" . (!empty($settings['visual_verification_type']) ? 1 : 0) . "')");
 }
 ---}
 ---#
@@ -627,29 +627,29 @@ VALUES
 ---# Replacing old calendar settings...
 ---{
 // Only try it if one of the "new" settings doesn't yet exist.
-if (!isset($modSettings['cal_showholidays']) || !isset($modSettings['cal_showbdays']) || !isset($modSettings['cal_showevents']))
+if (!isset($settings['cal_showholidays']) || !isset($settings['cal_showbdays']) || !isset($settings['cal_showevents']))
 {
 	// Default to just the calendar setting.
-	$modSettings['cal_showholidays'] = empty($modSettings['cal_showholidaysoncalendar']) ? 0 : 1;
-	$modSettings['cal_showbdays'] = empty($modSettings['cal_showbdaysoncalendar']) ? 0 : 1;
-	$modSettings['cal_showevents'] = empty($modSettings['cal_showeventsoncalendar']) ? 0 : 1;
+	$settings['cal_showholidays'] = empty($settings['cal_showholidaysoncalendar']) ? 0 : 1;
+	$settings['cal_showbdays'] = empty($settings['cal_showbdaysoncalendar']) ? 0 : 1;
+	$settings['cal_showevents'] = empty($settings['cal_showeventsoncalendar']) ? 0 : 1;
 
 	// Then take into account board index.
-	if (!empty($modSettings['cal_showholidaysonindex']))
-		$modSettings['cal_showholidays'] = $modSettings['cal_showholidays'] === 1 ? 2 : 3;
-	if (!empty($modSettings['cal_showbdaysonindex']))
-		$modSettings['cal_showbdays'] = $modSettings['cal_showbdays'] === 1 ? 2 : 3;
-	if (!empty($modSettings['cal_showeventsonindex']))
-		$modSettings['cal_showevents'] = $modSettings['cal_showevents'] === 1 ? 2 : 3;
+	if (!empty($settings['cal_showholidaysonindex']))
+		$settings['cal_showholidays'] = $settings['cal_showholidays'] === 1 ? 2 : 3;
+	if (!empty($settings['cal_showbdaysonindex']))
+		$settings['cal_showbdays'] = $settings['cal_showbdays'] === 1 ? 2 : 3;
+	if (!empty($settings['cal_showeventsonindex']))
+		$settings['cal_showevents'] = $settings['cal_showevents'] === 1 ? 2 : 3;
 
 	// Actually save the settings.
 	upgrade_query("
 		INSERT IGNORE INTO {$db_prefix}settings
 			(variable, value)
 		VALUES
-			('cal_showholidays', $modSettings[cal_showholidays]),
-			('cal_showbdays', $modSettings[cal_showbdays]),
-			('cal_showevents', $modSettings[cal_showevents])");
+			('cal_showholidays', $settings[cal_showholidays]),
+			('cal_showbdays', $settings[cal_showbdays]),
+			('cal_showevents', $settings[cal_showevents])");
 }
 
 ---}
@@ -664,18 +664,18 @@ if (!isset($modSettings['cal_showholidays']) || !isset($modSettings['cal_showbda
 
 ---# Adding advanced signature settings...
 ---{
-if (empty($modSettings['signature_settings']))
+if (empty($settings['signature_settings']))
 {
-	if (isset($modSettings['max_signatureLength']))
-		$modSettings['signature_settings'] = '1,' . $modSettings['max_signatureLength'] . ',0,0,0,0,0,0:';
+	if (isset($settings['max_signatureLength']))
+		$settings['signature_settings'] = '1,' . $settings['max_signatureLength'] . ',0,0,0,0,0,0:';
 	else
-		$modSettings['signature_settings'] = '1,300,0,0,0,0,0,0:';
+		$settings['signature_settings'] = '1,300,0,0,0,0,0,0:';
 
 	upgrade_query("
 		INSERT IGNORE INTO {$db_prefix}settings
 			(variable, value)
 		VALUES
-			('signature_settings', '$modSettings[signature_settings]')");
+			('signature_settings', '$settings[signature_settings]')");
 
 	upgrade_query("
 		DELETE FROM {$db_prefix}settings
@@ -686,23 +686,23 @@ if (empty($modSettings['signature_settings']))
 
 ---# Updating spam protection settings.
 ---{
-if (empty($modSettings['pm_spam_settings']))
+if (empty($settings['pm_spam_settings']))
 {
-	if (isset($modSettings['max_pm_recipients']))
-		$modSettings['pm_spam_settings'] = $modSettings['max_pm_recipients'] . ',5,20';
+	if (isset($settings['max_pm_recipients']))
+		$settings['pm_spam_settings'] = $settings['max_pm_recipients'] . ',5,20';
 	else
-		$modSettings['pm_spam_settings'] = '10,5,20';
+		$settings['pm_spam_settings'] = '10,5,20';
 }
-elseif (substr_count($modSettings['pm_spam_settings'], ',') == 1)
+elseif (substr_count($settings['pm_spam_settings'], ',') == 1)
 {
-	$modSettings['pm_spam_settings'] .= ',20';
+	$settings['pm_spam_settings'] .= ',20';
 }
 
 upgrade_query("
 	INSERT IGNORE INTO {$db_prefix}settings
 		(variable, value)
 	VALUES
-		('pm_spam_settings', '$modSettings[pm_spam_settings]')");
+		('pm_spam_settings', '$settings[pm_spam_settings]')");
 
 upgrade_query("
 	DELETE FROM {$db_prefix}settings
@@ -712,7 +712,7 @@ upgrade_query("
 
 ---# Adjusting timezone settings...
 ---{
-	if (!isset($modSettings['default_timezone']))
+	if (!isset($settings['default_timezone']))
 	{
 		$server_offset = mktime(0, 0, 0, 1, 1, 1970);
 		$timezone_id = 'Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600);
@@ -769,14 +769,14 @@ CHANGE COLUMN default_value default_value varchar(255) NOT NULL default '';
 
 ---# Enhancing privacy settings for custom fields.
 ---{
-if (isset($modSettings['weVersion']) && $modSettings['weVersion'] <= '1.0')
+if (isset($settings['weVersion']) && $settings['weVersion'] <= '1.0')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
 	SET private = 2
 	WHERE private = 1");
 }
-if (isset($modSettings['weVersion']) && $modSettings['weVersion'] < '1.1')
+if (isset($settings['weVersion']) && $settings['weVersion'] < '1.1')
 {
 upgrade_query("
 	UPDATE {$db_prefix}custom_fields
@@ -866,7 +866,7 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}mail_queue (
 
 ---# Adding new mail queue settings...
 ---{
-if (!isset($modSettings['mail_next_send']))
+if (!isset($settings['mail_next_send']))
 {
 	upgrade_query("
 		INSERT INTO {$db_prefix}settings
@@ -937,7 +937,7 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_reported_comments (
 ---# Adding moderator center permissions...
 ---{
 // Don't do this twice!
-if (@$modSettings['weVersion'] < '1.0')
+if (@$settings['weVersion'] < '1.0')
 {
 	// Try find people who probably should see the moderation center.
 	$request = upgrade_query("
@@ -1009,7 +1009,7 @@ ADD INDEX warning (warning);
 ---# Ensuring warning settings are present...
 ---{
 // Only do this if not already done.
-if (empty($modSettings['warning_settings']))
+if (empty($settings['warning_settings']))
 {
 	upgrade_query("
 		INSERT IGNORE INTO {$db_prefix}settings
@@ -1098,7 +1098,7 @@ WHERE attachment_type = 3
 ---# Calculating attachment mime types.
 ---{
 // Don't ever bother doing this twice.
-if (@$modSettings['weVersion'] < '1.0')
+if (@$settings['weVersion'] < '1.0')
 {
 	$request = upgrade_query("
 		SELECT MAX(id_attach)
@@ -1114,7 +1114,7 @@ if (@$modSettings['weVersion'] < '1.0')
 	{
 		function getAttachmentFilename($filename, $attachment_id)
 		{
-			global $modSettings;
+			global $settings;
 
 			$clean_name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
 			$clean_name = strtr($clean_name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
@@ -1125,10 +1125,10 @@ if (@$modSettings['weVersion'] < '1.0')
 			if ($attachment_id == false)
 				return $clean_name;
 
-			if (file_exists($modSettings['attachmentUploadDir'] . '/' . $enc_name))
-				$filename = $modSettings['attachmentUploadDir'] . '/' . $enc_name;
+			if (file_exists($settings['attachmentUploadDir'] . '/' . $enc_name))
+				$filename = $settings['attachmentUploadDir'] . '/' . $enc_name;
 			else
-				$filename = $modSettings['attachmentUploadDir'] . '/' . $clean_name;
+				$filename = $settings['attachmentUploadDir'] . '/' . $clean_name;
 
 			return $filename;
 		}
@@ -1775,7 +1775,7 @@ ADD COLUMN is_new tinyint(3) NOT NULL default '0';
 ---# Set the new status to be correct....
 ---{
 // Don't do this twice!
-if (@$modSettings['weVersion'] < '1.0')
+if (@$settings['weVersion'] < '1.0')
 {
 	// Set all unread messages as new.
 	upgrade_query("
@@ -2252,7 +2252,7 @@ ADD COLUMN pm_receive_from tinyint(4) unsigned NOT NULL default '1';
 ---{
 
 // Don't do this if we've done this already.
-if (empty($modSettings['dont_repeat_buddylists']))
+if (empty($settings['dont_repeat_buddylists']))
 {
 	// Make sure the pm_receive_from column has the right default value - early adoptors might have a '0' set here.
 	upgrade_query("
@@ -2282,16 +2282,16 @@ if (empty($modSettings['dont_repeat_buddylists']))
 }
 
 // And yet, and yet... We might have a small hiccup here...
-if (!empty($modSettings['dont_repeat_buddylists']) && !isset($modSettings['enable_buddylist']))
+if (!empty($settings['dont_repeat_buddylists']) && !isset($settings['enable_buddylist']))
 {
 	// Correct RC3 adopters setting here... Is this useful in the first place?
-	if (isset($modSettings['enable_buddylists']))
+	if (isset($settings['enable_buddylists']))
 	{
 		upgrade_query("
 		REPLACE INTO {$db_prefix}settings
 			(variable, value)
 		VALUES
-			('enable_buddylist', '" . $modSettings['enable_buddylists'] . "')");
+			('enable_buddylist', '" . $settings['enable_buddylists'] . "')");
 	}
 	else
 	{
@@ -2315,7 +2315,7 @@ if (!empty($modSettings['dont_repeat_buddylists']) && !isset($modSettings['enabl
 ---{
 
 // Don't do this if we've done this already.
-if (!isset($modSettings['attachment_image_reencode']))
+if (!isset($settings['attachment_image_reencode']))
 {
 	// Enable image re-encoding by default.
 	upgrade_query("
@@ -2324,7 +2324,7 @@ if (!isset($modSettings['attachment_image_reencode']))
 		VALUES
 			('attachment_image_reencode', '1')");
 }
-if (!isset($modSettings['attachment_image_paranoid']))
+if (!isset($settings['attachment_image_paranoid']))
 {
 	// Disable draconic checks by default.
 	upgrade_query("
@@ -2333,7 +2333,7 @@ if (!isset($modSettings['attachment_image_paranoid']))
 		VALUES
 			('attachment_image_paranoid', '0')");
 }
-if (!isset($modSettings['avatar_reencode']))
+if (!isset($settings['avatar_reencode']))
 {
 	// Enable image re-encoding by default.
 	upgrade_query("
@@ -2342,7 +2342,7 @@ if (!isset($modSettings['avatar_reencode']))
 		VALUES
 			('avatar_reencode', '1')");
 }
-if (!isset($modSettings['avatar_paranoid']))
+if (!isset($settings['avatar_paranoid']))
 {
 	// Disable draconic checks by default.
 	upgrade_query("
@@ -2357,7 +2357,7 @@ if (!isset($modSettings['avatar_paranoid']))
 
 ---# Add other attachment settings...
 ---{
-if (!isset($modSettings['attachment_thumb_png']))
+if (!isset($settings['attachment_thumb_png']))
 {
 	// Make image attachment thumbnail as PNG by default.
 	upgrade_query("
@@ -2377,7 +2377,7 @@ if (!isset($modSettings['attachment_thumb_png']))
 ---# Installing new smiley sets...
 ---{
 // Don't do this twice!
-if (empty($modSettings['installed_new_smiley_sets_20']))
+if (empty($settings['installed_new_smiley_sets_20']))
 {
 	// First, the entries.
 	upgrade_query("

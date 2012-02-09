@@ -153,12 +153,12 @@ $context['smfinfo'] = array (
 	'enable_error' => get_wedge_setting('enableErrorLogging', 'on'),
 	'database_sessions' => get_wedge_setting('databaseSession_enable'),
 	'database_loose' => get_wedge_setting('databaseSession_loose'),
-	'session_timeout' => !empty($modSettings['databaseSession_lifetime']) ? $modSettings['databaseSession_lifetime'] . ' ' . $txt['seconds'] : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': >300)</strong>',
+	'session_timeout' => !empty($settings['databaseSession_lifetime']) ? $settings['databaseSession_lifetime'] . ' ' . $txt['seconds'] : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': >300)</strong>',
 	'maintenance_mode' => get_wedge_setting('maintenance'),
 	'time_load' => get_wedge_setting('timeLoadPageEnable'),
 	'hostname_lookup' => get_wedge_setting('disableHostnameLookup'),
-	'cache' => (!empty($modSettings['cache_enable']) ? $txt['cache_level'] . ' ' . $modSettings['cache_enable'] : $txt['off']) . ($modSettings['cache_enable'] != '1' ? '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt['cache_level'] . ' 1)</strong>' : ''),
-	'memcached_settings' => isset($modSettings['cache_memcached']) && trim($modSettings['cache_memcached']) != '' ? trim($modSettings['cache_memcached']) : '<i>' . $txt['empty'] . '</i>',
+	'cache' => (!empty($settings['cache_enable']) ? $txt['cache_level'] . ' ' . $settings['cache_enable'] : $txt['off']) . ($settings['cache_enable'] != '1' ? '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt['cache_level'] . ' 1)</strong>' : ''),
+	'memcached_settings' => isset($settings['cache_memcached']) && trim($settings['cache_memcached']) != '' ? trim($settings['cache_memcached']) : '<i>' . $txt['empty'] . '</i>',
 	'cookie_name' => !empty($cookiename) ? $cookiename : '<i>' . $txt['empty'] . '</i>&nbsp;<strong>(' . $txt['recommended'] . ': WedgeCookie' . rand(100,999) . ')</strong>',
 	'local_cookies' => get_wedge_setting('localCookies', 'off'),
 	'global_cookies' => get_wedge_setting('globalCookies'),
@@ -450,7 +450,7 @@ function show_password_form()
 
 function show_system_info()
 {
-	global $txt, $context, $smfInfo, $modSettings;
+	global $txt, $context, $smfInfo, $settings;
 	global $db_persist, $maintenance, $cookiename, $db_last_error, $db_show_debug;
 
 	get_database_version();
@@ -1315,14 +1315,14 @@ function show_footer()
 
 function initialize()
 {
-	global $txt, $context, $smfInfo, $sourcedir, $db_show_debug, $db_last_error, $modSettings;
+	global $txt, $context, $smfInfo, $sourcedir, $db_show_debug, $db_last_error, $settings;
 
 	// Set this to true so we get the correct forum value
 	$ssi_gzip = true;
 
 	define('WEDGE_VERSION', get_file_versions(true));
 
-	$smfInfo = !empty($modSettings['smfInfo']) ? $modSettings['smfInfo'] : '';
+	$smfInfo = !empty($settings['smfInfo']) ? $settings['smfInfo'] : '';
 
 	if (empty($smfInfo) || (allowedTo('admin_forum') && isset($_GET['regenerate'])))
 		generate_password();
@@ -1372,7 +1372,7 @@ function get_database_version()
 
 function get_file_versions($core = false)
 {
-	global $sourcedir, $boarddir, $context, $txt, $scripturl, $boardurl, $settings;
+	global $sourcedir, $boarddir, $context, $txt, $scripturl, $boardurl, $theme;
 
 	// Change index.php below to whatever you've changed yours to...
 	$fp = fopen($boarddir . '/index.php', 'rb');
@@ -1396,7 +1396,7 @@ function get_file_versions($core = false)
 	);
 
 	// Default place to find the languages would be the default theme dir.
-	$lang_dir = $settings['default_theme_dir'] . '/languages';
+	$lang_dir = $theme['default_theme_dir'] . '/languages';
 
 	$version_info = array(
 		'file_versions' => array(),
@@ -1457,9 +1457,9 @@ function get_file_versions($core = false)
 	$Sources_dir->close();
 
 	// Load all the files in the default template directory - and the current theme if applicable.
-	$directories = array('default_template_versions' => $settings['default_theme_dir']);
-	if ($settings['theme_id'] != 1)
-		$directories += array('template_versions' => $settings['theme_dir']);
+	$directories = array('default_template_versions' => $theme['default_theme_dir']);
+	if ($theme['theme_id'] != 1)
+		$directories += array('template_versions' => $theme['theme_dir']);
 
 	foreach ($directories as $type => $dirname)
 	{
@@ -1553,8 +1553,8 @@ function get_php_setting($val, $rec = '')
 function get_wedge_setting($val, $rec = '')
 {
 	global $txt;
-	global $modSettings, $settings;
-	$r = (!empty($GLOBALS[$val]) ? $txt['on'] : (!empty($modSettings[$val]) ? $txt['on'] : (!empty($settings[$val]) ? $txt['on'] : $txt['off'])));
+	global $settings, $theme;
+	$r = (!empty($GLOBALS[$val]) ? $txt['on'] : (!empty($settings[$val]) ? $txt['on'] : (!empty($theme[$val]) ? $txt['on'] : $txt['off'])));
 	if (!empty($rec) && strcmp($r, $txt[$rec]) != 0)
 		$r .= '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt[$rec] . ')</strong>';
 	return $r;
@@ -2253,7 +2253,7 @@ function get_file_data($filename)
 
 function get_server_versions($checkFor)
 {
-	global $txt, $db_connection, $_PHPA, $memcached, $modSettings;
+	global $txt, $db_connection, $_PHPA, $memcached, $settings;
 
 	loadLanguage('Admin');
 
@@ -2267,7 +2267,7 @@ function get_server_versions($checkFor)
 	}
 
 	// If we're using memcache we need the server info.
-	if (empty($memcached) && function_exists('memcache_get') && isset($modSettings['cache_memcached']) && trim($modSettings['cache_memcached']) != '')
+	if (empty($memcached) && function_exists('memcache_get') && isset($settings['cache_memcached']) && trim($settings['cache_memcached']) != '')
 		get_memcached_server();
 
 	// Check to see if we have any accelerators installed...

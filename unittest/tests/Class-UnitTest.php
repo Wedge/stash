@@ -242,7 +242,7 @@
 
 		protected function _simulateClick($URL, $memberID = 0, $sessionID = null, $cookies = array())
 		{
-			global $cookiename, $modSettings;
+			global $cookiename, $settings;
 
 			if ($sessionID !== null)
 				$cookies['PHPSESSID'] = $sessionID;
@@ -263,7 +263,7 @@
 
 				list ($passwd, $password_salt) = $smcFunc['db_fetch_row']($request);
 
-				$cookies[$cookiename] = serialize(array($memberID, sha1($passwd . $password_salt), time() + 60 * $modSettings['cookieTime'], (empty($modSettings['localCookies']) ? 0 : 1) | (empty($modSettings['globalCookies']) ? 0 : 2)));
+				$cookies[$cookiename] = serialize(array($memberID, sha1($passwd . $password_salt), time() + 60 * $settings['cookieTime'], (empty($settings['localCookies']) ? 0 : 1) | (empty($settings['globalCookies']) ? 0 : 2)));
 			}
 
 			$cookieString = '';

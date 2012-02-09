@@ -18,7 +18,7 @@
 require_once('SSI.php');
 
 // Are we not supposed to use the cron?
-if (empty($modSettings['mail_queue_use_cron']))
+if (empty($settings['mail_queue_use_cron']))
 	return;
 
 // Ensure we don't run out of memory with large email batches
@@ -30,7 +30,7 @@ $request = $smcFunc['db_query']('', '
 	ORDER BY priority ASC, id_mail ASC
 	LIMIT {int:limit}',
 	array(
-		'limit' => $modSettings['mail_limit'],
+		'limit' => $settings['mail_limit'],
 	)
 );
 
@@ -51,17 +51,17 @@ if (!empty($emails))
 
 if (empty($emails))
 	return false;
-elseif (!empty($modSettings['mail_type']) && $modSettings['smtp_host'] != '')
+elseif (!empty($settings['mail_type']) && $settings['smtp_host'] != '')
 	require_once($sourcedir . '/Subs-Post.php');
 
 // Send each email, yea!
 $failed_emails = array();
 foreach ($emails as $key => $email)
 {
-	if (empty($modSettings['mail_type']) || $modSettings['smtp_host'] == '')
+	if (empty($settings['mail_type']) || $settings['smtp_host'] == '')
 	{
 		$email['subject'] = strtr($email['subject'], array("\r" => '', "\n" => ''));
-		if (!empty($modSettings['mail_strip_carriage']))
+		if (!empty($settings['mail_strip_carriage']))
 		{
 			$email['body'] = strtr($email['body'], array("\r" => ''));
 			$email['headers'] = strtr($email['headers'], array("\r" => ''));
@@ -85,12 +85,12 @@ if (!empty($failed_emails))
 	$smcFunc['db_insert']('replace',
 		'{db_prefix}settings',
 		array('variable' => 'string', 'value' => 'string'),
-		array('mail_failed_attempts', empty($modSettings['mail_failed_attempts']) ? 1 : ++$modSettings['mail_failed_attempts']),
+		array('mail_failed_attempts', empty($settings['mail_failed_attempts']) ? 1 : ++$settings['mail_failed_attempts']),
 		array('variable')
 	);
 
 	// If we have failed to many times, tell mail to wait a bit and try again.
-	if ($modSettings['mail_failed_attempts'] > 5)
+	if ($settings['mail_failed_attempts'] > 5)
 		log_error('SMTP failed to send more than 5 emails', 'critical');
 
 	// Add our email back to the queue, manually.
@@ -104,7 +104,7 @@ if (!empty($failed_emails))
 	return false;
 }
 // We where unable to send the email, clear our failed attempts.
-elseif (!empty($modSettings['mail_failed_attempts']))
+elseif (!empty($settings['mail_failed_attempts']))
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}settings
 		SET value = {string:zero}

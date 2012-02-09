@@ -246,7 +246,7 @@ function load_lang_file()
 // This handy function loads some settings and the like.
 function load_database()
 {
-	global $modSettings, $sourcedir, $db_prefix, $db_connection, $db_name, $db_user;
+	global $settings, $sourcedir, $db_prefix, $db_connection, $db_name, $db_user;
 
 	if (empty($sourcedir))
 		$sourcedir = dirname(__FILE__) . '/Sources';
@@ -256,7 +256,7 @@ function load_database()
 	if (!defined('WEDGE'))
 		define('WEDGE', 1);
 
-	$modSettings['disableQueryCheck'] = true;
+	$settings['disableQueryCheck'] = true;
 
 	// Connect the database.
 	if (!$db_connection)
@@ -681,7 +681,7 @@ function DatabaseSettings()
 		// Now include it for database functions!
 		if (!defined('WEDGE'))
 			define('WEDGE', 1);
-		$modSettings['disableQueryCheck'] = true;
+		$settings['disableQueryCheck'] = true;
 		require_once($sourcedir . '/Class-DB.php');
 
 		// Attempt a connection.
@@ -821,7 +821,7 @@ function ForumSettings()
 // Step one: Do the SQL thang.
 function DatabasePopulation()
 {
-	global $txt, $db_connection, $db, $modSettings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
+	global $txt, $db_connection, $db, $settings, $sourcedir, $db_prefix, $incontext, $db_name, $boardurl;
 
 	$incontext['block'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
@@ -843,16 +843,16 @@ function DatabasePopulation()
 			'db_error_skip' => true,
 		)
 	);
-	$modSettings = array();
+	$settings = array();
 	if ($result !== false)
 	{
 		while ($row = wesql::fetch_assoc($result))
-			$modSettings[$row['variable']] = $row['value'];
+			$settings[$row['variable']] = $row['value'];
 		wesql::free_result($result);
 
 		// Do they match? If so, this is just a refresh so charge on!
 		// !!! @todo: This won't work anyway -- the upgrader. Remove this code.
-		if (!isset($modSettings['weVersion']) || $modSettings['weVersion'] != $GLOBALS['current_wedge_version'])
+		if (!isset($settings['weVersion']) || $settings['weVersion'] != $GLOBALS['current_wedge_version'])
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
@@ -992,7 +992,7 @@ function DatabasePopulation()
 	}
 
 	// Setting a timezone is required.
-	if (!isset($modSettings['default_timezone']))
+	if (!isset($settings['default_timezone']))
 	{
 		$timezone_id = @date_default_timezone_get();
 		if (date_default_timezone_set($timezone_id))
@@ -1030,7 +1030,7 @@ function DatabasePopulation()
 	}
 
 	// Default pretty URL filters
-	$modSettings['pretty_filters'] = array(
+	$settings['pretty_filters'] = array(
 		'topics' => 0,
 		'boards' => 0,
 		'profiles' => 0,
@@ -1041,7 +1041,7 @@ function DatabasePopulation()
 	wesql::insert('replace',
 		'{db_prefix}settings',
 		array('variable' => 'string-255', 'value' => 'string-65534'),
-		array('pretty_filters', serialize($modSettings['pretty_filters'])),
+		array('pretty_filters', serialize($settings['pretty_filters'])),
 		array('variable')
 	);
 
@@ -1275,7 +1275,7 @@ function AdminAccount()
 function DeleteInstall()
 {
 	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename, $cachedir;
-	global $current_wedge_version, $sourcedir, $modSettings, $user_info;
+	global $current_wedge_version, $sourcedir, $settings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['block'] = 'delete_install';
@@ -1347,7 +1347,7 @@ function DeleteInstall()
 		);
 	}
 
-	// We're going to want our lovely $modSettings now.
+	// We're going to want our lovely $settings now.
 	$request = wesql::query('
 		SELECT variable, value
 		FROM {db_prefix}settings',
@@ -1359,7 +1359,7 @@ function DeleteInstall()
 	if ($request)
 	{
 		while ($row = wesql::fetch_row($request))
-			$modSettings[$row[0]] = $row[1];
+			$settings[$row[0]] = $row[1];
 		wesql::free_result($request);
 	}
 
@@ -1385,7 +1385,7 @@ function DeleteInstall()
 	// Now is the perfect time to fetch the Wedge files.
 	require_once($sourcedir . '/ScheduledTasks.php');
 	// Sanity check that they loaded earlier!
-	if (isset($modSettings['recycle_board']))
+	if (isset($settings['recycle_board']))
 	{
 		define('WEDGE_VERSION', $current_wedge_version); // The variable is usually defined in index.php so let's just use our variable to do it for us.
 		scheduled_fetchRemoteFiles(); // Now go get those files!
@@ -1873,7 +1873,7 @@ function template_install_above()
 {
 	global
 		$incontext, $txt, $installurl, $boardurl, $cachedir, $boarddir,
-		$sourcedir, $wedgesite, $settings, $context, $modSettings;
+		$sourcedir, $wedgesite, $theme, $context, $settings;
 
 	// Load Wedge's default paths and pray that it works...
 	if (!defined('WEDGE'))
@@ -1894,17 +1894,17 @@ function template_install_above()
 	$boardurl = 'http' . (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off' ? 's' : '') . '://' . $host;
 	$boardurl .= substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'));
 
-	$settings['theme_dir'] = $boarddir . '/Themes/default';
-	$settings['default_theme_dir'] = $boarddir . '/Themes/default';
-	$settings['theme_url'] = $boardurl . '/Themes/default';
-	$settings['images_url'] = $boardurl . '/Themes/default/images';
+	$theme['theme_dir'] = $boarddir . '/Themes/default';
+	$theme['default_theme_dir'] = $boarddir . '/Themes/default';
+	$theme['theme_url'] = $boardurl . '/Themes/default';
+	$theme['images_url'] = $boardurl . '/Themes/default/images';
 	$context['css_folders'] = array('skins');
 	$context['css_suffixes'] = array($context['browser']['agent']);
 	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
 	// !!! and if they don't, we can still tell people to delete these lines before installing.
-	$modSettings['obfuscate_filenames'] = true;
-	$modSettings['enableCompressedData'] = true;
-	$modSettings['minify'] = 'packer';
+	$settings['obfuscate_filenames'] = true;
+	$settings['enableCompressedData'] = true;
+	$settings['minify'] = 'packer';
 
 	echo '<!DOCTYPE html>
 <html', !empty($txt['lang_rtl']) ? ' dir="rtl"' : '', '>

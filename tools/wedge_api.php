@@ -677,34 +677,34 @@ function we_loadThemeData($id_theme = 0)
 
 	// The theme was specified by parameter.
 	if (!empty($id_theme))
-		$theme = (int) $id_theme;
+		$th = (int) $id_theme;
 	// The theme was specified by REQUEST.
 	elseif (!empty($_REQUEST['theme']))
 	{
-		$theme = (int) $_REQUEST['theme'];
-		$_SESSION['id_theme'] = $theme;
+		$th = (int) $_REQUEST['theme'];
+		$_SESSION['id_theme'] = $th;
 	}
 	// The theme was specified by REQUEST... previously.
 	elseif (!empty($_SESSION['id_theme']))
-		$theme = (int) $_SESSION['id_theme'];
+		$th = (int) $_SESSION['id_theme'];
 	// The theme is just the user's choice. (might use ?board=1;theme=0 to force board theme.)
 	elseif (!empty($we_user_info['theme']) && !isset($_REQUEST['theme']))
-		$theme = $we_user_info['theme'];
+		$th = $we_user_info['theme'];
 	// The theme is the forum's default.
 	else
-		$theme = $we_settings['theme_guests'];
+		$th = $we_settings['theme_guests'];
 
 	// Verify the id_theme... no foul play.
 	if (!empty($we_settings['knownThemes']) && !empty($we_settings['theme_allow']))
 	{
 		$themes = explode(',', $we_settings['knownThemes']);
-		if (!in_array($theme, $themes))
-			$theme = $we_settings['theme_guests'];
+		if (!in_array($th, $themes))
+			$th = $we_settings['theme_guests'];
 		else
-			$theme = (int) $theme;
+			$th = (int) $th;
 	}
 	else
-		$theme = (int) $theme;
+		$th = (int) $th;
 
 	$member = empty($we_user_info['id']) ? -1 : $we_user_info['id'];
 
@@ -713,11 +713,11 @@ function we_loadThemeData($id_theme = 0)
 		SELECT variable, value, id_member, id_theme
 		FROM {raw:we_db_prefix}themes
 		WHERE id_member IN (-1, 0, {int:current_member})
-			AND id_theme' . ($theme == 1 ? ' = 1' : ' IN ({int:current_theme}, 1)'),
+			AND id_theme' . ($th == 1 ? ' = 1' : ' IN ({int:current_theme}, 1)'),
 			array(
 				'we_db_prefix' => $we_settings['db_prefix'],
 				'current_member' => $member,
-				'current_theme' => $theme,
+				'current_theme' => $th,
 		));
 	// Pick between $we_settings['theme'] and $we_user_info['theme'] depending on whose data it is.
 	$themeData = array(0 => array(), $member => array());
@@ -743,7 +743,7 @@ function we_loadThemeData($id_theme = 0)
 				$we_user_info['theme'][$k] = $v;
 		}
 
-	$we_settings['theme']['theme_id'] = $theme;
+	$we_settings['theme']['theme_id'] = $th;
 
 	$we_settings['theme']['actual_theme_url'] = $we_settings['theme']['theme_url'];
 	$we_settings['theme']['actual_images_url'] = $we_settings['theme']['images_url'];

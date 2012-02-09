@@ -8,7 +8,7 @@
 	require_once('../../SSI.php');
 
 	$context['ut_js_url'] = $jsURL;
-	$settings['template_dirs'] = array_merge($settings['template_dirs'], array($templateDir));
+	$theme['template_dirs'] = array_merge($theme['template_dirs'], array($templateDir));
 	loadTemplate('UnitTest');
 
 	$subAction = isset($_GET['sa']) && function_exists('do_' . $_GET['sa']) ? 'do_' . $_GET['sa'] : 'do_index';

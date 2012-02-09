@@ -127,13 +127,13 @@ show_footer();
 
 function show_header()
 {
-	global $settings;
+	global $theme;
 
 	echo '<!DOCTYPE html>
 <html>
 <head>
 	<title>Wedge Package SDK</title>
-	<script src="', $settings['theme_default_url'], '/scripts/script.js"></script>
+	<script src="', $theme['theme_default_url'], '/scripts/script.js"></script>
 	<style><!--
 		body
 		{
@@ -213,7 +213,7 @@ function show_header()
 </head>
 <body>
 	<div id="header">
-		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" style="float: right;" alt="Wedge" /></a>
+		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $theme['default_images_url'], '/wedgelogo.png" style="float: right;" alt="Wedge" /></a>
 		<div>Wedge Package SDK</div>
 	</div>
 	<div id="content">';

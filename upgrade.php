@@ -572,19 +572,19 @@ $request = $smcFunc['db_query']('', '
 	)
 );
 while ($row = $smcFunc['db_fetch_assoc']($request))
-	$modSettings[$row['variable']] = $row['value'];
+	$settings[$row['variable']] = $row['value'];
 $smcFunc['db_free_result']($request);
 
-if (!isset($modSettings['theme_url']))
+if (!isset($settings['theme_url']))
 {
-	$modSettings['theme_dir'] = $boarddir . '/Themes/default';
-	$modSettings['theme_url'] = 'Themes/default';
-	$modSettings['images_url'] = 'Themes/default/images';
+	$settings['theme_dir'] = $boarddir . '/Themes/default';
+	$settings['theme_url'] = 'Themes/default';
+	$settings['images_url'] = 'Themes/default/images';
 }
-if (!isset($settings['default_theme_url']))
-	$settings['default_theme_url'] = $modSettings['theme_url'];
-if (!isset($settings['default_theme_dir']))
-	$settings['default_theme_dir'] = $modSettings['theme_dir'];
+if (!isset($theme['default_theme_url']))
+	$theme['default_theme_url'] = $settings['theme_url'];
+if (!isset($theme['default_theme_dir']))
+	$theme['default_theme_dir'] = $settings['theme_dir'];
 
 // Default title...
 $upcontext['page_title'] = 'Updating your Wedge Install!';
@@ -736,7 +736,7 @@ function redirectLocation($location, $addForm = true)
 function loadEssentialData()
 {
 	global $db_server, $db_user, $db_passwd, $db_name, $db_connection, $db_prefix;
-	global $modSettings, $sourcedir, $upcontext;
+	global $settings, $sourcedir, $upcontext;
 
 	// Do the non-SSI stuff...
 	@set_magic_quotes_runtime(0);
@@ -783,9 +783,9 @@ function loadEssentialData()
 			'db_error_skip' => true,
 		)
 	);
-	$modSettings = array();
+	$settings = array();
 	while ($row = $smcFunc['db_fetch_assoc']($request))
-		$modSettings[$row['variable']] = $row['value'];
+		$settings[$row['variable']] = $row['value'];
 	$smcFunc['db_free_result']($request);
 
 	// If they don't have the file, they're going to get a warning anyway so we won't need to clean request vars.
@@ -871,7 +871,7 @@ function initialize_inputs()
 // Step 0 - Let's welcome them in and ask them to login!
 function WelcomeLogin()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
+	global $boarddir, $sourcedir, $db_prefix, $language, $settings, $cachedir, $upgradeurl;
 	global $upcontext, $disable_security, $txt;
 
 	$upcontext['block'] = 'welcome_message';
@@ -935,14 +935,14 @@ function WelcomeLogin()
 		return false;
 
 	// Check agreement.txt. (it may not exist, in which case $boarddir must be writable.)
-	if (isset($modSettings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
+	if (isset($settings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
 		return throw_error('The upgrader was unable to obtain write access to agreement.txt.<br><br>If you are using a linux or unix based server, please ensure that the file is chmod\'d to 777, or if it does not exist that the directory this upgrader is in is 777.<br>If your server is running Windows, please ensure that the internet guest account has the proper permissions on it or its folder.');
 
 	// Upgrade the agreement.
-	elseif (isset($modSettings['agreement']))
+	elseif (isset($settings['agreement']))
 	{
 		$fp = fopen($boarddir . '/agreement.txt', 'w');
-		fwrite($fp, $modSettings['agreement']);
+		fwrite($fp, $settings['agreement']);
 		fclose($fp);
 	}
 
@@ -967,7 +967,7 @@ function WelcomeLogin()
 // Step 0.5: Does the login work?
 function checkLogin()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $cachedir, $upgradeurl;
+	global $boarddir, $sourcedir, $db_prefix, $language, $settings, $cachedir, $upgradeurl;
 	global $upcontext, $disable_security, $support_js, $txt;
 
 	// Are we trying to login?
@@ -1053,7 +1053,7 @@ function checkLogin()
 
 		// Note down the version we are coming from.
 		if (empty($upcontext['user']['version']))
-			$upcontext['user']['version'] = $modSettings['weVersion'];
+			$upcontext['user']['version'] = $settings['weVersion'];
 
 		// Didn't get anywhere?
 		if ((empty($sha_passwd) || $password != $sha_passwd) && empty($upcontext['username_incorrect']) && !$disable_security)
@@ -1143,7 +1143,7 @@ function checkLogin()
 // Step 1: Do the maintenance and backup.
 function UpgradeOptions()
 {
-	global $db_prefix, $command_line, $modSettings, $is_debug;
+	global $db_prefix, $command_line, $settings, $is_debug;
 	global $boarddir, $boardurl, $sourcedir, $maintenance, $mmessage, $cachedir, $upcontext;
 
 	$upcontext['block'] = 'upgrade_options';
@@ -1322,7 +1322,7 @@ function backupTable($table)
 // Step 2: Everything.
 function DatabaseChanges()
 {
-	global $db_prefix, $modSettings, $command_line;
+	global $db_prefix, $settings, $command_line;
 	global $language, $boardurl, $sourcedir, $boarddir, $upcontext, $support_js;
 
 	// Have we just completed this?
@@ -1345,7 +1345,7 @@ function DatabaseChanges()
 	{
 		$upcontext['file_count'] = 0;
 		foreach ($files as $file)
-			if ($modSettings['weVersion'] < $file[1])
+			if ($settings['weVersion'] < $file[1])
 				$upcontext['file_count']++;
 	}
 
@@ -1362,7 +1362,7 @@ function DatabaseChanges()
 			$upcontext['cur_file_num']++;
 			$upcontext['cur_file_name'] = $file[0];
 			// Do we actually need to do this still?
-			if ($modSettings['weVersion'] < $file[1])
+			if ($settings['weVersion'] < $file[1])
 			{
 				$nextFile = parse_sql(dirname(__FILE__) . '/' . $file[0]);
 				if ($nextFile)
@@ -1375,7 +1375,7 @@ function DatabaseChanges()
 						array('variable')
 					);
 
-					$modSettings['weVersion'] = $file[2];
+					$settings['weVersion'] = $file[2];
 				}
 
 				// If this is XML we only do this stuff once.
@@ -1414,7 +1414,7 @@ function DatabaseChanges()
 // Clean up any mods installed...
 function CleanupMods()
 {
-	global $db_prefix, $modSettings, $upcontext, $boarddir, $sourcedir, $settings, $command_line;
+	global $db_prefix, $settings, $upcontext, $boarddir, $sourcedir, $theme, $command_line;
 
 	// Sorry. Not supported for command line users.
 	if ($command_line)
@@ -1470,7 +1470,7 @@ function CleanupMods()
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		if ($row['id_theme'] == 1)
-			$settings['default_' . $row['variable']] = $row['value'];
+			$theme['default_' . $row['variable']] = $row['value'];
 		elseif ($row['variable'] == 'theme_dir')
 			$theme_paths[$row['id_theme']][$row['variable']] = $row['value'];
 	}
@@ -1830,7 +1830,7 @@ function DeleteUpgrade()
 // Just like the built-in one, but setup for CLI to not use themes.
 function cli_scheduled_fetchRemoteFiles()
 {
-	global $sourcedir, $txt, $language, $settings, $modSettings;
+	global $sourcedir, $txt, $language, $theme, $settings;
 
 	if (empty($txt['time_format']))
 		$txt['time_format'] = '%B %e, %Y, %I:%M:%S %p';
@@ -1885,7 +1885,7 @@ function cli_scheduled_fetchRemoteFiles()
 
 function convertSettingsToTheme()
 {
-	global $db_prefix, $modSettings;
+	global $db_prefix, $settings;
 
 	$values = array(
 		'show_latest_member' => @$GLOBALS['showlatestmember'],
@@ -1902,7 +1902,7 @@ function convertSettingsToTheme()
 		'newsfader_time' => @$GLOBALS['fadertime'],
 		'use_image_buttons' => empty($GLOBALS['MenuType']) ? 1 : 0,
 		'enable_news' => @$GLOBALS['enable_news'],
-		'return_to_post' => @$modSettings['returnToPost'],
+		'return_to_post' => @$settings['returnToPost'],
 	);
 
 	$themeData = array();
@@ -1926,7 +1926,7 @@ function convertSettingsToTheme()
 
 function convertSettingstoOptions()
 {
-	global $db_prefix, $modSettings;
+	global $db_prefix, $settings;
 
 	// Format: new_setting -> old_setting_name.
 	$values = array(
@@ -1936,7 +1936,7 @@ function convertSettingstoOptions()
 
 	foreach ($values as $variable => $value)
 	{
-		if (empty($modSettings[$value[0]]))
+		if (empty($settings[$value[0]]))
 			continue;
 
 		$smcFunc['db_query']('', '
@@ -1946,7 +1946,7 @@ function convertSettingstoOptions()
 			FROM {db_prefix}members',
 			array(
 				'variable' => $variable,
-				'value' => $modSettings[$value[0]],
+				'value' => $settings[$value[0]],
 				'db_error_skip' => true,
 			)
 		);
@@ -1957,7 +1957,7 @@ function convertSettingstoOptions()
 			VALUES (-1, 1, {string:variable}, {string:value})',
 			array(
 				'variable' => $variable,
-				'value' => $modSettings[$value[0]],
+				'value' => $settings[$value[0]],
 				'db_error_skip' => true,
 			)
 		);
@@ -2307,7 +2307,7 @@ function parse_sql($filename)
 					continue;
 				}
 
-				if (eval('global $db_prefix, $modSettings; ' . $current_data) === false)
+				if (eval('global $db_prefix, $settings; ' . $current_data) === false)
 				{
 					$upcontext['error_message'] = 'Error in upgrade script ' . basename($filename) . ' on line ' . $line_number . '!' . $endl;
 					if ($command_line)
@@ -2368,11 +2368,11 @@ function parse_sql($filename)
 
 function upgrade_query($string, $unbuffered = false)
 {
-	global $db_connection, $db_server, $db_user, $db_passwd, $command_line, $upcontext, $upgradeurl, $modSettings;
+	global $db_connection, $db_server, $db_user, $db_passwd, $command_line, $upcontext, $upgradeurl, $settings;
 	global $db_name, $db_unbuffered;
 
 	// Get the query result - working around some Wedge specific security - just this once!
-	$modSettings['disableQueryCheck'] = true;
+	$settings['disableQueryCheck'] = true;
 	$db_unbuffered = $unbuffered;
 	$result = $smcFunc['db_query']('', $string, 'security_override');
 	$db_unbuffered = false;
@@ -2665,7 +2665,7 @@ function checkChange(&$change)
 // The next substep.
 function nextSubstep($substep)
 {
-	global $start_time, $timeLimitThreshold, $command_line, $file_steps, $modSettings, $custom_warning;
+	global $start_time, $timeLimitThreshold, $command_line, $file_steps, $settings, $custom_warning;
 	global $step_progress, $is_debug, $upcontext;
 
 	if ($_GET['substep'] < $substep)
@@ -2725,7 +2725,7 @@ function nextSubstep($substep)
 
 function cmdStep0()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $modSettings, $start_time, $cachedir, $db, $upcontext;
+	global $boarddir, $sourcedir, $db_prefix, $language, $settings, $start_time, $cachedir, $db, $upcontext;
 	global $language, $is_debug, $txt;
 	$start_time = time();
 
@@ -2795,12 +2795,12 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	if (!is_writable($boarddir . '/Settings_bak.php'))
 		print_error('Error: Unable to obtain write access to "Settings_bak.php".');
 
-	if (isset($modSettings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
+	if (isset($settings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
 		print_error('Error: Unable to obtain write access to "agreement.txt".');
-	elseif (isset($modSettings['agreement']))
+	elseif (isset($settings['agreement']))
 	{
 		$fp = fopen($boarddir . '/agreement.txt', 'w');
-		fwrite($fp, $modSettings['agreement']);
+		fwrite($fp, $settings['agreement']);
 		fclose($fp);
 	}
 
@@ -3054,7 +3054,7 @@ function makeFilesWritable(&$files)
 // This is what is displayed if there's any chmod to be done. If not it returns nothing...
 function template_chmod()
 {
-	global $upcontext, $upgradeurl, $settings;
+	global $upcontext, $upgradeurl, $theme;
 
 	// Don't call me twice!
 	if (!empty($upcontext['chmod_called']))
@@ -3110,7 +3110,7 @@ function template_chmod()
 					var content = popup.document;
 					content.write(\'<!DOCTYPE html>\n\');
 					content.write(\'<html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>\n\t<head>\n\t\t<meta name="robots" content="noindex">\n\t\t\');
-					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
+					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
 					content.write(\'<div class="description wrc">\n\t\t\t<h4>The following files needs to be made writable to continue:</h4>\n\t\t\t\');
 					content.write(\'<p>', implode('<br>\n\t\t\t', $upcontext['chmod']['files']), '</p>\n\t\t\t\');
 					content.write(\'<a href="javascript:self.close();">close</a>\n\t\t</div>\n\t</body>\n</html>\');
@@ -3173,7 +3173,7 @@ function template_chmod()
 
 function template_upgrade_above()
 {
-	global $modSettings, $txt, $wedgesite, $settings, $upcontext, $upgradeurl;
+	global $settings, $txt, $wedgesite, $theme, $upcontext, $upgradeurl;
 
 	echo '<!DOCTYPE html>
 <html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>
@@ -3181,8 +3181,8 @@ function template_upgrade_above()
 		<meta charset="utf-8">
 		<meta name="robots" content="noindex">
 		<title>', $txt['upgrade_upgrade_utility'], '</title>
-		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
-		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/install.css">
+		<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/index.css">
+		<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/install.css">
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 		<script><!-- // --><![CDATA[
@@ -3380,11 +3380,11 @@ function template_error_message()
 
 function template_welcome_message()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $txt;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $txt;
 
 	echo '
 		<script src="http://wedge.org/files/current-version.js?version=' . WEDGE_VERSION . '"></script>', empty($context['disable_login_hashing']) ? '
-		<script src="' . $settings['default_theme_url'] . '/scripts/sha1.js"></script>' : '', '
+		<script src="' . $theme['default_theme_url'] . '/scripts/sha1.js"></script>' : '', '
 			<h3>', sprintf($txt['upgrade_ready_proceed'], WEDGE_VERSION), '</h3>
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>
 		<div id="version_warning">
@@ -3411,7 +3411,7 @@ function template_welcome_message()
 
 	// Paths are incorrect?
 	echo '
-		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #804840; color: black; background-color: #fe5a44; ', (file_exists($settings['default_theme_dir'] . '/scripts/script.js') ? 'display: none;' : ''), '" id="js_script_missing_error">
+		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #804840; color: black; background-color: #fe5a44; ', (file_exists($theme['default_theme_dir'] . '/scripts/script.js') ? 'display: none;' : ''), '" id="js_script_missing_error">
 			<div style="float: left; width: 2ex; font-size: 2em; color: black">!!</div>
 			<strong style="text-decoration: underline">', $txt['upgrade_critical_error'], '</strong><br>
 			<div style="padding-left: 6ex">
@@ -3546,7 +3546,7 @@ function template_welcome_message()
 
 function template_upgrade_options()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $mmessage, $mtitle;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $mmessage, $mtitle;
 
 	echo '
 			<h3>Before the upgrade gets underway please review the options below - and hit continue when you\'re ready to begin.</h3>
@@ -3613,7 +3613,7 @@ function template_upgrade_options()
 // Template for the database backup tool/
 function template_backup_database()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $support_js, $is_debug;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $support_js, $is_debug;
 
 	echo '
 			<h3>Please wait while a backup is created. For large forums this may take some time!</h3>';
@@ -3688,7 +3688,7 @@ function template_backup_database()
 
 function template_backup_xml()
 {
-	global $upcontext, $settings, $options, $txt;
+	global $upcontext, $theme, $options, $txt;
 
 	echo '
 	<table num="', $upcontext['cur_table_num'], '">', $upcontext['cur_table_name'], '</table>';
@@ -3697,7 +3697,7 @@ function template_backup_xml()
 // Here is the actual "make the changes" template!
 function template_database_changes()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $support_js, $is_debug, $timeLimitThreshold;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $support_js, $is_debug, $timeLimitThreshold;
 
 	echo '
 		<h3>Executing database changes</h3>
@@ -4013,7 +4013,7 @@ function template_database_changes()
 
 function template_database_xml()
 {
-	global $upcontext, $settings, $options, $txt;
+	global $upcontext, $theme, $options, $txt;
 
 	echo '
 	<file num="', $upcontext['cur_file_num'], '" items="', $upcontext['total_items'], '" debug_items="', $upcontext['debug_items'], '">', $upcontext['cur_file_name'], '</file>
@@ -4027,7 +4027,7 @@ function template_database_xml()
 
 function template_clean_mods()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $boardurl;
 
 	$upcontext['chmod_in_form'] = true;
 
@@ -4079,7 +4079,7 @@ function template_clean_mods()
 // Finished with the mods - let them know what we've done.
 function template_cleanup_done()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $boardurl;
 
 	echo '
 	<h3>Wedge has attempted to fix and reinstall mods as required. We recommend you visit the package manager upon completing upgrade to check the status of your modifications.</h3>
@@ -4106,7 +4106,7 @@ function template_cleanup_done()
 
 function template_upgrade_complete()
 {
-	global $upcontext, $modSettings, $upgradeurl, $disable_security, $settings, $boarddir, $db_prefix, $boardurl;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $boardurl;
 
 	echo '
 	<h3>That wasn\'t so hard, was it? Now you are ready to use <a href="', $boardurl, '/index.php">your installation of Wedge</a>. Hope you like it!</h3>

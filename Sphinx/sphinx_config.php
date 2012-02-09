@@ -139,7 +139,7 @@ function step_1()
 
 function step_2()
 {
-	global $context, $modSettings, $txt;
+	global $context, $settings, $txt;
 
 	template_sphinx_config_above('Configure Wedge for Sphinx');
 
@@ -151,43 +151,43 @@ function step_2()
 			<tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_data_path_input">Index data path:</label></td>
 				<td>
-					<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($modSettings['sphinx_data_path']) ? $modSettings['sphinx_data_path'] : '/var/sphinx/data', '" size="65">
+					<input type="text" name="sphinx_data_path" id="sphinx_data_path_input" value="', isset($settings['sphinx_data_path']) ? $settings['sphinx_data_path'] : '/var/sphinx/data', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">This is the path that will be containing the search index files used by Sphinx.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_log_path_input">Log path:</label></td>
 				<td>
-					<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($modSettings['sphinx_log_path']) ? $modSettings['sphinx_log_path'] : '/var/sphinx/log', '" size="65">
+					<input type="text" name="sphinx_log_path" id="sphinx_log_path_input" value="', isset($settings['sphinx_log_path']) ? $settings['sphinx_log_path'] : '/var/sphinx/log', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Server path that will contain the log files created by Sphinx.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_stopword_path_input">Stopword path:</label></td>
 				<td>
-					<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($modSettings['sphinx_stopword_path']) ? $modSettings['sphinx_stopword_path'] : '', '" size="65">
+					<input type="text" name="sphinx_stopword_path" id="sphinx_stopword_path_input" value="', isset($settings['sphinx_stopword_path']) ? $settings['sphinx_stopword_path'] : '', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">The server path to the stopword list (leave empty for no stopword list).</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_indexer_mem_input">Memory limit indexer:</label></td>
 				<td>
-					<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($modSettings['sphinx_indexer_mem']) ? $modSettings['sphinx_indexer_mem'] : '32', '" size="4"> MB
+					<input type="text" name="sphinx_indexer_mem" id="sphinx_indexer_mem_input" value="', isset($settings['sphinx_indexer_mem']) ? $settings['sphinx_indexer_mem'] : '32', '" size="4"> MB
 					<div style="font-size: smaller; margin-bottom: 2ex;">The maximum amount of (RAM) memory the indexer is allowed to be using.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_server_input">Search deamon server:</label></td>
 				<td>
-					<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($modSettings['sphinx_searchd_server']) ? $modSettings['sphinx_searchd_server'] : 'localhost', '" size="65">
+					<input type="text" name="sphinx_searchd_server" id="sphinx_searchd_server_input" value="', isset($settings['sphinx_searchd_server']) ? $settings['sphinx_searchd_server'] : 'localhost', '" size="65">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Server the Sphinx search deamon resides on.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_searchd_port_input">Search deamon port:</label></td>
 				<td>
-					<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($modSettings['sphinx_searchd_port']) ? $modSettings['sphinx_searchd_port'] : '3312', '" size="4">
+					<input type="text" name="sphinx_searchd_port" id="sphinx_searchd_port_input" value="', isset($settings['sphinx_searchd_port']) ? $settings['sphinx_searchd_port'] : '3312', '" size="4">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Port on which the search deamon will listen.</div>
 				</td>
 			</tr><tr>
 				<td width="20%" valign="top" class="textbox"><label for="sphinx_max_results_input">Maximum # matches:</label></td>
 				<td>
-					<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($modSettings['sphinx_max_results']) ? $modSettings['sphinx_max_results'] : '2000', '" size="4">
+					<input type="text" name="sphinx_max_results" id="sphinx_max_results_input" value="', isset($settings['sphinx_max_results']) ? $settings['sphinx_max_results'] : '2000', '" size="4">
 					<div style="font-size: smaller; margin-bottom: 2ex;">Maximum amount of matches the search deamon will return.</div>
 				</td>
 			</tr>
@@ -203,7 +203,7 @@ function step_2()
 
 function step_3()
 {
-	global $context, $modSettings, $txt;
+	global $context, $settings, $txt;
 
 	checkSession();
 
@@ -217,7 +217,7 @@ function step_3()
 		'sphinx_max_results' => (int) $_POST['sphinx_max_results'],
 	));
 
-	if (!isset($modSettings['sphinx_indexed_msg_until']))
+	if (!isset($settings['sphinx_indexed_msg_until']))
 		updateSettings(array(
 			'sphinx_indexed_msg_until' => '1',
 		));
@@ -237,14 +237,14 @@ function step_3()
 	Move Sphinx\' PHP API file to the Sources directory of your Wedge installation (the path used here is merely an example):<br>
 	<tt>[~]#  mv api/sphinxapi.php /home/mydomain/public_html/wedge/Sources</tt><br>
 	<br>
-	Create directories for storing the indexes:<br>', strpos($modSettings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
+	Create directories for storing the indexes:<br>', strpos($settings['sphinx_data_path'], '/var/sphinx/') === false ? '' : '
 	<tt>[~]#  mkdir /var/sphinx</tt><br>', '
-	<tt>[~]#  mkdir ' . $modSettings['sphinx_data_path'] . '</tt><br>
-	<tt>[~]#  mkdir ' . $modSettings['sphinx_log_path'] . '</tt><br>
+	<tt>[~]#  mkdir ' . $settings['sphinx_data_path'] . '</tt><br>
+	<tt>[~]#  mkdir ' . $settings['sphinx_log_path'] . '</tt><br>
 	<br>
 	Make the data and log directories writable:<br>
-	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_data_path'] . '</tt><br>
-	<tt>[~]#  chmod 666 ' . $modSettings['sphinx_log_path'] . '</tt><br>
+	<tt>[~]#  chmod 666 ' . $settings['sphinx_data_path'] . '</tt><br>
+	<tt>[~]#  chmod 666 ' . $settings['sphinx_log_path'] . '</tt><br>
 
 	<h4>Indexing time!</h4>
 	It\'s time to create the full-text index:<br>
@@ -261,10 +261,10 @@ function step_3()
 	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">
 		<select name="search_index">
-			<option value=""', empty($modSettings['search_index']) ? ' selected' : '', '>(None)</option>
-			<option value="fulltext"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'fulltext' ? ' selected' : '', '>Fulltext</option>
-			<option value="custom"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'custom' ? ' selected' : '', '>Custom index</option>
-			<option value="sphinx"', !empty($modSettings['search_index']) && $modSettings['search_index'] === 'sphinx' ? ' selected' : '', '>Sphinx</option>
+			<option value=""', empty($settings['search_index']) ? ' selected' : '', '>(None)</option>
+			<option value="fulltext"', !empty($settings['search_index']) && $settings['search_index'] === 'fulltext' ? ' selected' : '', '>Fulltext</option>
+			<option value="custom"', !empty($settings['search_index']) && $settings['search_index'] === 'custom' ? ' selected' : '', '>Custom index</option>
+			<option value="sphinx"', !empty($settings['search_index']) && $settings['search_index'] === 'sphinx' ? ' selected' : '', '>Sphinx</option>
 		</select>
 		<input type="submit" value="Change Search Index" class="submit">
 		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
@@ -284,7 +284,7 @@ function step_3()
 
 function step_888()
 {
-	global $modSettings;
+	global $settings;
 
 	checkSession();
 
@@ -298,7 +298,7 @@ function step_888()
 
 function step_999()
 {
-	global $context, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $modSettings;
+	global $context, $db_server, $db_name, $db_user, $db_passwd, $db_prefix, $settings;
 
 	$humungousTopicPosts = 200;
 
@@ -320,7 +320,7 @@ function step_999()
 	$weight_total = 0;
 	foreach ($weight_factors as $weight_factor)
 	{
-		$weight[$weight_factor] = empty($modSettings['search_weight_' . $weight_factor]) ? 0 : (int) $modSettings['search_weight_' . $weight_factor];
+		$weight[$weight_factor] = empty($settings['search_weight_' . $weight_factor]) ? 0 : (int) $settings['search_weight_' . $weight_factor];
 		$weight_total += $weight[$weight_factor];
 	}
 
@@ -398,8 +398,8 @@ source wedge_delta_source : wedge_source
 index wedge_base_index
 {
 	source = wedge_source
-	path = ', $modSettings['sphinx_data_path'], '/wedge_sphinx_base.index', empty($modSettings['sphinx_stopword_path']) ? '' : '
-	stopwords = ' . $modSettings['sphinx_stopword_path'], '
+	path = ', $settings['sphinx_data_path'], '/wedge_sphinx_base.index', empty($settings['sphinx_stopword_path']) ? '' : '
+	stopwords = ' . $settings['sphinx_stopword_path'], '
 	min_word_len = 2
 	charset_type = utf-8
 	charset_table = 0..9, A..Z->a..z, _, a..z
@@ -408,7 +408,7 @@ index wedge_base_index
 index wedge_delta_index : wedge_base_index
 {
 	source = wedge_delta_source
-	path = ', $modSettings['sphinx_data_path'], '/wedge_sphinx_delta.index
+	path = ', $settings['sphinx_data_path'], '/wedge_sphinx_delta.index
 }
 
 index wedge_index
@@ -420,17 +420,17 @@ index wedge_index
 
 indexer
 {
-	mem_limit = ', (int) $modSettings['sphinx_indexer_mem'], 'M
+	mem_limit = ', (int) $settings['sphinx_indexer_mem'], 'M
 }
 
 searchd
 {
-	port = ', (int) $modSettings['sphinx_searchd_port'], '
-	log = ', $modSettings['sphinx_log_path'], '/searchd.log
-	query_log = ', $modSettings['sphinx_log_path'], '/query.log
+	port = ', (int) $settings['sphinx_searchd_port'], '
+	log = ', $settings['sphinx_log_path'], '/searchd.log
+	query_log = ', $settings['sphinx_log_path'], '/query.log
 	read_timeout = 5
 	max_children = 30
-	pid_file = ', $modSettings['sphinx_data_path'], '/searchd.pid
+	pid_file = ', $settings['sphinx_data_path'], '/searchd.pid
 	max_matches = 1000
 }
 ';
@@ -449,7 +449,7 @@ function template_sphinx_config_above($title)
 </head>
 <body>
 	<div id="header">
-		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $settings['default_images_url'], '/wedgelogo.png" alt="Wedge"></a>
+		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $theme['default_images_url'], '/wedgelogo.png" alt="Wedge"></a>
 		<div title="A wedge is like a pyramid...">Wedge Sphinx Configuration Utility</div>
 	</div>
 	<div id="content">

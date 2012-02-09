@@ -53,7 +53,7 @@ class sphinx_search
 	// This function compares the length of two strings plus a little.
 	public function searchSort($a, $b)
 	{
-		global $modSettings, $excludedWords;
+		global $settings, $excludedWords;
 
 		$x = strlen($a) - (in_array($a, $excludedWords) ? 1000 : 0);
 		$y = strlen($b) - (in_array($b, $excludedWords) ? 1000 : 0);
@@ -64,7 +64,7 @@ class sphinx_search
 	// Do we have to do some work with the words we are searching for to prepare them?
 	public function prepareIndexes($word, &$wordsSearch, &$wordsExclude, $isExcluded)
 	{
-		global $modSettings;
+		global $settings;
 
 		$subwords = text2words($word, null, false);
 
@@ -77,7 +77,7 @@ class sphinx_search
 	// This has it's own custom search.
 	public function searchQuery($search_params, $search_words, $excluded_words, &$participants, &$search_results)
 	{
-		global $user_info, $context, $sourcedir, $modSettings;
+		global $user_info, $context, $sourcedir, $settings;
 
 		// Only request the results if they haven't been cached yet.
 		if (($cached_results = cache_get_data('search_results_' . md5($user_info['query_see_board'] . '_' . $context['params']))) === null)
@@ -88,15 +88,15 @@ class sphinx_search
 
 			// Create an instance of the sphinx client and set a few options.
 			$mySphinx = new SphinxClient();
-			$mySphinx->SetServer($modSettings['sphinx_searchd_server'], (int) $modSettings['sphinx_searchd_port']);
-			$mySphinx->SetLimits(0, (int) $modSettings['sphinx_max_results']);
+			$mySphinx->SetServer($settings['sphinx_searchd_server'], (int) $settings['sphinx_searchd_port']);
+			$mySphinx->SetLimits(0, (int) $settings['sphinx_max_results']);
 			$mySphinx->SetMatchMode(SPH_MATCH_EXTENDED);
 			$mySphinx->SetGroupBy('id_topic', SPH_GROUPBY_ATTR);
 			$mySphinx->SetSortMode($search_params['sort_dir'] === 'asc' ? SPH_SORT_ATTR_ASC : SPH_SORT_ATTR_DESC, $search_params['sort'] === 'id_msg' ? 'id_topic' : $search_params['sort']);
 
 			// Set the limits based on the search parameters.
 			if (!empty($search_params['min_msg_id']) || !empty($search_params['max_msg_id']))
-				$mySphinx->SetIDRange($search_params['min_msg_id'], empty($search_params['max_msg_id']) ? (int) $modSettings['maxMsgID'] : $search_params['max_msg_id']);
+				$mySphinx->SetIDRange($search_params['min_msg_id'], empty($search_params['max_msg_id']) ? (int) $settings['maxMsgID'] : $search_params['max_msg_id']);
 			if (!empty($search_params['topic']))
 				$mySphinx->SetFilter('id_topic', array((int) $search_params['topic']));
 			if (!empty($search_params['brd']))
@@ -167,7 +167,7 @@ class sphinx_search
 		}
 
 		$participants = array();
-		foreach (array_slice(array_keys($cached_results['matches']), $_REQUEST['start'], $modSettings['search_results_per_page']) as $msgID)
+		foreach (array_slice(array_keys($cached_results['matches']), $_REQUEST['start'], $settings['search_results_per_page']) as $msgID)
 		{
 			$context['topics'][$msgID] = $cached_results['matches'][$msgID];
 			$participants[$cached_results['matches'][$msgID]['id']] = false;

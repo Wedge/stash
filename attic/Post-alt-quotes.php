@@ -5,7 +5,7 @@ function Post()
 	/* The following is to be found around line 870 of Post.php, replacing this:
 
 			// Remove any nested quotes, if necessary.
-			if (!empty($modSettings['removeNestedQuotes']))
+			if (!empty($settings['removeNestedQuotes']))
 				$form_message = preg_replace(array('~\n?\[quote.*?].+?\[/quote]\n?~is', '~^\n~', '~\[/quote]~'), '', $form_message);
 
 			// Add a quote string on the front and end.
@@ -14,7 +14,7 @@ function Post()
 	*/
 
 			// Remove any nested quotes, if necessary.
-			if (!empty($modSettings['removeNestedQuotes']))
+			if (!empty($settings['removeNestedQuotes']))
 				$form_message = preg_replace(array('~\n?\[quote.*?].+?\[/quote]\n?~is', '~^\n~', '~\[/quote]~'), '', $form_message);
 			else
 			{

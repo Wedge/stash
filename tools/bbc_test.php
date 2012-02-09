@@ -149,11 +149,11 @@ function define_testcases()
 
 function run_test($test)
 {
-	global $sourcedir, $modSettings;
+	global $sourcedir, $settings;
 
 	require_once($sourcedir . '/Subs-Post.php');
 
-	$modSettings['cache_enable'] = false;
+	$settings['cache_enable'] = false;
 	$test['text'] = strtr($test['text'], array("\r" => ''));
 
 	$results = array();
@@ -275,14 +275,14 @@ function action_test()
 
 function show_header()
 {
-	global $start_time, $settings;
+	global $start_time, $theme;
 	$start_time = time();
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
 		<title>BBC Testcases</title>
-		<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js"></script>
+		<script type="text/javascript" src="', $theme['default_theme_url'], '/scripts/script.js"></script>
 		<style type="text/css">
 			body
 			{

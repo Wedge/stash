@@ -2,7 +2,7 @@
 
 function template_ut_index()
 {
-	global $context, $settings, $options, $scripturl;
+	global $context, $theme, $options, $scripturl;
 
 	echo '
 	<div id="mainframe">
@@ -48,7 +48,7 @@ echo '
 
 function template_ut_test_results()
 {
-	global $context, $settings, $options, $le_settings;
+	global $context, $theme, $options, $le_settings;
 
 	echo '<', '?xml version="1.0" encoding="UTF-8"?', '>
 <wedge>

@@ -263,7 +263,7 @@ function show_settings()
 	if (count($settingsArray) == 1)
 		$settingsArray = preg_split('~[\r\n]~', $settingsArray[0]);
 
-	$settings = array();
+	$theme = array();
 	for ($i = 0, $n = count($settingsArray); $i < $n; $i++)
 	{
 		$settingsArray[$i] = rtrim(stripslashes($settingsArray[$i]));
@@ -274,15 +274,15 @@ function show_settings()
 			if (isset($match[3]))
 			{
 				if ($match[3] == 'dirname(__FILE__)')
-					$settings[$match[1]] = dirname(__FILE__);
+					$theme[$match[1]] = dirname(__FILE__);
 				elseif ($match[3] == 'dirname(__FILE__) . \'/Sources\'')
-					$settings[$match[1]] = dirname(__FILE__) . '/Sources';
+					$theme[$match[1]] = dirname(__FILE__) . '/Sources';
 				elseif ($match[3] == '$boarddir . \'/Sources\'')
-					$settings[$match[1]] = $settings['boarddir'] . '/Sources';
+					$theme[$match[1]] = $theme['boarddir'] . '/Sources';
 				elseif ($match[3] == 'dirname(__FILE__) . \'/cache\'')
-					$settings[$match[1]] = dirname(__FILE__) . '/cache';
+					$theme[$match[1]] = dirname(__FILE__) . '/cache';
 				else
-					$settings[$match[1]] = $match[3];
+					$theme[$match[1]] = $match[3];
 			}
 		}
 	}
@@ -298,7 +298,7 @@ function show_settings()
 			$db_connection
 		);
 		while ($row = wesql::fetch_assoc($request))
-			$settings[$row['variable']] = $row['value'];
+			$theme[$row['variable']] = $row['value'];
 		wesql::free_result($request);
 
 		// Load all the themes.
@@ -396,9 +396,9 @@ function show_settings()
 	if (!empty($theme_settings))
 	{
 		// Create the values for the themes.
-		foreach ($theme_settings as $id => $theme)
+		foreach ($theme_settings as $id => $th)
 		{
-			$this_theme = ($pos = strpos($theme['theme_url'], '/Themes/')) !== false ? substr($theme['theme_url'], $pos+8) : '';
+			$this_theme = ($pos = strpos($th['theme_url'], '/Themes/')) !== false ? substr($th['theme_url'], $pos+8) : '';
 			if (!empty($this_theme))
 				$exist = file_exists(dirname(__FILE__) . '/Themes/' . $this_theme);
 			else
@@ -409,15 +409,15 @@ function show_settings()
 				'theme_'. $id.'_images_url'=>array('theme', 'string', $exist && !empty($this_theme) ? $url . '/Themes/' . $this_theme . '/images' : null),
 				'theme_' . $id . '_theme_dir' => array('theme', 'string', $exist && !empty($this_theme) ? realpath(dirname(__FILE__) . '/Themes/' . $this_theme) : null),
 			);
-			$settings += array(
-				'theme_' . $id . '_theme_url' => $theme['theme_url'],
-				'theme_' . $id . '_images_url' => $theme['images_url'],
-				'theme_' . $id . '_theme_dir' => $theme['theme_dir'],
+			$theme += array(
+				'theme_' . $id . '_theme_url' => $th['theme_url'],
+				'theme_' . $id . '_images_url' => $th['images_url'],
+				'theme_' . $id . '_theme_dir' => $th['theme_dir'],
 			);
 
-			$txt['theme_' . $id . '_theme_url'] = $theme['name'] . ' URL';
-			$txt['theme_' . $id . '_images_url'] = $theme['name'] . ' Images URL';
-			$txt['theme_' . $id . '_theme_dir'] = $theme['name'] . ' Directory';
+			$txt['theme_' . $id . '_theme_url'] = $th['name'] . ' URL';
+			$txt['theme_' . $id . '_images_url'] = $th['name'] . ' Images URL';
+			$txt['theme_' . $id . '_theme_dir'] = $th['name'] . ' Directory';
 		}
 	}
 
@@ -469,7 +469,7 @@ function show_settings()
 							<td width="20%" valign="top" class="textbox" style="padding-bottom: 1ex;">
 								<label', $info[1] != 'int' ? ' for="' . $setting . '"' : '', '>', $txt[$setting], ': '.
 									( isset($txt[$setting . '_desc']) ? '<span class="smalltext">' . $txt[$setting . '_desc'] . '</span>' : '' ).'
-								</label>', !isset($settings[$setting]) && $info[1] != 'check' ? '<br />
+								</label>', !isset($theme[$setting]) && $info[1] != 'check' ? '<br />
 								' . $txt['no_value'] : '', '
 							</td>
 							<td style="padding-bottom: 1ex;">';
@@ -478,12 +478,12 @@ function show_settings()
 			{
 				for ($i = 0; $i <= $info[2]; $i++)
 					echo '
-								<label for="', $setting, $i, '"><input type="radio" name="', $info[0], 'settings[', $setting, ']" id="', $setting, $i, '" value="', $i, '"', isset($settings[$setting]) && $settings[$setting] == $i ? ' checked' : '', '> ', $txt[$setting . $i], '</label><br />';
+								<label for="', $setting, $i, '"><input type="radio" name="', $info[0], 'settings[', $setting, ']" id="', $setting, $i, '" value="', $i, '"', isset($theme[$setting]) && $theme[$setting] == $i ? ' checked' : '', '> ', $txt[$setting . $i], '</label><br />';
 			}
 			elseif ($info[1] == 'string')
 			{
 				echo '
-								<input type="text" name="', $info[0], 'settings[', $setting, ']" id="', $setting, '" value="', isset($settings[$setting]) ? $settings[$setting] : '', '" size="', $settings_section == 'path_url_settings' || $settings_section == 'theme_path_url_settings' ? '60" style="width: 80%' : '30', '">';
+								<input type="text" name="', $info[0], 'settings[', $setting, ']" id="', $setting, '" value="', isset($theme[$setting]) ? $theme[$setting] : '', '" size="', $settings_section == 'path_url_settings' || $settings_section == 'theme_path_url_settings' ? '60" style="width: 80%' : '30', '">';
 
 				if (isset($info[2]))
 					echo '
@@ -548,7 +548,7 @@ function set_settings()
 	$db_updates['theme_guests'] = 1;
 
 	$settingsArray = file(dirname(__FILE__) . '/Settings.php');
-	$settings = array();
+	$theme = array();
 	for ($i = 0, $n = count($settingsArray); $i < $n; $i++)
 	{
 		$settingsArray[$i] = rtrim($settingsArray[$i]);
@@ -566,7 +566,7 @@ function set_settings()
 		}
 
 		if (substr($settingsArray[$i], 0, 1) == '$' && preg_match('~^[$]([a-zA-Z_]+)\s*=\s*(["\'])?(.*?)(?:\\2)?;~', $settingsArray[$i], $match) == 1)
-			$settings[$match[1]] = stripslashes($match[3]);
+			$theme[$match[1]] = stripslashes($match[3]);
 
 		foreach ($file_updates as $var => $val)
 		{

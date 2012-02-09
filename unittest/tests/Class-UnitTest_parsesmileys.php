@@ -112,12 +112,12 @@
 
 		public function doTest($testID)
 		{
-			global $modSettings, $user_info;
+			global $settings, $user_info;
 
 			if (!isset($this->_tests[$testID]))
 				return 'Invalid test ID given';
 
-			$this->_tests[$testID]['output'] = strtr($this->_tests[$testID]['output'], array('{smiley_url}' => $modSettings['smileys_url'] . '/' . $user_info['smiley_set']));
+			$this->_tests[$testID]['output'] = strtr($this->_tests[$testID]['output'], array('{smiley_url}' => $settings['smileys_url'] . '/' . $user_info['smiley_set']));
 			$message = $this->_tests[$testID]['input'];
 			parsesmileys($message);
 			if ($message === $this->_tests[$testID]['output'])

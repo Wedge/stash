@@ -143,7 +143,7 @@ if (($data = cache_get_data('site_latest_themes', 3600)) == null)
 	}
 	$smcFunc['db_free_result']($request);
 
-	if (!empty($modSettings['cache_enable']))
+	if (!empty($settings['cache_enable']))
 		cache_put_data('site_latest_themes', array($themes, $featured, $latest_ids, $random_id), 86400);
 }
 else
@@ -153,14 +153,14 @@ header('Content-Type: text/javascript');
 echo '
 var we_themeInfo = {';
 $temp_output = array();
-foreach($themes AS $theme)
+foreach ($themes AS $th)
 {
 	$temp_output[] = '
-	'. $theme['id']. ': {
-		name: \''. addcslashes($theme['name'], "'"). '\',
-		desc: \''. addcslashes($theme['description'], "'"). '\',
-		file: \''. addcslashes($theme['package']['name'], "'"). '\',
-		author: \''.addcslashes($theme['author_name'], "'"). '\'
+	'. $th['id']. ': {
+		name: \''. addcslashes($th['name'], "'"). '\',
+		desc: \''. addcslashes($th['description'], "'"). '\',
+		file: \''. addcslashes($th['package']['name'], "'"). '\',
+		author: \''.addcslashes($th['author_name'], "'"). '\'
 	}';
 }
 echo implode(',', $temp_output), '

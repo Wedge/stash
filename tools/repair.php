@@ -799,7 +799,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 
 function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
-	global $db_connection, $modSettings;
+	global $db_connection, $settings;
 
 	// Gonna need a lot of memory.
 	if (@ini_get('memory_limit') < 128)
@@ -866,7 +866,7 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	}
 
 	// For create backup, we tell it to ignore security checks.
-	$modSettings['disableQueryCheck'] = 1;
+	$settings['disableQueryCheck'] = 1;
 
 	return $db_connection;
 }

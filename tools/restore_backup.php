@@ -361,11 +361,11 @@ function step3()
 	if (!empty($updates))
 	{
 		$inserts = array();
-		foreach ($updates as $theme => $path)
+		foreach ($updates as $th => $path)
 			$inserts += array(
-				array($theme, 0, 'theme_dir', "$mydir/$path"),
-				array($theme, 0, 'theme_url', "$url/$path"),
-				array($theme, 0, 'images_url', "$url/$path/images")
+				array($th, 0, 'theme_dir', "$mydir/$path"),
+				array($th, 0, 'theme_url', "$url/$path"),
+				array($th, 0, 'images_url', "$url/$path/images")
 			);
 
 		$smcFunc['db_insert']('insert',
@@ -992,7 +992,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 
 function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 {
-	global $db_connection, $modSettings;
+	global $db_connection, $settings;
 
 	// Gonna need a lot of memory.
 	if (@ini_get('memory_limit') < 128)
@@ -1059,7 +1059,7 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	}
 
 	// For create backup, we tell it to ignore security checks.
-	$modSettings['disableQueryCheck'] = 1;
+	$settings['disableQueryCheck'] = 1;
 
 	return $db_connection;
 }

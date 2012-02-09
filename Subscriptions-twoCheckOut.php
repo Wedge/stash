@@ -36,14 +36,14 @@ class twocheckout_display
 	// Can we accept payments with 2co?
 	public function gatewayEnabled()
 	{
-		global $modSettings;
+		global $settings;
 
-		return !empty($modSettings['2co_id']) && !empty($modSettings['2co_password']);
+		return !empty($settings['2co_id']) && !empty($settings['2co_password']);
 	}
 
 	public function fetchGatewayFields($unique_id, $sub_data, $value, $period, $return_url)
 	{
-		global $modSettings, $txt, $boardurl, $context;
+		global $settings, $txt, $boardurl, $context;
 
 		$return_data = array(
 			'form' => 'https://www.2checkout.com/2co/buyer/purchase',
@@ -56,12 +56,12 @@ class twocheckout_display
 		);
 
 		// Now some hidden fields.
-		$return_data['hidden']['x_login'] = $modSettings['2co_id'];
+		$return_data['hidden']['x_login'] = $settings['2co_id'];
 		$return_data['hidden']['x_invoice_num'] = $unique_id;
 		$return_data['hidden']['x_amount'] = $value;
 		$return_data['hidden']['x_Email'] = $context['user']['email'];
 		$return_data['hidden']['fixed'] = 'Y';
-		$return_data['hidden']['demo'] = empty($modSettings['paidsubs_test']) ? 'N' : 'Y';
+		$return_data['hidden']['demo'] = empty($settings['paidsubs_test']) ? 'N' : 'Y';
 		$return_data['hidden']['return_url'] = $return_url;
 
 		return $return_data;
@@ -74,10 +74,10 @@ class twocheckout_payment
 
 	public function isValid()
 	{
-		global $modSettings;
+		global $settings;
 
 		// Is it even on?
-		if (empty($modSettings['2co_id']) || empty($modSettings['2co_password']))
+		if (empty($settings['2co_id']) || empty($settings['2co_password']))
 			return false;
 		// Is it a 2co hash?
 		if (empty($_POST['x_MD5_Hash']))
@@ -91,17 +91,17 @@ class twocheckout_payment
 
 	public function precheck()
 	{
-		global $modSettings, $txt;
+		global $settings, $txt;
 
 		// Is this the right hash?
-		if (empty($modSettings['2co_password']) || $_POST['x_MD5_Hash'] != strtoupper(md5($modSettings['2co_password'] . $modSettings['2co_id'] . $_POST['x_trans_id'] . $_POST['x_amount'])))
+		if (empty($settings['2co_password']) || $_POST['x_MD5_Hash'] != strtoupper(md5($settings['2co_password'] . $settings['2co_id'] . $_POST['x_trans_id'] . $_POST['x_amount'])))
 			generateSubscriptionError($txt['2co_password_wrong']);
 
 		// Verify the currency
 		list (, $currency) = explode(':', $_POST['x_invoice_num']);
 
 		// Verify the currency!
-		if (strtolower($currency) != $modSettings['currency_code'])
+		if (strtolower($currency) != $settings['currency_code'])
 			exit;
 
 		// Return the ID_SUB/ID_MEMBER

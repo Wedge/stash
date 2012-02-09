@@ -46,7 +46,7 @@ if (($mod_site['wedge_versions'] = cache_get_data('site_wedge_versions', 86400))
 		$mod_site['wedge_versions'][$row['id_ver']] = $row['vername'];
 	$smcFunc['db_free_result']($result);
 
-	if (!empty($modSettings['cache_enable']))
+	if (!empty($settings['cache_enable']))
 		cache_put_data('site_wedge_versions', $mod_site['wedge_versions'], 86400);
 }
 
@@ -139,7 +139,7 @@ if (($data = cache_get_data('site_latest_packages', 3600)) == null)
 			unset($context['mod']['wedge_versions'][$i]);
 	}
 
-	if (!empty($modSettings['cache_enable']))
+	if (!empty($settings['cache_enable']))
 		cache_put_data('site_latest_packages', array($mods, $mod_site['wedge_versions'], $context['cust_packs']), 86400);
 }
 // Otherwise we split the data up.

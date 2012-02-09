@@ -9,7 +9,7 @@
 ================================================================================
 
 	This script can be used to add new settings into the database for use
-	with Wedge's $modSettings array. It is meant to be run either from the
+	with Wedge's $settings array. It is meant to be run either from the
 	package manager or directly by URL.
 
 *******************************************************************************/

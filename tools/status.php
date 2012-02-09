@@ -1098,7 +1098,7 @@ function generate_status()
 
 function show_header()
 {
-	global $settings, $command_line;
+	global $theme, $command_line;
 
 	if ($command_line)
 		return;

@@ -37,18 +37,18 @@ class authorize_display
 	// Is it enabled?
 	public function gatewayEnabled()
 	{
-		global $modSettings;
+		global $settings;
 
-		return !empty($modSettings['authorize_id']) && !empty($modSettings['authorize_transid']);
+		return !empty($settings['authorize_id']) && !empty($settings['authorize_transid']);
 	}
 
 	// Let's set up the fields needed for the transaction.
 	public function fetchGatewayFields($unique_id, $sub_data, $value, $period, $return_url)
 	{
-		global $modSettings, $txt, $boardurl, $context;
+		global $settings, $txt, $boardurl, $context;
 
 		$return_data = array(
-			'form' => 'https://' . (empty($modSettings['paidsubs_test']) ? 'secure' : 'test') . '.authorize.net/gateway/transact.dll',
+			'form' => 'https://' . (empty($settings['paidsubs_test']) ? 'secure' : 'test') . '.authorize.net/gateway/transact.dll',
 			'id' => 'authorize',
 			'hidden' => array(),
 			'title' => $txt['authorize'],
@@ -59,13 +59,13 @@ class authorize_display
 
 		$timestamp = time();
 		$sequence = substr(time(), -5);
-		$hash = $this->_md5_hmac($modSettings['authorize_transid'], $modSettings['authorize_id'] . '^' . $sequence . '^' . $timestamp . '^' . $value . '^' . strtoupper($modSettings['paid_currency_code']));
+		$hash = $this->_md5_hmac($settings['authorize_transid'], $settings['authorize_id'] . '^' . $sequence . '^' . $timestamp . '^' . $value . '^' . strtoupper($settings['paid_currency_code']));
 
-		$return_data['hidden']['x_login'] = $modSettings['authorize_id'];
+		$return_data['hidden']['x_login'] = $settings['authorize_id'];
 		$return_data['hidden']['x_amount'] = $value;
-		$return_data['hidden']['x_currency_code'] = strtoupper($modSettings['paid_currency_code']);
+		$return_data['hidden']['x_currency_code'] = strtoupper($settings['paid_currency_code']);
 		$return_data['hidden']['x_show_form'] = 'PAYMENT_FORM';
-		$return_data['hidden']['x_test_request'] = empty($modSettings['paidsubs_test']) ? 'FALSE' : 'TRUE';
+		$return_data['hidden']['x_test_request'] = empty($settings['paidsubs_test']) ? 'FALSE' : 'TRUE';
 		$return_data['hidden']['x_fp_sequence'] = $sequence;
 		$return_data['hidden']['x_fp_timestamp'] = $timestamp;
 		$return_data['hidden']['x_fp_hash'] = $hash;
@@ -92,10 +92,10 @@ class authorize_payment
 
 	public function isValid()
 	{
-		global $modSettings;
+		global $settings;
 
 		// Is it even on?
-		if (empty($modSettings['authorize_id']) || empty($modSettings['authorize_transid']))
+		if (empty($settings['authorize_id']) || empty($settings['authorize_transid']))
 			return false;
 		// We got a hash?
 		if (empty($_POST['x_MD5_Hash']))
@@ -112,10 +112,10 @@ log_error(print_r($_POST, true));
 	// Validate this is valid for this transaction type.
 	public function precheck()
 	{
-		global $modSettings;
+		global $settings;
 
 		// Is this the right hash?
-		if ($_POST['x_MD5_Hash'] != strtoupper(md5($modSettings['authorize_id'] . $_POST['x_trans_id'] . $_POST['x_amount'])))
+		if ($_POST['x_MD5_Hash'] != strtoupper(md5($settings['authorize_id'] . $_POST['x_trans_id'] . $_POST['x_amount'])))
 			exit;
 
 		// Can't exist if it doesn't contain anything.
@@ -126,7 +126,7 @@ log_error(print_r($_POST, true));
 		$currency = $_POST['x_currency_code'];
 
 		// Verify the currency!
-		if (strtolower($currency) != $modSettings['currency_code'])
+		if (strtolower($currency) != $settings['currency_code'])
 			exit;
 
 		// Return the ID_SUB/ID_MEMBER
