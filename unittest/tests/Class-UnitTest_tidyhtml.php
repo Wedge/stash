@@ -758,11 +758,6 @@
 					'description' => "Unapproved topics",
 					'url' => $scripturl . '?action=moderate;area=postmod;sa=topics',
 				),
-				'PostModeration_3' => array(
-					'name' => 'Post moderation (3)',
-					'description' => "Unapproved attachments",
-					'url' => $scripturl . '?action=moderate;area=postmod;sa=attachments',
-				),
 				'Printpage_1' => array(
 					'name' => 'Print page (1)',
 					'description' => "Print page",
