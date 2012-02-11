@@ -775,7 +775,7 @@ function loadEssentialData()
 		)
 	);
 
-	// Load the modSettings data...
+	// Load the settings data...
 	$request = $smcFunc['db_query']('', '
 		SELECT variable, value
 		FROM {db_prefix}settings',
