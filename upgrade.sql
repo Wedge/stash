@@ -13,9 +13,6 @@ $nameChanges = array(
 	),
 	'approval_queue' => array(
 		'ID_MSG' => 'ID_MSG id_msg int(10) unsigned NOT NULL default \'0\'',
-		'ID_ATTACH' => 'ID_ATTACH id_attach int(10) unsigned NOT NULL default \'0\'',
-		'ID_EVENT' => 'ID_EVENT id_event smallint(5) unsigned NOT NULL default \'0\'',
-		'attachmentType' => 'attachmentType attachment_type tinyint(3) unsigned NOT NULL default \'0\'',
 	),
 	'attachments' => array(
 		'ID_ATTACH' => 'ID_ATTACH id_attach int(10) unsigned NOT NULL auto_increment',
@@ -53,18 +50,6 @@ $nameChanges = array(
 		'ID_THEME' => 'ID_THEME id_theme tinyint(4) unsigned NOT NULL default \'0\'',
 		'unapprovedPosts' => 'unapprovedPosts unapproved_posts smallint(5) NOT NULL default \'0\'',
 		'unapprovedTopics' => 'unapprovedTopics unapproved_topics smallint(5) NOT NULL default \'0\'',
-	),
-	'calendar' => array(
-		'ID_EVENT' => 'ID_EVENT id_event smallint(5) unsigned NOT NULL auto_increment',
-		'ID_MEMBER' => 'ID_MEMBER id_member mediumint(8) unsigned NOT NULL default \'0\'',
-		'ID_BOARD' => 'ID_BOARD id_board smallint(5) unsigned NOT NULL default \'0\'',
-		'ID_TOPIC' => 'ID_TOPIC id_topic mediumint(8) unsigned NOT NULL default \'0\'',
-		'startDate' => 'startDate start_date date NOT NULL default \'0001-01-01\'',
-		'endDate' => 'endDate end_date date NOT NULL default \'0001-01-01\'',
-	),
-	'calendar_holidays' => array(
-		'ID_HOLIDAY' => 'ID_HOLIDAY id_holiday smallint(5) unsigned NOT NULL auto_increment',
-		'eventDate' => 'eventDate event_date date NOT NULL default \'0001-01-01\'',
 	),
 	'categories' => array(
 		'ID_CAT' => 'ID_CAT id_cat tinyint(4) unsigned NOT NULL auto_increment',
@@ -622,44 +607,6 @@ INSERT IGNORE INTO {$db_prefix}themes
 	(id_theme, variable, value)
 VALUES
 	(1, 'show_stats_index', '0');
----#
-
----# Replacing old calendar settings...
----{
-// Only try it if one of the "new" settings doesn't yet exist.
-if (!isset($settings['cal_showholidays']) || !isset($settings['cal_showbdays']) || !isset($settings['cal_showevents']))
-{
-	// Default to just the calendar setting.
-	$settings['cal_showholidays'] = empty($settings['cal_showholidaysoncalendar']) ? 0 : 1;
-	$settings['cal_showbdays'] = empty($settings['cal_showbdaysoncalendar']) ? 0 : 1;
-	$settings['cal_showevents'] = empty($settings['cal_showeventsoncalendar']) ? 0 : 1;
-
-	// Then take into account board index.
-	if (!empty($settings['cal_showholidaysonindex']))
-		$settings['cal_showholidays'] = $settings['cal_showholidays'] === 1 ? 2 : 3;
-	if (!empty($settings['cal_showbdaysonindex']))
-		$settings['cal_showbdays'] = $settings['cal_showbdays'] === 1 ? 2 : 3;
-	if (!empty($settings['cal_showeventsonindex']))
-		$settings['cal_showevents'] = $settings['cal_showevents'] === 1 ? 2 : 3;
-
-	// Actually save the settings.
-	upgrade_query("
-		INSERT IGNORE INTO {$db_prefix}settings
-			(variable, value)
-		VALUES
-			('cal_showholidays', $settings[cal_showholidays]),
-			('cal_showbdays', $settings[cal_showbdays]),
-			('cal_showevents', $settings[cal_showevents])");
-}
-
----}
----#
-
----# Deleting old calendar settings...
-	DELETE FROM {$db_prefix}settings
-	WHERE VARIABLE IN ('cal_showholidaysonindex', 'cal_showbdaysonindex', 'cal_showeventsonindex',
-		'cal_showholidaysoncalendar', 'cal_showbdaysoncalendar', 'cal_showeventsoncalendar',
-		'cal_holidaycolor', 'cal_bdaycolor', 'cal_eventcolor');
 ---#
 
 ---# Adding advanced signature settings...
@@ -1226,9 +1173,7 @@ ADD COLUMN file_hash varchar(40) NOT NULL default '';
 
 ---# Creating "approval_queue" table...
 CREATE TABLE IF NOT EXISTS {$db_prefix}approval_queue (
-	id_msg int(10) unsigned NOT NULL default '0',
-	id_attach int(10) unsigned NOT NULL default '0',
-	id_event smallint(5) unsigned NOT NULL default '0'
+	id_msg int(10) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM{$db_collation};
 ---#
 
@@ -1502,23 +1447,22 @@ $mod_permissions = array(
 	'moderate_board', 'post_new', 'post_reply_own', 'post_reply_any', 'poll_post', 'poll_add_any',
 	'poll_remove_any', 'poll_view', 'poll_vote', 'poll_lock_any', 'poll_edit_any', 'report_any',
 	'lock_own', 'send_topic', 'mark_any_notify', 'mark_notify', 'delete_own', 'modify_own', 'pin_topic',
-	'lock_any', 'remove_any', 'move_any', 'merge_any', 'split_any', 'delete_any', 'modify_any', 'approve_posts',
-	'post_attachment', 'view_attachments', 'post_unapproved_replies_any', 'post_unapproved_replies_own',
-	'post_unapproved_attachments', 'post_unapproved_topics',
+	'lock_any', 'remove_any', 'move_any', 'merge_any', 'split_any', 'delete_any', 'modify_any',
+	'post_unapproved_replies_any', 'post_unapproved_replies_own', 'post_unapproved_topics',
+	'approve_posts', 'post_attachment', 'view_attachments',
 );
 
 $no_poll_reg = array(
 	'post_new', 'post_reply_own', 'post_reply_any', 'poll_view', 'poll_vote', 'report_any',
 	'lock_own', 'send_topic', 'mark_any_notify', 'mark_notify', 'delete_own', 'modify_own',
-	'post_attachment', 'view_attachments', 'remove_own', 'post_unapproved_replies_any', 'post_unapproved_replies_own',
-	'post_unapproved_attachments', 'post_unapproved_topics',
+	'post_unapproved_replies_any', 'post_unapproved_replies_own', 'post_unapproved_topics',
+	'post_attachment', 'view_attachments', 'remove_own',
 );
 
 $reply_only_reg = array(
 	'post_reply_own', 'post_reply_any', 'poll_view', 'poll_vote', 'report_any',
 	'lock_own', 'send_topic', 'mark_any_notify', 'mark_notify', 'delete_own', 'modify_own',
 	'post_attachment', 'view_attachments', 'remove_own', 'post_unapproved_replies_any', 'post_unapproved_replies_own',
-	'post_unapproved_attachments',
 );
 
 $read_only_reg = array(
