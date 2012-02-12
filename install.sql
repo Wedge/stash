@@ -1655,6 +1655,7 @@ CREATE TABLE {$db_prefix}messages (
   smileys_enabled tinyint(4) NOT NULL default 1,
   modified_time int(10) unsigned NOT NULL default 0,
   modified_name varchar(255) NOT NULL default '',
+  modified_member mediumint(8) unsigned NOT NULL default 0,
   body text NOT NULL,
   icon varchar(16) NOT NULL default 'xx',
   approved tinyint(3) NOT NULL default 1,
@@ -2331,7 +2332,7 @@ VALUES (1, 'name', '{$default_theme_name}'),
 	(1, 'return_to_post', '1'),
 	(1, 'copy_to_outbox', '1'),
 	(1, 'display_quick_mod', '1'),
-	(1, 'display_quick_reply', '1'),
+	(1, 'display_quick_reply', '2'),
 	(1, 'view_newest_pm_first', '1'),
 	(1, 'pm_remove_inbox_label', '1');
 
