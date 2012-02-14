@@ -196,7 +196,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'DefaultStats.template.php': '0.1',
 	'DefaultThemes.template.php': '0.1',
 	'DefaultWho.template.php': '0.1',
-	'DefaultWireless.template.php': '0.1',
 	'DefaultXml.template.php': '0.1',
 	'Defaultindex.template.php': '0.1',
 
@@ -244,7 +243,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'TemplatesStats.template.php': '0.1',
 	'TemplatesThemes.template.php': '0.1',
 	'TemplatesWho.template.php': '0.1',
-	'TemplatesWireless.template.php': '0.1',
 	'TemplatesXml.template.php': '0.1',
 	'Templatesindex.template.php': '0.1'
 };
@@ -280,6 +278,5 @@ window.weLanguageVersions = {
 	'Stats': '0.1',
 	'Themes': '0.1',
 	'ThemeStrings': '0.1',
-	'Who': '0.1',
-	'Wireless': '0.1'
+	'Who': '0.1'
 };

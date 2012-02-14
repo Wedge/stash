@@ -7,7 +7,7 @@ General
 	Support for multiple languages.
 	Open and well-documented source code.
 	Designed for optimal performance and scalability.
-	Multi-media output. (XHTML, XML, RSS, WAP)
+	Multi-media output. (HTML5, XML, Atom...)
 	Easy integration within webpages. (SSI, PHP)
 	Multi-language support by one of the largest communities.
 	Proper handling of read and unread topics/boards (not by time.)
@@ -107,14 +107,6 @@ External integration
 		Latest members.
 		News.
 		Recent posts.
-
-Wireless access
-	Support for WAP, WAP2 and I-mode protocols.
-	Browse through boards/topics/messages with reduced page size.
-	Ability to login and logout (not with WAP.)
-	Ability to see new topics/boards with new replies.
-	Ability to jump to first unread reply.
-	Ability to post new messages (not with WAP.)
 
 Theme and Templating
 	Ability to allow or disallow your users to select their own theme.
