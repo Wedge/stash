@@ -1925,7 +1925,7 @@ function template_install_above()
 	if (!empty($incontext['detected_languages']) && count($incontext['detected_languages']) > 1 && $incontext['current_step'] == 0)
 	{
 		echo '
-				<div class="righttext">
+				<div class="right">
 					<form action="', $installurl, '" method="get">
 						<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;">';
 
@@ -1979,7 +1979,7 @@ function template_install_below()
 	if (!empty($incontext['continue']) || !empty($incontext['skip']))
 	{
 		echo '
-		<div class="righttext" style="margin: 1ex">';
+		<div class="right" style="margin: 1ex">';
 
 		if (!empty($incontext['continue']))
 			echo '

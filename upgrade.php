@@ -3163,7 +3163,7 @@ function template_chmod()
 			</tr>
 		</table>
 
-		<div class="righttext" style="margin: 1ex"><input type="submit" value="', $txt['ftp_connect'], '" class="submit"></div>
+		<div class="right" style="margin: 1ex"><input type="submit" value="', $txt['ftp_connect'], '" class="submit"></div>
 	</div>';
 
 	if (empty($upcontext['chmod_in_form']))
@@ -3295,7 +3295,7 @@ function template_upgrade_below()
 								</div>';
 
 	echo '
-								<div class="righttext" style="margin: 1ex">';
+								<div class="right" style="margin: 1ex">';
 
 	if (!empty($upcontext['continue']))
 		echo '

@@ -908,7 +908,7 @@ function show_status()
 		<div class="panel">
 			<h2>Basic Information</h2>
 
-			<div class="righttext">', $context['current_time'], '</div>
+			<div class="right">', $context['current_time'], '</div>
 			<table width="100%" cellpadding="2" cellspacing="0" border="0">';
 
 	if (!empty($context['operating_system']['name']))
@@ -1080,7 +1080,7 @@ function show_status()
 		<div class="panel">
 			<h2>MySQL Statistics</h2>
 
-			<div class="righttext">MySQL ', $context['mysql_version'], '</div>
+			<div class="right">MySQL ', $context['mysql_version'], '</div>
 			<table width="100%" cellpadding="2" cellspacing="0" border="0">';
 
 		foreach ($context['mysql_statistics'] as $stat)

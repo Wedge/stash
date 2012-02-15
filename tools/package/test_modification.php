@@ -192,22 +192,11 @@ function show_header()
 		{
 			margin: 0;
 		}
-		.centertext
-		{
-			margin: 0 auto;
-			text-align: center;
-		}
 		.righttext
 		{
 			margin-left: auto;
 			margin-right: 0;
 			text-align: right;
-		}
-		.lefttext
-		{
-			margin-left: 0;
-			margin-right: auto;
-			text-align: left;
 		}
 	--></style>
 </head>
