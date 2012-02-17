@@ -36,4 +36,22 @@
 		return;
 	}
 
+/*
+	Related CSS
+
+.bullet_a, .bullet_c, .bullet_f, .bullet_m, .bullet_r
+	padding-bottom: 3px
+
+.bullet_a
+	list-style-image: url($images/aeva/bullet_new.png)
+.bullet_c
+	list-style-image: url($images/aeva/bullet_com.png)
+.bullet_f
+	list-style-image: url($images/aeva/bullet_fix.png)
+.bullet_m
+	list-style-image: url($images/aeva/bullet_mod.png)
+.bullet_r
+	list-style-image: url($images/aeva/bullet_rem.png)
+*/
+
 ?>
