@@ -206,8 +206,8 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 CREATE TABLE {$db_prefix}board_groups (
   id_board smallint(5) NOT NULL default 0,
   id_group mediumint(5) NOT NULL default 0,
-  view_perm enum('allow','deny') NOT NULL default 'allow',
-  enter_perm enum('allow','deny') NOT NULL default 'deny',
+  view_perm enum('allow', 'deny') NOT NULL default 'allow',
+  enter_perm enum('allow', 'deny') NOT NULL default 'deny',
   PRIMARY KEY (id_group, id_board)
 ) ENGINE=MyISAM;
 
@@ -229,7 +229,7 @@ VALUES (1, -1, 'allow', 'allow'),
 CREATE TABLE {$db_prefix}board_members (
   id_member mediumint(8) unsigned NOT NULL default 0,
   id_board smallint(5) unsigned NOT NULL default 0,
-  permission enum('access','deny') NOT NULL default 'access',
+  permission enum('access', 'deny') NOT NULL default 'access',
   PRIMARY KEY (id_member, id_board, permission)
 ) ENGINE=MyISAM;
 
@@ -626,7 +626,7 @@ CREATE TABLE {$db_prefix}boards (
   id_theme tinyint(4) unsigned NOT NULL default 0,
   override_theme tinyint(4) unsigned NOT NULL default 0,
   skin varchar(255) NOT NULL default '',
-  board_type enum('board','blog','site') NOT NULL default 'board',
+  board_type enum('board', 'blog', 'site') NOT NULL default 'board',
   unapproved_posts smallint(5) NOT NULL default 0,
   unapproved_topics smallint(5) NOT NULL default 0,
   redirect varchar(255) NOT NULL default '',
@@ -1296,7 +1296,7 @@ CREATE TABLE {$db_prefix}media_files (
   height int(4) NOT NULL default 1,
   directory text NOT NULL,
   id_album int(20) NOT NULL default 0,
-  transparency enum('','transparent','opaque') NOT NULL default '',
+  transparency enum('', 'transparent', 'opaque') NOT NULL default '',
   meta text NOT NULL,
   PRIMARY KEY (id_file)
 ) ENGINE=MyISAM;
@@ -2374,7 +2374,8 @@ CREATE TABLE {$db_prefix}thoughts (
   id_parent int(10) unsigned NOT NULL,
   id_master int(10) unsigned NOT NULL,
   id_member mediumint(8) unsigned NOT NULL,
-  privacy tinyint(3) unsigned NOT NULL default 0,
+  privacy enum('default', 'members', 'groups', 'contacts', 'author') NOT NULL DEFAULT 'default',
+  privacy_id int(10) unsigned NOT NULL default 0,
   updated int(10) unsigned NOT NULL,
   thought varchar(2048) NOT NULL,
   PRIMARY KEY (id_thought),
@@ -2402,6 +2403,9 @@ CREATE TABLE {$db_prefix}topics (
   locked tinyint(4) NOT NULL default 0,
   unapproved_posts smallint(5) NOT NULL default 0,
   approved tinyint(3) NOT NULL default 1,
+  privacy enum('default', 'members', 'groups', 'contacts', 'author') NOT NULL DEFAULT 'default',
+  privacy_id int(10) unsigned NOT NULL default 0,
+  tags text NOT NULL,
   PRIMARY KEY (id_topic),
   UNIQUE last_message (id_last_msg, id_board),
   UNIQUE first_message (id_first_msg, id_board),
