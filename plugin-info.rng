@@ -26,6 +26,9 @@
 					<ref name="settings" />
 				</optional>
 				<optional>
+					<ref name="settings-page" />
+				</optional>
+				<optional>
 					<ref name="database" />
 				</optional>
 				<optional>
@@ -138,6 +141,192 @@
 					</attribute>
 				</element>
 			</oneOrMore>
+		</element>
+	</define>
+
+	<!-- A simple settings page that is to be added. -->
+	<define name="settings-page">
+		<element name="settings-page">
+			<attribute name="area">
+				<text/>
+			</attribute>
+			<optional>
+				<attribute name="icon">
+					<text/>
+				</attribute>
+			</optional>
+			<optional>
+				<attribute name="bigicon">
+					<text/>
+				</attribute>
+			</optional>
+			<optional>
+				<attribute name="permission">
+					<text/>
+				</attribute>
+			</optional>
+			<interleave>
+				<zeroOrMore>
+					<element name="language">
+						<attribute name="file">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="desc">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="title">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="check">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="literal">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="email">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="password">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="text">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<optional>
+							<attribute name="size">
+								<data type="positiveInteger" />
+							</attribute>
+						</optional>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="large-text">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<optional>
+							<attribute name="size">
+								<data type="positiveInteger" />
+							</attribute>
+						</optional>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="select">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<oneOrMore>
+							<element name="option">
+								<attribute name="name">
+									<text/>
+								</attribute>
+								<attribute name="value">
+									<text/>
+								</attribute>
+							</element>
+						</oneOrMore>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="multi-select">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<oneOrMore>
+							<element name="option">
+								<attribute name="name">
+									<text/>
+								</attribute>
+								<attribute name="value">
+									<text/>
+								</attribute>
+							</element>
+						</oneOrMore>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="int">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<optional>
+							<attribute name="min">
+								<data type="integer" />
+							</attribute>
+						</optional>
+						<optional>
+							<attribute name="max">
+								<data type="integer" />
+							</attribute>
+						</optional>
+						<optional>
+							<attribute name="step">
+								<data type="positiveInteger" />
+							</attribute>
+						</optional>
+						<optional>
+							<attribute name="size">
+								<data type="positiveInteger" />
+							</attribute>
+						</optional>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="float">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="permissions">
+						<attribute name="name">
+							<text/>
+						</attribute>
+						<optional>
+							<attribute name="noguests">
+								<text/>
+							</attribute>
+						</optional>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
+					<element name="bbc">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+			</interleave>
 		</element>
 	</define>
 
