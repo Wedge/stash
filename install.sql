@@ -206,8 +206,8 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 CREATE TABLE {$db_prefix}board_groups (
   id_board smallint(5) NOT NULL default 0,
   id_group mediumint(5) NOT NULL default 0,
-  view_perm enum('allow', 'deny') NOT NULL default 'allow',
-  enter_perm enum('allow', 'deny') NOT NULL default 'deny',
+  view_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
+  enter_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
   PRIMARY KEY (id_group, id_board)
 ) ENGINE=MyISAM;
 
