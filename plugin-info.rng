@@ -326,6 +326,11 @@
 						</attribute>
 					</element>
 				</zeroOrMore>
+				<zeroOrMore>
+					<element name="hr">
+						<empty></empty>
+					</element>
+				</zeroOrMore>
 			</interleave>
 		</element>
 	</define>
