@@ -513,7 +513,7 @@ function show_system_info()
 						</td>
 					</tr>';
 
-	$server_checks = array('gd', 'eaccelerator', 'phpa', 'apc', 'memcache');
+	$server_checks = array('gd', 'phpa', 'apc', 'memcache');
 	foreach (get_server_versions($server_checks) as $values)
 		echo '
 					<tr>
@@ -2271,8 +2271,6 @@ function get_server_versions($checkFor)
 		get_memcached_server();
 
 	// Check to see if we have any accelerators installed...
-	if (in_array('eaccelerator', $checkFor) && defined('EACCELERATOR_VERSION'))
-		$versions['eaccelerator'] = array('title' => 'eAccelerator', 'version' => EACCELERATOR_VERSION);
 	if (in_array('phpa', $checkFor) && isset($_PHPA))
 		$versions['phpa'] = array('title' => 'ionCube PHP-Accelerator', 'version' => $_PHPA['VERSION']);
 	if (in_array('apc', $checkFor) && extension_loaded('apc'))

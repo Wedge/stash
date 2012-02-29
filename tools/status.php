@@ -13,7 +13,7 @@
 
 // Forum slow? Having performance problems? This little blue pill will assist in finding the problem!
 
-// !!! eAccelerator, etc.?
+// !!! Memcache, etc.?
 
 initialize_inputs();
 
