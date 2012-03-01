@@ -1914,7 +1914,7 @@ CREATE TABLE {$db_prefix}pretty_topic_urls (
   id_topic mediumint(8) NOT NULL default 0,
   pretty_url varchar(80) NOT NULL,
   PRIMARY KEY (id_topic),
-  UNIQUE (pretty_url)
+  KEY pretty_url (pretty_url)
 ) ENGINE=MyISAM;
 
 #

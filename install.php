@@ -19,7 +19,8 @@ $GLOBALS['required_php_version'] = '5.2.3';
 
 // Database info.
 $db = array(
-	'required_version' => '5.1.0',
+	'required_server' => '5.1.0',
+	'required_client' => '4.1.0', // !!! 5.0.0?
 	'default_user' => 'mysql.default_user',
 	'default_password' => 'mysql.default_password',
 	'default_host' => 'mysql.default_host',
@@ -708,8 +709,7 @@ function DatabaseSettings()
 		}
 
 		// Do they meet the install requirements?
-		// !!! Old client, new server?
-		if (version_compare($db['required_version'], preg_replace('~^\D*|\-.+?$~', '', min(mysql_get_server_info(), mysql_get_client_info()))) > 0)
+		if ((version_compare($db['required_client'], preg_replace('~^\D*|\-.+?$~', '', mysql_get_client_info())) > 0) || (version_compare($db['required_server'], preg_replace('~^\D*|\-.+?$~', '', mysql_get_server_info())) > 0))
 		{
 			$incontext['error'] = sprintf($txt['error_db_too_low'], 'Server: ' . mysql_get_server_info() . ' / Client: ' . mysql_get_client_info());
 			return false;
