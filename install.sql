@@ -2367,6 +2367,17 @@ INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1
 # --------------------------------------------------------
 
 #
+# Table structure for table `thought_privacy`
+#
+
+CREATE TABLE {$db_prefix}thought_privacy (
+  id_thought int(10) unsigned NOT NULL,
+  privacy_type enum('member', 'group', 'contact') NOT NULL,
+  privacy_id mediumint(8) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_thought, privacy_type, privacy_id)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `thoughts`
 #
 
@@ -2382,6 +2393,17 @@ CREATE TABLE {$db_prefix}thoughts (
   PRIMARY KEY (id_thought),
   KEY mup (id_member, updated),
   KEY privacy (privacy)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `topic_privacy`
+#
+
+CREATE TABLE {$db_prefix}topic_privacy (
+  id_topic mediumint(8) unsigned NOT NULL,
+  privacy_type enum('member', 'group', 'contact') NOT NULL,
+  privacy_id mediumint(8) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_topic, privacy_type, privacy_id)
 ) ENGINE=MyISAM;
 
 #
