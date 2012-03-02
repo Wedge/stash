@@ -1979,6 +1979,17 @@ VALUES
 # --------------------------------------------------------
 
 #
+# Table structure for table `sessions`
+#
+
+CREATE TABLE {$db_prefix}sessions (
+  session_id char(32) NOT NULL,
+  last_update int(10) unsigned NOT NULL,
+  data text NOT NULL,
+  PRIMARY KEY (session_id)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `settings`
 #
 
@@ -2191,17 +2202,6 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('newsfader_time', '5000'),
 	('additional_options_collapsable', '1');
 # --------------------------------------------------------
-
-#
-# Table structure for table `sessions`
-#
-
-CREATE TABLE {$db_prefix}sessions (
-  session_id char(32) NOT NULL,
-  last_update int(10) unsigned NOT NULL,
-  data text NOT NULL,
-  PRIMARY KEY (session_id)
-) ENGINE=MyISAM;
 
 #
 # Table structure for table `smileys`
