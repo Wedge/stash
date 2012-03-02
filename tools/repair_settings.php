@@ -89,7 +89,6 @@ echo '<!DOCTYPE html>
 	<meta charset="utf-8" />
 	<meta name="robots" content="noindex" />
 	<title>', $txt['wedge_repair_settings'], '</title>
-	<link rel="stylesheet" href="Themes/default/css/index.css" />
 	<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 	<script src="Themes/default/scripts/script.js"></script>
 	<style>
@@ -107,7 +106,6 @@ echo '<!DOCTYPE html>
 		}
 		div#header
 		{
-			background-image: url(Themes/default/images/catbg.jpg);
 			background-repeat: repeat-x;
 			background-color: #88a6c0;
 			padding: 22px 4% 12px 4%;
@@ -235,6 +233,7 @@ function initialize_inputs()
 		loadSource('Subs-Auth');
 		loadSource('Class-DB');
 		loadSource('Class-DBExtra');
+		wesql::getInstance();
 		$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 	}
 }
