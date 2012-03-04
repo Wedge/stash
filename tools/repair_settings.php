@@ -74,7 +74,7 @@ $txt['theme_dir'] = 'Default Theme Directory';
 $txt['theme_path_url_settings'] = 'Paths &amp; URLs For Themes';
 $txt['theme_path_url_settings_info'] = 'These are the paths and URLs to your Wedge themes.';
 
-if (isset($_POST['submit']))
+if (isset($_POST['save']))
 	set_settings();
 
 // Try to find the forum logo: could be a .gif or a .png
@@ -516,10 +516,10 @@ function show_settings()
 
 	if ($failure)
 		echo '
-				<input type="submit" name="submit" value="', $txt['save_settings'], '" disabled class="submit" /><br />', $txt['not_writable'];
+				<input type="submit" name="save" value="', $txt['save_settings'], '" disabled class="submit" /><br />', $txt['not_writable'];
 	else
 		echo '
-				<input type="submit" name="submit" value="', $txt['save_settings'], '" class="submit" />';
+				<input type="submit" name="save" value="', $txt['save_settings'], '" class="submit" />';
 
 	echo '
 				</div>
