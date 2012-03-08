@@ -2092,6 +2092,7 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('autoFixDatabase', '1'),
 	('allow_guestAccess', '1'),
 	('enableBBC', '1'),
+	('editorFonts', 'Courier New\nArial\nImpact\nVerdana\nTimes New Roman\nGeorgia\nTrebuchet MS\nSegoe UI'),
 	('max_messageLength', '20000'),
 	('signature_settings', '1,300,0,0,0,0,0,0:'),
 	('autoOptMaxOnline', '0'),
@@ -2364,6 +2365,7 @@ INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'copy_to_outbox', '1');
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'show_signatures', '1');
 INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'show_avatars', '1');
+INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'new_reply_warning', '1');
 # --------------------------------------------------------
 
 #
