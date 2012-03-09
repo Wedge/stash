@@ -152,6 +152,7 @@ function initialize_inputs()
 			$ftp->unlink('webinstall.php');
 			$ftp->unlink('install.sql');
 
+			// We won't bother with JS/CSS cache here, it poses no security threat. Let the user do the job themselves...
 			$ftp->close();
 
 			unset($_SESSION['installer_temp_ftp']);
@@ -161,6 +162,10 @@ function initialize_inputs()
 			@unlink(__FILE__);
 			@unlink(dirname(__FILE__) . '/webinstall.php');
 			@unlink(dirname(__FILE__) . '/install.sql');
+
+			// Remove JavaScript and CSS cache, in case user chose to disable compression during the install process.
+			foreach (glob(dirname(__FILE__) . '/cache/*.[cj]*') as $del)
+				@unlink($del);
 		}
 
 		// Now just output to a blank.gif... (I would use the one in Subs.php but it isn't loaded yet.)
@@ -232,12 +237,87 @@ function load_lang_file()
 	// Make sure it exists, if it doesn't reset it.
 	if (!isset($_SESSION['installer_temp_lang']) || preg_match('~[^\\w_\\-.]~', $_SESSION['installer_temp_lang']) === 1 || !file_exists(dirname(__FILE__) . '/Themes/default/languages/' . $_SESSION['installer_temp_lang']))
 	{
-		// Use the first one...
-		list ($_SESSION['installer_temp_lang']) = array_keys($incontext['detected_languages']);
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+		{
+			// break up string into pieces (languages and q factors)
+			preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']), $lang_parse);
 
-		// If we have an additional language pack installed, it's likely the admin wants to use it, so do it now.
-		if ($_SESSION['installer_temp_lang'] == 'Install.english.php' && count($incontext['detected_languages']) > 1)
-			list (, $_SESSION['installer_temp_lang']) = array_keys($incontext['detected_languages']);
+			if (count($lang_parse[1]))
+			{
+				// create a list like "en" => 0.8
+				$preferred = array_combine($lang_parse[1], $lang_parse[4]);
+
+				// set default to 1 for any without q factor (IE fix)
+				foreach ($preferred as $lang => $val)
+					if ($val === '')
+						$preferred[$lang] = 1;
+
+				// sort list based on value
+				arsort($preferred, SORT_NUMERIC);
+			}
+
+			// This is the list of known SMF language packs as of March 2012.
+			// Obviously they'll need to go through a conversion for Wedge...
+			$langs = array(
+				'sq' => 'Albanian',
+				'ar' => 'Arabic',
+				'bg' => 'Bulgarian',
+				'ca' => 'Catalan',
+				'zh' => 'Chinese_simplified',
+				'zh-tw' => 'Chinese_traditional',
+				'hr' => 'Croatian',
+				'cs' => 'Czech',
+				'da' => 'Danish',
+				'nl' => 'Dutch',
+				'en' => 'English',
+				'en-gb' => 'English_british',
+				'fi' => 'Finnish',
+				'fr' => 'French',
+				'gl-es' => 'Galician',
+				'de' => 'German',
+				'el' => 'Greek',
+				'he' => 'Hebrew',
+				'hu' => 'Hungarian',
+				'id' => 'Indonesian',
+				'it' => 'Italian',
+				'ja' => 'Japanese',
+				'lt' => 'Lithuanian',
+				'mk' => 'Macedonian',
+				'ms' => 'Malay',
+				'no' => 'Norwegian',
+				'fa' => 'Persian',
+				'pl' => 'Polish',
+				'pt' => 'Portuguese_pt',
+				'pt-br' => 'Portuguese_brazilian',
+				'ro' => 'Romanian',
+				'ru' => 'Russian',
+				'sr-rs' => 'Serbian_cyrillic',
+				'sr-yu' => 'Serbian_latin',
+				'sk' => 'Slovak',
+				'es' => 'Spanish_es',
+				'es-ar' => 'Spanish_latin',
+				'sv' => 'Swedish',
+				'th' => 'Thai',
+				'tr' => 'Turkish',
+				'uk' => 'Ukrainian',
+				'ur' => 'Urdu',
+				'vi' => 'Vietnamese',
+			);
+
+			foreach ($preferred as $key => $value)
+			{
+				$lang = isset($langs[$key]) ? $langs[$key] : (isset($langs[substr($key, 0, 2)]) ? $langs[substr($key, 0, 2)] : '');
+				if (!empty($lang) && in_array($lang, $incontext['detected_languages']))
+				{
+					$_SESSION['installer_temp_lang'] = array_search($lang);
+					break;
+				}
+			}
+		}
+
+		// Use the first one...
+		if (empty($_SESSION['installer_temp_lang']))
+			list ($_SESSION['installer_temp_lang']) = array_keys($incontext['detected_languages']);
 	}
 
 	// And now include the actual language file itself.
@@ -873,6 +953,7 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$boarddomain}' => substr($boardurl, strpos($boardurl, '://') !== false ? strpos($boardurl, '://') + 3 : 0),
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
+		'{$enableCompressedData}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
 		'{$wedge_version}' => $GLOBALS['current_wedge_version'],
 		'{$current_time}' => time(),
@@ -1900,10 +1981,6 @@ function template_install_above()
 	$theme['images_url'] = $boardurl . '/Themes/default/images';
 	$context['css_folders'] = array('skins');
 	$context['css_suffixes'] = array($context['browser']['agent']);
-	// !!! Maybe we shouldn't set these... But OTOH, they should work on a default install,
-	// !!! and if they don't, we can still tell people to delete these lines before installing.
-	$settings['obfuscate_filenames'] = true;
-	$settings['enableCompressedData'] = true;
 	$settings['minify'] = 'packer';
 
 	echo '<!DOCTYPE html>
