@@ -772,6 +772,19 @@ CREATE TABLE {$db_prefix}group_moderators (
 ) ENGINE=MyISAM;
 
 #
+# Table structure for table `likes`
+#
+CREATE TABLE {$db_prefix}likes (
+  id_content int(10) unsigned NOT NULL default 0,
+  content_type char(6) NOT NULL default '',
+  id_member mediumint(8) NOT NULL default 0,
+  like_time int(10) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_content, content_type, id_member),
+  KEY (id_content, content_type),
+  KEY (id_member)
+) ENGINE=MyISAM;
+
+#
 # Table structure for table `log_actions`
 #
 
