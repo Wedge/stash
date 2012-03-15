@@ -309,7 +309,7 @@ function load_lang_file()
 				$lang = isset($langs[$key]) ? $langs[$key] : (isset($langs[substr($key, 0, 2)]) ? $langs[substr($key, 0, 2)] : '');
 				if (!empty($lang) && in_array($lang, $incontext['detected_languages']))
 				{
-					$_SESSION['installer_temp_lang'] = array_search($lang);
+					$_SESSION['installer_temp_lang'] = array_search($lang, $incontext['detected_languages']);
 					break;
 				}
 			}

@@ -2401,7 +2401,7 @@ CREATE TABLE {$db_prefix}thoughts (
   id_parent int(10) unsigned NOT NULL,
   id_master int(10) unsigned NOT NULL,
   id_member mediumint(8) unsigned NOT NULL,
-  privacy varchar(255) unsigned NOT NULL default '-3',
+  privacy varchar(255) NOT NULL default '-3',
   updated int(10) unsigned NOT NULL,
   thought varchar(2048) NOT NULL,
   PRIMARY KEY (id_thought),
