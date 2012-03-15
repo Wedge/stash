@@ -2401,24 +2401,12 @@ CREATE TABLE {$db_prefix}thoughts (
   id_parent int(10) unsigned NOT NULL,
   id_master int(10) unsigned NOT NULL,
   id_member mediumint(8) unsigned NOT NULL,
-  privacy enum('default', 'members', 'groups', 'contacts', 'author') NOT NULL DEFAULT 'default',
-  privacy_id int(10) unsigned NOT NULL default 0,
+  privacy varchar(255) unsigned NOT NULL default '-3',
   updated int(10) unsigned NOT NULL,
   thought varchar(2048) NOT NULL,
   PRIMARY KEY (id_thought),
   KEY mup (id_member, updated),
-  KEY privacy (privacy)
-) ENGINE=MyISAM;
-
-#
-# Table structure for table `topic_privacy`
-#
-
-CREATE TABLE {$db_prefix}topic_privacy (
-  id_topic mediumint(8) unsigned NOT NULL,
-  privacy_type enum('member', 'group', 'contact') NOT NULL,
-  privacy_id mediumint(8) unsigned NOT NULL default 0,
-  PRIMARY KEY (id_topic, privacy_type, privacy_id)
+  KEY privacy (privacy(48))
 ) ENGINE=MyISAM;
 
 #
