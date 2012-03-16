@@ -2397,13 +2397,13 @@ CREATE TABLE {$db_prefix}thought_privacy (
 #
 
 CREATE TABLE {$db_prefix}thoughts (
-  id_thought int(10) unsigned NOT NULL AUTO_INCREMENT,
-  id_parent int(10) unsigned NOT NULL,
-  id_master int(10) unsigned NOT NULL,
-  id_member mediumint(8) unsigned NOT NULL,
+  id_thought int(10) unsigned NOT NULL auto_increment,
+  id_parent int(10) unsigned NOT NULL default 0,
+  id_master int(10) unsigned NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
+  updated int(10) unsigned NOT NULL default 0,
+  thought varchar(2048) NOT NULL default '',
   privacy varchar(255) NOT NULL default '-3',
-  updated int(10) unsigned NOT NULL,
-  thought varchar(2048) NOT NULL,
   PRIMARY KEY (id_thought),
   KEY mup (id_member, updated),
   KEY privacy (privacy(48))
