@@ -30,10 +30,10 @@
 
 			$this->_id_member = $this->_getUnitTestMemberId('admin');
 
-			list($this->_id_msg, $this->_id_topic) = $this->_getUnitTestTopic($this->_id_board, $this->_id_member, 'Testing HTML tidy', 'This topic will is only there to check if the display page is properly xHTML compatible.');
+			list ($this->_id_msg, $this->_id_topic) = $this->_getUnitTestTopic($this->_id_board, $this->_id_member, 'Testing HTML tidy', 'This topic will is only there to check if the display page is properly xHTML compatible.');
 			$this->_createReply($this->_id_board, $this->_id_topic, $this->_id_member, 'HTML tidy reply', 'A reply to the topic');
 
-			list($this->_id_msg3, $this->_id_topic2) = $this->_getUnitTestTopic($this->_id_board, $this->_id_member, 'Testing HTML tidy - merge topic', 'This topic is needed to test the second step of a topic merge.');
+			list ($this->_id_msg3, $this->_id_topic2) = $this->_getUnitTestTopic($this->_id_board, $this->_id_member, 'Testing HTML tidy - merge topic', 'This topic is needed to test the second step of a topic merge.');
 			$this->_id_cat = $this->_getUnitTestCatId();
 
 			$this->_tests = array(
