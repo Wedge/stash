@@ -668,7 +668,8 @@ CREATE TABLE {$db_prefix}categories (
   cat_order tinyint(4) NOT NULL default 0,
   name varchar(255) NOT NULL default '',
   can_collapse tinyint(1) unsigned NOT NULL default 1,
-  PRIMARY KEY (id_cat)
+  PRIMARY KEY (cat_order, id_cat),
+  UNIQUE id_cat (id_cat)
 ) ENGINE=MyISAM;
 
 #
