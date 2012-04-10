@@ -141,7 +141,8 @@ CREATE TABLE {$db_prefix}bbcode (
 #
 INSERT INTO {$db_prefix}bbcode
 	(`id_bbcode`, `tag`, `bbctype`, `before_code`, `after_code`, `content`, `disabled_before`, `disabled_after`, `disabled_content`, `block_level`, `test`, `validate_func`, `disallow_children`, `require_parents`, `require_children`, `parsed_tags_allowed`, `quoted`, `params`, `trim_wspace`, `id_plugin`)
-VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' ($1)', '', 0, '', '', '', '', '', '', 'optional', '', 'none', ''),
+VALUES
+	(1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' ($1)', '', 0, '', '', '', '', '', '', 'optional', '', 'none', ''),
 	(2, 'anchor', 'unparsed_equals', '<span id="post_$1">', '</span>', '', '', '', '', 0, '[#]?([A-Za-z][A-Za-z0-9_\\-]*)\\]', '', '', '', '', '', 'none', '', 'none', ''),
 	(3, 'b', 'parsed', '<strong>', '</strong>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(4, 'bdo', 'unparsed_equals', '<bdo dir="$1">', '</bdo>', '', '', '', '', 1, '(rtl|ltr)\\]', '', '', '', '', '', 'none', '', 'none', ''),
@@ -175,18 +176,18 @@ VALUES (1, 'abbr', 'unparsed_equals', '<abbr title="$1">', '</abbr>', '', '', ' 
 	(32, 'nobbc', 'unparsed_content', '', '', '$1', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(33, 'php', 'unparsed_content', '', '', '<div class="php_code"><code>$1</code></div>', '', '', '$1', 1, '', '$add_begin = substr(trim($data), 0, 5) != ''&lt;'';\r\n$data = highlight_php_code($add_begin ? ''&lt;?php '' . $data . ''?&gt;'' : $data);\r\nif ($add_begin)\r\n	$data = preg_replace(array(''~^(.+?)&lt;\\?.{0,40}?php(?:&nbsp;|\\s)~'', ''~\\?&gt;((?:</(font|span)>)*)$~''), ''$1'', $data, 2);', '', '', '', '', 'none', '', 'none', ''),
 	(34, 'pre', 'parsed', '<span class="bbc_pre">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(35, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_noun}}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(36, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:2:{s:5:"match";s:11:"(.{1,192}?)";s:6:"quoted";b:1;}}', 'none', ''),
-	(37, 'quote', 'parsed_equals', '<div class="bbc_quote"><header>{{quote_from}} $1</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', 'url,iurl,ftp', 'optional', '', 'none', ''),
-	(38, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author} <a href="<URL>?{link}">{date}</a></header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:3:{s:6:"author";a:1:{s:5:"match";s:15:"([^<>]{1,192}?)";}s:4:"link";a:1:{s:5:"match";s:83:"(topic=[\\dmsg#\\./]{1,40}(?:;start=[\\dmsg#\\./]{1,40})?|action=profile;u=\\d+|msg=\\d+)";}s:4:"date";a:2:{s:5:"match";s:5:"(\\d+)";s:8:"validate";s:13:"on_timeformat";}}', 'none', ''),
-	(39, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:1:{s:5:"match";s:11:"(.{1,192}?)";}}', 'none', ''),
+	(35, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_noun}}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'outside', ''),
+	(36, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:2:{s:5:"match";s:11:"(.{1,192}?)";s:6:"quoted";b:1;}}', 'outside', ''),
+	(37, 'quote', 'parsed_equals', '<div class="bbc_quote"><header>{{quote_from}} $1</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', 'url,iurl,ftp', 'optional', '', 'outside', ''),
+	(38, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author} <a href="<URL>?{link}">{date}</a></header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:3:{s:6:"author";a:1:{s:5:"match";s:15:"([^<>]{1,192}?)";}s:4:"link";a:1:{s:5:"match";s:83:"(topic=[\\dmsg#\\./]{1,40}(?:;start=[\\dmsg#\\./]{1,40})?|action=profile;u=\\d+|msg=\\d+)";}s:4:"date";a:2:{s:5:"match";s:5:"(\\d+)";s:8:"validate";s:13:"on_timeformat";}}', 'outside', ''),
+	(39, 'quote', 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><blockquote>', '</blockquote><footer></footer></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:1:{s:5:"match";s:11:"(.{1,192}?)";}}', 'outside', ''),
 	(40, 'right', 'parsed', '<div class="right">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(41, 'rtl', 'parsed', '<div dir="rtl">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(42, 's', 'parsed', '<del>', '</del>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(43, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|small(?:er)?|large[r]?|x[x]?-(?:small|large)|medium|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none', ''),
 	(44, 'size', 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 8, 2 => 10, 3 => 12, 4 => 14, 5 => 18, 6 => 24, 7 => 36);\r\n$data = $sizes[$data] . ''pt'';', '', '', '', '', 'none', '', 'none', ''),
 	(45, 'spoiler', 'parsed', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="{{spoiler}}" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(46, 'spoiler', 'parsed_equals', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="$1" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', ' ', 'optional', '', 'none', ''),
+	(46, 'spoiler', 'parsed_equals', '<div class="spoiler"><div class="spoilerhint"><input type="button" value=$1 onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', ' ', 'optional', '', 'none', ''),
 	(47, 'sub', 'parsed', '<sub>', '</sub>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(48, 'sup', 'parsed', '<sup>', '</sup>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(49, 'table', 'parsed', '<table class="bbc_table">', '</table>', '', '', '', '', 1, '', '', '', '', 'tr', '', 'none', '', 'inside', ''),
@@ -216,7 +217,8 @@ CREATE TABLE {$db_prefix}board_groups (
 #
 INSERT INTO {$db_prefix}board_groups
 	(`id_board`, `id_group`, `view_perm`, `enter_perm`)
-VALUES (1, -1, 'allow', 'allow'),
+VALUES
+	(1, -1, 'allow', 'allow'),
 	(1, 0, 'allow', 'allow'),
 	(1, 2, 'allow', 'allow'),
 	(2, 2, 'allow', 'allow');
@@ -251,7 +253,8 @@ CREATE TABLE {$db_prefix}board_permissions (
 
 INSERT INTO {$db_prefix}board_permissions
 	(id_group, id_profile, permission)
-VALUES (-1, 1, 'poll_view'),
+VALUES
+	(-1, 1, 'poll_view'),
 	(0, 1, 'remove_own'),
 	(0, 1, 'lock_own'),
 	(0, 1, 'mark_any_notify'),
@@ -655,7 +658,8 @@ CREATE TABLE {$db_prefix}boards (
 
 INSERT INTO {$db_prefix}boards
 	(id_board, id_cat, board_order, id_last_msg, id_msg_updated, name, description, url, urllen, num_topics, num_posts, member_groups)
-VALUES (1, 1, 1, 1, 1, '{$default_board_name}', '{$default_board_description}', '{$boarddomain}/{$default_board_url}', CHAR_LENGTH('{$boarddomain}/{$default_board_url}'), 1, 1, '-1,0,2'),
+VALUES
+	(1, 1, 1, 1, 1, '{$default_board_name}', '{$default_board_description}', '{$boarddomain}/{$default_board_url}', CHAR_LENGTH('{$boarddomain}/{$default_board_url}'), 1, 1, '-1,0,2'),
 	(2, 1, 2, 0, 0, '{$default_recycling_board_name}', '{$default_recycling_board_description}', '{$default_recycling_board_url}', CHAR_LENGTH('{$default_recycling_board_url}'), 0, 0, '2');
 # --------------------------------------------------------
 
@@ -1324,7 +1328,8 @@ CREATE TABLE {$db_prefix}media_files (
 
 INSERT INTO {$db_prefix}media_files
 	(id_file, filename, filesize, directory, width, height, id_album, meta)
-VALUES ('1', 'music.png', '4118', 'icons', '48', '48', '0', ''),
+VALUES
+	('1', 'music.png', '4118', 'icons', '48', '48', '0', ''),
 	('2', 'film.png', '2911', 'icons', '48', '48', '0', ''),
 	('3', 'camera.png', '2438', 'icons', '48', '48', '0', ''),
 	('4', 'folder.png', '2799', 'icons', '48', '48', '0', '');
@@ -1456,7 +1461,8 @@ CREATE TABLE {$db_prefix}media_settings (
 
 INSERT INTO {$db_prefix}media_settings
 	(name, value)
-VALUES ('installed_on', UNIX_TIMESTAMP()),
+VALUES
+	('installed_on', UNIX_TIMESTAMP()),
 	('data_dir_path', '{$boarddir}/media'),
 	('data_dir_url', '{$boardurl}/media'),
 	('max_dir_files', '1500'),
@@ -1503,6 +1509,7 @@ VALUES ('installed_on', UNIX_TIMESTAMP()),
 	('album_edit_unapprove', '1'),
 	('item_edit_unapprove', '1'),
 	('album_columns', '1'),
+	('disable_rss', '0'),
 	('disable_playlists', '0'),
 	('disable_comments', '0'),
 	('disable_ratings', '0'),
@@ -1553,7 +1560,8 @@ CREATE TABLE {$db_prefix}membergroups (
 
 INSERT INTO {$db_prefix}membergroups
 	(id_group, group_name, description, online_color, min_posts, stars, group_type)
-VALUES (1, '{$default_administrator_group}', '', '#d2653a', -1, '5#rankadmin.gif', 1),
+VALUES
+	(1, '{$default_administrator_group}', '', '#d2653a', -1, '5#rankadmin.gif', 1),
 	(2, '{$default_global_moderator_group}', '', '#c18933', -1, '5#rankgmod.gif', 0),
 	(3, '{$default_moderator_group}', '', '', -1, '5#rankmod.gif', 0),
 	(4, '{$default_newbie_group}', '', '', 0, '1#rank.gif', 0),
@@ -1663,7 +1671,8 @@ CREATE TABLE {$db_prefix}message_icons (
 # // !!! i18n
 INSERT INTO {$db_prefix}message_icons
 	(filename, title, icon_order)
-VALUES ('xx', 'Standard', '0'),
+VALUES
+	('xx', 'Standard', '0'),
 	('thumbup', 'Thumb Up', '1'),
 	('thumbdown', 'Thumb Down', '2'),
 	('exclamation', 'Exclamation point', '3'),
@@ -1792,7 +1801,8 @@ CREATE TABLE {$db_prefix}permissions (
 
 INSERT INTO {$db_prefix}permissions
 	(id_group, permission)
-VALUES (-1, 'search_posts'),
+VALUES
+	(-1, 'search_posts'),
 	(-1, 'view_stats'),
 	(-1, 'profile_view_any'),
 	(0, 'view_mlist'),
@@ -1990,7 +2000,6 @@ VALUES
 	(7, 0, {$sched_task_offset}, 1, 'd', 0, 'fetchRemoteFiles', ''),
 	(8, 0, 0, 1, 'w', 0, 'weekly_maintenance', ''),
 	(9, 0, 120, 1, 'd', 1, 'paid_subscriptions', '');
-
 # --------------------------------------------------------
 
 #
@@ -2020,7 +2029,8 @@ CREATE TABLE {$db_prefix}settings (
 
 INSERT INTO {$db_prefix}settings
 	(variable, value)
-VALUES ('weVersion', '{$wedge_version}'),
+VALUES
+	('weVersion', '{$wedge_version}'),
 	('news', '{$default_news}'),
 	('todayMod', '2'),
 	('enablePreviousNext', '1'),
@@ -2120,8 +2130,10 @@ VALUES ('weVersion', '{$wedge_version}'),
 	('maxMsgID', '1'),
 	('enableAllMessages', '0'),
 	('fixLongWords', '0'),
+	('max_urlLength', '50'),
 	('knownThemes', '1,2,3'),
 	('who_enabled', '1'),
+	('display_who_viewing', '2'),
 	('time_offset', '0'),
 	('cookieTime', '60'),
 	('lastActive', '15'),
@@ -2240,7 +2252,8 @@ CREATE TABLE {$db_prefix}smileys (
 
 INSERT INTO {$db_prefix}smileys
 	(code, filename, description, smiley_order, hidden)
-VALUES (':)', 'smiley.gif', '{$default_smiley_smiley}', 0, 0),
+VALUES
+	(':)', 'smiley.gif', '{$default_smiley_smiley}', 0, 0),
 	(';)', 'wink.gif', '{$default_wink_smiley}', 1, 0),
 	(':D', 'cheesy.gif', '{$default_cheesy_smiley}', 2, 0),
 	(';D', 'grin.gif', '{$default_grin_smiley}', 3, 0),
@@ -2283,7 +2296,8 @@ CREATE TABLE {$db_prefix}spiders (
 
 INSERT INTO {$db_prefix}spiders
 	(id_spider, spider_name, user_agent, ip_info)
-VALUES (1, 'Google', 'googlebot', ''),
+VALUES
+	(1, 'Google', 'googlebot', ''),
 	(2, 'Yahoo!', 'slurp', ''),
 	(3, 'Bing', 'msnbot', ''),
 	(4, 'Google (Mobile)', 'Googlebot-Mobile', ''),
@@ -2354,7 +2368,8 @@ CREATE TABLE {$db_prefix}themes (
 
 INSERT INTO {$db_prefix}themes
 	(id_theme, variable, value)
-VALUES (1, 'name', '{$default_theme_name}'),
+VALUES
+	(1, 'name', '{$default_theme_name}'),
 	(1, 'theme_url', '{$boardurl}/Themes/default'),
 	(1, 'images_url', '{$boardurl}/Themes/default/images'),
 	(1, 'theme_dir', '{$boarddir}/Themes/default'),
@@ -2374,13 +2389,16 @@ VALUES (1, 'name', '{$default_theme_name}'),
 	(1, 'view_newest_pm_first', '1'),
 	(1, 'pm_remove_inbox_label', '1');
 
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'display_quick_reply', '2');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'posts_apply_ignore_list', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'return_to_post', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'copy_to_outbox', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'show_signatures', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'show_avatars', '1');
-INSERT INTO {$db_prefix}themes (id_member, id_theme, variable, value) VALUES (-1, 1, 'new_reply_warning', '1');
+INSERT INTO {$db_prefix}themes
+	(id_member, id_theme, variable, value)
+VALUES
+	(-1, 1, 'display_quick_reply', '2'),
+	(-1, 1, 'posts_apply_ignore_list', '1'),
+	(-1, 1, 'return_to_post', '1'),
+	(-1, 1, 'copy_to_outbox', '1'),
+	(-1, 1, 'show_signatures', '1'),
+	(-1, 1, 'show_avatars', '1'),
+	(-1, 1, 'new_reply_warning', '1');
 # --------------------------------------------------------
 
 #
