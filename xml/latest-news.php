@@ -38,8 +38,8 @@ window.wedge_news = [';
 $format = isset($_GET['format']) ? $_GET['format'] : '%e %B %Y';
 $language = isset($_GET['language']) ? $_GET['language'] : 'english';
 $format = str_replace(
-	array('%b',				'%h',				'%B',			'%a',			'%A'),
-	array('$shortmonth-%m',	'$shortmonth-%m',	'$month-%m',	'$shortday-%w',	'$day-%w'),
+	array('%b',				'%h',				'%B',			'%a',			'%A',		'%@'),
+	array('$shortmonth-%m',	'$shortmonth-%m',	'$month-%m',	'$shortday-%w',	'$day-%w',	'%e'),
 	$format
 );
 
