@@ -1267,7 +1267,7 @@ function AdminAccount()
 			$_POST['username'] = preg_replace('~[\t\n\r\x0B\0\xA0]+~', ' ', $_POST['username']);
 			$ip = isset($_SERVER['REMOTE_ADDR']) ? expand_ip($_SERVER['REMOTE_ADDR']) : expand_ip('');
 
-			$request = wesql::insert('insert',
+			$request = wesql::insert('',
 				'{db_prefix}members',
 				array(
 					'member_name' => 'string-25', 'real_name' => 'string-25', 'passwd' => 'string', 'email_address' => 'string',
