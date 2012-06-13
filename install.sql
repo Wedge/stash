@@ -1547,6 +1547,7 @@ CREATE TABLE {$db_prefix}membergroups (
   online_color varchar(20) NOT NULL default '',
   min_posts mediumint(9) NOT NULL default '-1',
   max_messages smallint(5) unsigned NOT NULL default 0,
+  show_when tinyint(3) unsigned NOT NULL default 0,
   stars varchar(255) NOT NULL default '',
   group_type tinyint(3) NOT NULL default 0,
   hidden tinyint(3) NOT NULL default 0,
@@ -1560,16 +1561,16 @@ CREATE TABLE {$db_prefix}membergroups (
 #
 
 INSERT INTO {$db_prefix}membergroups
-	(id_group, group_name, description, online_color, min_posts, stars, group_type)
+	(id_group, group_name, description, online_color, min_posts, show_when, stars, group_type)
 VALUES
-	(1, '{$default_administrator_group}', '', '#d2653a', -1, '5#rankadmin.gif', 1),
-	(2, '{$default_global_moderator_group}', '', '#c18933', -1, '5#rankgmod.gif', 0),
-	(3, '{$default_moderator_group}', '', '', -1, '5#rankmod.gif', 0),
-	(4, '{$default_newbie_group}', '', '', 0, '1#rank.gif', 0),
-	(5, '{$default_junior_group}', '', '', 50, '2#rank.gif', 0),
-	(6, '{$default_full_group}', '', '', 100, '3#rank.gif', 0),
-	(7, '{$default_senior_group}', '', '', 250, '4#rank.gif', 0),
-	(8, '{$default_hero_group}', '', '#5e8e75', 500, '5#rank.gif', 0);
+	(1, '{$default_administrator_group}', '', '#d2653a', -1, 1, '5#rankadmin.gif', 1),
+	(2, '{$default_global_moderator_group}', '', '#c18933', -1, 2, '5#rankgmod.gif', 0),
+	(3, '{$default_moderator_group}', '', '', -1, 3, '5#rankmod.gif', 0),
+	(4, '{$default_newbie_group}', '', '', 0, 2, '1#rank.gif', 0),
+	(5, '{$default_junior_group}', '', '', 50, 2, '2#rank.gif', 0),
+	(6, '{$default_full_group}', '', '', 100, 2, '3#rank.gif', 0),
+	(7, '{$default_senior_group}', '', '', 250, 2, '4#rank.gif', 0),
+	(8, '{$default_hero_group}', '', '#5e8e75', 500, 2, '5#rank.gif', 0);
 # --------------------------------------------------------
 
 #
@@ -1816,6 +1817,7 @@ VALUES
 	(0, 'pm_send'),
 	(0, 'save_pm_draft'),
 	(0, 'auto_save_pm_draft'),
+	(0, 'post_thought'),
 	(0, 'view_stats'),
 	(0, 'who_view'),
 	(0, 'view_ip_address_own'),
@@ -1835,6 +1837,7 @@ VALUES
 	(2, 'pm_send'),
 	(2, 'save_pm_draft'),
 	(2, 'auto_save_pm_draft'),
+	(2, 'post_thought'),
 	(2, 'view_stats'),
 	(2, 'who_view'),
 	(2, 'view_ip_address_own'),
@@ -2161,6 +2164,7 @@ VALUES
 	('search_floodcontrol_time', '5'),
 	('permission_enable_deny', '0'),
 	('permission_enable_postgroups', '0'),
+	('group_text_show', 'cond'),
 	('mail_next_send', '0'),
 	('mail_recent', '0000000000|0'),
 	('settings_updated', '0'),
