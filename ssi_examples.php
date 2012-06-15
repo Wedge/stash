@@ -305,7 +305,7 @@ template_ssi_above();
 			<h3>Code</h3>
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_showPoll($topicID); ?&gt;</code></div>
 			<h3>Result</h3>
-			<div class="ssi_result"><i>Not shown because it needs specific topic ID that contains a poll.</i></div>
+			<div class="ssi_result"><em>Not shown because it needs specific topic ID that contains a poll.</em></div>
 		</div>
 
 		<div class="ssi_preview" id="ssi_fetchPosts">
@@ -316,7 +316,7 @@ template_ssi_above();
 			<h3>Code</h3>
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_fetchPosts($postIDs, $isOverride); ?&gt;</code></div>
 			<h3>Result</h3>
-			<div class="ssi_result"><i>Not shown because it needs a specific post ID.</i></div>
+			<div class="ssi_result"><em>Not shown because it needs a specific post ID.</em></div>
 		</div>
 
 		<div class="ssi_preview" id="ssi_fetchMember">
@@ -326,7 +326,7 @@ template_ssi_above();
 			<h3>Code</h3>
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_fetchMember($memberIDs); ?&gt;</code></div>
 			<h3>Result</h3>
-			<div class="ssi_result"><i>Not shown because it needs a specific member ID.</i></div>
+			<div class="ssi_result"><em>Not shown because it needs a specific member ID.</em></div>
 		</div>
 
 		<div class="ssi_preview" id="ssi_fetchGroupMembers">
@@ -336,7 +336,7 @@ template_ssi_above();
 			<h3>Code</h3>
 			<div class="bbc_code"><header>Code: <a href="#" onclick="return weSelectText(this);" class="codeoperation">[Select]</a></header><code>&lt;?php ssi_fetchGroupMembers($groupIDs); ?&gt;</code></div>
 			<h3>Result</h3>
-			<div class="ssi_result"><i>Not shown because it needs specific membergroup IDs.</i></div>
+			<div class="ssi_result"><em>Not shown because it needs specific membergroup IDs.</em></div>
 		</div>
 
 		<div class="ssi_preview" id="htmlhome">
