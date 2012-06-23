@@ -1916,6 +1916,7 @@ CREATE TABLE {$db_prefix}polls (
   max_votes tinyint(3) unsigned NOT NULL default 1,
   expire_time int(10) unsigned NOT NULL default 0,
   hide_results tinyint(3) unsigned NOT NULL default 0,
+  voters_visible tinyint(3) unsigned NOT NULL default 0,
   change_vote tinyint(3) unsigned NOT NULL default 0,
   guest_vote tinyint(3) unsigned NOT NULL default 0,
   num_guest_voters int(10) unsigned NOT NULL default 0,
