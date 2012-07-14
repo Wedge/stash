@@ -149,22 +149,22 @@ VALUES
 	(4, 'bdo', 3, 'unparsed_equals', '<bdo dir="$1">', '</bdo>', '', '', '', '', 1, '(rtl|ltr)\\]', '', '', '', '', '', 'none', '', 'none', ''),
 	(5, 'br', 2, 'closed', '', '', '<br>', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(6, 'center', 6, 'parsed', '<div class="center">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(7, 'code', 4, 'unparsed_content', '', '', '<div class="bbc_code"><header>{{code}}: <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\r\n\r\nif (!isset($disabled[''code'']))\r\n{\r\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\r\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span></div>'';\r\n	else\r\n 		$tag[''content''] .= ''<code>$1</code></div>'';\r\n\r\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data, -1, PREG_SPLIT_DELIM_CAPTURE);\r\n\r\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\r\n	{\r\n		// Do PHP code coloring?\r\n		if ($php_parts[$php_i] != ''&lt;?php'')\r\n			continue;\r\n\r\n		$php_string = '''';\r\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\r\n		{\r\n			$php_string .= $php_parts[$php_i];\r\n			$php_parts[$php_i++] = '''';\r\n		}\r\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\r\n	}\r\n\r\n	// Fix the PHP code stuff...\r\n	$data = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\r\n\r\n	// Older browsers are annoying, aren''t they?\r\n	if (!$context[''browser''][''is_gecko''])\r\n		$data = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data);\r\n\r\n	// Fix IE line breaks to actually be copyable.\r\n	if ($context[''browser''][''is_ie''])\r\n		$data = str_replace(''<br>'', ''&#13;'', $data);\r\n}', '', '', '', '', 'none', '', 'none', ''),
-	(8, 'code', 4, 'unparsed_equals_content', '', '', '<div class="bbc_code"><header>{{code}}: ($2) <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\r\n\r\nif (!isset($disabled[''code'']))\r\n{\r\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\r\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span></div>'';\r\n	else\r\n 		$tag[''content''] .= ''<code>$1</code></div>'';\r\n\r\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data[0], -1, PREG_SPLIT_DELIM_CAPTURE);\r\n\r\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\r\n	{\r\n		// Do PHP code coloring?\r\n		if ($php_parts[$php_i] != ''&lt;?php'')\r\n			continue;\r\n\r\n		$php_string = '''';\r\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\r\n		{\r\n			$php_string .= $php_parts[$php_i];\r\n			$php_parts[$php_i++] = '''';\r\n		}\r\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\r\n	}\r\n\r\n	// Fix the PHP code stuff...\r\n	$data[0] = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\r\n\r\n	// Older browsers are annoying, aren''t they?\r\n	if (!$context[''browser''][''is_gecko''])\r\n		$data[0] = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data[0]);\r\n\r\n	// Fix IE line breaks to actually be copyable.\r\n	if ($context[''browser''][''is_ie''])\r\n		$data[0] = str_replace(''<br>'', ''&#13;'', $data[0]);\r\n}', '', '', '', '', 'none', '', 'none', ''),
+	(7, 'code', 4, 'unparsed_content', '', '', '<div class="bbc_code"><header>{{code}}: <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\n\nif (!isset($disabled[''code'']))\n{\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span></div>'';\n	else\n 		$tag[''content''] .= ''<code>$1</code></div>'';\n\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data, -1, PREG_SPLIT_DELIM_CAPTURE);\n\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\n	{\n		// Do PHP code coloring?\n		if ($php_parts[$php_i] != ''&lt;?php'')\n			continue;\n\n		$php_string = '''';\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\n		{\n			$php_string .= $php_parts[$php_i];\n			$php_parts[$php_i++] = '''';\n		}\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\n	}\n\n	// Fix the PHP code stuff...\n	$data = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\n\n	// Older browsers are annoying, aren''t they?\n	if (!$context[''browser''][''is_gecko''])\n		$data = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data);\n\n	// Fix IE line breaks to actually be copyable.\n	if ($context[''browser''][''is_ie''])\n		$data = str_replace(''<br>'', ''&#13;'', $data);\n}', '', '', '', '', 'none', '', 'none', ''),
+	(8, 'code', 4, 'unparsed_equals_content', '', '', '<div class="bbc_code"><header>{{code}}: ($2) <a href="#" onclick="return weSelectText(this);" class="codeoperation">{{code_select}}</a></header>', '', '', '', 1, '', 'global $context;\n\nif (!isset($disabled[''code'']))\n{\n	if ($context[''browser''][''is_gecko''] || $context[''browser''][''is_opera''])\n		$tag[''content''] .= ''<span class="bbc_pre"><code>$1</code></span></div>'';\n	else\n 		$tag[''content''] .= ''<code>$1</code></div>'';\n\n	$php_parts = preg_split(''~(&lt;\\?php|\\?&gt;)~'', $data[0], -1, PREG_SPLIT_DELIM_CAPTURE);\n\n	for ($php_i = 0, $php_n = count($php_parts); $php_i < $php_n; $php_i++)\n	{\n		// Do PHP code coloring?\n		if ($php_parts[$php_i] != ''&lt;?php'')\n			continue;\n\n		$php_string = '''';\n		while ($php_i + 1 < count($php_parts) && $php_parts[$php_i] != ''?&gt;'')\n		{\n			$php_string .= $php_parts[$php_i];\n			$php_parts[$php_i++] = '''';\n		}\n		$php_parts[$php_i] = highlight_php_code($php_string . $php_parts[$php_i]);\n	}\n\n	// Fix the PHP code stuff...\n	$data[0] = str_replace("<span class=\\"bbc_pre\\">\\t</span>", "\\t", implode('''', $php_parts));\n\n	// Older browsers are annoying, aren''t they?\n	if (!$context[''browser''][''is_gecko''])\n		$data[0] = str_replace("\\t", "<span class=\\"bbc_pre\\">\\t</span>", $data[0]);\n\n	// Fix IE line breaks to actually be copyable.\n	if ($context[''browser''][''is_ie''])\n		$data[0] = str_replace(''<br>'', ''&#13;'', $data[0]);\n}', '', '', '', '', 'none', '', 'none', ''),
 	(9, 'color', 5, 'unparsed_equals', '<span style="color: $1" class="bbc_color">', '</span>', '', '', '', '', 0, '(#[\\da-fA-F]{3}|#[\\da-fA-F]{6}|[A-Za-z]{1,20}|rgb\\(\\d{1,3}, ?\\d{1,3}, ?\\d{1,3}\\))\\]', '', '', '', '', '', 'none', '', 'none', ''),
 	(10, 'email', 5, 'unparsed_content', '', '', '<a href="mailto:$1" class="bbc_email">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));', '', '', '', '', 'none', '', 'none', ''),
 	(11, 'email', 5, 'unparsed_equals', '<a href="mailto:$1" class="bbc_email">', '</a>', '', '', '($1)', '', 0, '', '', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', ''),
-	(12, 'flash', 5, 'unparsed_commas_content', '', '', '<object width="$2" height="$3" data="$1"><param name="movie" value="$1"><param name="play" value="true"><param name="loop" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="never"><embed src="$1" type="application/x-shockwave-flash" allowscriptaccess="never" width="$2" height="$3"></object>', '', '', '<a href="$1" target="_blank" class="new_win">$1</a>', 0, '\\d+,\\d+\\]', 'if (isset($disabled[''url'']))\r\n	$tag[''content''] = ''$1'';\r\nelseif (strpos($data[0], ''http://'') !== 0 && strpos($data[0], ''https://'') !== 0)\r\n	$data[0] = ''http://'' . $data[0];', '', '', '', '', 'none', '', 'none', ''),
+	(12, 'flash', 5, 'unparsed_commas_content', '', '', '<object width="$2" height="$3" data="$1"><param name="movie" value="$1"><param name="play" value="true"><param name="loop" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="never"><embed src="$1" type="application/x-shockwave-flash" allowscriptaccess="never" width="$2" height="$3"></object>', '', '', '<a href="$1" target="_blank" class="new_win">$1</a>', 0, '\\d+,\\d+\\]', 'if (isset($disabled[''url'']))\n	$tag[''content''] = ''$1'';\nelseif (strpos($data[0], ''http://'') !== 0 && strpos($data[0], ''https://'') !== 0)\n	$data[0] = ''http://'' . $data[0];', '', '', '', '', 'none', '', 'none', ''),
 	(13, 'font', 4, 'unparsed_equals', '<span style="font-family: $1" class="bbc_font">', '</span>', '', '', '', '', 0, '[A-Za-z0-9_,\\-\\s]+?\\]', '', '', '', '', '', 'none', '', 'none', ''),
-	(14, 'ftp', 3, 'unparsed_content', '', '', '<a href="$1" class="bbc_ftp new_win" target="_blank">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''ftp://'') !== 0 && strpos($data, ''ftps://'') !== 0)\r\n	$data = ''ftp://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
-	(15, 'ftp', 3, 'unparsed_equals', '<a href="$1" class="bbc_ftp new_win" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''ftp://'') !== 0 && strpos($data, ''ftps://'') !== 0)\r\n	$data = ''ftp://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', ''),
+	(14, 'ftp', 3, 'unparsed_content', '', '', '<a href="$1" class="bbc_ftp new_win" target="_blank">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\nif (strpos($data, ''ftp://'') !== 0 && strpos($data, ''ftps://'') !== 0)\n	$data = ''ftp://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
+	(15, 'ftp', 3, 'unparsed_equals', '<a href="$1" class="bbc_ftp new_win" target="_blank">', '</a>', '', '', ' ($1)', '', 0, '', 'if (strpos($data, ''ftp://'') !== 0 && strpos($data, ''ftps://'') !== 0)\n	$data = ''ftp://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', ''),
 	(16, 'html', 4, 'unparsed_content', '', '', '$1', '', '', '$1', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(17, 'hr', 2, 'closed', '', '', '<hr>', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(18, 'i', 1, 'parsed', '<em>', '</em>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(19, 'img', 3, 'unparsed_content', '', '', '<img src="$1" alt="{alt}"{width}{height} class="bbc_img resized{align}">', '', '', '($1)', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', 'a:4:{s:3:"alt";a:1:{s:8:"optional";b:1;}s:5:"align";a:3:{s:8:"optional";b:1;s:5:"value";s:3:" $1";s:5:"match";s:19:"(right|left|center)";}s:5:"width";a:3:{s:8:"optional";b:1;s:5:"value";s:11:" width="$1"";s:5:"match";s:5:"(\\d+)";}s:6:"height";a:3:{s:8:"optional";b:1;s:5:"value";s:12:" height="$1"";s:5:"match";s:5:"(\\d+)";}}', 'none', ''),
-	(20, 'img', 3, 'unparsed_content', '', '', '<img src="$1" class="bbc_img">', '', '', '($1)', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
-	(21, 'iurl', 4, 'unparsed_content', '', '', '<a href="$1" class="bbc_link">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
-	(22, 'iurl', 4, 'unparsed_equals', '<a href="$1" class="bbc_link">', '</a>', '', '', '($1)', '', 0, '', 'if (substr($data, 0, 1) == ''#'')\r\n	$data = ''#post_'' . substr($data, 1);\r\nelseif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', ''),
+	(19, 'img', 3, 'unparsed_content', '', '', '<img src="$1" alt="{alt}"{width}{height} class="bbc_img resized{align}">', '', '', '($1)', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;\nadd_js_unique(''\n\t$("img.resized").click(function () { this.style.width = this.style.height = (this.style.width == "auto" ? null : "auto"); });'');', '', '', '', '', 'none', 'a:4:{s:3:"alt";a:1:{s:8:"optional";b:1;}s:5:"align";a:3:{s:8:"optional";b:1;s:5:"value";s:3:" $1";s:5:"match";s:19:"(right|left|center)";}s:5:"width";a:3:{s:8:"optional";b:1;s:5:"value";s:11:" width="$1"";s:5:"match";s:5:"(\\d+)";}s:6:"height";a:3:{s:8:"optional";b:1;s:5:"value";s:12:" height="$1"";s:5:"match";s:5:"(\\d+)";}}', 'none', ''),
+	(20, 'img', 3, 'unparsed_content', '', '', '<img src="$1" class="bbc_img">', '', '', '($1)', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
+	(21, 'iurl', 4, 'unparsed_content', '', '', '<a href="$1" class="bbc_link">$1</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
+	(22, 'iurl', 4, 'unparsed_equals', '<a href="$1" class="bbc_link">', '</a>', '', '', '($1)', '', 0, '', 'if (substr($data, 0, 1) == ''#'')\n	$data = ''#post_'' . substr($data, 1);\nelseif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', ''),
 	(23, 'left', 4, 'parsed', '<div class="left">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(24, 'li', 2, 'parsed', '<li>', '</li>', '', ' ', '<br>', '', 1, '', '', '', 'list', '', '', 'none', '', 'outside', ''),
 	(25, 'list', 4, 'parsed', '<ul class="bbc_list">', '</ul>', '', '', '', '', 1, '', '', '', '', 'li,list', '', 'none', '', 'inside', ''),
@@ -175,7 +175,7 @@ VALUES
 	(30, 'mergedate', 9, 'unparsed_content', '', '', '<div class="mergedate">{{search_date_posted}} $1</div>', '', '', '', 0, '', 'if (is_numeric($data)) $data = timeformat($data);', '', '', '', '', 'none', '', 'none', ''),
 	(31, 'more', 4, 'closed', '', '', ' ', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(32, 'nobbc', 5, 'unparsed_content', '', '', '$1', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(33, 'php', 3, 'unparsed_content', '', '', '<div class="php_code"><code>$1</code></div>', '', '', '$1', 1, '', '$add_begin = substr(trim($data), 0, 5) != ''&lt;'';\r\n$data = highlight_php_code($add_begin ? ''&lt;?php '' . $data . ''?&gt;'' : $data);\r\nif ($add_begin)\r\n	$data = preg_replace(array(''~^(.+?)&lt;\\?.{0,40}?php(?:&nbsp;|\\s)~'', ''~\\?&gt;((?:</(font|span)>)*)$~''), ''$1'', $data, 2);', '', '', '', '', 'none', '', 'none', ''),
+	(33, 'php', 3, 'unparsed_content', '', '', '<div class="php_code"><code>$1</code></div>', '', '', '$1', 1, '', '$add_begin = substr(trim($data), 0, 5) != ''&lt;'';\n$data = highlight_php_code($add_begin ? ''&lt;?php '' . $data . ''?&gt;'' : $data);\nif ($add_begin)\n	$data = preg_replace(array(''~^(.+?)&lt;\\?.{0,40}?php(?:&nbsp;|\\s)~'', ''~\\?&gt;((?:</(font|span)>)*)$~''), ''$1'', $data, 2);', '', '', '', '', 'none', '', 'none', ''),
 	(34, 'pre', 3, 'parsed', '<span class="bbc_pre">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(35, 'quote', 5, 'parsed', '<div class="bbc_quote"><header>{{quote_noun}}</header><div><blockquote>', '</blockquote></div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'outside', ''),
 	(36, 'quote', 5, 'parsed', '<div class="bbc_quote"><header>{{quote_from}} {author}</header><div><blockquote>', '</blockquote></div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', 'a:1:{s:6:"author";a:2:{s:5:"match";s:11:"(.{1,192}?)";s:6:"quoted";b:1;}}', 'outside', ''),
@@ -186,19 +186,19 @@ VALUES
 	(41, 'rtl', 3, 'parsed', '<div dir="rtl">', '</div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(42, 's', 1, 'parsed', '<del>', '</del>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(43, 'size', 4, 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '([1-9][\\d]?p[xt]|small(?:er)?|large[r]?|x[x]?-(?:small|large)|medium|(0\\.[1-9]|[1-9](\\.[\\d][\\d]?)?)?em)\\]', '', '', '', '', '', 'none', '', 'none', ''),
-	(44, 'size', 4, 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 8, 2 => 10, 3 => 12, 4 => 14, 5 => 18, 6 => 24, 7 => 36);\r\n$data = $sizes[$data] . ''pt'';', '', '', '', '', 'none', '', 'none', ''),
+	(44, 'size', 4, 'unparsed_equals', '<span style="font-size: $1" class="bbc_size">', '</span>', '', '', '', '', 0, '[1-7]\\]', '$sizes = array(1 => 8, 2 => 10, 3 => 12, 4 => 14, 5 => 18, 6 => 24, 7 => 36);\n$data = $sizes[$data] . ''pt'';', '', '', '', '', 'none', '', 'none', ''),
 	(45, 'spoiler', 7, 'parsed', '<div class="spoiler"><div class="spoilerhint"><input type="button" value="{{spoiler}}" onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(46, 'spoiler', 7, 'parsed_equals', '<div class="spoiler"><div class="spoilerhint"><input type="button" value=$1 onclick="$(this.parentNode.parentNode.lastChild).toggle(); return false;">{{click_for_spoiler}}</div><div class="spoiled hide">', '</div></div>', '', '', '', '', 1, '', '', '', '', '', ' ', 'optional', '', 'none', ''),
 	(47, 'sub', 3, 'parsed', '<sub>', '</sub>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(48, 'sup', 3, 'parsed', '<sup>', '</sup>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(49, 'table', 5, 'parsed', '<table class="bbc_table">', '</table>', '', '', '', '', 1, '', '', '', '', 'tr', '', 'none', '', 'inside', ''),
 	(50, 'td', 2, 'parsed', '<td>', '</td>', '', ' ', ' ', '', 1, '', '', '', 'tr', '', '', 'none', '', 'outside', ''),
-	(51, 'time', 4, 'unparsed_content', '', '', '$1', '', '', '', 0, '', 'if (is_numeric($data))\r\n	$data = timeformat($data);\r\nelse\r\n	$tag[''content''] = ''[time]$1[/time]'';', '', '', '', '', 'none', '', 'none', ''),
+	(51, 'time', 4, 'unparsed_content', '', '', '$1', '', '', '', 0, '', 'if (is_numeric($data))\n	$data = timeformat($data);\nelse\n	$tag[''content''] = ''[time]$1[/time]'';', '', '', '', '', 'none', '', 'none', ''),
 	(52, 'tr', 2, 'parsed', '<tr>', '</tr>', '', ' ', ' ', '', 1, '', '', '', 'table', 'td', '', 'none', '', 'both', ''),
 	(53, 'tt', 2, 'parsed', '<span class="bbc_tt">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
 	(54, 'u', 1, 'parsed', '<span class="bbc_u">', '</span>', '', '', '', '', 0, '', '', '', '', '', '', 'none', '', 'none', ''),
-	(55, 'url', 3, 'unparsed_content', '', '', '<a href="$1" class="bbc_link" target="_blank">$2</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\r\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
-	(56, 'url', 3, 'unparsed_equals', '<a href="$1" class="bbc_link" target="_blank">', '</a>', '', '', '($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\r\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', '');
+	(55, 'url', 3, 'unparsed_content', '', '', '<a href="$1" class="bbc_link" target="_blank">$2</a>', '', '', '', 0, '', '$data = strtr($data, array(''<br>'' => ''''));\nif (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;', '', '', '', '', 'none', '', 'none', ''),
+	(56, 'url', 3, 'unparsed_equals', '<a href="$1" class="bbc_link" target="_blank">', '</a>', '', '', '($1)', '', 0, '', 'if (strpos($data, ''http://'') !== 0 && strpos($data, ''https://'') !== 0)\n	$data = ''http://'' . $data;', 'email,ftp,url,iurl', '', '', '', 'none', '', 'none', '');
 # --------------------------------------------------------
 
 #
@@ -711,7 +711,7 @@ CREATE TABLE {$db_prefix}contact_lists (
 #
 
 CREATE TABLE {$db_prefix}contacts (
-  id_member mediumint(8) NOT NULL DEFAULT 0,
+  id_member mediumint(8) unsigned NOT NULL DEFAULT 0,
   id_list mediumint(8) NOT NULL DEFAULT 0,
   is_synchronous tinyint(1) unsigned NOT NULL DEFAULT 0,
   position tinyint(4) NOT NULL DEFAULT 0,
@@ -725,7 +725,7 @@ CREATE TABLE {$db_prefix}contacts (
 #
 
 CREATE TABLE {$db_prefix}custom_fields (
-  id_field smallint(5) NOT NULL auto_increment,
+  id_field smallint(5) unsigned NOT NULL auto_increment,
   col_name varchar(12) NOT NULL default '',
   field_name varchar(40) NOT NULL default '',
   field_desc varchar(255) NOT NULL default '',
@@ -784,7 +784,7 @@ CREATE TABLE {$db_prefix}group_moderators (
 CREATE TABLE {$db_prefix}likes (
   id_content int(10) unsigned NOT NULL default 0,
   content_type char(6) NOT NULL default '',
-  id_member mediumint(8) NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   like_time int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_content, content_type, id_member),
   KEY (id_content, content_type),
@@ -1005,7 +1005,7 @@ CREATE TABLE {$db_prefix}log_online (
 #
 
 CREATE TABLE {$db_prefix}log_packages (
-  id_install int(10) NOT NULL auto_increment,
+  id_install int(10) unsigned NOT NULL auto_increment,
   filename varchar(255) NOT NULL default '',
   package_id varchar(255) NOT NULL default '',
   name varchar(255) NOT NULL default '',
@@ -1068,7 +1068,7 @@ CREATE TABLE {$db_prefix}log_reported (
 CREATE TABLE {$db_prefix}log_reported_comments (
   id_comment mediumint(8) unsigned NOT NULL auto_increment,
   id_report mediumint(8) NOT NULL default 0,
-  id_member mediumint(8) NOT NULL,
+  id_member mediumint(8) unsigned NOT NULL,
   membername varchar(255) NOT NULL default '',
   email_address varchar(255) NOT NULL default '',
   member_ip int(10) NOT NULL default 0,
@@ -1085,7 +1085,7 @@ CREATE TABLE {$db_prefix}log_reported_comments (
 #
 
 CREATE TABLE {$db_prefix}log_scheduled_tasks (
-  id_log mediumint(8) NOT NULL auto_increment,
+  id_log mediumint(8) unsigned NOT NULL auto_increment,
   id_task smallint(5) NOT NULL default 0,
   time_run int(10) NOT NULL default 0,
   time_taken float NOT NULL default 0,
@@ -1171,7 +1171,7 @@ CREATE TABLE {$db_prefix}log_spider_stats (
 CREATE TABLE {$db_prefix}log_subscribed (
   id_sublog int(10) unsigned NOT NULL auto_increment,
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
-  id_member int(10) NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   old_id_group smallint(5) NOT NULL default 0,
   start_time int(10) NOT NULL default 0,
   end_time int(10) NOT NULL default 0,
@@ -1226,7 +1226,7 @@ CREATE TABLE {$db_prefix}mail_queue (
 #
 
 CREATE TABLE {$db_prefix}media_albums (
-  id_album int(11) NOT NULL auto_increment,
+  id_album int(10) unsigned NOT NULL auto_increment,
   album_of int(11) NOT NULL default 0,
   featured tinyint(1) unsigned NOT NULL default 0,
   name varchar(255) NOT NULL default '',
@@ -1264,10 +1264,10 @@ CREATE TABLE {$db_prefix}media_albums (
 #
 
 CREATE TABLE {$db_prefix}media_comments (
-  id_comment int(11) NOT NULL auto_increment,
-  id_member int(11) NOT NULL default 0,
-  id_media int(11) NOT NULL default 0,
-  id_album int(11) NOT NULL default 0,
+  id_comment int(10) unsigned NOT NULL auto_increment,
+  id_member mediumint(8) unsigned NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL default 0,
+  id_album int(10) unsigned NOT NULL default 0,
   message text NOT NULL,
   posted_on int(11) NOT NULL default 0,
   last_edited int(11) NOT NULL default 0,
@@ -1282,7 +1282,7 @@ CREATE TABLE {$db_prefix}media_comments (
 #
 
 CREATE TABLE {$db_prefix}media_fields (
-  id_field int(11) NOT NULL auto_increment,
+  id_field int(10) unsigned NOT NULL auto_increment,
   name varchar(100) NOT NULL default '',
   type varchar(20) NOT NULL default 'text',
   options text NOT NULL,
@@ -1300,7 +1300,7 @@ CREATE TABLE {$db_prefix}media_fields (
 
 CREATE TABLE {$db_prefix}media_field_data (
   id_field int(11) NOT NULL default 0,
-  id_media int(11) NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL default 0,
   value text NOT NULL,
   PRIMARY KEY (id_field, id_media)
 ) ENGINE=MyISAM;
@@ -1310,13 +1310,13 @@ CREATE TABLE {$db_prefix}media_field_data (
 #
 
 CREATE TABLE {$db_prefix}media_files (
-  id_file int(11) NOT NULL auto_increment,
-  filesize int(20) NOT NULL default 0,
+  id_file int(10) unsigned NOT NULL auto_increment,
+  filesize int(10) unsigned NOT NULL default 0,
   filename text NOT NULL,
-  width int(4) NOT NULL default 1,
-  height int(4) NOT NULL default 1,
+  width mediumint(4) NOT NULL default 1,
+  height mediumint(4) NOT NULL default 1,
   directory text NOT NULL,
-  id_album int(20) NOT NULL default 0,
+  id_album int(10) unsigned NOT NULL default 0,
   transparency enum('', 'transparent', 'opaque') NOT NULL default '',
   meta text NOT NULL,
   PRIMARY KEY (id_file)
@@ -1340,8 +1340,8 @@ VALUES
 #
 
 CREATE TABLE {$db_prefix}media_items (
-  id_media int(11) NOT NULL auto_increment,
-  id_member int(11) NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL auto_increment,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   member_name varchar(25) NOT NULL default '',
   last_edited int(11) NOT NULL default 0,
   last_edited_by int(11) NOT NULL default 0,
@@ -1377,8 +1377,8 @@ CREATE TABLE {$db_prefix}media_items (
 #
 
 CREATE TABLE {$db_prefix}media_log_media (
-  id_media int(11) NOT NULL default 0,
-  id_member int(11) NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   time int(11) NOT NULL default 0,
   PRIMARY KEY (id_media, id_member)
 ) ENGINE=MyISAM;
@@ -1388,8 +1388,8 @@ CREATE TABLE {$db_prefix}media_log_media (
 #
 
 CREATE TABLE {$db_prefix}media_log_ratings (
-  id_media int(11) NOT NULL default 0,
-  id_member int(11) NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   rating int(11) NOT NULL default 0,
   time int(11) NOT NULL default 0,
   PRIMARY KEY (id_media, id_member)
@@ -1411,11 +1411,11 @@ CREATE TABLE {$db_prefix}media_perms (
 #
 
 CREATE TABLE {$db_prefix}media_playlists (
-  id_playlist int(11) unsigned NOT NULL auto_increment,
-  id_member int(10) unsigned NOT NULL default 0,
+  id_playlist int(10) unsigned NOT NULL auto_increment,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   name varchar(80) NOT NULL default '',
   description text NOT NULL,
-  views int(11) unsigned NOT NULL default 0,
+  views int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_playlist),
   KEY name (name),
   KEY views (views)
@@ -1426,7 +1426,7 @@ CREATE TABLE {$db_prefix}media_playlists (
 #
 
 CREATE TABLE {$db_prefix}media_playlist_data (
-  id_playlist int(11) unsigned NOT NULL default 0,
+  id_playlist int(10) unsigned NOT NULL default 0,
   id_media int(10) unsigned NOT NULL default 0,
   play_order int(5) unsigned NOT NULL auto_increment,
   description text NOT NULL,
@@ -1521,7 +1521,7 @@ VALUES
 #
 
 CREATE TABLE {$db_prefix}media_variables (
-  id int(11) NOT NULL auto_increment,
+  id int(10) NOT NULL auto_increment,
   type varchar(15) NOT NULL default '',
   val1 text NOT NULL,
   val2 text NOT NULL,
@@ -1894,7 +1894,7 @@ CREATE TABLE {$db_prefix}pm_recipients (
 
 CREATE TABLE {$db_prefix}pm_rules (
   id_rule int(10) unsigned NOT NULL auto_increment,
-  id_member int(10) unsigned NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   rule_name varchar(60) NOT NULL,
   criteria text NOT NULL,
   actions text NOT NULL,
@@ -1921,7 +1921,7 @@ CREATE TABLE {$db_prefix}polls (
   guest_vote tinyint(3) unsigned NOT NULL default 0,
   num_guest_voters int(10) unsigned NOT NULL default 0,
   reset_poll int(10) unsigned NOT NULL default 0,
-  id_member mediumint(8) NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   poster_name varchar(255) NOT NULL default '',
   PRIMARY KEY (id_poll)
 ) ENGINE=MyISAM;
@@ -2337,7 +2337,7 @@ CREATE TABLE {$db_prefix}subscriptions (
   description varchar(255) NOT NULL default '',
   cost text NOT NULL,
   length varchar(6) NOT NULL default '',
-  id_group smallint(5) NOT NULL default 0,
+  id_group smallint(5) unsigned NOT NULL default 0,
   add_groups varchar(40) NOT NULL default '',
   active tinyint(3) NOT NULL default 1,
   repeatable tinyint(3) NOT NULL default 0,
@@ -2354,7 +2354,7 @@ CREATE TABLE {$db_prefix}subscriptions (
 
 CREATE TABLE {$db_prefix}subscriptions_groups (
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
-  id_group smallint(5) NOT NULL default 0,
+  id_group smallint(5) unsigned NOT NULL default 0,
   PRIMARY KEY (id_subscribe, id_group)
 ) ENGINE=MyISAM;
 
@@ -2363,7 +2363,7 @@ CREATE TABLE {$db_prefix}subscriptions_groups (
 #
 
 CREATE TABLE {$db_prefix}themes (
-  id_member mediumint(8) NOT NULL default 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   id_theme tinyint(4) unsigned NOT NULL default 1,
   variable varchar(255) NOT NULL default '',
   value text NOT NULL,
@@ -2451,6 +2451,7 @@ CREATE TABLE {$db_prefix}topics (
   id_member_started mediumint(8) unsigned NOT NULL default 0,
   id_member_updated mediumint(8) unsigned NOT NULL default 0,
   id_poll mediumint(8) unsigned NOT NULL default 0,
+  id_media int(10) unsigned NOT NULL default 0,
   id_previous_board smallint(5) NOT NULL default 0,
   id_previous_topic mediumint(8) NOT NULL default 0,
   num_replies int(10) unsigned NOT NULL default 0,
