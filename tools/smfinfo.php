@@ -17,7 +17,7 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 
 // Hmm... no SSI.php and no Wedge?
 elseif(!defined('WEDGE'))
-	die('<b>Error:</b> Cannot start - please verify you put this in the same place as Wedge\'s SSI.php.');
+	exit('<b>Error:</b> Cannot start - please verify you put this in the same place as Wedge\'s SSI.php.');
 
 initialize();
 
@@ -346,8 +346,7 @@ function show_header()
 
 		</style>
 		<script><!-- // --><![CDATA[
-			var sections = new Array();
-			var titles = new Array();
+			var sections = [], titles = [];
 
 			function addSection(name, title)
 			{
@@ -372,7 +371,7 @@ function show_header()
 
 			}
 
-			var onload_events = new Array();
+			var onload_events = [];
 			function addLoadEvent(func)
 			{
 				// Get the old event if there is one.
@@ -445,7 +444,7 @@ function show_password_form()
 	</body>
 </html>';
 
-	exit();
+	exit;
 }
 
 function show_system_info()

@@ -53,7 +53,7 @@
 	string we_logError(string error_message, string file, int line)
 		- logs an error, assuming error logging is enabled.
 		- filename and line should be __FILE__ and __LINE__, respectively.
-		- returns the error message. (ie. die(log_error($msg));)
+		- returns the error message. (ie. exit(log_error($msg));)
 
 	string we_formatTime(int time)
 		- formats the timestamp time into a readable string.

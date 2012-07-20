@@ -661,7 +661,7 @@ function upgradeExit($fallThrough = false)
 
 			echo "\n" . 'Error: Unexpected call to use the ' . (isset($upcontext['block']) ? $upcontext['block'] : '') . ' template. Please copy and paste all the text above and visit the Wedge support forum to tell the Developers that they\'ve made a boo boo; they\'ll get you up and running again.';
 			flush();
-			die();
+			exit;
 		}
 
 		if (!isset($_GET['xml']))
@@ -706,7 +706,7 @@ function upgradeExit($fallThrough = false)
 	}
 
 	// Bang - gone!
-	die();
+	exit;
 }
 
 // Used to direct the user to another location.
@@ -766,7 +766,7 @@ function loadEssentialData()
 
 	// Oh dear god!!
 	if ($db_connection === null)
-		die('Unable to connect to database - please check username and password are correct in Settings.php');
+		exit('Unable to connect to database - please check username and password are correct in Settings.php');
 
 	$smcFunc['db_query']('', '
 		SET NAMES utf8',
@@ -831,9 +831,9 @@ function initialize_inputs()
 			if (preg_match('~upgrade_[\w-]+\.sql~i', $file, $matches))
 				@unlink(dirname(__FILE__) . '/' . $file);
 
-		// Now just output to a blank.gif... (I would use the one in Subs.php but it isn't loaded yet.)
+		// Now just output a blank GIF... (Same code as in the verification code generator.)
 		header('Content-Type: image/gif');
-		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
+		exit("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 	}
 
 	// Are we calling the backup css file?
@@ -2150,7 +2150,7 @@ function parse_sql($filename)
 			)
 		);
 		if ($smcFunc['db_num_rows']($request) === 0)
-			die('Unable to find members table!');
+			exit('Unable to find members table!');
 		$table_status = $smcFunc['db_fetch_assoc']($request);
 		$smcFunc['db_free_result']($request);
 
@@ -2453,10 +2453,7 @@ function upgrade_query($string, $unbuffered = false)
 		$query_string = '?' . substr($query_string, 1);
 
 	if ($command_line)
-	{
-		echo 'Unsuccessful! Database error message:', "\n", $db_error_message, "\n";
-		die;
-	}
+		exit("Unsuccessful! Database error message:\n" . $db_error_message);
 
 	// Bit of a bodge - do we want the error?
 	if (!empty($upcontext['return_error']))
@@ -3969,7 +3966,7 @@ function template_database_changes()
 				updateStepProgress(barDone, barTotal, ', $upcontext['step_weight'] * ((100 - $upcontext['step_progress']) / 100), ');
 
 				// Finally - update the time here as it shows the server is responding!
-				iElapsed = (+new Date() / 1000 - ', $upcontext['started'], ');
+				iElapsed = (+new Date / 1000 - ', $upcontext['started'], ');
 				mins = parseInt(iElapsed / 60);
 				secs = parseInt(iElapsed - mins * 60);
 				document.getElementById("mins_elapsed").innerHTML = mins;
@@ -4109,22 +4106,21 @@ function template_upgrade_complete()
 
 	if (!empty($upcontext['can_delete_script']))
 		echo '
-		<label for="delete_self"><input type="checkbox" id="delete_self" onclick="doTheDelete(this);"> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
+		<label><input type="checkbox" onclick="doTheDelete();"> Delete this upgrade.php and its data files now.</label> <em>(doesn\'t work on all servers.)</em>
 		<script><!-- // --><![CDATA[
-			function doTheDelete(theCheck)
+			function doTheDelete()
 			{
-				var theImage = document.getElementById ? document.getElementById("delete_upgrader") : document.all.delete_upgrader;
-				theImage.src = "', $upgradeurl, '?delete=1&ts_" + (+new Date());
-				theCheck.disabled = true;
+				$.get(weUrl"', $upgradeurl, '?delete=1&ts_" + +new Date);
+				$(this).attr("disabled", true);
 			}
-		// ]]></script>
-		<img src="', $boardurl, '/Themes/default/images/blank.gif" alt="" id="delete_upgrader"><br>';
+		// ]]></script><br>';
 
 	echo '<br>
 			If you had any problems with this upgrade, or have any problems using Wedge, please don\'t hesitate to <a href="http://wedge.org/">look to us for assistance</a>.<br>
 			<br>
-			Best of luck,<br>
-			The Wedge Team.';
+			', sprintf($txt['go_to_your_forum'], $boardurl . '/index.php'), '<br>
+			<br>
+			', $txt['good_luck'];
 }
 
 ?>

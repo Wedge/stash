@@ -24,7 +24,7 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	if (strtotime($modified_since) >= filemtime(__FILE__))
 	{
 		header('HTTP/1.1 304 Not Modified');
-		die;
+		exit;
 	}
 }
 

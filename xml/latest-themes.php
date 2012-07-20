@@ -15,7 +15,7 @@
 
 */
 
-exit();
+exit;
 
 // Some required files to make everything work
 require_once('/home/sites/simplemachines.org/public_html/community/SSI.php');

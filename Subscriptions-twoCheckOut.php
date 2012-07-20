@@ -136,7 +136,7 @@ class twocheckout_payment
 	// Redirect the user away.
 	public function close()
 	{
-		exit();
+		exit;
 	}
 }
 

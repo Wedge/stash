@@ -30,7 +30,7 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 	require_once(dirname(__FILE__) . '/SSI.php');
 // Hmm... no SSI.php and no Wedge?
 elseif (!defined('WEDGE'))
-	die('<strong>Error:</strong> Cannot install - please verify you put this in the same place as Wedge\'s index.php.');
+	exit('<strong>Error:</strong> Cannot install - please verify you put this in the same place as Wedge\'s index.php.');
 
 // Sorted out the array defined above - now insert the data!
 $result = $smcFunc['db_insert']($overwrite_old_settings ? 'replace' : 'ignore'),

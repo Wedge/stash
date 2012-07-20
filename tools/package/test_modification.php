@@ -6,7 +6,7 @@ if (is_file(dirname(__FILE__) . '/SSI.php'))
 elseif (is_file(dirname(dirname(__FILE__)) . '/SSI.php'))
 	require_once(dirname(dirname(__FILE__)) . '/SSI.php');
 else
-	die('SSI.php wasn\'t found - please put this in your Wedge directory.');
+	exit('SSI.php wasn\'t found - please put this in your Wedge directory.');
 
 // Load Subs-Package for the parse functions.
 loadSource('Subs-Package');

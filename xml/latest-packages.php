@@ -18,7 +18,7 @@
 
 */
 
-exit();
+exit;
 
 include_once('/home/sites/simplemachines.org/public_html/community/SSI.php');
 include_once('/home/sites/custom.simplemachines.org/public_html/mods/ModSiteSettings.php');

@@ -280,7 +280,7 @@ function step2()
 function step3()
 {
 	if (!isset($_SESSION['temp_db']))
-		die;
+		exit;
 
 	list ($_POST['db_server'], $_POST['db_user'], $_POST['db_passwd'], $_POST['db_name']) = $_SESSION['temp_db'];
 	$_SESSION['temp_db'] = '';
@@ -292,7 +292,7 @@ function step3()
 	if ($smcFunc['db_num_rows']($request) == 1)
 		list ($db_prefix) = preg_replace('~log_topics$~', '', $smcFunc['db_fetch_row']($request));
 	else
-		die;
+		exit;
 	$smcFunc['db_free_result']($request);
 
 	// What host and port are we on?
@@ -349,7 +349,7 @@ function step3()
 	$result = $smcFunc['db_query']('', '
 		SELECT id_theme, value
 		FROM {db_prefix}themes
-		WHERE variable = {string:theme_dir}', array('theme_dir' => 'theme_dir'), $db_connection) or die($smcFunc['db_error']($db_connection));
+		WHERE variable = {string:theme_dir}', array('theme_dir' => 'theme_dir'), $db_connection) or exit($smcFunc['db_error']($db_connection));
 	$updates = array();
 	while ($row = $smcFunc['db_fetch_assoc']($result))
 	{
@@ -376,7 +376,7 @@ function step3()
 		);
 	}
 
-	die;
+	exit;
 }
 
 function show_header()

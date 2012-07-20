@@ -510,7 +510,7 @@ function doStep1()
 		// Verify mirror.
 		$install_info = fetch_install_info();
 		if (!isset($install_info['mirrors'][$_POST['mirror']]))
-			die('Security error.');
+			exit('Security error.');
 
 		// Build file list ;).
 		$files_to_download = array();

@@ -12,7 +12,7 @@
  */
 
 if (!file_exists(dirname(__FILE__) . '/SSI.php'))
-	die('Please move this file to the main Wedge directory and make sure SSI.php is part of that directory.');
+	exit('Please move this file to the main Wedge directory and make sure SSI.php is part of that directory.');
 
 $sphinx_ver = '0.9.7-rc2';
 
@@ -23,7 +23,7 @@ is_not_guest();
 
 // Kick the non-admin
 if (!$user_info['is_admin'])
-	die('You need admin permission to use this tool.');
+	exit('You need admin permission to use this tool.');
 
 if (!isset($_REQUEST['step']))
 	step_0();

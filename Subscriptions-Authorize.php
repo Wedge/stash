@@ -163,7 +163,7 @@ log_error(print_r($_POST, true));
 	// Redirect the user away.
 	public function close()
 	{
-		exit();
+		exit;
 	}
 }
 

@@ -168,9 +168,9 @@ function initialize_inputs()
 				@unlink($del);
 		}
 
-		// Now just output to a blank.gif... (I would use the one in Subs.php but it isn't loaded yet.)
+		// Now just output a blank GIF... (Same code as in the verification code generator.)
 		header('Content-Type: image/gif');
-		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
+		exit("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 	}
 
 	// Make sure a timezone is set, it isn't always. But let's use the system derived one as much as possible.
@@ -225,7 +225,7 @@ function load_lang_file()
 		<p>If you continue to get this error message, feel free to <a href="http://wedge.org/">look to us for support</a>.</p>
 	</div></body>
 </html>';
-		die;
+		exit;
 	}
 
 	// Override the language file?
@@ -377,7 +377,7 @@ function installExit($fallThrough = false)
 	}
 
 	// Bang - gone!
-	die();
+	exit;
 }
 
 // This checks whether GD2 is available and all the neat little gizmos we want to use, returns true if all good, false if not.
@@ -2413,15 +2413,13 @@ function template_delete_install()
 	if ($incontext['probably_delete_install'])
 		echo '
 		<div style="margin: 1ex; font-weight: bold">
-			<label><input type="checkbox" id="delete_self" onclick="doTheDelete();"> ', $txt['delete_installer'], !isset($_SESSION['installer_temp_ftp']) ? ' ' . $txt['delete_installer_maybe'] : '', '</label>
+			<label><input type="checkbox" onclick="doTheDelete();"> ', $txt['delete_installer'], !isset($_SESSION['installer_temp_ftp']) ? ' ' . $txt['delete_installer_maybe'] : '', '</label>
 		</div>
 		<script><!-- // --><![CDATA[
 			function doTheDelete()
 			{
-				var tempImage = new Image();
-				tempImage.src = "', $installurl, '?delete=1&ts_" + (+new Date());
-				tempImage.width = 0;
-				$("#delete_self").attr("disabled", true);
+				$.get("', $installurl, '?delete=1&ts_" + +new Date);
+				$(this).attr("disabled", true);
 			}
 		// ]]></script>
 		<br>';
