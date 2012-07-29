@@ -2418,7 +2418,7 @@ function template_delete_install()
 		<script><!-- // --><![CDATA[
 			function doTheDelete()
 			{
-				$.get("', $installurl, '?delete=1&ts_" + +new Date);
+				$.get("', $installurl, '?delete=1&ts_" + $.now());
 				$(this).attr("disabled", true);
 			}
 		// ]]></script>

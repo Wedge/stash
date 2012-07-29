@@ -3961,12 +3961,12 @@ function template_database_changes()
 
 				// Get the progress bar right.
 				barTotal = debugItems * ', $upcontext['file_count'], ';
-				barDone = (debugItems * (curFile - 1)) + lastItem;
+				barDone = debugItems * (curFile - 1) + lastItem;
 
 				updateStepProgress(barDone, barTotal, ', $upcontext['step_weight'] * ((100 - $upcontext['step_progress']) / 100), ');
 
 				// Finally - update the time here as it shows the server is responding!
-				iElapsed = (+new Date / 1000 - ', $upcontext['started'], ');
+				iElapsed = $.now() / 1000 - ', $upcontext['started'], ';
 				mins = parseInt(iElapsed / 60);
 				secs = parseInt(iElapsed - mins * 60);
 				document.getElementById("mins_elapsed").innerHTML = mins;
@@ -4110,7 +4110,7 @@ function template_upgrade_complete()
 		<script><!-- // --><![CDATA[
 			function doTheDelete()
 			{
-				$.get(weUrl"', $upgradeurl, '?delete=1&ts_" + +new Date);
+				$.get(weUrl("', $upgradeurl, '?delete=1&ts_" + $.now()));
 				$(this).attr("disabled", true);
 			}
 		// ]]></script><br>';
