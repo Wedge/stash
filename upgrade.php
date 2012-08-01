@@ -3637,7 +3637,7 @@ function template_backup_database()
 			var lastTable = ', $upcontext['cur_table_num'], ';
 			function getNextTables()
 			{
-				getXMLDocument(\'', $upcontext['form_url'], '&xml&substep=\' + lastTable, onBackupUpdate);
+				$.get(\'', $upcontext['form_url'], '&xml&substep=\' + lastTable, onBackupUpdate);
 			}
 
 			// Got an update!
@@ -3765,7 +3765,7 @@ function template_database_changes()
 					clearTimeout(timeOutID);
 				timeOutID = setTimeout(retTimeout, ', (10 * $timeLimitThreshold), '000);
 
-				getXMLDocument(\'', $upcontext['form_url'], '&xml&filecount=', $upcontext['file_count'], '&substep=\' + lastItem + getData, onItemUpdate);
+				$.get(\'', $upcontext['form_url'], '&xml&filecount=', $upcontext['file_count'], '&substep=\' + lastItem + getData, onItemUpdate);
 			}
 
 			// Got an update!
