@@ -76,9 +76,13 @@ UnitTest.prototype.checkTest = function()
 				var oImage = document.getElementById('img_placeholder_' + aTestParts[0] + '-' + aTestParts[1]);
 				oImage.innerHTML = '<img src="' + we_theme_url + '/images/icons/field_check.gif" alt="" />';
 
-				this.tmpMethod = getXMLDocument;
-				this.tmpMethod(we_script + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1] + ';xml', this.onTestReady);
-				delete tmpMethod;
+				$.ajax(
+					we_script + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1] + ';xml',
+					{
+						context: this,
+						success: this.onTestReady
+					}
+				);
 
 				delete this.aCurTests[i];
 				this.iThreadsOpen++;
