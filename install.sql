@@ -2239,7 +2239,8 @@ VALUES
 	('pm_enabled', '1'),
 	('show_newsfader', '0'),
 	('newsfader_time', '5000'),
-	('additional_options_collapsable', '1');
+	('additional_options_collapsable', '1'),
+	('likes_enable', '1');
 # --------------------------------------------------------
 
 #
