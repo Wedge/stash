@@ -65,7 +65,7 @@
 			}
 			else
 			{
-				list($id_board) = $smcFunc['db_fetch_row']($request);
+				list ($id_board) = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 			}
 
@@ -139,7 +139,7 @@
 			}
 			else
 			{
-				list($id_member) = $smcFunc['db_fetch_row']($request);
+				list ($id_member) = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 			}
 
@@ -197,7 +197,7 @@
 			}
 			else
 			{
-				list($id_topic, $id_msg) = $smcFunc['db_fetch_row']($request);
+				list ($id_topic, $id_msg) = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 			}
 
