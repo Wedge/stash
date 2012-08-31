@@ -206,8 +206,8 @@ VALUES
 #
 
 CREATE TABLE {$db_prefix}board_groups (
-  id_board smallint(5) NOT NULL default 0,
-  id_group mediumint(5) NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   view_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
   enter_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
   PRIMARY KEY (id_group, id_board)
@@ -231,7 +231,7 @@ VALUES
 
 CREATE TABLE {$db_prefix}board_members (
   id_member mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   permission enum('access', 'deny') NOT NULL default 'access',
   PRIMARY KEY (id_member, id_board, permission)
 ) ENGINE=MyISAM;
@@ -241,7 +241,7 @@ CREATE TABLE {$db_prefix}board_members (
 #
 
 CREATE TABLE {$db_prefix}board_permissions (
-  id_group smallint(5) NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   id_profile smallint(5) unsigned NOT NULL default 0,
   permission varchar(30) NOT NULL default '',
   add_deny tinyint(4) NOT NULL default 1,
@@ -607,7 +607,7 @@ VALUES
 #
 
 CREATE TABLE {$db_prefix}boards (
-  id_board smallint(5) unsigned NOT NULL auto_increment,
+  id_board mediumint(8) unsigned NOT NULL auto_increment,
   id_owner mediumint(8) unsigned NOT NULL default 0,
   id_cat tinyint(4) unsigned NOT NULL default 0,
   child_level tinyint(4) unsigned NOT NULL default 0,
@@ -700,8 +700,8 @@ CREATE TABLE {$db_prefix}collapsed_categories (
 #
 
 CREATE TABLE {$db_prefix}contact_lists (
-  id_list mediumint(8) NOT NULL DEFAULT 0,
-  id_owner mediumint(8) NOT NULL DEFAULT 0,
+  id_list mediumint(8) unsigned NOT NULL default 0,
+  id_owner mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_list),
   KEY member (id_owner)
 ) ENGINE=MyISAM;
@@ -711,12 +711,12 @@ CREATE TABLE {$db_prefix}contact_lists (
 #
 
 CREATE TABLE {$db_prefix}contacts (
-  id_member mediumint(8) unsigned NOT NULL DEFAULT 0,
-  id_list mediumint(8) NOT NULL DEFAULT 0,
-  is_synchronous tinyint(1) unsigned NOT NULL DEFAULT 0,
-  position tinyint(4) NOT NULL DEFAULT 0,
-  updated int(11) NOT NULL DEFAULT 0,
-  hidden tinyint(1) unsigned NOT NULL DEFAULT 0,
+  id_member mediumint(8) unsigned NOT NULL default 0,
+  id_list mediumint(8) unsigned NOT NULL default 0,
+  is_synchronous tinyint(1) unsigned NOT NULL default 0,
+  position tinyint(4) NOT NULL default 0,
+  updated int(10) unsigned NOT NULL default 0,
+  hidden tinyint(1) unsigned NOT NULL default 0,
   PRIMARY KEY (id_member, id_list)
 ) AUTO_INCREMENT=100 ENGINE=MyISAM;
 
@@ -755,12 +755,12 @@ CREATE TABLE {$db_prefix}custom_fields (
 
 CREATE TABLE {$db_prefix}drafts (
   id_draft int(10) unsigned NOT NULL auto_increment,
-  id_member mediumint(8) unsigned NOT NULL,
+  id_member mediumint(8) unsigned NOT NULL default 0,
   subject varchar(255) NOT NULL default '',
   body mediumtext NOT NULL,
   post_time int(10) unsigned,
   is_pm tinyint(3) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_context int(10) unsigned NOT NULL default 0,
   extra text NOT NULL,
   PRIMARY KEY (id_draft),
@@ -773,7 +773,7 @@ CREATE TABLE {$db_prefix}drafts (
 #
 
 CREATE TABLE {$db_prefix}group_moderators (
-  id_group smallint(5) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_group, id_member)
 ) ENGINE=MyISAM;
@@ -802,7 +802,7 @@ CREATE TABLE {$db_prefix}log_actions (
   id_member mediumint(8) unsigned NOT NULL default 0,
   ip int(10) NOT NULL default 0,
   action varchar(30) NOT NULL default '',
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_topic mediumint(8) unsigned NOT NULL default 0,
   id_msg int(10) unsigned NOT NULL default 0,
   extra text NOT NULL,
@@ -835,7 +835,7 @@ CREATE TABLE {$db_prefix}log_activity (
 
 CREATE TABLE {$db_prefix}log_boards (
   id_member mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_msg int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_member, id_board)
 ) ENGINE=MyISAM;
@@ -866,8 +866,8 @@ CREATE TABLE {$db_prefix}log_comments (
 #
 
 CREATE TABLE {$db_prefix}log_digest (
-  id_topic mediumint(8) unsigned NOT NULL,
-  id_msg int(10) unsigned NOT NULL,
+  id_topic mediumint(8) unsigned NOT NULL default 0,
+  id_msg int(10) unsigned NOT NULL default 0,
   note_type varchar(10) NOT NULL default 'post',
   daily tinyint(3) unsigned NOT NULL default 0,
   exclude mediumint(8) unsigned NOT NULL default 0
@@ -912,7 +912,7 @@ CREATE TABLE {$db_prefix}log_floodcontrol (
 CREATE TABLE {$db_prefix}log_group_requests (
   id_request mediumint(8) unsigned NOT NULL auto_increment,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  id_group smallint(5) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   time_applied int(10) unsigned NOT NULL default 0,
   reason text NOT NULL,
   PRIMARY KEY (id_request),
@@ -955,7 +955,7 @@ CREATE TABLE {$db_prefix}log_intrusion (
 
 CREATE TABLE {$db_prefix}log_mark_read (
   id_member mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_msg int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_member, id_board)
 ) ENGINE=MyISAM;
@@ -978,7 +978,7 @@ CREATE TABLE {$db_prefix}log_member_notices (
 CREATE TABLE {$db_prefix}log_notify (
   id_member mediumint(8) unsigned NOT NULL default 0,
   id_topic mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   sent tinyint(1) unsigned NOT NULL default 0,
   PRIMARY KEY (id_member, id_topic, id_board),
   KEY id_topic (id_topic, id_member)
@@ -1043,7 +1043,7 @@ CREATE TABLE {$db_prefix}log_reported (
   id_report mediumint(8) unsigned NOT NULL auto_increment,
   id_msg int(10) unsigned NOT NULL default 0,
   id_topic mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
   membername varchar(255) NOT NULL default '',
   subject varchar(255) NOT NULL default '',
@@ -1067,7 +1067,7 @@ CREATE TABLE {$db_prefix}log_reported (
 
 CREATE TABLE {$db_prefix}log_reported_comments (
   id_comment mediumint(8) unsigned NOT NULL auto_increment,
-  id_report mediumint(8) NOT NULL default 0,
+  id_report mediumint(8) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL,
   membername varchar(255) NOT NULL default '',
   email_address varchar(255) NOT NULL default '',
@@ -1172,7 +1172,7 @@ CREATE TABLE {$db_prefix}log_subscribed (
   id_sublog int(10) unsigned NOT NULL auto_increment,
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  old_id_group smallint(5) NOT NULL default 0,
+  old_id_group mediumint(8) NOT NULL default 0,
   start_time int(10) NOT NULL default 0,
   end_time int(10) NOT NULL default 0,
   status tinyint(3) NOT NULL default 0,
@@ -1227,23 +1227,23 @@ CREATE TABLE {$db_prefix}mail_queue (
 
 CREATE TABLE {$db_prefix}media_albums (
   id_album int(10) unsigned NOT NULL auto_increment,
-  album_of int(11) NOT NULL default 0,
+  album_of mediumint(8) unsigned NOT NULL default 0,
   featured tinyint(1) unsigned NOT NULL default 0,
   name varchar(255) NOT NULL default '',
   description text NOT NULL,
-  master int(11) NOT NULL default 0,
-  icon int(11) NOT NULL default 0,
-  bigicon int(11) NOT NULL default 0,
+  master int(10) unsigned NOT NULL default 0,
+  icon int(10) unsigned NOT NULL default 0,
+  bigicon int(10) unsigned NOT NULL default 0,
   passwd varchar(64) NOT NULL default '',
   directory text NOT NULL,
-  parent int(11) NOT NULL default 0,
+  parent int(10) unsigned NOT NULL default 0,
   access varchar(255) NOT NULL default '',
   access_write varchar(255) NOT NULL default '',
   approved tinyint(1) unsigned NOT NULL default 0,
   a_order int(11) NOT NULL default 0,
   child_level int(11) NOT NULL default 0,
-  id_last_media int(11) NOT NULL default 0,
-  num_items int(11) NOT NULL default 0,
+  id_last_media int(11) unsigned NOT NULL default 0,
+  num_items int(11) unsigned NOT NULL default 0,
   options text NOT NULL,
   id_perm_profile int(11) NOT NULL default 0,
   id_quota_profile int(11) NOT NULL default 0,
@@ -1252,7 +1252,7 @@ CREATE TABLE {$db_prefix}media_albums (
   allowed_write varchar(255) NOT NULL default '',
   denied_members varchar(255) NOT NULL default '',
   denied_write varchar(255) NOT NULL default '',
-  id_topic int(11) NOT NULL default 0,
+  id_topic mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_album),
   KEY album_of (album_of),
   KEY master (master),
@@ -1269,9 +1269,9 @@ CREATE TABLE {$db_prefix}media_comments (
   id_media int(10) unsigned NOT NULL default 0,
   id_album int(10) unsigned NOT NULL default 0,
   message text NOT NULL,
-  posted_on int(11) NOT NULL default 0,
-  last_edited int(11) NOT NULL default 0,
-  last_edited_by int(11) NOT NULL default 0,
+  posted_on int(10) unsigned NOT NULL default 0,
+  last_edited int(10) unsigned NOT NULL default 0,
+  last_edited_by int(10) unsigned NOT NULL default 0,
   last_edited_name varchar(25) NOT NULL default '',
   approved tinyint(1) unsigned NOT NULL default 0,
   PRIMARY KEY (id_comment)
@@ -1299,7 +1299,7 @@ CREATE TABLE {$db_prefix}media_fields (
 #
 
 CREATE TABLE {$db_prefix}media_field_data (
-  id_field int(11) NOT NULL default 0,
+  id_field int(10) unsigned NOT NULL default 0,
   id_media int(10) unsigned NOT NULL default 0,
   value text NOT NULL,
   PRIMARY KEY (id_field, id_media)
@@ -1313,8 +1313,8 @@ CREATE TABLE {$db_prefix}media_files (
   id_file int(10) unsigned NOT NULL auto_increment,
   filesize int(10) unsigned NOT NULL default 0,
   filename text NOT NULL,
-  width mediumint(4) NOT NULL default 1,
-  height mediumint(4) NOT NULL default 1,
+  width smallint(5) NOT NULL default 1,
+  height smallint(5) NOT NULL default 1,
   directory text NOT NULL,
   id_album int(10) unsigned NOT NULL default 0,
   transparency enum('', 'transparent', 'opaque') NOT NULL default '',
@@ -1343,29 +1343,29 @@ CREATE TABLE {$db_prefix}media_items (
   id_media int(10) unsigned NOT NULL auto_increment,
   id_member mediumint(8) unsigned NOT NULL default 0,
   member_name varchar(25) NOT NULL default '',
-  last_edited int(11) NOT NULL default 0,
-  last_edited_by int(11) NOT NULL default 0,
+  last_edited int(10) unsigned NOT NULL default 0,
+  last_edited_by int(10) unsigned NOT NULL default 0,
   last_edited_name text NOT NULL,
-  id_file int(11) NOT NULL default 0,
-  id_thumb int(11) NOT NULL default 0,
-  id_preview int(11) NOT NULL default 0,
+  id_file int(10) unsigned NOT NULL default 0,
+  id_thumb int(10) unsigned NOT NULL default 0,
+  id_preview int(10) unsigned NOT NULL default 0,
   type varchar(10) NOT NULL default 'image',
-  album_id int(11) NOT NULL default 0,
-  rating int(11) NOT NULL default 0,
-  voters mediumint(9) NOT NULL default 0,
+  album_id int(10) unsigned NOT NULL default 0,
+  rating mediumint(8) unsigned NOT NULL default 0,
+  voters mediumint(8) unsigned NOT NULL default 0,
   weighted float NOT NULL default 0,
   title varchar(255) NOT NULL default '(No title)',
   description text NOT NULL,
   approved tinyint(1) unsigned NOT NULL default 0,
-  time_added int(11) NOT NULL default 0,
-  views int(11) NOT NULL default 0,
-  downloads int(11) NOT NULL default 0,
+  time_added int(10) unsigned NOT NULL default 0,
+  views int(10) unsigned NOT NULL default 0,
+  downloads int(10) unsigned NOT NULL default 0,
   last_viewed tinyint(1) unsigned NOT NULL default 0,
   keywords text NOT NULL,
   embed_url text NOT NULL,
-  id_last_comment int(11) NOT NULL default 0,
-  log_last_access_time int(11) NOT NULL default 0,
-  num_comments int(11) NOT NULL default 0,
+  id_last_comment int(10) unsigned NOT NULL default 0,
+  log_last_access_time int(10) unsigned NOT NULL default 0,
+  num_comments mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_media),
   KEY id_thumb (id_thumb),
   KEY time_added (time_added),
@@ -1379,7 +1379,7 @@ CREATE TABLE {$db_prefix}media_items (
 CREATE TABLE {$db_prefix}media_log_media (
   id_media int(10) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  time int(11) NOT NULL default 0,
+  time int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_media, id_member)
 ) ENGINE=MyISAM;
 
@@ -1390,8 +1390,8 @@ CREATE TABLE {$db_prefix}media_log_media (
 CREATE TABLE {$db_prefix}media_log_ratings (
   id_media int(10) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  rating int(11) NOT NULL default 0,
-  time int(11) NOT NULL default 0,
+  rating mediumint(8) NOT NULL default 0,
+  time int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_media, id_member)
 ) ENGINE=MyISAM;
 
@@ -1400,8 +1400,8 @@ CREATE TABLE {$db_prefix}media_log_ratings (
 #
 
 CREATE TABLE {$db_prefix}media_perms (
-  id_group int(11) NOT NULL default 0,
-  id_profile int(11) NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
+  id_profile int(10) unsigned NOT NULL default 0,
   permission varchar(255) NOT NULL default '',
   PRIMARY KEY (id_group, id_profile, permission)
 ) ENGINE=MyISAM;
@@ -1438,10 +1438,10 @@ CREATE TABLE {$db_prefix}media_playlist_data (
 #
 
 CREATE TABLE {$db_prefix}media_quotas (
-  id_profile int(11) NOT NULL default 0,
-  id_group int(11) NOT NULL default 0,
+  id_profile int(10) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   type varchar(10) NOT NULL default '',
-  quota int(11) NOT NULL default 0,
+  quota int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_profile, id_group, type)
 ) ENGINE=MyISAM;
 
@@ -1514,14 +1514,14 @@ VALUES
 	('disable_playlists', '0'),
 	('disable_comments', '0'),
 	('disable_ratings', '0'),
-	('my_docs', 'txt,rtf,pdf,xls,doc,ppt,docx,xlsx,pptx,odt,ods,odp,xml,html,htm,php,css,js,zip,rar,ace,arj,7z,gz,tar,tgz,bz,bzip2,sit');
+	('my_docs', 'txt,rtf,diff,patch,pdf,xls,doc,ppt,docx,xlsx,pptx,odt,ods,odp,xml,html,htm,mht,torrent,srt,ssa,php,css,js,zip,rar,ace,arj,7z,gz,tar,tgz,bz,bzip2,sit');
 
 #
 # Table structure for table `media_variables`
 #
 
 CREATE TABLE {$db_prefix}media_variables (
-  id int(10) NOT NULL auto_increment,
+  id int(10) unsigned NOT NULL auto_increment,
   type varchar(15) NOT NULL default '',
   val1 text NOT NULL,
   val2 text NOT NULL,
@@ -1541,7 +1541,7 @@ CREATE TABLE {$db_prefix}media_variables (
 #
 
 CREATE TABLE {$db_prefix}membergroups (
-  id_group smallint(5) unsigned NOT NULL auto_increment,
+  id_group mediumint(8) NOT NULL auto_increment,
   group_name varchar(80) NOT NULL default '',
   description text NOT NULL,
   online_color varchar(20) NOT NULL default '',
@@ -1582,7 +1582,7 @@ CREATE TABLE {$db_prefix}members (
   member_name varchar(80) NOT NULL default '',
   real_name varchar(255) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default 0,
-  id_group smallint(5) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   id_post_group smallint(5) unsigned NOT NULL default 0,
   additional_groups varchar(255) NOT NULL default '',
   lngfile varchar(255) NOT NULL default '',
@@ -1635,9 +1635,9 @@ CREATE TABLE {$db_prefix}members (
   id_msg_last_visit int(10) unsigned NOT NULL default 0,
   total_time_logged_in int(10) unsigned NOT NULL default 0,
   warning tinyint(4) NOT NULL default 0,
-  media_items int(11) NOT NULL default 0,
-  media_comments int(11) NOT NULL default 0,
-  media_unseen int(11) NOT NULL default '-1',
+  media_items mediumint(8) unsigned NOT NULL default 0,
+  media_comments mediumint(8) unsigned NOT NULL default 0,
+  media_unseen mediumint(8) unsigned NOT NULL default '-1',
   data text NOT NULL,
   PRIMARY KEY (id_member),
   KEY member_name (member_name),
@@ -1662,7 +1662,7 @@ CREATE TABLE {$db_prefix}message_icons (
   id_icon smallint(5) unsigned NOT NULL auto_increment,
   title varchar(80) NOT NULL default '',
   filename varchar(80) NOT NULL default '',
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   icon_order smallint(5) unsigned NOT NULL default 0,
   PRIMARY KEY (id_icon),
   KEY id_board (id_board)
@@ -1697,7 +1697,7 @@ VALUES
 CREATE TABLE {$db_prefix}messages (
   id_msg int(10) unsigned NOT NULL auto_increment,
   id_topic mediumint(8) unsigned NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   poster_time int(10) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
   id_msg_modified int(10) unsigned NOT NULL default 0,
@@ -1741,7 +1741,7 @@ VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Wedge', 'dont
 #
 
 CREATE TABLE {$db_prefix}moderators (
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_board, id_member)
 ) ENGINE=MyISAM;
@@ -1793,7 +1793,7 @@ VALUES (1, 'default'), (2, 'no_polls'), (3, 'reply_only'), (4, 'read_only');
 #
 
 CREATE TABLE {$db_prefix}permissions (
-  id_group smallint(5) NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   permission varchar(30) NOT NULL default '',
   add_deny tinyint(4) NOT NULL default 1,
   PRIMARY KEY (id_group, permission)
@@ -1943,7 +1943,7 @@ CREATE TABLE {$db_prefix}poll_choices (
 #
 
 CREATE TABLE {$db_prefix}pretty_topic_urls (
-  id_topic mediumint(8) NOT NULL default 0,
+  id_topic mediumint(8) unsigned NOT NULL default 0,
   pretty_url varchar(80) NOT NULL,
   PRIMARY KEY (id_topic),
   KEY pretty_url (pretty_url)
@@ -2049,7 +2049,7 @@ VALUES
 	('attachmentNumPerPostLimit', '4'),
 	('attachmentDirSizeLimit', '10240'),
 	('attachmentUploadDir', '{$boarddir}/attachments'),
-	('attachmentExtensions', 'doc,gif,jpg,mpg,pdf,png,txt,zip'),
+	('attachmentExtensions', 'doc,docx,gif,jpg,png,pdf,txt,rtf,diff,patch,zip,rar,7z'),
 	('attachmentCheckExtensions', '0'),
 	('attachmentShowImages', '1'),
 	('attachmentEnable', '1'),
@@ -2340,7 +2340,7 @@ CREATE TABLE {$db_prefix}subscriptions (
   description varchar(255) NOT NULL default '',
   cost text NOT NULL,
   length varchar(6) NOT NULL default '',
-  id_group smallint(5) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   add_groups varchar(40) NOT NULL default '',
   active tinyint(3) NOT NULL default 1,
   repeatable tinyint(3) NOT NULL default 0,
@@ -2357,7 +2357,7 @@ CREATE TABLE {$db_prefix}subscriptions (
 
 CREATE TABLE {$db_prefix}subscriptions_groups (
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
-  id_group smallint(5) unsigned NOT NULL default 0,
+  id_group mediumint(8) NOT NULL default 0,
   PRIMARY KEY (id_subscribe, id_group)
 ) ENGINE=MyISAM;
 
@@ -2448,7 +2448,7 @@ CREATE TABLE {$db_prefix}thoughts (
 CREATE TABLE {$db_prefix}topics (
   id_topic mediumint(8) unsigned NOT NULL auto_increment,
   is_pinned tinyint(4) NOT NULL default 0,
-  id_board smallint(5) unsigned NOT NULL default 0,
+  id_board mediumint(8) unsigned NOT NULL default 0,
   id_first_msg int(10) unsigned NOT NULL default 0,
   id_last_msg int(10) unsigned NOT NULL default 0,
   id_member_started mediumint(8) unsigned NOT NULL default 0,
@@ -2462,7 +2462,7 @@ CREATE TABLE {$db_prefix}topics (
   locked tinyint(4) NOT NULL default 0,
   unapproved_posts smallint(5) NOT NULL default 0,
   approved tinyint(3) NOT NULL default 1,
-  privacy enum('default', 'members', 'groups', 'contacts', 'author') NOT NULL DEFAULT 'default',
+  privacy enum('default', 'members', 'groups', 'contacts', 'author') NOT NULL default 'default',
   privacy_id int(10) unsigned NOT NULL default 0,
   tags text NOT NULL,
   PRIMARY KEY (id_topic),
