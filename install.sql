@@ -1637,7 +1637,7 @@ CREATE TABLE {$db_prefix}members (
   warning tinyint(4) NOT NULL default 0,
   media_items mediumint(8) unsigned NOT NULL default 0,
   media_comments mediumint(8) unsigned NOT NULL default 0,
-  media_unseen mediumint(8) unsigned NOT NULL default '-1',
+  media_unseen mediumint(8) NOT NULL default '-1',
   data text NOT NULL,
   PRIMARY KEY (id_member),
   KEY member_name (member_name),
