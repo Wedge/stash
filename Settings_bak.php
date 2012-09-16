@@ -39,11 +39,37 @@ $db_show_debug = false;
 $boarddir = dirname(__FILE__);					# The absolute path to the forum's folder. (not just '.'!)
 $sourcedir = dirname(__FILE__) . '/Sources';	# Path to the Sources directory.
 $cachedir = dirname(__FILE__) . '/cache';		# Path to the cache directory.
+$cssdir = dirname(__FILE__) . '/css';			# Path to the CSS cache directory.
+$jsdir = dirname(__FILE__) . '/js';				# Path to the JS cache directory.
 $pluginsdir = dirname(__FILE__) . '/Plugins';	# Path to the plugins directory.
 $pluginsurl = $boardurl . '/Plugins';			# URL to the Plugins area root.
 
 ########## Error-Catching ##########
 # Note: You shouldn't touch these settings.
 $db_last_error = 0;
+
+if (file_exists(dirname(__FILE__) . '/install.php'))
+{
+	header('Location: http' . (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 's' : '') . '://' . (empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] . (empty($_SERVER['SERVER_PORT']) || $_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT']) : $_SERVER['HTTP_HOST']) . (strtr(dirname($_SERVER['PHP_SELF']), '\\', '/') == '/' ? '' : strtr(dirname($_SERVER['PHP_SELF']), '\\', '/')) . '/install.php');
+	exit;
+}
+
+# Make sure the paths are correct... at least try to fix them.
+if (!file_exists($boarddir) && file_exists(dirname(__FILE__) . '/agreement.txt'))
+	$boarddir = dirname(__FILE__);
+if (!file_exists($sourcedir) && file_exists($boarddir . '/Sources'))
+	$sourcedir = $boarddir . '/Sources';
+if (!file_exists($pluginsdir) && file_exists($boarddir . '/Plugins'))
+	$pluginsdir = $boarddir . '/Plugins';
+
+# Make absolutely sure the cache directories are defined.
+foreach (array('cache', 'css', 'js') as $var)
+{
+	$dir = $var . 'dir';
+	if ((empty($$dir) || ($$dir !== $boarddir . '/' . $var && !file_exists($$dir))) && file_exists($boarddir . '/' . $var))
+		$$dir = $boarddir . '/' . $var;
+	if (!file_exists($$dir))
+		exit('Missing cache folder: $' . $dir . ' (' . $$dir . ')');
+}
 
 ?>

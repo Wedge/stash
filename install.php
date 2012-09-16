@@ -1353,7 +1353,7 @@ function AdminAccount()
 // Final step, clean up and a complete message!
 function DeleteInstall()
 {
-	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename, $cachedir;
+	global $txt, $incontext, $context, $scripturl, $boardurl, $cookiename, $cachedir, $cssdir, $jsdir;
 	global $current_wedge_version, $sourcedir, $settings, $user_info;
 
 	$incontext['page_title'] = $txt['congratulations'];
@@ -1945,15 +1945,16 @@ function fixModSecurity()
 
 function template_install_above()
 {
-	global
-		$incontext, $txt, $installurl, $boardurl, $cachedir, $boarddir,
-		$sourcedir, $wedgesite, $theme, $context, $settings;
+	global $incontext, $txt, $installurl, $boardurl, $cachedir, $cssdir, $jsdir;
+	global $boarddir, $sourcedir, $wedgesite, $theme, $context, $settings;
 
 	// Load Wedge's default paths and pray that it works...
 	if (!defined('WEDGE'))
 		define('WEDGE', 1);
 	$boarddir = dirname(__FILE__);
 	$cachedir = $boarddir . '/cache';
+	$cssdir = $boarddir . '/css';
+	$jsdir = $boarddir . '/js';
 	$sourcedir = $boarddir . '/Sources';
 	require_once($sourcedir . '/Load.php');
 	// !!! I dunno if we have to load all of these, but better safe than sorry.
