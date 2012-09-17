@@ -320,6 +320,13 @@
 					</element>
 				</zeroOrMore>
 				<zeroOrMore>
+					<element name="boards">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
 					<element name="bbc">
 						<attribute name="name">
 							<text/>
