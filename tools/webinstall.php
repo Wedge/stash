@@ -13,7 +13,7 @@
 
 // !!! On upgrade, warn about installed.list!
 
-$GLOBALS['required_php_version'] = '5.2.3';
+$GLOBALS['required_php_version'] = '5.2.4';
 $GLOBALS['required_mysql_version'] = '5.1.0';
 
 // Initialize everything and load the language files.
