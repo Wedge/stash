@@ -35,6 +35,9 @@
 					<ref name="hooks" />
 				</optional>
 				<optional>
+					<ref name="newperms" />
+				</optional>
+				<optional>
 					<ref name="scheduledtasks" />
 				</optional>
 				<optional>
@@ -633,6 +636,75 @@
 					</element>
 				</optional>
 			</interleave>
+		</element>
+	</define>
+
+	<!-- The permissions a plugin wants to make. -->
+	<define name="newperms">
+		<element name="newperms">
+			<attribute name="filename">
+				<data type="string"/>
+			</attribute>
+			<optional>
+				<element name="groups">
+					<oneOrMore>
+						<element name="group">
+							<attribute name="type">
+								<choice>
+									<value>membergroup</value>
+									<value>board</value>
+								</choice>
+							</attribute>
+							<optional>
+								<attribute name="column">
+									<choice>
+										<value>left</value>
+										<value>right</value>
+									</choice>
+								</attribute>
+							</optional>
+							<attribute name="classic">
+								<data type="string"/>
+							</attribute>
+							<attribute name="simple">
+								<data type="string"/>
+							</attribute>
+						</element>
+					</oneOrMore>
+				</element>
+			</optional>
+			<element name="permissions">
+				<oneOrMore>
+					<element name="permission">
+						<attribute name="type">
+							<choice>
+								<value>membergroup</value>
+								<value>board</value>
+							</choice>
+						</attribute>
+						<attribute name="name">
+							<data type="string"/>
+						</attribute>
+						<attribute name="ownany">
+							<choice>
+								<value>true</value>
+								<value>false</value>
+							</choice>
+						</attribute>
+						<attribute name="classic">
+							<data type="string"/>
+						</attribute>
+						<attribute name="simple">
+							<data type="string"/>
+						</attribute>
+						<optional>
+							<attribute name="simpleany">
+								<data type="string"/>
+							</attribute>
+						</optional>
+					</element>
+				</oneOrMore>
+			</element>
 		</element>
 	</define>
 
