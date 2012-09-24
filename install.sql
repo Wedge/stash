@@ -26,7 +26,7 @@ VALUES
 	(1, 'current-version.js', '/files/', 'version=%3$s', '', 'text/javascript'),
 	(2, 'detailed-version.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
 	(3, 'latest-news.js', '/files/', 'language=%1$s&format=%2$s', '', 'text/javascript'),
-	(4, 'latest-packages.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
+	(4, 'latest-plugins.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
 	(5, 'latest-smileys.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
 	(6, 'latest-support.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
 	(7, 'latest-themes.js', '/files/', 'language=%1$s&version=%3$s', '', 'text/javascript');
@@ -72,7 +72,7 @@ CREATE TABLE {$db_prefix}attachments (
 #
 
 CREATE TABLE {$db_prefix}ban_groups (
-  id_ban_group mediumint(8) unsigned NOT NULL auto_increment,
+  id_ban_id_group smallint(5) NOT NULL auto_increment,
   name varchar(20) NOT NULL default '',
   ban_time int(10) unsigned NOT NULL default 0,
   expire_time int(10) unsigned,
@@ -91,7 +91,7 @@ CREATE TABLE {$db_prefix}ban_groups (
 
 CREATE TABLE {$db_prefix}ban_items (
   id_ban mediumint(8) unsigned NOT NULL auto_increment,
-  id_ban_group smallint(5) unsigned NOT NULL default 0,
+  id_ban_group smallint(5) NOT NULL default 0,
   ip_low1 tinyint(3) unsigned NOT NULL default 0,
   ip_high1 tinyint(3) unsigned NOT NULL default 0,
   ip_low2 tinyint(3) unsigned NOT NULL default 0,
@@ -207,7 +207,7 @@ VALUES
 
 CREATE TABLE {$db_prefix}board_groups (
   id_board mediumint(8) unsigned NOT NULL default 0,
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   view_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
   enter_perm enum('allow', 'disallow', 'deny') NOT NULL default 'allow',
   PRIMARY KEY (id_group, id_board)
@@ -241,7 +241,7 @@ CREATE TABLE {$db_prefix}board_members (
 #
 
 CREATE TABLE {$db_prefix}board_permissions (
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   id_profile smallint(5) unsigned NOT NULL default 0,
   permission varchar(30) NOT NULL default '',
   add_deny tinyint(4) NOT NULL default 1,
@@ -773,7 +773,7 @@ CREATE TABLE {$db_prefix}drafts (
 #
 
 CREATE TABLE {$db_prefix}group_moderators (
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
   PRIMARY KEY (id_group, id_member)
 ) ENGINE=MyISAM;
@@ -912,7 +912,7 @@ CREATE TABLE {$db_prefix}log_floodcontrol (
 CREATE TABLE {$db_prefix}log_group_requests (
   id_request mediumint(8) unsigned NOT NULL auto_increment,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   time_applied int(10) unsigned NOT NULL default 0,
   reason text NOT NULL,
   PRIMARY KEY (id_request),
@@ -1172,7 +1172,7 @@ CREATE TABLE {$db_prefix}log_subscribed (
   id_sublog int(10) unsigned NOT NULL auto_increment,
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
   id_member mediumint(8) unsigned NOT NULL default 0,
-  old_id_group mediumint(8) NOT NULL default 0,
+  old_id_group smallint(5) NOT NULL default 0,
   start_time int(10) NOT NULL default 0,
   end_time int(10) NOT NULL default 0,
   status tinyint(3) NOT NULL default 0,
@@ -1400,7 +1400,7 @@ CREATE TABLE {$db_prefix}media_log_ratings (
 #
 
 CREATE TABLE {$db_prefix}media_perms (
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   id_profile int(10) unsigned NOT NULL default 0,
   permission varchar(255) NOT NULL default '',
   PRIMARY KEY (id_group, id_profile, permission)
@@ -1439,7 +1439,7 @@ CREATE TABLE {$db_prefix}media_playlist_data (
 
 CREATE TABLE {$db_prefix}media_quotas (
   id_profile int(10) unsigned NOT NULL default 0,
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   type varchar(10) NOT NULL default '',
   quota int(10) unsigned NOT NULL default 0,
   PRIMARY KEY (id_profile, id_group, type)
@@ -1541,7 +1541,7 @@ CREATE TABLE {$db_prefix}media_variables (
 #
 
 CREATE TABLE {$db_prefix}membergroups (
-  id_group mediumint(8) NOT NULL auto_increment,
+  id_group smallint(5) NOT NULL auto_increment,
   group_name varchar(80) NOT NULL default '',
   description text NOT NULL,
   online_color varchar(20) NOT NULL default '',
@@ -1582,8 +1582,8 @@ CREATE TABLE {$db_prefix}members (
   member_name varchar(80) NOT NULL default '',
   real_name varchar(255) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default 0,
-  id_group mediumint(8) NOT NULL default 0,
-  id_post_group smallint(5) unsigned NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
+  id_post_group smallint(5) NOT NULL default 0,
   additional_groups varchar(255) NOT NULL default '',
   lngfile varchar(255) NOT NULL default '',
   instant_messages smallint(5) NOT NULL default 0,
@@ -1603,7 +1603,7 @@ CREATE TABLE {$db_prefix}members (
   show_online tinyint(4) NOT NULL default 1,
   hide_email tinyint(4) NOT NULL default 0,
   email_address varchar(255) NOT NULL default '',
-  personal_text varchar(255) NOT NULL default '',
+  personal_text varchar(500) NOT NULL default '',
   gender tinyint(4) unsigned NOT NULL default 0,
   birthdate date NOT NULL default '0001-01-01',
   website_title varchar(255) NOT NULL default '',
@@ -1793,7 +1793,7 @@ VALUES (1, 'default'), (2, 'no_polls'), (3, 'reply_only'), (4, 'read_only');
 #
 
 CREATE TABLE {$db_prefix}permissions (
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   permission varchar(30) NOT NULL default '',
   add_deny tinyint(4) NOT NULL default 1,
   PRIMARY KEY (id_group, permission)
@@ -1958,6 +1958,39 @@ CREATE TABLE {$db_prefix}pretty_urls_cache (
   replacement varchar(255) NOT NULL,
   log_time timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY (url_id)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `privacy_boards`
+#
+
+CREATE TABLE {$db_prefix}privacy_boards (
+  id_board smallint(5) unsigned NOT NULL,
+  privacy_type enum('member', 'group', 'contact') NOT NULL,
+  privacy_id mediumint(8) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_board, privacy_type, privacy_id)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `privacy_thoughts`
+#
+
+CREATE TABLE {$db_prefix}privacy_thoughts (
+  id_thought int(10) unsigned NOT NULL,
+  privacy_type enum('member', 'group', 'contact') NOT NULL,
+  privacy_id mediumint(8) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_thought, privacy_type, privacy_id)
+) ENGINE=MyISAM;
+
+#
+# Table structure for table `privacy_topics`
+#
+
+CREATE TABLE {$db_prefix}privacy_topics (
+  id_topic mediumint(8) unsigned NOT NULL,
+  privacy_type enum('member', 'group', 'contact') NOT NULL,
+  privacy_id mediumint(8) unsigned NOT NULL default 0,
+  PRIMARY KEY (id_topic, privacy_type, privacy_id)
 ) ENGINE=MyISAM;
 
 #
@@ -2340,7 +2373,7 @@ CREATE TABLE {$db_prefix}subscriptions (
   description varchar(255) NOT NULL default '',
   cost text NOT NULL,
   length varchar(6) NOT NULL default '',
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   add_groups varchar(40) NOT NULL default '',
   active tinyint(3) NOT NULL default 1,
   repeatable tinyint(3) NOT NULL default 0,
@@ -2357,7 +2390,7 @@ CREATE TABLE {$db_prefix}subscriptions (
 
 CREATE TABLE {$db_prefix}subscriptions_groups (
   id_subscribe mediumint(8) unsigned NOT NULL default 0,
-  id_group mediumint(8) NOT NULL default 0,
+  id_group smallint(5) NOT NULL default 0,
   PRIMARY KEY (id_subscribe, id_group)
 ) ENGINE=MyISAM;
 
@@ -2412,17 +2445,6 @@ VALUES
 	(-1, 1, 'show_avatars', '1'),
 	(-1, 1, 'new_reply_warning', '1');
 # --------------------------------------------------------
-
-#
-# Table structure for table `thought_privacy`
-#
-
-CREATE TABLE {$db_prefix}thought_privacy (
-  id_thought int(10) unsigned NOT NULL,
-  privacy_type enum('member', 'group', 'contact') NOT NULL,
-  privacy_id mediumint(8) unsigned NOT NULL default 0,
-  PRIMARY KEY (id_thought, privacy_type, privacy_id)
-) ENGINE=MyISAM;
 
 #
 # Table structure for table `thoughts`
