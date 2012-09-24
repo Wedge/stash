@@ -1583,7 +1583,7 @@ CREATE TABLE {$db_prefix}members (
   real_name varchar(255) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default 0,
   id_group smallint(5) NOT NULL default 0,
-  id_post_group smallint(5) NOT NULL default 0,
+  id_post_group smallint(5) unsigned NOT NULL default 0,
   additional_groups varchar(255) NOT NULL default '',
   lngfile varchar(255) NOT NULL default '',
   instant_messages smallint(5) NOT NULL default 0,
