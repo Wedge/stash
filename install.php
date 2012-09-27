@@ -1833,20 +1833,25 @@ function updateSettingsFile($vars)
 
 	for ($i = 0, $n = count($settingsArray); $i < $n; $i++)
 	{
-		// Remove the redirect...
-		if (trim($settingsArray[$i]) == 'if (file_exists(dirname(__FILE__) . \'/install.php\'))')
+		// Remove the redirect (normally 5 lines of code)...
+		if (strpos($settingsArray[$i], 'file_exists') !== false && trim($settingsArray[$i]) == 'if (file_exists(dirname(__FILE__) . \'/install.php\'))')
 		{
-			// Get the two lines to nothing.
+			$settingsArray[$i++] = '';
+			$tab = substr($settingsArray[$i], 0, strpos($settingsArray[$i], '{')); // It should normally be empty.
+			while ($i < $n - 1 && rtrim($settingsArray[$i]) != $tab . '}')
+				$settingsArray[$i++] = '';
 			$settingsArray[$i] = '';
-			$settingsArray[++$i] = '';
 			continue;
 		}
+
+		if (empty($settingsArray[$i]))
+			continue;
 
 		if (trim($settingsArray[$i]) == '?' . '>')
 			$settingsArray[$i] = '';
 
 		// Don't trim or bother with it if it's not a variable.
-		if (substr($settingsArray[$i], 0, 1) != '$')
+		if ($settingsArray[$i][0] != '$')
 			continue;
 
 		$settingsArray[$i] = rtrim($settingsArray[$i]) . "\n";
@@ -1870,7 +1875,7 @@ function updateSettingsFile($vars)
 			$settingsArray[$i++] = '$' . $var . ' = \'' . $val . '\';' . "\n";
 	}
 
-	// Blank out the file - done to fix a oddity with some servers.
+	// Blank out the file - done to fix an oddity with some servers.
 	$fp = @fopen(dirname(__FILE__) . '/Settings.php', 'w');
 	if (!$fp)
 		return false;
