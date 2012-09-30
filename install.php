@@ -62,6 +62,11 @@ $incontext['current_step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
 $incontext['overall_percent'] = 0;
 foreach ($incontext['steps'] as $num => $step)
 {
+	// We need to declare we're in the installer so that updateSettings doesn't get called.
+	// But we need to leave it callable in the final step of the installer for when the admin is created.
+	if ($step[2] != 'DeleteInstall')
+		define('WEDGE_INSTALLER', 1);
+
 	if ($num >= $incontext['current_step'])
 	{
 		// The current weight of this step in terms of overall progress.
