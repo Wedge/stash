@@ -11,6 +11,8 @@
  * @version 0.1
  */
 
+define('WEDGE_INSTALLER', 1);
+
 $GLOBALS['current_wedge_version'] = '0.1';
 $GLOBALS['required_php_version'] = '5.2.4';
 
@@ -64,8 +66,7 @@ foreach ($incontext['steps'] as $num => $step)
 {
 	// We need to declare we're in the installer so that updateSettings doesn't get called.
 	// But we need to leave it callable in the final step of the installer for when the admin is created.
-	if ($step[2] != 'DeleteInstall')
-		define('WEDGE_INSTALLER', 1);
+	$incontext['enable_update_settings'] = $step[2] == 'DeleteInstall';
 
 	if ($num >= $incontext['current_step'])
 	{
@@ -146,6 +147,7 @@ function initialize_inputs()
 			$_POST[$k] = addslashes($v);
 
 	// This is really quite simple; if ?delete is on the URL, delete the installer...
+	// @todo: do this when first visiting the forum instead. It should be done anyway...
 	if (isset($_GET['delete']))
 	{
 		if (isset($_SESSION['installer_temp_ftp']))
@@ -157,7 +159,7 @@ function initialize_inputs()
 			$ftp->unlink('webinstall.php');
 			$ftp->unlink('install.sql');
 
-			// We won't bother with JS/CSS cache here, it poses no security threat. Let the user do the job themselves...
+			// We won't bother with CSS/JS caches here, it poses no security threat. Let the user do the job themselves...
 			$ftp->close();
 
 			unset($_SESSION['installer_temp_ftp']);
@@ -168,9 +170,9 @@ function initialize_inputs()
 			@unlink(dirname(__FILE__) . '/webinstall.php');
 			@unlink(dirname(__FILE__) . '/install.sql');
 
-			// Remove JavaScript and CSS cache, in case user chose to disable compression during the install process.
-			foreach (glob(dirname(__FILE__) . '/cache/*.[cj]*') as $del)
-				@unlink($del);
+			// Empty CSS and JavaScript caches, in case user chose to enable compression during the install process.
+			clean_cache('css');
+			clean_cache('js');
 		}
 
 		// Now just output a blank GIF... (Same code as in the verification code generator.)
@@ -956,7 +958,6 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$boarddomain}' => substr($boardurl, strpos($boardurl, '://') !== false ? strpos($boardurl, '://') + 3 : 0),
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
-		'{$enableCompressedData}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
 		'{$wedge_version}' => $GLOBALS['current_wedge_version'],
 		'{$current_time}' => time(),
@@ -1838,6 +1839,9 @@ function updateSettingsFile($vars)
 
 	for ($i = 0, $n = count($settingsArray); $i < $n; $i++)
 	{
+		if (empty($settingsArray[$i]))
+			continue;
+
 		// Remove the redirect (normally 5 lines of code)...
 		if (strpos($settingsArray[$i], 'file_exists') !== false && trim($settingsArray[$i]) == 'if (file_exists(dirname(__FILE__) . \'/install.php\'))')
 		{
@@ -1849,11 +1853,11 @@ function updateSettingsFile($vars)
 			continue;
 		}
 
-		if (empty($settingsArray[$i]))
-			continue;
-
 		if (trim($settingsArray[$i]) == '?' . '>')
+		{
 			$settingsArray[$i] = '';
+			continue;
+		}
 
 		// Don't trim or bother with it if it's not a variable.
 		if ($settingsArray[$i][0] != '$')
@@ -1893,9 +1897,15 @@ function updateSettingsFile($vars)
 		fwrite($fp, "<?php\n");
 
 	$lines = count($settingsArray);
+	$last_line = '';
 	for ($i = 0; $i < $lines - 1; $i++)
-		if ($settingsArray[$i] !== '' || @$settingsArray[$i - 1] !== '') // Skip multiple blank lines
+	{
+		$line = trim($settingsArray[$i]);
+		// Skip multiple blank lines
+		if ($line !== '' || $last_line !== '')
 			fwrite($fp, strtr($settingsArray[$i], "\r", ''));
+		$last_line = $line;
+	}
 
 	fwrite($fp, $settingsArray[$i] . '?' . '>');
 	fclose($fp);
@@ -1980,8 +1990,9 @@ function template_install_above()
 	$boardurl .= substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'));
 
 	$theme['theme_dir'] = $boarddir . '/Themes/default';
-	$theme['default_theme_dir'] = $boarddir . '/Themes/default';
 	$theme['theme_url'] = $boardurl . '/Themes/default';
+	$theme['default_theme_dir'] = $boarddir . '/Themes/default';
+	$theme['default_theme_url'] = $boardurl . '/Themes/default';
 	$theme['images_url'] = $boardurl . '/Themes/default/images';
 	$context['css_folders'] = array('skins');
 	$context['css_suffixes'] = array($context['browser']['agent']);
@@ -1993,45 +2004,32 @@ function template_install_above()
 		<meta charset="utf-8">
 		<meta name="robots" content="noindex">
 		<title>', $txt['wedge_installer'], '</title>
-		<link rel="stylesheet" href="', add_css_file(array('index', 'install')), '">
+		<link rel="stylesheet" href="',
+		add_css_file(
+			array('common', 'index', 'sections', 'install'),
+			false, false,
+			array('common', 'index', 'sections')
+		), '">
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
-		<script src="', add_js_file('scripts/script.js', false, true), '"></script>
+		<script src="',
+		add_js_file(
+			array('scripts/script.js', 'scripts/sbox.js'),
+			false, true,
+			array('scripts/sbox.js' => 1)
+		), '"></script>
 	</head>
 	<body><div id="wedge">
-	<div id="header"><div class="frame">
-		<div id="top_section"><div class="frame">
-			<div class="news normaltext">';
-
-	// Have we got a language drop down - if so do it on the first step only.
-	if (!empty($incontext['detected_languages']) && count($incontext['detected_languages']) > 1 && $incontext['current_step'] == 0)
-	{
-		echo '
-				<div class="right">
-					<form action="', $installurl, '" method="get">
-						<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + this.options[this.selectedIndex].value;">';
-
-		foreach ($incontext['detected_languages'] as $lang => $name)
-			echo '
-							<option', isset($_SESSION['installer_temp_lang']) && $_SESSION['installer_temp_lang'] == $lang ? ' selected' : '', ' value="', $lang, '">', $name, '</option>';
-
-		echo '
-						</select></label>
-						<noscript><input type="submit" value="', $txt['installer_language_set'], '" class="submit"></noscript>
-					</form>
-				</div>';
-	}
-
-	echo '
-			</div>
-		</div></div>
-		<div id="upper_section" class="flow_hidden"><div class="frame">
-			<h1 class="forumtitle"><a>', $txt['wedge_installer'], '</a></h1>
-			<div id="wedgelogo"></div>
-		</div></div>
-	</div></div>
+	<div id="header">
+		<img src="http://wedge.org/wedge.png" id="install_logo" />
+		<div class="frame" style="margin-left: 140px">
+			<div id="upper_section" class="flow_hidden"><div class="frame">
+				<h1 class="forumtitle"><a>', $txt['wedge_installer'], '</a></h1>
+			</div></div>
+		</div>
+	</div>
 	<div id="content"><div class="frame">
 		<div id="main">
-			<div id="main-steps">
+			<div id="main_steps">
 				<h2>', $txt['upgrade_progress'], '</h2>
 				<ul>';
 
@@ -2042,10 +2040,10 @@ function template_install_above()
 	echo '
 				</ul>
 			</div>
-			<div style="font-size: 12pt; height: 25pt; border: 1px solid black; background: white; float: left; margin: 42px 0 0 12%; width: 25%">
+			<div id="install_progress">
 				<div id="overall_text" style="padding-top: 8pt; z-index: 2; color: black; margin-left: -4em; position: absolute; text-align: center; font-weight: bold">', $incontext['overall_percent'], '%</div>
-				<div id="overall_progress" style="width: ', $incontext['overall_percent'], '%; height: 25pt; z-index: 1; background-color: lime">&nbsp;</div>
-				<div class="overall_progress">', $txt['upgrade_overall_progress'], '</div>
+				<div id="overall_progress" style="width: ', $incontext['overall_percent'], '%">&nbsp;</div>
+				<div id="overall_caption">', $txt['upgrade_overall_progress'], '</div>
 			</div>
 			<div id="main_screen" class="clear">
 				<h2>', $incontext['page_title'], '</h2>
@@ -2079,17 +2077,40 @@ function template_install_below()
 
 	echo '
 	</div></div></div></div></div></div>
-	<div id="footer"><div class="frame" style="height: 40px">
-		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2012, Wedgeward</a></div>
+	<div id="footer"><div class="frame" style="height: 30px; line-height: 30px">
+		<a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2012, Wedgeward</a>
 	</div></div>
-	</div></body>
+	</div>
+	<script><!-- // --><![CDATA[
+		$("select").sb();
+	// ]]></script>
+	</body>
 </html>';
 }
 
-// Welcome winners to the wonderful world of Wedge!
+// Welcome, winners, to the wonderful world of Wedge!
 function template_welcome_message()
 {
 	global $incontext, $installurl, $txt;
+
+	// Have we got a language drop down - if so do it on the first step only.
+	if (!empty($incontext['detected_languages']) && count($incontext['detected_languages']) > 1)
+	{
+		echo '
+	<div>
+		<form action="', $installurl, '" method="get">
+			<label>', $txt['installer_language'], ': <select name="lang_file" onchange="location.href = \'', $installurl, '?lang_file=\' + $(this).val();">';
+
+		foreach ($incontext['detected_languages'] as $lang => $name)
+			echo '
+				<option', isset($_SESSION['installer_temp_lang']) && $_SESSION['installer_temp_lang'] == $lang ? ' selected' : '', ' value="', $lang, '">', $name, '</option>';
+
+		echo '
+			</select></label>
+			<noscript><input type="submit" value="', $txt['installer_language_set'], '" class="submit"></noscript>
+		</form>
+	</div>';
+	}
 
 	echo '
 	<script src="http://wedge.org/files/current-version.js?version=' . urlencode($GLOBALS['current_wedge_version']) . '"></script>
@@ -2195,13 +2216,13 @@ function template_chmod_files()
 					<td>
 						<div style="float: ', empty($txt['lang_rtl']) ? 'right' : 'left', '; margin-', empty($txt['lang_rtl']) ? 'right' : 'left', ': 1px"><label class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong> <input type="text" size="3" name="ftp_port" value="', $incontext['ftp']['port'], '"></label></div>
 						<input type="text" size="30" name="ftp_server" id="ftp_server" value="', $incontext['ftp']['server'], '" style="width: 70%">
-						<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_server_info'], '</div>
+						<div class="install_details">', $txt['ftp_server_info'], '</div>
 					</td>
 				</tr><tr>
 					<td style="vertical-align: top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
 					<td>
 						<input type="text" size="50" name="ftp_username" id="ftp_username" value="', $incontext['ftp']['username'], '" style="width: 99%">
-						<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_username_info'], '</div>
+						<div class="install_details">', $txt['ftp_username_info'], '</div>
 					</td>
 				</tr><tr>
 					<td style="vertical-align: top" class="textbox"><label for="ftp_password">', $txt['ftp_password'], ':</label></td>
@@ -2213,7 +2234,7 @@ function template_chmod_files()
 					<td style="vertical-align: top" class="textbox"><label for="ftp_path">', $txt['ftp_path'], ':</label></td>
 					<td style="padding-bottom: 1ex">
 						<input type="text" size="50" name="ftp_path" id="ftp_path" value="', $incontext['ftp']['path'], '" style="width: 99%">
-						<div style="font-size: smaller; margin-bottom: 2ex">', $incontext['ftp']['path_msg'], '</div>
+						<div class="install_details">', $incontext['ftp']['path_msg'], '</div>
 					</td>
 				</tr>
 			</table>
@@ -2239,32 +2260,32 @@ function template_database_settings()
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="db_server_input">', $txt['db_settings_server'], ':</label></td>
 				<td>
 					<input type="text" name="db_server" id="db_server_input" value="', $incontext['db']['server'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_server_info'], '</div>
+					<div class="install_details">', $txt['db_settings_server_info'], '</div>
 				</td>
 			</tr><tr id="db_user_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_user_input">', $txt['db_settings_username'], ':</label></td>
 				<td>
 					<input type="text" name="db_user" id="db_user_input" value="', $incontext['db']['user'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_username_info'], '</div>
+					<div class="install_details">', $txt['db_settings_username_info'], '</div>
 				</td>
 			</tr><tr id="db_passwd_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_passwd_input">', $txt['db_settings_password'], ':</label></td>
 				<td>
 					<input type="password" name="db_passwd" id="db_passwd_input" value="', $incontext['db']['pass'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_password_info'], '</div>
+					<div class="install_details">', $txt['db_settings_password_info'], '</div>
 				</td>
 			</tr><tr id="db_name_contain">
 				<td style="vertical-align: top" class="textbox"><label for="db_name_input">', $txt['db_settings_database'], ':</label></td>
 				<td>
 					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'wedge' : $incontext['db']['name'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_database_info'], '
+					<div class="install_details">', $txt['db_settings_database_info'], '
 					<span id="db_name_info_warning">', $txt['db_settings_database_info_note'], '</span></div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="db_prefix_input">', $txt['db_settings_prefix'], ':</label></td>
 				<td>
 					<input type="text" name="db_prefix" id="db_prefix_input" value="', $incontext['db']['prefix'], '" size="30"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['db_settings_prefix_info'], '</div>
+					<div class="install_details">', $txt['db_settings_prefix_info'], '</div>
 				</td>
 			</tr>
 		</table>';
@@ -2290,25 +2311,25 @@ function template_forum_settings()
 				<td style="width: 20%; vertical-align: top" class="textbox"><label for="mbname_input">', $txt['install_settings_name'], ':</label></td>
 				<td>
 					<input type="text" name="mbname" id="mbname_input" value="', $default_name, '" size="65">
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_name_info'], '</div>
+					<div class="install_details">', $txt['install_settings_name_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="boardurl_input">', $txt['install_settings_url'], ':</label></td>
 				<td>
 					<input type="text" name="boardurl" id="boardurl_input" value="', $incontext['detected_url'], '" size="65"><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_url_info'], '</div>
+					<div class="install_details">', $txt['install_settings_url_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_compress'], ':</td>
 				<td>
 					<label><input type="checkbox" name="compress" checked> ', $txt['install_settings_compress_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['install_settings_compress_info'], '</div>
+					<div class="install_details">', $txt['install_settings_compress_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox">', $txt['install_settings_dbsession'], ':</td>
 				<td>
 					<label><input type="checkbox" name="dbsession" checked> ', $txt['install_settings_dbsession_title'], '</label><br>
-					<div style="font-size: smaller; margin-bottom: 2ex">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
+					<div class="install_details">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
 				</td>
 			</tr>
 		</table>';
@@ -2371,25 +2392,25 @@ function template_admin_account()
 				<td style="width: 18%; vertical-align: top" class="textbox"><label for="username">', $txt['user_settings_username'], ':</label></td>
 				<td>
 					<input type="text" name="username" id="username" value="', $incontext['username'], '" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_username_info'], '</div>
+					<div class="install_details">', $txt['user_settings_username_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="password1">', $txt['user_settings_password'], ':</label></td>
 				<td>
 					<input type="password" name="password1" id="password1" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_password_info'], '</div>
+					<div class="install_details">', $txt['user_settings_password_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="password2">', $txt['user_settings_again'], ':</label></td>
 				<td>
 					<input type="password" name="password2" id="password2" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_again_info'], '</div>
+					<div class="install_details">', $txt['user_settings_again_info'], '</div>
 				</td>
 			</tr><tr>
 				<td style="vertical-align: top" class="textbox"><label for="email">', $txt['user_settings_email'], ':</label></td>
 				<td>
 					<input type="text" name="email" id="email" value="', $incontext['email'], '" size="40">
-					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['user_settings_email_info'], '</div>
+					<div class="install_details">', $txt['user_settings_email_info'], '</div>
 				</td>
 			</tr>
 		</table>

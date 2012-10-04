@@ -72,7 +72,7 @@ CREATE TABLE {$db_prefix}attachments (
 #
 
 CREATE TABLE {$db_prefix}ban_groups (
-  id_ban_id_group smallint(5) NOT NULL auto_increment,
+  id_ban_group smallint(5) NOT NULL auto_increment,
   name varchar(20) NOT NULL default '',
   ban_time int(10) unsigned NOT NULL default 0,
   expire_time int(10) unsigned,
@@ -2077,6 +2077,7 @@ VALUES
 	('password_strength', '1'),
 	('pollMode', '1'),
 	('enableCompressedOutput', '{$enableCompressedOutput}'),
+	('enableCompressedData', '{$enableCompressedOutput}'),
 	('attachmentSizeLimit', '128'),
 	('attachmentPostLimit', '192'),
 	('attachmentNumPerPostLimit', '4'),
