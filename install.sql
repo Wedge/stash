@@ -2133,7 +2133,6 @@ VALUES
 	('send_welcomeEmail', '1'),
 	('allow_editDisplayName', '1'),
 	('allow_hideOnline', '1'),
-	('guest_hideContacts', '1'),
 	('spamWaitTime', '5'),
 	('pm_spam_settings', '10,5,20'),
 	('reserveWord', '0'),
