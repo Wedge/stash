@@ -16,11 +16,7 @@ define('WEDGE_VERSION', '0.1');
 define('WEDGE_LANG_VERSION', '0.1');
 
 $GLOBALS['required_php_version'] = '5.2.4';
-$GLOBALS['required_mysql_version'] = '5.1.0';
-
-$db = array(
-	'required_version' => '5.1.0',
-);
+$GLOBALS['required_mysql_version'] = '5.0.3';
 
 // General options for the script.
 $timeLimitThreshold = 3;
@@ -2027,20 +2023,12 @@ function changeSettings($config_vars)
 
 function php_version_check()
 {
-	$minver = explode('.', $GLOBALS['required_php_version']);
-	$curver = explode('.', PHP_VERSION);
-
-	return !(($curver[0] <= $minver[0]) && ($curver[1] <= $minver[1]) && ($curver[1] <= $minver[1]) && ($curver[2][0] < $minver[2][0]));
+	return version_compare($GLOBALS['required_php_version'], PHP_VERSION, '<');
 }
 
 function db_version_check()
 {
-	global $db;
-
-	$curver = min(mysql_get_server_info(), mysql_get_client_info());
-	$curver = preg_replace('~\-.+?$~', '', $curver);
-
-	return version_compare($db['required_version'], $curver) <= 0;
+	return version_compare($GLOBALS['required_mysql_version'], preg_replace('~\-.+?$~', '', mysql_get_server_info()), '<');
 }
 
 function getMemberGroups()
@@ -2092,7 +2080,7 @@ function fixRelativePath($path)
 function parse_sql($filename)
 {
 	global $db_prefix, $db_collation, $boarddir, $boardurl, $command_line, $file_steps, $step_progress, $custom_warning;
-	global $upcontext, $support_js, $is_debug, $db_connection, $db;
+	global $upcontext, $support_js, $is_debug, $db_connection;
 
 /*
 	Failure allowed on:
@@ -2139,7 +2127,7 @@ function parse_sql($filename)
 	set_error_handler('sql_error_handler');
 
 	// Let's find out what the members table uses and put it in a global var - to allow upgrade script to match collations!
-	if (version_compare($db['required_version'], mysql_get_server_info()) != 1)
+	if (version_compare($GLOBALS['required_mysql_version'], mysql_get_server_info()) != 1)
 	{
 		$request = $smcFunc['db_query']('', '
 			SHOW TABLE STATUS
@@ -2589,7 +2577,7 @@ function protected_alter($change, $substep, $is_test = false)
 // Alter a text column definition preserving its character set.
 function textfield_alter($change, $substep)
 {
-	global $db_prefix, $db;
+	global $db_prefix;
 
 	// If we're here, we only need to concern ourselves with updating the column type; we don't need to worry about collation since everything's UTF-8!
 
@@ -2621,8 +2609,6 @@ function textfield_alter($change, $substep)
 // Check if we need to alter this query.
 function checkChange(&$change)
 {
-	global $db;
-
 	// Not a column we need to check on?
 	if (!in_array($change['name'], array('memberGroups', 'passwordSalt')))
 		return;
@@ -2717,7 +2703,7 @@ function nextSubstep($substep)
 
 function cmdStep0()
 {
-	global $boarddir, $sourcedir, $db_prefix, $language, $settings, $start_time, $cachedir, $db, $upcontext;
+	global $boarddir, $sourcedir, $db_prefix, $language, $settings, $start_time, $cachedir, $upcontext;
 	global $language, $is_debug, $txt;
 	$start_time = time();
 
@@ -2760,7 +2746,7 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 	if (!php_version_check())
 		print_error('Error: PHP ' . PHP_VERSION . ' does not match the minimum requirements of Wedge.', true);
 	if (!db_version_check())
-		print_error('Error: Your MySQL version does not meet the minimum requirements (' . $db['required_version'] . ') of Wedge. Please ask your host to upgrade.', true);
+		print_error('Error: Your MySQL version does not meet the minimum requirements (' . $GLOBALS['required_mysql_version'] . ') of Wedge. Please ask your host to upgrade.', true);
 
 	if ($smcFunc['db_query']('', 'ALTER TABLE {db_prefix}boards ORDER BY id_board', array()) === false)
 		print_error('Error: the MySQL account in Settings.php does not have sufficient privileges.', true);
