@@ -198,6 +198,13 @@
 					</element>
 				</zeroOrMore>
 				<zeroOrMore>
+					<element name="yesno">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
 					<element name="literal">
 						<attribute name="name">
 							<text/>
