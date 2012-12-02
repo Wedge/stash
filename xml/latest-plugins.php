@@ -163,9 +163,9 @@ function we_packagesMoreInfo(id)
 {
 	window.weLatestPackages_temp = document.getElementById("weLatestPackagesWindow").innerHTML;
 
-	document.getElementById('weLatestPackagesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + we_modificationInfo[id].name + '</h3>\
-		<h4 style="padding: 4px; margin: 0;"><a href="' + window.we_script + actionurl + 'http://custom.simplemachines.org/mods/downloads/' + id + '/' + we_modificationInfo[id].file + ';' + window.weSessionQuery + '">Install Now!</a></h4>\
-		<div style="margin: 4px;">' + we_modificationInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
+	document.getElementById('weLatestPackagesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px">' + we_modificationInfo[id].name + '</h3>\
+		<h4 style="padding: 4px; margin: 0"><a href="' + window.we_script + actionurl + 'http://custom.simplemachines.org/mods/downloads/' + id + '/' + we_modificationInfo[id].file + ';' + window.weSessionQuery + '">Install Now!</a></h4>\
+		<div style="margin: 4px">' + we_modificationInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
 		<div class="title" style="padding: 4px; margin: 0"><a href="javascript:we_packagesBack();void(0);">(go back)</a></div>');
 }
 
@@ -176,10 +176,10 @@ function we_packagesBack()
 }
 
 window.weLatestPackages = '\
-	<div id="weLatestPackagesWindow"style="overflow: auto;">\
-		<h3 style="margin: 0; padding: 4px;">New Packages:</h3>\
-		<img src="http://www.simplemachines.org/smf/images/package.png" width="102" height="98" style="float: right; margin: 4px;" alt="(package)" />\
-		<ul style="list-style: none; margin-top: 3px; padding: 0 4px;">';
+	<div id="weLatestPackagesWindow" style="overflow: auto">\
+		<h3 style="margin: 0; padding: 4px">New Packages:</h3>\
+		<img src="http://www.simplemachines.org/smf/images/package.png" width="102" height="98" style="float: right; margin: 4px" alt="(package)" />\
+		<ul style="list-style: none; margin-top: 3px; padding: 0 4px">';
 
 for (var i = 0; i < we_latestModifications.length; i++)
 {
@@ -192,8 +192,8 @@ window.weLatestPackages += '\
 		</ul>';
 
 window.weLatestPackages += '\
-		<h3 style="margin: 0; padding: 4px;">Package of the Moment:</h3>\
-		<div style="padding: 0 4px;">\
+		<h3 style="margin: 0; padding: 4px">Package of the Moment:</h3>\
+		<div style="padding: 0 4px">\
 			<a href="javascript:we_packagesMoreInfo(<?php echo $context['cust_packs']['moment_id']; ?>);void(0);"><?php echo addcslashes($mods[$context['cust_packs']['moment_id']]['name'], "'"), ' ', addcslashes($mods[$context['cust_packs']['moment_id']]['version'], "'"); ?></a>\
 		</div>';
 

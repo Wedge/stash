@@ -174,13 +174,13 @@ function we_themesMoreInfo(id)
 {
 	window.weLatestThemes_temp = document.getElementById("weLatestThemesWindow").innerHTML;
 	document.getElementById("weLatestThemesWindow").style.overflow = 'auto';
-	document.getElementById('weLatestThemesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px;">' + we_themeInfo[id].name + '</h3>\
-		<h4 style="margin: 0;padding: 4px;"><a href="http://custom.simplemachines.org/themes/index.php?lemma=' + id + '">View Theme Now!</a></h4>\
-		<div style="overflow: auto;">\
-			<img src="http://custom.simplemachines.org/themes/index.php?action=download;lemma='+id+';image=thumb" alt="" style="float: right; margin: 10px;" />\
-			<div style="padding:8px;">' + we_themeInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
+	document.getElementById('weLatestThemesWindow').innerHTML = '<h3 style="margin: 0; padding: 4px">' + we_themeInfo[id].name + '</h3>\
+		<h4 style="margin: 0;padding: 4px"><a href="http://custom.simplemachines.org/themes/index.php?lemma=' + id + '">View Theme Now!</a></h4>\
+		<div style="overflow: auto">\
+			<img src="http://custom.simplemachines.org/themes/index.php?action=download;lemma='+id+';image=thumb" alt="" style="float: right; margin: 10px" />\
+			<div style="padding: 8px">' + we_themeInfo[id].desc.replace(/<a href/g, '<a href') + '</div>\
 		</div>\
-		<div style="padding: 4px;" class="smalltext"><a href="javascript:we_themesBack();void(0);">(go back)</a></div>';
+		<div style="padding: 4px" class="smalltext"><a href="javascript:we_themesBack();void(0);">(go back)</a></div>';
 }
 
 function we_themesBack()
@@ -193,13 +193,13 @@ function we_themesBack()
 window.weLatestThemes = '\
 	<div id="weLatestThemesWindow">\
 		<div>\
-			<img src="http://www.simplemachines.org/smf/images/themes.png" width="102" height="98" style="float: right; margin: 0 0 10px 10px;" alt="(package)" />\
-			<ul style="list-style: none; padding: 0; margin: 0 0 0 5px;">';
+			<img src="http://www.simplemachines.org/smf/images/themes.png" width="102" height="98" style="float: right; margin: 0 0 10px 10px" alt="(package)" />\
+			<ul style="list-style: none; padding: 0; margin: 0 0 0 5px">';
 for(var i=0; i < we_latestThemes.length; i++)
 {
 	var id_theme = we_latestThemes[i];
 	window.weLatestThemes += '\
-				<li style="list-style: none;"><a href="javascript:we_themesMoreInfo(' + id_theme + ');void(0);">' + we_themeInfo[id_theme].name + ' by ' + we_themeInfo[id_theme].author + '</a></li>';
+				<li style="list-style: none"><a href="javascript:we_themesMoreInfo(' + id_theme + ');void(0);">' + we_themeInfo[id_theme].name + ' by ' + we_themeInfo[id_theme].author + '</a></li>';
 }
 
 window.weLatestThemes += '\
@@ -209,14 +209,14 @@ if (we_featured !=0 || we_random != 0)
 
 	if (we_featured != 0)
 		window.weLatestThemes += '\
-				<h4 style="padding: 4px 4px 0 4px; margin: 0;">Featured Theme</h4>\
-				<p style="padding: 0 4px; margin: 0;">\
+				<h4 style="padding: 4px 4px 0 4px; margin: 0">Featured Theme</h4>\
+				<p style="padding: 0 4px; margin: 0">\
 					<a href="javascript:we_themesMoreInfo('+we_featured+');void(0);">'+we_themeInfo[we_featured].name + ' by ' + we_themeInfo[we_featured].author+'</a>\
 				</p>';
 	if (we_random != 0)
 		window.weLatestThemes += '\
-				<h4 style="padding: 4px 4px 0 4px;margin: 0;">Theme of the Moment</h4>\
-				<p style="padding: 0 4px; margin: 0;">\
+				<h4 style="padding: 4px 4px 0 4px; margin: 0">Theme of the Moment</h4>\
+				<p style="padding: 0 4px; margin: 0">\
 					<a href="javascript:we_themesMoreInfo('+we_random+');void(0);">'+we_themeInfo[we_random].name + ' by ' + we_themeInfo[we_random].author+'</a>\
 				</p>';
 }
