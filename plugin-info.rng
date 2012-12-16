@@ -318,6 +318,13 @@
 					</element>
 				</zeroOrMore>
 				<zeroOrMore>
+					<element name="percent">
+						<attribute name="name">
+							<text/>
+						</attribute>
+					</element>
+				</zeroOrMore>
+				<zeroOrMore>
 					<element name="permissions">
 						<attribute name="name">
 							<text/>
