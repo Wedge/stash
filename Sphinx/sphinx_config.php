@@ -304,11 +304,11 @@ function step_999()
 
 	ob_end_clean();
 	header('Pragma: ');
-	if (!$context['browser']['is_gecko'])
+	if (!we::is('gecko'))
 		header('Content-Transfer-Encoding: binary');
 	header('Connection: close');
 	header('Content-Disposition: attachment; filename="sphinx.conf"');
-	header('Content-Type: ' . ($context['browser']['is_ie'] || $context['browser']['is_opera'] ? 'application/octetstream' : 'application/octet-stream'));
+	header('Content-Type: ' . (we::is('ie,opera') ? 'application/octetstream' : 'application/octet-stream'));
 
 	$weight_factors = array(
 		'age',

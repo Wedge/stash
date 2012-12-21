@@ -23,13 +23,13 @@ $final = preg_replace_callback('~(?<!-)(?:' . implode('|', array_keys($rule_list
 
 function wedge_fix_browser_css($matches)
 {
-	global $browser, $prefix, $rule_list;
+	global $prefix, $rule_list;
 
-	$index = $browser['is_ie'] ? 0 : ($browser['is_firefox'] ? 1 : ($browser['is_chrome'] ? 2 : ($browser['is_ios'] ? 3 : ($browser['is_safari'] ? 4 : ($browser['is_opera'] ? 5 : ($browser['is_android'] ? 6 : 7))))));
+	$index = we::is('ie') ? 0 : (we::is('firefox') ? 1 : (we::is('chrome') ? 2 : (we::is('ios') ? 3 : (we::is('safari') ? 4 : (we::is('opera') ? 5 : (we::is('android') ? 6 : 7))))));
 
 	foreach ($rule_list as $key => $rule)
 		if (strpos($matches[0], $key) === 0)
-			return $rule[$index] === -1 || $browser['version'] < $rule[$index] ? $prefix . $matches[0] : $matches[0];
+			return $rule[$index] === -1 || we::$browser['version'] < $rule[$index] ? $prefix . $matches[0] : $matches[0];
 
 	return $matches[0];
 }
