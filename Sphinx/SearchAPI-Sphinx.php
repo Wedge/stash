@@ -77,10 +77,10 @@ class sphinx_search
 	// This has it's own custom search.
 	public function searchQuery($search_params, $search_words, $excluded_words, &$participants, &$search_results)
 	{
-		global $user_info, $context, $sourcedir, $settings;
+		global $context, $sourcedir, $settings;
 
 		// Only request the results if they haven't been cached yet.
-		if (($cached_results = cache_get_data('search_results_' . md5($user_info['query_see_board'] . '_' . $context['params']))) === null)
+		if (($cached_results = cache_get_data('search_results_' . md5(we::$user['query_see_board'] . '_' . $context['params']))) === null)
 		{
 			//!!! Should this not be in here?
 			// The API communicating with the search daemon.
@@ -163,7 +163,7 @@ class sphinx_search
 			}
 
 			// Store the search results in the cache.
-			cache_put_data('search_results_' . md5($user_info['query_see_board'] . '_' . $context['params']), $cached_results, 600);
+			cache_put_data('search_results_' . md5(we::$user['query_see_board'] . '_' . $context['params']), $cached_results, 600);
 		}
 
 		$participants = array();

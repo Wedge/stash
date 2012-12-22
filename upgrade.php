@@ -1794,7 +1794,7 @@ function DeleteUpgrade()
 			'id_board' => 'int', 'id_topic' => 'int', 'id_msg' => 'int', 'extra' => 'string-65534',
 		),
 		array(
-			time(), 3, we::$id, $command_line ? '127.0.0.1' : $user_info['ip'], 'upgrade',
+			time(), 3, we::$id, $command_line ? '127.0.0.1' : we::$user['ip'], 'upgrade',
 			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => we::$id)),
 		),
 		array('id_action')

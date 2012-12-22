@@ -793,7 +793,7 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 	// Some core functions.
 	function wesql_replacement__callback($matches)
 	{
-		global $db_callback, $user_info, $db_prefix;
+		global $db_callback, $db_prefix;
 
 		list ($values, $connection) = $db_callback;
 
@@ -801,10 +801,10 @@ function we_compat_initiate($db_server, $db_name, $db_user, $db_passwd, $db_pref
 			return $db_prefix;
 
 		if ($matches[1] === 'query_see_board')
-			return $user_info['query_see_board'];
+			return we::$user['query_see_board'];
 
 		if ($matches[1] === 'query_wanna_see_board')
-			return $user_info['query_wanna_see_board'];
+			return we::$user['query_wanna_see_board'];
 
 		if (!isset($matches[2]))
 			wesql_error_backtrace('Invalid value inserted or no type specified.', '', E_USER_ERROR, __FILE__, __LINE__);
