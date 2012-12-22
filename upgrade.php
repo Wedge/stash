@@ -1731,7 +1731,7 @@ function CleanupMods()
 // Delete the damn thing!
 function DeleteUpgrade()
 {
-	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $user_info, $maintenance;
+	global $command_line, $language, $upcontext, $boarddir, $sourcedir, $maintenance;
 
 	// Now it's nice to have some of the basic Wedge source files.
 	if (!isset($_GET['ssi']) && !$command_line)
@@ -1783,8 +1783,8 @@ function DeleteUpgrade()
 	}
 
 	// Log what we've done.
-	if (empty($user_info['id']))
-		$user_info['id'] = !empty($upcontext['user']['id']) ? $upcontext['user']['id'] : 0;
+	if (empty(we::$id))
+		we::$id = !empty($upcontext['user']['id']) ? $upcontext['user']['id'] : 0;
 
 	// Log the action manually, so CLI still works.
 	$smcFunc['db_insert']('',
@@ -1794,12 +1794,12 @@ function DeleteUpgrade()
 			'id_board' => 'int', 'id_topic' => 'int', 'id_msg' => 'int', 'extra' => 'string-65534',
 		),
 		array(
-			time(), 3, $user_info['id'], $command_line ? '127.0.0.1' : $user_info['ip'], 'upgrade',
-			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => $user_info['id'])),
+			time(), 3, we::$id, $command_line ? '127.0.0.1' : $user_info['ip'], 'upgrade',
+			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => we::$id)),
 		),
 		array('id_action')
 	);
-	$user_info['id'] = 0;
+	we::$id = 0;
 
 	if ($command_line)
 	{

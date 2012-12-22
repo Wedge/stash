@@ -4,7 +4,7 @@
 
 	// Gather all the information together first and then display it.
 	// It doesn't get updated all too often so don't get it too often.
-	if (($data = cache_get_data('mirrors-xml-data', 3600)) === null || (isset($_REQUEST['recache']) && $user_info['is_admin']))
+	if (($data = cache_get_data('mirrors-xml-data', 3600)) === null || (isset($_REQUEST['recache']) && we::$is_admin))
 	{
 		$data = array(
 			'mirrors' => array(),

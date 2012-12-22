@@ -22,7 +22,7 @@ require(dirname(__FILE__) . '/SSI.php');
 is_not_guest();
 
 // Kick the non-admin
-if (!$user_info['is_admin'])
+if (!we::$is_admin)
 	exit('You need admin permission to use this tool.');
 
 if (!isset($_REQUEST['step']))
