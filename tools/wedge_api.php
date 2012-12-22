@@ -331,7 +331,7 @@ function we_authenticateUser()
 				$check = false;
 
 			// Wrong password or not activated - either way, you're going nowhere.
-			$id_member = $check && ($we_user_info['is_activated'] == 1 || $we_user_info['is_activated'] == 11) ? $we_user_info['id_member'] : 0;
+			$id_member = $check && ($we_user_info['is_activated'] % 10 == 1) ? $we_user_info['id_member'] : 0;
 		}
 		else
 			$id_member = 0;
