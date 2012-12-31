@@ -403,11 +403,6 @@
 					'description' => "Registration Agreement",
 					'url' => $scripturl . '?action=admin;area=regcenter;sa=agreement',
 				),
-				'ManageRegistration_3' => array(
-					'name' => 'Manage registration (3)',
-					'description' => "Set Reserved Names",
-					'url' => $scripturl . '?action=admin;area=regcenter;sa=reservednames',
-				),
 				'ManageRegistration_4' => array(
 					'name' => 'Manage registration (4)',
 					'description' => "Settings",
