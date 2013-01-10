@@ -85,5 +85,3 @@ function straighten_up($t)
 		$mo .= "\n> " . $l;
 	return $mo;
 }
-
-?>

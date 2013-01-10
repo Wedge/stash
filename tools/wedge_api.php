@@ -5,7 +5,7 @@
  * we_api.php
  *
  * @package wedge
- * @copyright 2010-2012 Wedgeward, wedge.org
+ * @copyright 2010-2013 Wedgeward, wedge.org
  * @license http://wedge.org/license/
  *
  * @version 0.1
@@ -889,5 +889,3 @@ function we_sessionGC($max_lifetime)
 			'old_sessions' => time() - $max_lifetime,
 		));
 }
-
-?>

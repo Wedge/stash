@@ -5,7 +5,7 @@
  * Handles upgrading existing databases from older versions.
  *
  * @package wedge
- * @copyright 2010-2012 Wedgeward, wedge.org
+ * @copyright 2010-2013 Wedgeward, wedge.org
  * @license http://wedge.org/license/
  *
  * @version 0.1
@@ -3291,7 +3291,7 @@ function template_upgrade_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px">
-		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010&ndash;2012, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010-2013, Wedgeward</a></div>
 	</div></div>
 	</body>
 </html>';
@@ -4108,5 +4108,3 @@ function template_upgrade_complete()
 			<br>
 			', $txt['good_luck'];
 }
-
-?>

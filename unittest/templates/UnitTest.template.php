@@ -60,5 +60,3 @@ function template_ut_test_results()
 	</results>
 </wedge>';
 }
-
-?>

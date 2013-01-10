@@ -1114,5 +1114,3 @@
 			return $errorList;
 		}
 	}
-
-?>

@@ -33,5 +33,3 @@ function wedge_fix_browser_css($matches)
 
 	return $matches[0];
 }
-
-?>

@@ -29,5 +29,3 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 }
 
 echo 'window.weVersion = "0.1";';
-
-?>

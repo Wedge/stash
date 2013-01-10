@@ -45,5 +45,3 @@ $result = $smcFunc['db_insert']($overwrite_old_settings ? 'replace' : 'ignore'),
 // Uh-oh spaghetti-oh!
 if ($result === false)
 	echo '<strong>Error:</strong> Database modifications failed!';
-
-?>

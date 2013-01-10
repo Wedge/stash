@@ -53,5 +53,3 @@
 .bullet_r
 	list-style-image: url($images/aeva/bullet_rem.png)
 */
-
-?>

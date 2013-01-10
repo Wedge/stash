@@ -13,5 +13,3 @@ function img_blankGif()
 	global $theme;
 	return $theme['images_url'] . '/blank.gif';
 }
-
-?>

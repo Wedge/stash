@@ -222,5 +222,3 @@ function protectTimeOut($request)
 		// ]]></script>';
 	exit;
 }
-
-?>

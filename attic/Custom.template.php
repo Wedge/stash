@@ -22,5 +22,3 @@ function template_sidebar_feed_override()
 		<br>
 		<em>...SPOILERS!</em>';
 }
-
-?>

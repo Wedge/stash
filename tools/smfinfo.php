@@ -5,7 +5,7 @@
  * smfinfo.php
  *
  * @package wedge
- * @copyright 2010-2012 Wedgeward, wedge.org
+ * @copyright 2010-2013 Wedgeward, wedge.org
  * @license http://wedge.org/license/
  *
  * @version 0.1
@@ -2430,5 +2430,3 @@ function convert_memory($number, $bytes=true)
 
 	return number_format($number,2) . ' ' . $thousandArray[$i] . $bitsOrBytes;
 }
-
-?>
