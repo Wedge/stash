@@ -232,7 +232,6 @@ function initialize_inputs()
 		loadSource('Security');
 		loadSource('Subs-Auth');
 		loadSource('Class-DB');
-		loadSource('Class-DBExtra');
 		wesql::getInstance();
 		$db_connection = wesql::connect($db_server, $db_name, $db_user, $db_passwd, $db_prefix, array('non_fatal' => true));
 	}
@@ -411,7 +410,8 @@ function show_settings()
 
 	if ($db_connection == true)
 	{
-		$request = weDBExtra::list_tables('', '
+		loadSource('Class-DBPackages');
+		$request = wedbPackages::list_tables('', '
 			{db_prefix}log_topics',
 			array(
 				'db_error_skip' => true,
