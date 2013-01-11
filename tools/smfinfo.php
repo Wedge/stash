@@ -200,7 +200,7 @@ show_footer();
 
 function show_header()
 {
-	global $txt, $smfInfo, $context;
+	global $txt, $smfInfo;
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -663,6 +663,7 @@ function show_detailed_db()
 						<td width="25%"><strong>', $txt['database_version'], '</strong></td>
 						<td>', $context['database_version'], '</td>
 					</tr>';
+
 	if (isset($context['database_size']))
 		echo '
 					<tr>
@@ -796,7 +797,7 @@ function show_error_log()
 						<td>', $context['num_errors'], '</td>
 					</tr>
 					<tr>
-						<td colspan="2"><strong>', (($context['num_errors'] < 101) ? $txt['show_all_errors'] : sprintf($txt['show_num_errors'], $context['num_errors'])), '</strong></td>
+						<td colspan="2"><strong>', ($context['num_errors'] < 101) ? $txt['show_all_errors'] : sprintf($txt['show_num_errors'], $context['num_errors']), '</strong></td>
 					</tr>
 					<tr>
 						<td colspan="2">';
@@ -1314,7 +1315,7 @@ function show_footer()
 
 function initialize()
 {
-	global $txt, $context, $smfInfo, $sourcedir, $db_show_debug, $db_last_error, $settings;
+	global $txt, $smfInfo, $sourcedir, $db_show_debug, $db_last_error, $settings;
 
 	// Set this to true so we get the correct forum value
 	$ssi_gzip = true;
@@ -1340,7 +1341,7 @@ function initialize()
 	error_reporting(E_ALL);
 	@session_start();
 
-	if ($context['user']['is_admin'] && isset($_GET['delete']))
+	if (we::$is_admin && isset($_GET['delete']))
 	{
 		// This won't work on all servers...
 		@unlink(__FILE__);

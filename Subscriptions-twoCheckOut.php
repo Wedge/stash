@@ -43,7 +43,7 @@ class twocheckout_display
 
 	public function fetchGatewayFields($unique_id, $sub_data, $value, $period, $return_url)
 	{
-		global $settings, $txt, $boardurl, $context;
+		global $settings, $txt, $boardurl;
 
 		$return_data = array(
 			'form' => 'https://www.2checkout.com/2co/buyer/purchase',
@@ -59,7 +59,7 @@ class twocheckout_display
 		$return_data['hidden']['x_login'] = $settings['2co_id'];
 		$return_data['hidden']['x_invoice_num'] = $unique_id;
 		$return_data['hidden']['x_amount'] = $value;
-		$return_data['hidden']['x_Email'] = $context['user']['email'];
+		$return_data['hidden']['x_Email'] = we::$user['email'];
 		$return_data['hidden']['fixed'] = 'Y';
 		$return_data['hidden']['demo'] = empty($settings['paidsubs_test']) ? 'N' : 'Y';
 		$return_data['hidden']['return_url'] = $return_url;

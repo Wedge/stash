@@ -45,7 +45,7 @@ class authorize_display
 	// Let's set up the fields needed for the transaction.
 	public function fetchGatewayFields($unique_id, $sub_data, $value, $period, $return_url)
 	{
-		global $settings, $txt, $boardurl, $context;
+		global $settings, $txt, $boardurl;
 
 		$return_data = array(
 			'form' => 'https://' . (empty($settings['paidsubs_test']) ? 'secure' : 'test') . '.authorize.net/gateway/transact.dll',
@@ -70,9 +70,9 @@ class authorize_display
 		$return_data['hidden']['x_fp_timestamp'] = $timestamp;
 		$return_data['hidden']['x_fp_hash'] = $hash;
 		$return_data['hidden']['x_invoice_num'] = $unique_id;
-		$return_data['hidden']['x_email'] = $context['user']['email'];
+		$return_data['hidden']['x_email'] = we::$user['email'];
 		$return_data['hidden']['x_type'] = 'AUTH_CAPTURE';
-		$return_data['hidden']['x_cust_id'] = $context['user']['name'];
+		$return_data['hidden']['x_cust_id'] = we::$user['name'];
 		$return_data['hidden']['x_relay_url'] = $boardurl . '/subscriptions.php';
 
 		return $return_data;
