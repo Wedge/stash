@@ -1,7 +1,7 @@
 
 function _testStyle(sty, undefined)
 {
-	var uc = sty.charAt(0).toUpperCase() + sty.substr(1), stys = [ sty, 'Moz' + uc, 'Webkit' + uc, 'Khtml' + uc, 'ms' + uc, 'O' + uc ], i;
+	var uc = sty[0].toUpperCase() + sty.slice(1), stys = [ sty, 'Moz' + uc, 'Webkit' + uc, 'Khtml' + uc, 'ms' + uc, 'O' + uc ], i;
 	for (i in stys) if (_w.style[stys[i]] !== undefined) return true;
 	return false;
 }

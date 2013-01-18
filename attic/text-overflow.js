@@ -20,7 +20,7 @@
 		el.after(t).attr('title', text);
 		while (text.length > 0 && t.width() > el.width())
 		{
-			text = text.substr(0, text.length - 1);
+			text = text.slice(0, -1);
 			t.html(text + '&hell;');
 		}
 		el.html(t.html());

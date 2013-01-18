@@ -122,10 +122,10 @@ function step1($error_message = '')
 									<script type="text/javascript"><!-- // --><![CDATA[
 										function fixExtension(el)
 										{
-											if (el.form.path.value.substr(el.form.path.value.length - 4) == ".sql" && el.checked)
+											if (el.form.path.value.slice(-4) == ".sql" && el.checked)
 												el.form.path.value += ".gz";
-											else if (el.form.path.value.substr(el.form.path.value.length - 3) == ".gz" && !el.checked)
-												el.form.path.value = el.form.path.value.substr(0, el.form.path.value.length - 3);
+											else if (el.form.path.value.slice(-3) == ".gz" && !el.checked)
+												el.form.path.value = el.form.path.value.slice(0, -3);
 										}
 									// ]]></script>
 									<label for="compress"><input type="checkbox" name="compress" id="compress" value="1"', isset($_POST['compress']) ? ' checked' : '', ' onchange="fixExtension(this);"> Compress the backup with gzip.</label><div style="font-size: smaller">Please note that this will only compress the backup after it is complete.</div><br>

@@ -1205,7 +1205,7 @@ function show_footer()
 
 					var versionType;
 					for (var verType in lowVersion)
-						if (filename.substr(0, verType.length) == verType)
+						if (filename.slice(0, verType.length) == verType)
 						{
 							versionType = verType;
 							break;
