@@ -256,7 +256,7 @@ function step_3()
 	If everything worked so far, congratulations, Sphinx has been installed and works! Next step is modifying Wedge\'s search to work with Sphinx.
 
 	<h4>Configuring Wedge</h4>
-	Upload the package file to the \'Packages\' directory and apply it in Wedge\'s package manager.<br><br>
+	Upload the package file to the \'Packages\' directory and apply it in Wedge\'s package manager. (Note, this is totally wrong. Wedge uses plugins.)<br><br>
 	Select \'Sphinx\' as database index below and press \'Change Search Index\'. Test your search function afterwards, it should work now!<br>
 	<br>
 	<form action="' . $_SERVER['PHP_SELF'] . '?step=888" method="post" target="_blank">

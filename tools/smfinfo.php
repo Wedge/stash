@@ -31,7 +31,6 @@ function load_txt_strings()
 	$txt['phpinfo'] = 'PHP Info';
 	$txt['detailedinfo'] = 'Detailed File Check';
 	$txt['detailedinfo_db'] = 'Detailed DB Check';
-	$txt['mods_installed'] = 'Mods Installed';
 	$txt['error_log'] = 'Error Log';
 	$txt['status'] = 'System Status';
 
@@ -112,11 +111,6 @@ function load_txt_strings()
 	$txt['db_column_default'] = 'Default Value';
 	$txt['db_column_extra'] = 'Extra Info';
 
-	// Mods installed
-	$txt['package_name'] = 'Package Name';
-	$txt['package_id'] = 'Package Id';
-	$txt['package_version'] = 'Package Version';
-
 	// Error log
 	$txt['error_log_count'] = 'Number of Errors';
 	$txt['show_all_errors'] = 'Showing all errors';
@@ -189,8 +183,6 @@ show_php_info();
 show_detailed_file();
 
 show_detailed_db();
-
-show_mods();
 
 show_error_log();
 
@@ -753,35 +745,6 @@ function show_detailed_db()
 			</div>';
 }
 
-function show_mods()
-{
-	global $txt;
-
-	echo '
-			<div class="tab-page" id="mods_installed"><h2 class="tab">', $txt['mods_installed'], '</h2>
-				<script type="text/javascript">addSection("mods_installed", "', $txt['mods_installed'], '");</script>
-				<table border="0" width="50%" align="center">
-					<tr>
-						<td width="200px"><strong>', $txt['package_name'], '</strong></td>
-						<td><strong>', $txt['package_id'], '</strong></td>
-						<td width="150px"><strong>', $txt['package_version'], '</strong></td>
-					</tr>';
-
-	foreach (loadInstalledPackages() as $package)
-	{
-		echo '
-					<tr>
-						<td>', $package['name'], '</td>
-						<td>', (!empty($package['package_id']) ? $package['package_id'] : $package['id']), '</td>
-						<td>', $package['version'], '</td>
-					</tr>';
-	}
-
-	echo '
-				</table>
-			</div>';
-}
-
 function show_error_log()
 {
 	global $txt, $context;
@@ -1329,9 +1292,6 @@ function initialize()
 
 	// If the user isn't an admin or they don't have a password in the URL, or it's incorrect, kick 'em out
 	if (!allowedTo('admin_forum') && (!isset($_POST['pass']) || strcmp($_POST['pass'], $smfInfo) != 0))
-
-
-
 		show_password_form();
 
 	// Either their an admin or have the right password

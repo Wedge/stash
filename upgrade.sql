@@ -126,11 +126,6 @@ $nameChanges = array(
 		'ID_TOPIC' => 'ID_TOPIC id_topic mediumint(8) unsigned NOT NULL default \'0\'',
 		'ID_BOARD' => 'ID_BOARD id_board smallint(5) unsigned NOT NULL default \'0\'',
 	),
-	'log_packages' => array(
-		'ID_INSTALL' => 'ID_INSTALL id_install int(10) NOT NULL auto_increment',
-		'ID_MEMBER_INSTALLED' => 'ID_MEMBER_INSTALLED id_member_installed mediumint(8) NOT NULL default \'0\'',
-		'ID_MEMBER_REMOVED' => 'ID_MEMBER_REMOVED id_member_removed mediumint(8) NOT NULL default \'0\'',
-	),
 	'log_polls' => array(
 		'ID_MEMBER' => 'ID_MEMBER id_member mediumint(8) unsigned NOT NULL default \'0\'',
 		'ID_CHOICE' => 'ID_CHOICE id_choice tinyint(3) unsigned NOT NULL default \'0\'',
@@ -257,9 +252,6 @@ $nameChanges = array(
 	'moderators' => array(
 		'ID_MEMBER' => 'ID_MEMBER id_member mediumint(8) unsigned NOT NULL default \'0\'',
 		'ID_BOARD' => 'ID_BOARD id_board smallint(5) unsigned NOT NULL default \'0\'',
-	),
-	'package_servers' => array(
-		'ID_SERVER' => 'ID_SERVER id_server smallint(5) unsigned NOT NULL auto_increment',
 	),
 	'personal_messages' => array(
 		'ID_PM' => 'ID_PM id_pm int(10) unsigned NOT NULL auto_increment',
@@ -758,37 +750,6 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_digest (
 ---# Adding digest option to "members" table...
 ALTER TABLE {$db_prefix}members
 CHANGE COLUMN notifyOnce notify_regularity tinyint(4) unsigned NOT NULL default '1';
----#
-
-/******************************************************************************/
---- Making changes to the package manager.
-/******************************************************************************/
-
----# Creating "log_packages" table...
-CREATE TABLE IF NOT EXISTS {$db_prefix}log_packages (
-	id_install int(10) NOT NULL auto_increment,
-	filename varchar(255) NOT NULL default '',
-	package_id varchar(255) NOT NULL default '',
-	name varchar(255) NOT NULL default '',
-	version varchar(255) NOT NULL default '',
-	id_member_installed mediumint(8) NOT NULL default '0',
-	member_installed varchar(255) NOT NULL default '',
-	time_installed int(10) NOT NULL default '0',
-	id_member_removed mediumint(8) NOT NULL default '0',
-	member_removed varchar(255) NOT NULL default '',
-	time_removed int(10) NOT NULL default '0',
-	install_state tinyint(3) NOT NULL default '1',
-	failed_steps text NOT NULL,
-	themes_installed varchar(255) NOT NULL default '',
-	db_changes text NOT NULL,
-	PRIMARY KEY (id_install),
-	KEY filename (filename(15))
-) ENGINE=MyISAM{$db_collation};
----#
-
----# Adding extra "log_packages" columns...
-ALTER TABLE {$db_prefix}log_packages
-ADD db_changes text NOT NULL AFTER themes_installed;
 ---#
 
 /******************************************************************************/
@@ -2010,15 +1971,6 @@ $nameChanges = array(
 	'log_member_notices' => array(
 		'subject' => 'subject subject varchar(255) NOT NULL default \'\'',
 	),
-	'log_packages' => array(
-		'filename' => 'filename filename varchar(255) NOT NULL default \'\'',
-		'package_id' => 'package_id package_id varchar(255) NOT NULL default \'\'',
-		'name' => 'name name varchar(255) NOT NULL default \'\'',
-		'version' => 'version version varchar(255) NOT NULL default \'\'',
-		'member_installed' => 'member_installed member_installed varchar(255) NOT NULL default \'\'',
-		'member_removed' => 'member_removed member_removed varchar(255) NOT NULL default \'\'',
-		'themes_installed' => 'themes_installed themes_installed varchar(255) NOT NULL default \'\'',
-	),
 	'log_reported' => array(
 		'membername' => 'membername membername varchar(255) NOT NULL default \'\'',
 		'subject' => 'subject subject varchar(255) NOT NULL default \'\'',
@@ -2065,10 +2017,6 @@ $nameChanges = array(
 		'poster_email' => 'poster_email poster_email varchar(255) NOT NULL default \'\'',
 		'poster_ip' => 'poster_ip poster_ip varchar(255) NOT NULL default \'\'',
 		'modified_name' => 'modified_name modified_name varchar(255) NOT NULL default \'\'',
-	),
-	'package_servers' => array(
-		'name' => 'name name varchar(255) NOT NULL default \'\'',
-		'url' => 'url url varchar(255) NOT NULL default \'\'',
 	),
 	'permission_profiles' => array(
 		'profile_name' => 'profile_name profile_name varchar(255) NOT NULL default \'\'',
