@@ -1052,11 +1052,11 @@ function checkLogin()
 			$upcontext['user']['version'] = $settings['weVersion'];
 
 		// Didn't get anywhere?
-		if ((empty($sha_passwd) || $password != $sha_passwd) && empty($upcontext['username_incorrect']) && !$disable_security)
+		if ((empty($sha_passwd) || $password !== $sha_passwd) && empty($upcontext['username_incorrect']) && !$disable_security)
 		{
 			// MD5?
 			$md5pass = md5_hmac($_REQUEST['passwrd'], strtolower($_POST['user']));
-			if ($md5pass != $password)
+			if ($md5pass !== $password)
 			{
 				$upcontext['password_failed'] = true;
 				// Disable the hashing this time.
