@@ -504,7 +504,6 @@ function we_logOnline($action = null)
 
 	$serialized = $_GET;
 	$serialized['USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
-	unset($serialized['sesc']);
 	if ($action !== null)
 		$serialized['action'] = $action;
 

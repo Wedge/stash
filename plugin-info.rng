@@ -8,6 +8,11 @@
 			<attribute name="id">
 				<text/>
 			</attribute>
+			<optional>
+				<attribute name="maintenance">
+					<text/>
+				</attribute>
+			</optional>
 			<interleave>
 				<ref name="name" />
 				<ref name="author" />
