@@ -16,7 +16,7 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('WEDGE'))
 	require_once(dirname(__FILE__) . '/SSI.php');
 
 // Hmm... no SSI.php and no Wedge?
-elseif(!defined('WEDGE'))
+elseif (!defined('WEDGE'))
 	exit('<b>Error:</b> Cannot start - please verify you put this in the same place as Wedge\'s SSI.php.');
 
 initialize();
