@@ -16,7 +16,7 @@ function we_selectbox()
 	$(document).mousedown(function () { $('#' + id + '_ul').hide(); });
 	$('#' + id + '_ul').children('li').each(function () {
 		$(this)
-			.bind('mouseenter focus mouseleave blur', function () { $(this).toggleClass('hove'); })
+			.on('mouseenter focus mouseleave blur', function () { $(this).toggleClass('hove'); })
 			.mousedown(function () {
 				$(this).parent().children('li').removeClass('active');
 				$(this).addClass('active');

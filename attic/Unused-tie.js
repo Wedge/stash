@@ -8,7 +8,7 @@
 */
 
 var delayTimeout;
-$orig.find("option,optgroup").andSelf().bind("updated.sb", function () {
+$orig.find("option,optgroup").addBack().on("updated.sb", function () {
 		clearTimeout(delayTimeout);
 		delayTimeout = setTimeout(reloadSB);
 	});

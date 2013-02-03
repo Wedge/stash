@@ -17,4 +17,4 @@ for (i = 0, attr = $orig[0].attributes, j = attr.length; i < j; i++)
 for (i in $events)
 	for (j in $events[i])
 		if ($events[i][j].namespace != "specialChange")
-			$display.bind(i, $events[i][j].handler);
+			$display.on(i, $events[i][j].handler);
