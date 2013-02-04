@@ -3697,7 +3697,7 @@ function template_upgrade_complete()
 			function doTheDelete()
 			{
 				$.get(weUrl("', $upgradeurl, '?delete=1&ts_" + $.now()));
-				$(this).attr("disabled", true);
+				this.disabled = true;
 			}
 		// ]]></script><br>';
 
