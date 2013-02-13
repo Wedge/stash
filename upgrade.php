@@ -740,8 +740,8 @@ function loadEssentialData()
 	define('WEDGE', 1);
 
 	// Start the session.
-	if (@ini_get('session.save_handler') == 'user')
-		@ini_set('session.save_handler', 'files');
+	if (ini_get('session.save_handler') == 'user')
+		ini_set('session.save_handler', 'files');
 	@session_start();
 
 	if (empty($smcFunc))

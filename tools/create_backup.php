@@ -14,8 +14,8 @@
 if (function_exists('set_magic_quotes_runtime'))
 	@set_magic_quotes_runtime(0);
 error_reporting(E_ALL);
-if (@ini_get('session.save_handler') == 'user')
-	@ini_set('session.save_handler', 'files');
+if (ini_get('session.save_handler') == 'user')
+	ini_set('session.save_handler', 'files');
 @session_start();
 
 if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() == 1)
@@ -39,14 +39,14 @@ function step1($error_message = '')
 	if (!isset($db_server))
 	{
 		// Set up the defaults.
-		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : @ini_get('mysql.default_host') or $db_server = 'localhost';
-		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : @ini_get('mysql.default_user');
-		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : @ini_get('mysql.default_user');
-		$db_passwd = @ini_get('mysql.default_password');
+		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : ini_get('mysql.default_host') or $db_server = 'localhost';
+		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : ini_get('mysql.default_user');
+		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : ini_get('mysql.default_user');
+		$db_passwd = ini_get('mysql.default_password');
 		$db_prefix = isset($_POST['db_prefix']) ? $_POST['db_prefix'] : '';
 
 		// Should we use a non standard port?
-		$db_port = @ini_get('mysql.default_port');
+		$db_port = ini_get('mysql.default_port');
 		if (!empty($db_port))
 			$db_server .= ':' . $db_port;
 	}
@@ -1339,8 +1339,8 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	global $db_connection;
 
 	// Gonna need a lot of memory.
-	if (@ini_get('memory_limit') < 128)
-		@ini_set('memory_limit', '128M');
+	if (ini_get('memory_limit') < 128)
+		ini_set('memory_limit', '128M');
 	@set_time_limit(300);
 	ignore_user_abort(true);
 	if (function_exists('apache_reset_timeout'))

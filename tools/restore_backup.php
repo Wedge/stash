@@ -14,8 +14,8 @@
 if (function_exists('set_magic_quotes_runtime'))
 	@set_magic_quotes_runtime(0);
 error_reporting(E_ALL);
-if (@ini_get('session.save_handler') == 'user')
-	@ini_set('session.save_handler', 'files');
+if (ini_get('session.save_handler') == 'user')
+	ini_set('session.save_handler', 'files');
 @session_start();
 
 if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() == 1)
@@ -42,13 +42,13 @@ function step1($error_message = '')
 	if (!isset($db_server))
 	{
 		// Set up the defaults.
-		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : @ini_get('mysql.default_host') or $db_server = 'localhost';
-		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : @ini_get('mysql.default_user');
-		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : @ini_get('mysql.default_user');
-		$db_passwd = @ini_get('mysql.default_password');
+		$db_server = isset($_POST['db_server']) ? $_POST['db_server'] : ini_get('mysql.default_host') or $db_server = 'localhost';
+		$db_user = isset($_POST['db_user']) ? $_POST['db_user'] : ini_get('mysql.default_user');
+		$db_name = isset($_POST['db_name']) ? $_POST['db_name'] : ini_get('mysql.default_user');
+		$db_passwd = ini_get('mysql.default_password');
 
 		// Should we use a non standard port?
-		$db_port = @ini_get('mysql.default_port');
+		$db_port = ini_get('mysql.default_port');
 		if (!empty($db_port))
 			$db_server .= ':' . $db_port;
 	}
@@ -102,7 +102,7 @@ function step1($error_message = '')
 						</table>
 
 						<h2>Database backup file</h2>
-						<h3>Please upload your database backup file (it may be a <tt>.sql</tt> file, <tt>.sql.gz</tt> file, or a <tt>.sql.zip</tt> file) through FTP or other means, and enter the path here.<br>', !function_exists('gzcompress') ? '<strong>Warning</strong>: To restore compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : 'Please note that if this file is compressed, it may be replaced by an uncompressed version during this process.', @ini_get('allow_url_fopen') ? '<br>If your backup is uncompressed, you can also specify a URL to it here.' : '', '</h3>
+						<h3>Please upload your database backup file (it may be a <tt>.sql</tt> file, <tt>.sql.gz</tt> file, or a <tt>.sql.zip</tt> file) through FTP or other means, and enter the path here.<br>', !function_exists('gzcompress') ? '<strong>Warning</strong>: To restore compressed backups, the <strong>zlib library</strong> is needed, which you don\'t seem to have on this server.' : 'Please note that if this file is compressed, it may be replaced by an uncompressed version during this process.', ini_get('allow_url_fopen') ? '<br>If your backup is uncompressed, you can also specify a URL to it here.' : '', '</h3>
 
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 2ex">
 							<tr>
@@ -133,8 +133,8 @@ function step2()
 		return step1('Cannot connect to the database server with the supplied data.<br><br>If you are not sure about what to type in, please contact your host.');
 
 	// This is going to *burn* memory...
-	if (@ini_get('memory_limit') < 24)
-		@ini_set('memory_limit', '128M');
+	if (ini_get('memory_limit') < 24)
+		ini_set('memory_limit', '128M');
 	@set_time_limit(300);
 	if (function_exists('apache_reset_timeout'))
 		@apache_reset_timeout();
@@ -984,8 +984,8 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	global $db_connection, $settings;
 
 	// Gonna need a lot of memory.
-	if (@ini_get('memory_limit') < 128)
-		@ini_set('memory_limit', '128M');
+	if (ini_get('memory_limit') < 128)
+		ini_set('memory_limit', '128M');
 	@set_time_limit(300);
 	ignore_user_abort(true);
 	if (function_exists('apache_reset_timeout'))

@@ -162,14 +162,14 @@ $context['smfinfo'] = array (
 
 $context['phpinfo'] = array (
 	'safe_mode' => get_php_setting('safe_mode', 'off'),
-	'open_base' => ($ob = @ini_get('open_basedir')) ? $ob : $txt['none'],
+	'open_base' => ($ob = ini_get('open_basedir')) ? $ob : $txt['none'],
 	'display_errors' => get_php_setting('display_errors', 'off'),
 	'file_uploads' => get_php_setting('file_uploads', 'on'),
 	'magic_quotes' => get_php_setting('magic_quotes_gpc', 'off'),
 	'register_globals' => get_php_setting('register_globals', 'off'),
 	'output_buffering' => get_php_setting('output_handler'),
-	'session_save' => ($path = @ini_get('session.save_path')) ? $path : $txt['none'],
-	'session_auto' => (int) @ini_get('session.auto_start'),
+	'session_save' => ($path = ini_get('session.save_path')) ? $path : $txt['none'],
+	'session_auto' => (int) ini_get('session.auto_start'),
 	'xml_enabled' => extension_loaded('xml') ? $txt['on'] : $txt['off'],
 	'zlib_enabled' => extension_loaded('zlib') ? $txt['on'] : $txt['off'],
 );
@@ -1504,7 +1504,7 @@ function get_server_software()
 function get_php_setting($val, $rec = '')
 {
 	global $txt;
-	$r = (@ini_get($val) == '1' ? 1 : 0) ? $txt['on'] : $txt['off'];
+	$r = (ini_get($val) == '1' ? 1 : 0) ? $txt['on'] : $txt['off'];
 	if (!empty($rec) && strcmp($r, $txt[$rec]) != 0)
 		$r .= '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt[$rec] . ')</strong>';
 	return $r;

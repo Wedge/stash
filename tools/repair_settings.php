@@ -194,8 +194,8 @@ function initialize_inputs()
 	// Turn off magic quotes runtime and enable error reporting.
 	@set_magic_quotes_runtime(0);
 	error_reporting(E_ALL);
-	if (@ini_get('session.save_handler') == 'user')
-		@ini_set('session.save_handler', 'files');
+	if (ini_get('session.save_handler') == 'user')
+		ini_set('session.save_handler', 'files');
 	@session_start();
 
 	// Add slashes, as long as they aren't already being added.

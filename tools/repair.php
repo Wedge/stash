@@ -386,7 +386,7 @@ function action_spell()
 	}
 
 	error_reporting(E_ALL);
-	@ini_set('display_errors', 1);
+	ini_set('display_errors', 1);
 	ob_implicit_flush();
 
 	// With some versions of Windows Aspell, the first spell check link returned is broken.
@@ -802,8 +802,8 @@ function we_compat_database($db_server, $db_user, $db_passwd, $db_name)
 	global $db_connection, $settings;
 
 	// Gonna need a lot of memory.
-	if (@ini_get('memory_limit') < 128)
-		@ini_set('memory_limit', '128M');
+	if (ini_get('memory_limit') < 128)
+		ini_set('memory_limit', '128M');
 	@set_time_limit(300);
 	ignore_user_abort(true);
 	if (function_exists('apache_reset_timeout'))

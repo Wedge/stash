@@ -755,15 +755,15 @@ function we_loadSession()
 	global $HTTP_SESSION_VARS, $we_connection, $we_settings, $we_user_info;
 
 	// Attempt to change a few PHP settings.
-	@ini_set('session.use_cookies', true);
-	@ini_set('session.use_only_cookies', false);
-	@ini_set('arg_separator.output', '&amp;');
+	ini_set('session.use_cookies', true);
+	ini_set('session.use_only_cookies', false);
+	ini_set('arg_separator.output', '&amp;');
 
 	// If it's already been started... probably best to skip this.
-	if ((@ini_get('session.auto_start') == 1 && !empty($we_settings['databaseSession_enable'])) || session_id() == '')
+	if ((ini_get('session.auto_start') == 1 && !empty($we_settings['databaseSession_enable'])) || session_id() == '')
 	{
 		// Attempt to end the already-started session.
-		if (@ini_get('session.auto_start') == 1)
+		if (ini_get('session.auto_start') == 1)
 			@session_write_close();
 
 		// This is here to stop people from using bad junky PHPSESSIDs.
@@ -773,8 +773,8 @@ function we_loadSession()
 		// Use database sessions?
 		if (!empty($we_settings['databaseSession_enable']) && $we_connection)
 			session_set_save_handler('we_sessionOpen', 'we_sessionClose', 'we_sessionRead', 'we_sessionWrite', 'we_sessionDestroy', 'we_sessionGC');
-		elseif (@ini_get('session.gc_maxlifetime') <= 1440 && !empty($we_settings['databaseSession_lifetime']))
-			@ini_set('session.gc_maxlifetime', max($we_settings['databaseSession_lifetime'], 60));
+		elseif (ini_get('session.gc_maxlifetime') <= 1440 && !empty($we_settings['databaseSession_lifetime']))
+			ini_set('session.gc_maxlifetime', max($we_settings['databaseSession_lifetime'], 60));
 
 		session_start();
 	}

@@ -171,8 +171,8 @@ function initialize_inputs()
 	}
 
 	ob_start();
-	if (@ini_get('session.save_handler') == 'user')
-		@ini_set('session.save_handler', 'files');
+	if (ini_get('session.save_handler') == 'user')
+		ini_set('session.save_handler', 'files');
 	@session_start();
 	ignore_user_abort(true);
 
@@ -674,8 +674,8 @@ function doStep2()
 		}
 	}
 
-	if (@ini_get('memory_limit') < 64)
-		@ini_set('memory_limit', '64M');
+	if (ini_get('memory_limit') < 64)
+		ini_set('memory_limit', '64M');
 
 	foreach ($_SESSION['webinstall_state']['files_to_download'] as $i => $file)
 	{
@@ -788,8 +788,8 @@ function doStep3()
 
 	$chmod =& $_SESSION['webinstall_state']['chmod'];
 
-	if (@ini_get('memory_limit') < 64)
-		@ini_set('memory_limit', '64M');
+	if (ini_get('memory_limit') < 64)
+		ini_set('memory_limit', '64M');
 
 	foreach ($_SESSION['webinstall_state']['files_to_download'] as $i => $file)
 	{
