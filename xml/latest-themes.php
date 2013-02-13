@@ -85,7 +85,7 @@ if (($data = cache_get_data('site_latest_themes', 3600)) == null)
 		)
 	);
 	$latest_ids = array();
-	while ( $row = $smcFunc['db_fetch_assoc']($request) )
+	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		censorText($row['theme_name']);
 		censorText($row['description']);
@@ -121,7 +121,7 @@ if (($data = cache_get_data('site_latest_themes', 3600)) == null)
 			'ids' => array_merge(array($featured), $latest_ids),
 		)
 	);
-	while ( $row = $smcFunc['db_fetch_assoc']($request) )
+	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		censorText($row['theme_name']);
 		censorText($row['description']);

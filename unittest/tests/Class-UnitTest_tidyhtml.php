@@ -1049,7 +1049,6 @@
 				return 'Invalid test ID given';
 
 			$returnDoc = $this->_simulateClick($this->_tests[$testID]['url'], isset($this->_tests[$testID]['id_member']) ? $this->_tests[$testID]['id_member'] : $this->_id_member);
-			//
 			$testResults = $this->_testHtml($returnDoc['html'], $this->_openSpPath . ' -wvalid -wnon-sgml-char-ref -wno-duplicate -E0 -s ' . dirname($this->_openSpPath) . '/xml.dcl -');
 			if (empty($testResults))
 				$testResults = $this->_testHtml($returnDoc['html'], $this->_tidyPath . ' -errors -quiet -access -1');

@@ -2065,7 +2065,7 @@ function upgrade_query($string, $unbuffered = false)
 	if ($mysql_errno == 1016)
 	{
 		if (preg_match('~\'([^\.\']+)~', $db_error_message, $match) != 0 && !empty($match[1]))
-			mysql_query( '
+			mysql_query('
 				REPAIR TABLE `' . $match[1] . '`');
 
 		$result = mysql_query($string);
@@ -2179,7 +2179,7 @@ function protected_alter($change, $substep, $is_test = false)
 	}
 	elseif ($change['type'] === 'index')
 	{
-		$request = upgrade_query( '
+		$request = upgrade_query('
 			SHOW INDEX
 			FROM ' . $db_prefix . $change['table']);
 		if ($request !== false)

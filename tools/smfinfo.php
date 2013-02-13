@@ -523,7 +523,7 @@ function show_php_info()
 
 	echo '
 			<div class="tab-page" id="phpinfo"><h2 class="tab">', $txt['phpinfo'], '</h2>
-				<script type="text/javascript">addSection( "phpinfo", "', $txt['phpinfo'], '");</script>';
+				<script type="text/javascript">addSection("phpinfo", "', $txt['phpinfo'], '");</script>';
 
 	// Get the PHP Info
 	ob_start();
