@@ -77,7 +77,7 @@ UnitTest.prototype.checkTest = function()
 				oImage.innerHTML = '<img src="' + we_theme_url + '/images/icons/field_check.gif" alt="" />';
 
 				$.ajax(
-					we_script + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1] + ';xml',
+					we_script + '?sa=test;test=' + aTestParts[0] + ';subtest=' + aTestParts[1],
 					{
 						context: this,
 						success: this.onTestReady

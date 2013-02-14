@@ -664,16 +664,14 @@ function upgradeExit($fallThrough = false)
 			template_upgrade_above();
 		else
 		{
-			header('Content-Type: text/xml; charset=ISO-8859-1');
+			header('Content-Type: text/xml; charset=UTF-8');
+
 			// Sadly we need to retain the $_GET data thanks to the old upgrade scripts.
 			$upcontext['get_data'] = array();
 			foreach ($_GET as $k => $v)
-			{
 				if (substr($k, 0, 3) != 'amp' && !in_array($k, array('xml', 'substep', 'lang', 'data', 'step', 'filecount')))
-				{
 					$upcontext['get_data'][$k] = $v;
-				}
-			}
+
 			template_xml_above();
 		}
 
@@ -3004,7 +3002,7 @@ function template_xml_above()
 {
 	global $upcontext;
 
-	echo '<', '?xml version="1.0" encoding="ISO-8859-1"?', '>
+	echo '<', '?xml version="1.0" encoding="UTF-8"?', '>
 	<we>';
 
 	if (!empty($upcontext['get_data']))
