@@ -928,18 +928,6 @@ function WelcomeLogin()
 	if (!makeFilesWritable($writable_files))
 		return false;
 
-	// Check agreement.txt. (it may not exist, in which case $boarddir must be writable.)
-	if (isset($settings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
-		return throw_error('The upgrader was unable to obtain write access to agreement.txt.<br><br>If you are using a linux or unix based server, please ensure that the file is chmod\'d to 777, or if it does not exist that the directory this upgrader is in is 777.<br>If your server is running Windows, please ensure that the internet guest account has the proper permissions on it or its folder.');
-
-	// Upgrade the agreement.
-	elseif (isset($settings['agreement']))
-	{
-		$fp = fopen($boarddir . '/agreement.txt', 'w');
-		fwrite($fp, $settings['agreement']);
-		fclose($fp);
-	}
-
 	// We're going to check that their board dir setting is right incase they've been moving stuff around.
 	if (strtr($boarddir, array('/' => '', '\\' => '')) != strtr(dirname(__FILE__), array('/' => '', '\\' => '')))
 		$upcontext['warning'] = '
@@ -2449,15 +2437,6 @@ Usage: /path/to/php -f ' . basename(__FILE__) . ' -- [OPTION]...
 		@chmod($boarddir . '/Settings_bak.php', 0777);
 	if (!is_writable($boarddir . '/Settings_bak.php'))
 		print_error('Error: Unable to obtain write access to "Settings_bak.php".');
-
-	if (isset($settings['agreement']) && (!is_writable($boarddir) || file_exists($boarddir . '/agreement.txt')) && !is_writable($boarddir . '/agreement.txt'))
-		print_error('Error: Unable to obtain write access to "agreement.txt".');
-	elseif (isset($settings['agreement']))
-	{
-		$fp = fopen($boarddir . '/agreement.txt', 'w');
-		fwrite($fp, $settings['agreement']);
-		fclose($fp);
-	}
 
 	// Make sure Themes is writable.
 	if (!is_writable($boarddir . '/Themes'))
