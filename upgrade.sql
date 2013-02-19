@@ -842,33 +842,6 @@ CREATE TABLE IF NOT EXISTS {$db_prefix}log_reported_comments (
 ) ENGINE=MyISAM{$db_collation};
 ---#
 
----# Adding moderator center permissions...
----{
-// Don't do this twice!
-if (@$settings['weVersion'] < '1.0')
-{
-	// Try find people who probably should see the moderation center.
-	$request = upgrade_query("
-		SELECT id_group, add_deny, permission
-		FROM {$db_prefix}permissions
-		WHERE permission = 'calendar_edit_any'");
-	$inserts = array();
-	while ($row = mysql_fetch_assoc($request))
-	{
-		$inserts[] = "($row[id_group], 'access_mod_center', $row[add_deny])";
-	}
-	mysql_free_result($request);
-
-	if (!empty($inserts))
-		upgrade_query("
-			INSERT IGNORE INTO {$db_prefix}permissions
-				(id_group, permission, add_deny)
-			VALUES
-				" . implode(',', $inserts));
-}
----}
----#
-
 ---# Adding moderation center preferences...
 ALTER TABLE {$db_prefix}members
 ADD mod_prefs varchar(20) NOT NULL default '';
@@ -1879,20 +1852,6 @@ CHANGE field_options field_options text NOT NULL;
 ---# Changing ignore_boards column to a larger field type...
 ALTER TABLE {$db_prefix}members
 CHANGE ignore_boards ignore_boards text NOT NULL;
----#
-
-/******************************************************************************/
---- Allow for longer calendar event/holiday titles.
-/******************************************************************************/
-
----# Changing event title column to a larger field type...
-ALTER TABLE {$db_prefix}calendar
-CHANGE title title varchar(60) NOT NULL default '';
----#
-
----# Changing holidays title column to a larger field type...
-ALTER TABLE {$db_prefix}calendar_holidays
-CHANGE title title varchar(60) NOT NULL default '';
 ---#
 
 /******************************************************************************/
