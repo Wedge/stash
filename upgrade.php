@@ -558,12 +558,9 @@ $request = $smcFunc['db_query']('', '
 	SELECT variable, value
 	FROM {db_prefix}themes
 	WHERE id_theme = {int:id_theme}
-		AND variable IN ({string:theme_url}, {string:theme_dir}, {string:images_url})',
+		AND variable IN ({literal:theme_url}, {literal:theme_dir}, {literal:images_url})',
 	array(
 		'id_theme' => 1,
-		'theme_url' => 'theme_url',
-		'theme_dir' => 'theme_dir',
-		'images_url' => 'images_url',
 		'db_error_skip' => true,
 	)
 );
@@ -1062,10 +1059,9 @@ function checkLogin()
 						SELECT permission
 						FROM {db_prefix}permissions
 						WHERE id_group IN ({array_int:groups})
-							AND permission = {string:admin_forum}',
+							AND permission = {literal:admin_forum}',
 						array(
 							'groups' => $groups,
-							'admin_forum' => 'admin_forum',
 							'db_error_skip' => true,
 						)
 					);
