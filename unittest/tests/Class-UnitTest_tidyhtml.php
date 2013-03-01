@@ -693,11 +693,6 @@
 					'description' => "Search messages",
 					'url' => $scripturl . '?action=pm;sa=search',
 				),
-				'PersonalMessages_5' => array(
-					'name' => 'Personal messages (5)',
-					'description' => "Advanced search",
-					'url' => $scripturl . '?action=pm;sa=search;advanced',
-				),
 				'PersonalMessages_6' => array(
 					'name' => 'Personal messages (6)',
 					'description' => "Prune messages",
@@ -914,11 +909,6 @@
 					'name' => 'Search (1)',
 					'description' => "Search forum",
 					'url' => $scripturl . '?action=search',
-				),
-				'Search_2' => array(
-					'name' => 'Search (2)',
-					'description' => "Search forum advanced",
-					'url' => $scripturl . '?action=search;sa=advanced',
 				),
 				'SendTopic_1' => array(
 					'name' => 'Send topic (1)',
