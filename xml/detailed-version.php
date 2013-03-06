@@ -108,7 +108,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'SourcesSearchAPI-Custom.php': '0.1',
 	'SourcesSearchAPI-Standard.php': '0.1',
 	'SourcesSecurity.php': '0.1',
-	'SourcesSpellcheck.php': '0.1',
 	'SourcesSplit.php': '0.1',
 	'SourcesStats.php': '0.1',
 	'SourcesPin.php': '0.1',
