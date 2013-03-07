@@ -2768,14 +2768,14 @@ function template_chmod()
 			<tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_server">', $txt['ftp_server'], ':</label></td>
 				<td>
-					<div style="float: right; margin-right: 1px"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($upcontext['chmod']['port']) ? $upcontext['chmod']['port'] : '21', '"></div>
-					<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($upcontext['chmod']['server']) ? $upcontext['chmod']['server'] : 'localhost', '" style="width: 70%">
+					<div style="float: right; margin-right: 1px"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input size="3" name="ftp_port" id="ftp_port" value="', isset($upcontext['chmod']['port']) ? $upcontext['chmod']['port'] : '21', '"></div>
+					<input size="30" name="ftp_server" id="ftp_server" value="', isset($upcontext['chmod']['server']) ? $upcontext['chmod']['server'] : 'localhost', '" style="width: 70%">
 					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_server_info'], '</div>
 				</td>
 			</tr><tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
 				<td>
-					<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($upcontext['chmod']['username']) ? $upcontext['chmod']['username'] : '', '" style="width: 99%">
+					<input size="50" name="ftp_username" id="ftp_username" value="', isset($upcontext['chmod']['username']) ? $upcontext['chmod']['username'] : '', '" style="width: 99%">
 					<div style="font-size: smaller; margin-bottom: 2ex">', $txt['ftp_username_info'], '</div>
 				</td>
 			</tr><tr>
@@ -2787,7 +2787,7 @@ function template_chmod()
 			</tr><tr>
 				<td width="26%" valign="top" class="textbox"><label for="ftp_path">', $txt['ftp_path'], ':</label></td>
 				<td style="padding-bottom: 1ex">
-					<input type="text" size="50" name="ftp_path" id="ftp_path" value="', isset($upcontext['chmod']['path']) ? $upcontext['chmod']['path'] : '', '" style="width: 99%">
+					<input size="50" name="ftp_path" id="ftp_path" value="', isset($upcontext['chmod']['path']) ? $upcontext['chmod']['path'] : '', '" style="width: 99%">
 					<div style="font-size: smaller; margin-bottom: 2ex">', !empty($upcontext['chmod']['path']) ? $txt['ftp_path_found_info'] : $txt['ftp_path_info'], '</div>
 				</td>
 			</tr>
@@ -3098,7 +3098,7 @@ function template_welcome_message()
 				<tr valign="top">
 					<td><strong ', $disable_security ? 'style="color: gray"' : '', '>Username:</strong></td>
 					<td>
-						<input type="text" name="user" value="', !empty($upcontext['username']) ? $upcontext['username'] : '', '"', $disable_security ? ' disabled' : '', '>';
+						<input name="user" value="', !empty($upcontext['username']) ? $upcontext['username'] : '', '"', $disable_security ? ' disabled' : '', '>';
 
 	if (!empty($upcontext['username_incorrect']))
 		echo '
@@ -3211,7 +3211,7 @@ function template_upgrade_options()
 							<label for="maint">Put the forum into maintenance mode during upgrade.</label> <span class="smalltext">(<a href="#" onclick="document.getElementById(\'mainmess\').style.display = document.getElementById(\'mainmess\').style.display == \'\' ? \'none\' : \'\'">Customize</a>)</span>
 							<div id="mainmess" style="display: none">
 								<strong class="smalltext">Maintenance Title: </strong><br>
-								<input type="text" name="maintitle" size="30" value="', htmlspecialchars($mtitle), '"><br>
+								<input name="maintitle" size="30" value="', htmlspecialchars($mtitle), '"><br>
 								<strong class="smalltext">Maintenance Message: </strong><br>
 								<textarea name="mainmessage" rows="3" cols="50">', htmlspecialchars($mmessage), '</textarea>
 							</div>

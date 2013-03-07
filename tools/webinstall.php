@@ -317,7 +317,7 @@ function doStep0()
 
 	if (empty($_SESSION['webinstall_state']['is_logged_in']))
 		echo '
-									<span style="white-space: nowrap;"><label for="member_username">', $txt['member_username'], ':</label> <input type="text" size="20" name="member_username" id="member_username" value="', isset($_POST['member_username']) ? $_POST['member_username'] : '', '" style="margin-right: 3ex;" onchange="if (this.value != \'\' && this.form.member_password.value != \'\') this.form.verify.click();" /></span>
+									<span style="white-space: nowrap;"><label for="member_username">', $txt['member_username'], ':</label> <input size="20" name="member_username" id="member_username" value="', isset($_POST['member_username']) ? $_POST['member_username'] : '', '" style="margin-right: 3ex;" onchange="if (this.value != \'\' && this.form.member_password.value != \'\') this.form.verify.click();" /></span>
 									<span style="white-space: nowrap;"><label for="member_password">', $txt['member_password'], ':</label> <input type="password" size="20" name="member_password" id="member_password" value="" style="margin-right: 3ex;" onchange="if (this.value != \'\' && this.form.member_password.value != \'\') this.form.verify.click();" /></span> <input type="submit" name="verify" value="', $txt['member_verify'], '" />
 									<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['member_login_info'], '</div>';
 	else
@@ -593,14 +593,14 @@ function doStep1()
 							<tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_server">', $txt['ftp_server'], ':</label></td>
 								<td>
-									<div style="float: right; margin-right: 1px;"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '" /></div>
-									<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($_POST['ftp_server']) ? $_POST['ftp_server'] : 'localhost', '" style="width: 70%;" />
+									<div style="float: right; margin-right: 1px;"><label for="ftp_port" class="textbox"><strong>', $txt['ftp_port'], ':&nbsp;</strong></label> <input size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '" /></div>
+									<input size="30" name="ftp_server" id="ftp_server" value="', isset($_POST['ftp_server']) ? $_POST['ftp_server'] : 'localhost', '" style="width: 70%;" />
 									<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_server_info'], '</div>
 								</td>
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_username">', $txt['ftp_username'], ':</label></td>
 								<td>
-									<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($_POST['ftp_username']) ? $_POST['ftp_username'] : '', '" style="width: 99%;" />
+									<input size="50" name="ftp_username" id="ftp_username" value="', isset($_POST['ftp_username']) ? $_POST['ftp_username'] : '', '" style="width: 99%;" />
 									<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['ftp_username_info'], '</div>
 								</td>
 							</tr><tr>
@@ -612,7 +612,7 @@ function doStep1()
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_path">', $txt['ftp_path'], ':</label></td>
 								<td style="padding-bottom: 1ex;">
-									<input type="text" size="50" name="ftp_path" id="ftp_path" value="', $_POST['ftp_path'], '" style="width: 99%;" />
+									<input size="50" name="ftp_path" id="ftp_path" value="', $_POST['ftp_path'], '" style="width: 99%;" />
 									<div style="font-size: smaller; margin-bottom: 2ex;">', !empty($found_path) ? $txt['ftp_path_found_info'] : $txt['ftp_path_info'], '</div>
 								</td>
 							</tr>

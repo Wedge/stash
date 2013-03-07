@@ -73,13 +73,13 @@ function step1($error_message = '')
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="db_server">Database server name:</label></td>
 								<td>
-									<input type="text" name="db_server" id="db_server" value="', $db_server, '" size="30"><br>
+									<input name="db_server" id="db_server" value="', $db_server, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex">This is nearly always localhost - so if you don\'t know, try localhost.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_user">Database username:</label></td>
 								<td>
-									<input type="text" name="db_user" id="db_user" value="', $db_user, '" size="30"><br>
+									<input name="db_user" id="db_user" value="', $db_user, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex">Fill in the username you need to connect to your database here.<br>If you don\'t know what it is, try the username of your ftp account, most of the time they are the same.</div>
 								</td>
 							</tr><tr>
@@ -91,13 +91,13 @@ function step1($error_message = '')
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_name">database name:</label></td>
 								<td>
-									<input type="text" name="db_name" id="db_name" value="', empty($db_name) ? 'wedge' : $db_name, '" size="30"><br>
+									<input name="db_name" id="db_name" value="', empty($db_name) ? 'wedge' : $db_name, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex">Fill in the name of the database you want to backup.</div>
 								</td>
 							</tr><tr>
 								<td valign="top" class="textbox"><label for="db_prefix">Table prefix:</label></td>
 								<td>
-									<input type="text" name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br>
+									<input name="db_prefix" id="db_prefix" value="', empty($db_prefix) ? '' : $db_prefix, '" size="30"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex">Fill in a prefix to only backup tables that start with this prefix.<br>Normally, you can leave this blank to get a full backup.</div>
 								</td>
 							</tr>
@@ -110,7 +110,7 @@ function step1($error_message = '')
 							<tr>
 								<td width="20%" valign="top" class="textbox"><label for="path">Path to backup file:</label></td>
 								<td>
-									<input type="text" name="path" id="path" value="', $_POST['path'], '" size="60" style="width: 90%"><br>
+									<input name="path" id="path" value="', $_POST['path'], '" size="60" style="width: 90%"><br>
 									<div style="font-size: smaller; margin-bottom: 2ex">The default value for this field is a file in this script\'s directory.</div>
 								</td>';
 
@@ -435,14 +435,14 @@ function get_ftp_info()
 							<tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_server">Server:</label></td>
 								<td>
-									<div style="float: right; margin-right: 1px"><label for="ftp_port" class="textbox"><strong>Port:&nbsp;</strong></label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '"></div>
-									<input type="text" size="30" name="ftp_server" id="ftp_server" value="', isset($_POST['ftp_server']) ? $_POST['ftp_server'] : 'localhost', '" style="width: 70%">
+									<div style="float: right; margin-right: 1px"><label for="ftp_port" class="textbox"><strong>Port:&nbsp;</strong></label> <input size="3" name="ftp_port" id="ftp_port" value="', isset($_POST['ftp_port']) ? $_POST['ftp_port'] : '21', '"></div>
+									<input size="30" name="ftp_server" id="ftp_server" value="', isset($_POST['ftp_server']) ? $_POST['ftp_server'] : 'localhost', '" style="width: 70%">
 									<div style="font-size: smaller; margin-bottom: 2ex">This should be the server and port for your FTP server.</div>
 								</td>
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_username">Username:</label></td>
 								<td>
-									<input type="text" size="50" name="ftp_username" id="ftp_username" value="', isset($_POST['ftp_username']) ? $_POST['ftp_username'] : '', '" style="width: 99%">
+									<input size="50" name="ftp_username" id="ftp_username" value="', isset($_POST['ftp_username']) ? $_POST['ftp_username'] : '', '" style="width: 99%">
 									<div style="font-size: smaller; margin-bottom: 2ex">The username to login with. <em>This will not be saved anywhere.</em></div>
 								</td>
 							</tr><tr>
@@ -454,7 +454,7 @@ function get_ftp_info()
 							</tr><tr>
 								<td width="26%" valign="top" class="textbox"><label for="ftp_path">FTP Path:</label></td>
 								<td style="padding-bottom: 1ex">
-									<input type="text" size="50" name="ftp_path" id="ftp_path" value="', $_POST['ftp_path'], '" style="width: 99%">
+									<input size="50" name="ftp_path" id="ftp_path" value="', $_POST['ftp_path'], '" style="width: 99%">
 									<div style="font-size: smaller; margin-bottom: 2ex">', !empty($found_path) ? 'This path was automatically detected.' : 'This is the <em>relative</em> path to this file as seen in an FTP client.', '</div>
 								</td>
 							</tr>

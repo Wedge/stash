@@ -426,7 +426,7 @@ function show_password_form()
 				<form action="', $boardurl, '/smfinfo.php" method="post"
 				<table border="0" width="50%" cellpadding="2" cellspacing="2">
 					<tr>
-						<td>', $txt['password'], '</td><td><input type="text" size="20" name="pass" /></td><td><input type="submit" value="', $txt['submit'], '" /></td>
+						<td>', $txt['password'], '</td><td><input size="20" name="pass" /></td><td><input type="submit" value="', $txt['submit'], '" /></td>
 					</tr>
 				</table>
 				</form>

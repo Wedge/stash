@@ -471,7 +471,7 @@ function show_settings()
 			elseif ($info[1] == 'string')
 			{
 				echo '
-								<input type="text" name="', $info[0], 'settings[', $setting, ']" id="', $setting, '" value="', isset($theme[$setting]) ? $theme[$setting] : '', '" size="', $settings_section == 'path_url_settings' || $settings_section == 'theme_path_url_settings' ? '60" style="width: 80%' : '30', '">';
+								<input name="', $info[0], 'settings[', $setting, ']" id="', $setting, '" value="', isset($theme[$setting]) ? $theme[$setting] : '', '" size="', $settings_section == 'path_url_settings' || $settings_section == 'theme_path_url_settings' ? '60" style="width: 80%' : '30', '">';
 
 				if (isset($info[2]))
 					echo '
