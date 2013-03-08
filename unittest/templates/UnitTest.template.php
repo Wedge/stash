@@ -2,7 +2,7 @@
 
 function template_ut_index()
 {
-	global $context, $theme, $options, $scripturl;
+	global $context, $theme, $options;
 
 	echo '
 	<div id="mainframe">

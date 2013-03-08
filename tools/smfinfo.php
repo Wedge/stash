@@ -1332,7 +1332,7 @@ function get_database_version()
 
 function get_file_versions($core = false)
 {
-	global $sourcedir, $boarddir, $context, $txt, $scripturl, $boardurl, $theme;
+	global $sourcedir, $boarddir, $context, $txt, $boardurl, $theme;
 
 	// Change index.php below to whatever you've changed yours to...
 	$fp = fopen($boarddir . '/index.php', 'rb');
