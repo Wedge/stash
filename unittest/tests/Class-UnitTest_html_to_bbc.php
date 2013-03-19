@@ -158,7 +158,7 @@ class UnitTest_html_to_bbc extends UnitTest
 			return true;
 
 		else
-			return sprintf("Unexpected output received from legalise_bbc().\nInput: %1\$s\nExpected output: <pre>%2\$s</pre>\nReal output: <pre>%3\$s</pre>", htmlspecialchars($this->_tests[$testID]['input']), htmlspecialchars($expected_output), htmlspecialchars($output));
+			return sprintf("Unexpected output received from legalize_bbc().\nInput: %1\$s\nExpected output: <pre>%2\$s</pre>\nReal output: <pre>%3\$s</pre>", htmlspecialchars($this->_tests[$testID]['input']), htmlspecialchars($expected_output), htmlspecialchars($output));
 	}
 
 	public function getTestDescription($testID)
