@@ -13,7 +13,7 @@
 // Try to make sure this is kept up to date every time it loads.
 header('Cache-Control: no-cache, must-revalidate');
 header('Pragma: no-cache');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Expires: Wed, 25 Aug 2010 17:00:00 GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT');
 
 header('Content-Type: text/javascript');
