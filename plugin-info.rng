@@ -682,10 +682,7 @@
 									</choice>
 								</attribute>
 							</optional>
-							<attribute name="classic">
-								<data type="string"/>
-							</attribute>
-							<attribute name="simple">
+							<attribute name="name">
 								<data type="string"/>
 							</attribute>
 						</element>
@@ -710,17 +707,9 @@
 								<value>false</value>
 							</choice>
 						</attribute>
-						<attribute name="classic">
+						<attribute name="group">
 							<data type="string"/>
 						</attribute>
-						<attribute name="simple">
-							<data type="string"/>
-						</attribute>
-						<optional>
-							<attribute name="simpleany">
-								<data type="string"/>
-							</attribute>
-						</optional>
 					</element>
 				</oneOrMore>
 			</element>
