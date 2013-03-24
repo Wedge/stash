@@ -445,12 +445,12 @@
 				),
 				'ManageServer_1' => array(
 					'name' => 'Manage server settings (1)',
-					'description' => "Core configuration",
+					'description' => 'Core configuration',
 					'url' => $scripturl . '?action=admin;area=serversettings;sa=core',
 				),
 				'ManageServer_2' => array(
 					'name' => 'Manage server settings (2)',
-					'description' => "Feature Configuration   	",
+					'description' => 'Feature Configuration',
 					'url' => $scripturl . '?action=admin;area=serversettings;sa=other',
 				),
 				'ManageServer_3' => array(
