@@ -759,6 +759,11 @@
 					<attribute name="filename">
 						<data type="string"/>
 					</attribute>
+					<optional>
+						<attribute name="nolog">
+							<data type="string"/>
+						</attribute>
+					</optional>
 				</element>
 			</oneOrMore>
 		</element>
