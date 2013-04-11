@@ -10,7 +10,7 @@ function we_selectbox()
 		.change(function () { $(this).next().text($('option:selected', this).text()); })
 		.children('option').each(function () {
 			var here = $(this), txt = here.text();
-			$('#' + id + '_ul').append(txt == '-' ? '<li class="separator"><a><hr></a></li>' : '<li id="' + here.val() + '"><a>' + txt + '</a></li>');
+			$('#' + id + '_ul').append(txt == '-' ? '<li class="sep"><a><hr></a></li>' : '<li id="' + here.val() + '"><a>' + txt + '</a></li>');
 		});
 	$('#' + id + '_li').click(function () { $('#' + id + '_ul').show(); });
 	$(document).mousedown(function () { $('#' + id + '_ul').hide(); });
