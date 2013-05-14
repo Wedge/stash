@@ -53,7 +53,7 @@ class sphinx_search
 	// This function compares the length of two strings plus a little.
 	public function searchSort($a, $b)
 	{
-		global $settings, $excludedWords;
+		global $excludedWords;
 
 		$x = strlen($a) - (in_array($a, $excludedWords) ? 1000 : 0);
 		$y = strlen($b) - (in_array($b, $excludedWords) ? 1000 : 0);
@@ -64,8 +64,6 @@ class sphinx_search
 	// Do we have to do some work with the words we are searching for to prepare them?
 	public function prepareIndexes($word, &$wordsSearch, &$wordsExclude, $isExcluded)
 	{
-		global $settings;
-
 		$subwords = text2words($word, null, false);
 
 		$fulltextWord = count($subwords) === 1 ? $word : '"' . $word . '"';

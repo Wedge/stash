@@ -284,11 +284,9 @@ function step_3()
 
 function step_888()
 {
-	global $settings;
-
 	checkSession();
 
-	if (in_array($_REQUEST['search_index'], array('', 'fulltext', 'custom', 'sphinx')))
+	if (in_array($_REQUEST['search_index'], array('', 'custom', 'sphinx')))
 		updateSettings(array(
 			'search_index' => $_REQUEST['search_index'],
 		));
