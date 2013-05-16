@@ -654,8 +654,7 @@ function we_allowedTo($permission)
 		$smcFunc['db_free_result']($result);
 
 		// And now we get rid of the removals ;).
-		if (!empty($we_settings['permission_enable_deny']))
-			$we_user_info['permissions'] = array_diff($we_user_info['permissions'], $removals);
+		$we_user_info['permissions'] = array_diff($we_user_info['permissions'], $removals);
 	}
 
 	// So.... can you?
