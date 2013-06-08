@@ -320,7 +320,7 @@ function we_authenticateUser()
 				'id_member' => $id_member,
 		));
 		// Did we find 'im?  If not, junk it.
-		if (mysql_num_rows($request) != 0)
+		if (mysqli_num_rows($request) != 0)
 		{
 			// The base settings array.
 			$we_user_info += $smcFunc['db_fetch_assoc']($request);
@@ -564,7 +564,7 @@ function we_is_online($user)
 				'we_db_prefix' => $we_settings['db_prefix'],
 				'user' => (int) $user,
 		));
-	$return = mysql_num_rows($result) != 0;
+	$return = mysqli_num_rows($result) != 0;
 	$smcFunc['db_free_result']($result);
 
 	return $return;
