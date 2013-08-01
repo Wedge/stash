@@ -27,7 +27,6 @@ if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']))
 	'SourcesClass-Editor.php': '0.1',
 	'SourcesClass-GifAnimator.php': '0.1',
 	'SourcesClass-JSMin.php': '0.1',
-	'SourcesClass-Package.php': '0.1',
 	'SourcesClass-Packer.php': '0.1',
 	'SourcesClass-String.php': '0.1',
 	'SourcesClass-System.php': '0.1',
