@@ -7,23 +7,20 @@
 	it here, if only for nostalgia of some code that only lived for a few days in Wedge...
 */
 
-var post, ex_post, $area, $ex_area, cur_bg;
-$('#forumposts .root').not('.postheader').each(function ()
+var post, ex_post, $area, $ex_area;
+$('#forumposts .msg').not('.postheader').each(function ()
 {
 	post = $(this).find('.umme').data('id');
 	$area = $(this).find('.postarea');
 	if (ex_post == post)
 	{
 		$ex_area.find('.signature').remove();
-		$('<div/>').addClass('merged root').attr('id', $(this).attr('id')).append($area.contents()).appendTo($ex_area);
+		$('<div/>').addClass('merged msg').attr('id', $(this).attr('id')).append($area.contents()).appendTo($ex_area);
 		$(this).prev('hr').andSelf().remove();
 	}
 	else
 	{
 		ex_post = post;
 		$ex_area = $area;
-		if (cur_bg)
-			$(this).removeClass(cur_bg).addClass(cur_bg == 'postbg2' ? 'postbg' : 'postbg2');
-		cur_bg = $(this).hasClass('postbg') ? 'postbg' : 'postbg2';
 	}
 });
