@@ -1,14 +1,11 @@
 <?php
 /**
- * Wedge
- *
  * Handles upgrading existing databases from older versions.
  *
- * @package wedge
- * @copyright 2010-2013 Wedgeward, wedge.org
+ * @package Wedge
+ * @copyright 2010 René-Gilles Deberdt, wedge.org
  * @license http://wedge.org/license/
- *
- * @version 0.1
+ * @author see contributors.txt
  */
 
 // Version information...
@@ -890,7 +887,7 @@ function WelcomeLogin()
 
 	// Do a quick version spot check.
 	$temp = substr(@implode('', @file($boarddir . '/index.php')), 0, 4096);
-	preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $data, $match);
+	preg_match("~'WEDGE_VERSION', '([^']+)'~i", $data, $match);
 	if (empty($match[1]) || $match[1] != WEDGE_VERSION)
 		return throw_error('The upgrader found some old or outdated files.<br><br>Please make certain you uploaded the new versions of all the files included in the package.');
 
@@ -2943,7 +2940,7 @@ function template_upgrade_below()
 		</div>
 	</div></div>
 	<div id="footer"><div class="frame" style="height: 40px">
-		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010-2013, Wedgeward</a></div>
+		<div class="smalltext"><a href="http://wedge.org/" title="Free Forum Software" target="_blank" class="new_win">Wedge &copy; 2010, René-Gilles Deberdt</a></div>
 	</div></div>
 	</body>
 </html>';

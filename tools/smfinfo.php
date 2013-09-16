@@ -1,14 +1,11 @@
 <?php
 /**
- * Wedge
- *
  * smfinfo.php
  *
- * @package wedge
- * @copyright 2010-2013 Wedgeward, wedge.org
+ * @package Wedge
+ * @copyright 2010 René-Gilles Deberdt, wedge.org
  * @license http://wedge.org/license/
- *
- * @version 0.1
+ * @author see contributors.txt
  */
 
 // If SSI.php is in the same place as this file, and Wedge isn't defined, this is being run standalone.
@@ -87,10 +84,6 @@ function load_txt_strings()
 	$txt['disabled_func'] = 'Disabled Functions';
 
 	// File check
-	$txt['sources_version'] = 'Sources';
-	$txt['template_version'] = 'Default Templates';
-	$txt['language_version'] = 'Language Files';
-	$txt['custom_template_version'] = 'Custom Templates';
 	$txt['file_version'] = 'Wedge File';
 	$txt['your_version'] = 'Your Version';
 	$txt['current_version'] = 'Current Version';
@@ -551,93 +544,18 @@ function show_detailed_file()
 			<div class="tab-page" id="detailedinfo"><h2 class="tab">', $txt['detailedinfo'], '</h2>
 				<script type="text/javascript">addSection("detailedinfo", "', $txt['detailedinfo'], '");</script>';
 
-	get_file_versions();
+	get_wedge_version();
 
 	// The current version of the core Wedge package.
 	echo '
-					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
-						<tr>
-							<td width="50%"><strong>', $txt['file_version'], '</strong></td><td width="25%"><strong>', $txt['your_version'], '</strong></td><td width="25%"><strong>', $txt['current_version'], '</strong></td>
-						</tr>
-						<tr>
-							<td>', $txt['wedge_version'], '</td><td><em id="yourWedge">Wedge ', $context['forum_version'], '</em></td><td><em id="currentWedge">??</em></td>
-						</tr>';
-
-	// Now list all the source file versions, starting with the overall version (if all match!).
-	echo '
-						<tr>
-							<td><a href="#" onclick="return swapOption(this, \'Sources\');">', $txt['sources_version'], '</a></td><td><em id="yourSources">??</em></td><td><em id="currentSources">??</em></td>
-						</tr>
-					</table>
-					<table id="Sources" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
-
-	// Loop through every source file displaying its version - using javascript.
-	foreach ($context['file_versions'] as $filename => $version)
-		echo '
-						<tr>
-							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourSources', $filename, '">', $version, '</em></td><td width="25%"><em id="currentSources', $filename, '">??</em></td>
-						</tr>';
-
-	// Default template files.
-	echo '
-					</table>
-					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
-						<tr>
-							<td width="50%"><a href="#" onclick="return swapOption(this, \'Default\');">', $txt['template_version'], '</a></td><td width="25%"><em id="yourDefault">??</em></td><td width="25%"><em id="currentDefault">??</em></td>
-						</tr>
-					</table>
-					<table id="Default" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
-
-	foreach ($context['default_template_versions'] as $filename => $version)
-		echo '
-						<tr>
-							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourDefault', $filename, '">', $version, '</em></td><td width="25%"><em id="currentDefault', $filename, '">??</em></td>
-						</tr>';
-
-	// Now the language files...
-	echo '
-					</table>
-					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
-						<tr>
-							<td width="50%"><a href="#" onclick="return swapOption(this, \'Languages\');">', $txt['language_version'], '</a></td><td width="25%"><em id="yourLanguages">??</em></td><td width="25%"><em id="currentLanguages">??</em></td>
-						</tr>
-					</table>
-					<table id="Languages" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
-
-	foreach ($context['default_language_versions'] as $language => $files)
-	{
-		foreach ($files as $filename => $version)
-			echo '
-						<tr>
-							<td width="50%" style="padding-left: 3ex">', $filename, '.<em>', $language, '</em>.php</td><td width="25%"><em id="your', $filename, '.', $language, '">', $version, '</em></td><td width="25%"><em id="current', $filename, '.', $language, '">??</em></td>
-						</tr>';
-	}
-
-	echo '
-					</table>';
-
-	// Finally, display the version information for the currently selected theme - if it is not the default one.
-	if (!empty($context['template_versions']))
-	{
-		echo '
-					<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
-						<tr>
-							<td width="50%"><a href="#" onclick="return swapOption(this, \'Templates\');">', $txt['custom_template_version'], '</a></td><td width="25%"><em id="yourTemplates">??</em></td><td width="25%"><em id="currentTemplates">??</em></td>
-						</tr>
-					</table>
-					<table id="Templates" width="60%" cellpadding="2" cellspacing="0" border="0" align="center">';
-
-		foreach ($context['template_versions'] as $filename => $version)
-			echo '
-						<tr>
-							<td width="50%" style="padding-left: 3ex">', $filename, '</td><td width="25%"><em id="yourTemplates', $filename, '">', $version, '</em></td><td width="25%"><em id="currentTemplates', $filename, '">??</em></td>
-						</tr>';
-
-		echo '
-					</table>';
-	}
-
-	echo '
+				<table width="60%" cellpadding="2" cellspacing="0" border="0" align="center">
+					<tr>
+						<td width="50%"><strong>', $txt['file_version'], '</strong></td><td width="25%"><strong>', $txt['your_version'], '</strong></td><td width="25%"><strong>', $txt['current_version'], '</strong></td>
+					</tr>
+					<tr>
+						<td>', $txt['wedge_version'], '</td><td><em id="yourWedge">Wedge ', $context['forum_version'], '</em></td><td><em id="currentWedge">??</em></td>
+					</tr>
+				</table>
 			</div>';
 }
 
@@ -1119,7 +1037,7 @@ function show_footer()
 
 	echo '
 			</div>
-			<div style="clear: left">Powered by Wedge, &copy; Wedgeward.</div>
+			<div style="clear: left">Powered by Wedge, &copy; René-Gilles Deberdt.</div>
 		</div>';
 
 	/* Below is the hefty javascript for this. Upon opening the page it checks the current file versions with ones
@@ -1283,7 +1201,7 @@ function initialize()
 	// Set this to true so we get the correct forum value
 	$ssi_gzip = true;
 
-	define('WEDGE_VERSION', get_file_versions(true));
+	define('WEDGE_VERSION', get_wedge_version());
 
 	$smfInfo = !empty($settings['smfInfo']) ? $settings['smfInfo'] : '';
 
@@ -1330,9 +1248,9 @@ function get_database_version()
 	}
 }
 
-function get_file_versions($core = false)
+function get_wedge_version()
 {
-	global $sourcedir, $boarddir, $context, $txt, $boardurl, $theme;
+	global $boarddir, $context;
 
 	// Change index.php below to whatever you've changed yours to...
 	$fp = fopen($boarddir . '/index.php', 'rb');
@@ -1346,148 +1264,7 @@ function get_file_versions($core = false)
 	else
 		$context['forum_version'] = '??';
 
-	if ($core)
-		return $context['forum_version'];
-
-	$versionOptions = array(
-		'include_ssi' => true,
-		'include_subscriptions' => true,
-		'sort_results' => true,
-	);
-
-	// Default place to find the languages would be the default theme dir.
-	$lang_dir = $theme['default_theme_dir'] . '/languages';
-
-	$version_info = array(
-		'file_versions' => array(),
-		'default_template_versions' => array(),
-		'template_versions' => array(),
-		'default_language_versions' => array(),
-	);
-
-	// Find the version in SSI.php's file header.
-	if (!empty($versionOptions['include_ssi']) && file_exists($boarddir . '/SSI.php'))
-	{
-		$fp = fopen($boarddir . '/SSI.php', 'rb');
-		$header = fread($fp, 4096);
-		fclose($fp);
-
-		// The comment looks rougly like... that.
-		if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
-			$version_info['file_versions']['SSI.php'] = $match[1];
-		// Not found!  This is bad.
-		else
-			$version_info['file_versions']['SSI.php'] = '??';
-	}
-
-	// Do the paid subscriptions handler?
-	if (!empty($versionOptions['include_subscriptions']) && file_exists($boarddir . '/subscriptions.php'))
-	{
-		$fp = fopen($boarddir . '/subscriptions.php', 'rb');
-		$header = fread($fp, 4096);
-		fclose($fp);
-
-		// Found it?
-		if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
-			$version_info['file_versions']['subscriptions.php'] = $match[1];
-		// If we haven't how do we all get paid?
-		else
-			$version_info['file_versions']['subscriptions.php'] = '??';
-	}
-
-	// Load all the files in the Sources directory, except this file and the redirect.
-	$Sources_dir = dir($sourcedir);
-	while ($entry = $Sources_dir->read())
-	{
-		if (substr($entry, -4) === '.php' && !is_dir($sourcedir . '/' . $entry) && $entry !== 'index.php')
-		{
-			// Read the first 4k from the file.... enough for the header.
-			$fp = fopen($sourcedir . '/' . $entry, 'rb');
-			$header = fread($fp, 4096);
-			fclose($fp);
-
-			// Look for the version comment in the file header.
-			if (preg_match('~\*\s*@version\s+([^\s]+)~i', $header, $match) == 1)
-				$version_info['file_versions'][$entry] = $match[1];
-			// It wasn't found, but the file was... show a '??'.
-			else
-				$version_info['file_versions'][$entry] = '??';
-		}
-	}
-	$Sources_dir->close();
-
-	// Load all the files in the default template directory - and the current theme if applicable.
-	$directories = array('default_template_versions' => $theme['default_theme_dir']);
-	if ($theme['theme_id'] != 1)
-		$directories += array('template_versions' => $theme['theme_dir']);
-
-	foreach ($directories as $type => $dirname)
-	{
-		$This_dir = dir($dirname);
-		while ($entry = $This_dir->read())
-		{
-			if (substr($entry, -12) == 'template.php' && !is_dir($dirname . '/' . $entry))
-			{
-				// Read the first 768 bytes from the file.... enough for the header.
-				$fp = fopen($dirname . '/' . $entry, 'rb');
-				$header = fread($fp, 768);
-				fclose($fp);
-
-				// Look for the version comment in the file header.
-				if (preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*' . preg_quote(basename($entry, '.template.php'), '~') . '(?:[\s]{2}|\*/)~i', $header, $match) == 1)
-					$version_info[$type][$entry] = $match[1];
-				// It wasn't found, but the file was... show a '??'.
-				else
-					$version_info[$type][$entry] = '??';
-			}
-		}
-		$This_dir->close();
-	}
-
-	// Load up all the files in the default language directory and sort by language.
-	$This_dir = dir($lang_dir);
-	while ($entry = $This_dir->read())
-	{
-		if (substr($entry, -4) == '.php' && $entry != 'index.php' && !is_dir($lang_dir . '/' . $entry))
-		{
-			// Read the first 768 bytes from the file.... enough for the header.
-			$fp = fopen($lang_dir . '/' . $entry, 'rb');
-			$header = fread($fp, 768);
-			fclose($fp);
-
-			// Split the file name off into useful bits.
-			list ($name, $language) = explode('.', $entry);
-
-			// Look for the version comment in the file header.
-			if (preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*' . preg_quote($name, '~') . '(?:[\s]{2}|\*/)~i', $header, $match) == 1)
-				$version_info['default_language_versions'][$language][$name] = $match[1];
-			// It wasn't found, but the file was... show a '??'.
-			else
-				$version_info['default_language_versions'][$language][$name] = '??';
-		}
-	}
-	$This_dir->close();
-
-	// Sort the file versions by filename.
-	if (!empty($versionOptions['sort_results']))
-	{
-		ksort($version_info['file_versions']);
-		ksort($version_info['default_template_versions']);
-		ksort($version_info['template_versions']);
-		ksort($version_info['default_language_versions']);
-
-		// For languages sort each language too.
-		foreach ($version_info['default_language_versions'] as $language => $dummy)
-			ksort($version_info['default_language_versions'][$language]);
-	}
-
-	$context += array(
-		'file_versions' => $version_info['file_versions'],
-		'default_template_versions' => $version_info['default_template_versions'],
-		'template_versions' => $version_info['template_versions'],
-		'default_language_versions' => $version_info['default_language_versions'],
-		'default_known_languages' => array_keys($version_info['default_language_versions']),
-	);
+	return $context['forum_version'];
 }
 
 function get_server_software()
