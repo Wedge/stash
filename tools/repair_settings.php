@@ -589,8 +589,7 @@ function set_settings()
 		wesql::insert('replace',
 			'{db_prefix}settings',
 			array('variable' => 'string', 'value' => 'string-65534'),
-			$setString,
-			array('variable')
+			$setString
 		);
 
 	$setString = array();
@@ -608,7 +607,6 @@ function set_settings()
 		wesql::insert('replace',
 			'{db_prefix}themes',
 			array('id_theme' => 'int', 'id_member' => 'int', 'variable' => 'string', 'value' => 'string-65534'),
-			$setString,
-			array('id_theme', 'id_member', 'variable')
+			$setString
 		);
 }
