@@ -408,12 +408,7 @@ function show_settings()
 	if ($db_connection == true)
 	{
 		loadSource('Class-DBPackages');
-		$request = wedbPackages::list_tables('', '
-			{db_prefix}log_topics',
-			array(
-				'db_error_skip' => true,
-			)
-		);
+		$request = wedbPackages::list_tables(false, '{db_prefix}log_topics');
 		if ($request == true)
 		{
 			if (wesql::num_rows($request) == 1)
