@@ -1537,17 +1537,8 @@ function convertSettingsToTheme()
 	global $db_prefix, $settings;
 
 	$values = array(
-		'show_latest_member' => @$GLOBALS['showlatestmember'],
-		'show_bbc' => @$GLOBALS['showbbcbutt'],
-		'show_user_images' => @$GLOBALS['showuserpic'],
-		'show_blurb' => @$GLOBALS['showusertext'],
-		'show_gender' => @$GLOBALS['showgenderimage'],
-		'show_newsfader' => @$GLOBALS['shownewsfader'],
 		'display_recent_bar' => @$GLOBALS['Show_RecentBar'],
-		'show_member_bar' => @$GLOBALS['Show_MemberBar'],
-		'show_board_desc' => @$GLOBALS['ShowBDescrip'],
 		'newsfader_time' => @$GLOBALS['fadertime'],
-		'use_image_buttons' => empty($GLOBALS['MenuType']) ? 1 : 0,
 		'enable_news' => @$GLOBALS['enable_news'],
 		'return_to_post' => @$settings['returnToPost'],
 	);

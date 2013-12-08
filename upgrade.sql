@@ -505,29 +505,6 @@ VALUES
 	('next_task_time', UNIX_TIMESTAMP());
 ---#
 
----# Changing stats settings.
----{
-$request = upgrade_query("
-	SELECT value
-	FROM {$db_prefix}themes
-	WHERE variable = 'show_sp1_info'");
-if (mysql_num_rows($request) != 0)
-{
-	upgrade_query("
-		DELETE FROM {$db_prefix}themes
-		WHERE variable = 'show_stats_index'");
-
-	upgrade_query("
-		UPDATE {$db_prefix}themes
-		SET variable = 'show_stats_index'
-		WHERE variable = 'show_sp1_info'");
-}
-upgrade_query("
-	DELETE FROM {$db_prefix}themes
-	WHERE variable = 'show_sp1_info'");
----}
----#
-
 ---# Changing visual verification setting.
 ---{
 $request = upgrade_query("
@@ -592,13 +569,6 @@ if (mysql_num_rows($request) == 0)
 DELETE FROM {$db_prefix}settings
 WHERE variable = 'allow_hideEmail'
 	OR variable = 'allow_hide_email';
----#
-
----# Ensuring stats index setting present...
-INSERT IGNORE INTO {$db_prefix}themes
-	(id_theme, variable, value)
-VALUES
-	(1, 'show_stats_index', '0');
 ---#
 
 ---# Adding advanced signature settings...
