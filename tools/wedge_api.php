@@ -739,10 +739,6 @@ function we_loadThemeData($id_theme = 0)
 		}
 
 	$we_settings['theme']['theme_id'] = $th;
-
-	$we_settings['theme']['actual_theme_url'] = $we_settings['theme']['theme_url'];
-	$we_settings['theme']['actual_images_url'] = $we_settings['theme']['images_url'];
-	$we_settings['theme']['actual_theme_dir'] = $we_settings['theme']['theme_dir'];
 }
 
 // Attempt to start the session, unless it already has been.

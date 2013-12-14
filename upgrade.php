@@ -1,6 +1,9 @@
 <?php
 /**
  * Handles upgrading existing databases from older versions.
+ * THIS IS NOT INTENDED FOR USE WITH WEDGE.
+ * I don't know why I keep trying to update it.
+ * Poor me.
  *
  * @package Wedge
  * @copyright 2010 René-Gilles Deberdt, wedge.org
@@ -554,10 +557,8 @@ if ($upcontext['current_step'] != 0 || !empty($upcontext['user']['step']))
 $request = $smcFunc['db_query']('', '
 	SELECT variable, value
 	FROM {db_prefix}themes
-	WHERE id_theme = {int:id_theme}
-		AND variable IN ({literal:theme_url}, {literal:theme_dir}, {literal:images_url})',
+	WHERE variable IN ({literal:theme_url}, {literal:theme_dir}, {literal:images_url})',
 	array(
-		'id_theme' => 1,
 		'db_error_skip' => true,
 	)
 );
@@ -569,12 +570,8 @@ if (!isset($settings['theme_url']))
 {
 	$settings['theme_dir'] = $boarddir . '/Themes/default';
 	$settings['theme_url'] = 'Themes/default';
-	$settings['images_url'] = 'Themes/default/images';
+	define('IMAGES', $boarddir . '/Themes/default/images');
 }
-if (!isset($theme['default_theme_url']))
-	$theme['default_theme_url'] = $settings['theme_url'];
-if (!isset($theme['default_theme_dir']))
-	$theme['default_theme_dir'] = $settings['theme_dir'];
 
 // Default title...
 $upcontext['page_title'] = 'Updating your Wedge Install!';
@@ -1452,8 +1449,8 @@ function DeleteUpgrade()
 			'id_board' => 'int', 'id_topic' => 'int', 'id_msg' => 'int', 'extra' => 'string-65534',
 		),
 		array(
-			time(), 3, we::$id, $command_line ? '127.0.0.1' : we::$user['ip'], 'upgrade',
-			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => we::$id)),
+			time(), 3, MID, $command_line ? '127.0.0.1' : we::$user['ip'], 'upgrade',
+			0, 0, 0, serialize(array('version' => WEDGE_VERSION, 'member' => MID)),
 		),
 		array('id_action')
 	);
@@ -1479,7 +1476,7 @@ function DeleteUpgrade()
 // Just like the built-in one, but setup for CLI to not use themes.
 function cli_scheduled_fetchRemoteFiles()
 {
-	global $sourcedir, $txt, $language, $theme, $settings;
+	global $sourcedir, $txt, $language, $settings;
 
 	if (empty($txt['time_format']))
 		$txt['time_format'] = '%B %e, %Y, %I:%M:%S %p';
@@ -1539,7 +1536,6 @@ function convertSettingsToTheme()
 	$values = array(
 		'display_recent_bar' => @$GLOBALS['Show_RecentBar'],
 		'newsfader_time' => @$GLOBALS['fadertime'],
-		'enable_news' => @$GLOBALS['enable_news'],
 		'return_to_post' => @$settings['returnToPost'],
 	);
 
@@ -1579,8 +1575,8 @@ function convertSettingstoOptions()
 
 		$smcFunc['db_query']('', '
 			INSERT IGNORE INTO {db_prefix}themes
-				(id_member, id_theme, variable, value)
-			SELECT id_member, 1, {string:variable}, {string:value}
+				(id_member, variable, value)
+			SELECT id_member, {string:variable}, {string:value}
 			FROM {db_prefix}members',
 			array(
 				'variable' => $variable,
@@ -1591,8 +1587,8 @@ function convertSettingstoOptions()
 
 		$smcFunc['db_query']('', '
 			INSERT IGNORE INTO {db_prefix}themes
-				(id_member, id_theme, variable, value)
-			VALUES (-1, 1, {string:variable}, {string:value})',
+				(id_member, variable, value)
+			VALUES (-1, {string:variable}, {string:value})',
 			array(
 				'variable' => $variable,
 				'value' => $settings[$value[0]],
@@ -2670,7 +2666,7 @@ function makeFilesWritable(&$files)
 // This is what is displayed if there's any chmod to be done. If not it returns nothing...
 function template_chmod()
 {
-	global $upcontext, $upgradeurl, $theme;
+	global $upcontext, $upgradeurl;
 
 	// Don't call me twice!
 	if (!empty($upcontext['chmod_called']))
@@ -2726,7 +2722,7 @@ function template_chmod()
 					var content = popup.document;
 					content.write(\'<!DOCTYPE html>\n\');
 					content.write(\'<html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>\n\t<head>\n\t\t<meta name="robots" content="noindex">\n\t\t\');
-					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
+					content.write(\'<title>Warning</title>\n\t\t<link rel="stylesheet" href="', $settings['theme_url'], '/css/index.css">\n\t</head>\n\t<body id="popup">\n\t\t\');
 					content.write(\'<div class="description wrc">\n\t\t\t<h4>The following files needs to be made writable to continue:</h4>\n\t\t\t\');
 					content.write(\'<p>', implode('<br>\n\t\t\t', $upcontext['chmod']['files']), '</p>\n\t\t\t\');
 					content.write(\'<a href="javascript:self.close();">close</a>\n\t\t</div>\n\t</body>\n</html>\');
@@ -2789,7 +2785,7 @@ function template_chmod()
 
 function template_upgrade_above()
 {
-	global $settings, $txt, $wedgesite, $theme, $upcontext, $upgradeurl;
+	global $settings, $txt, $wedgesite, $upcontext, $upgradeurl;
 
 	echo '<!DOCTYPE html>
 <html', $upcontext['right_to_left'] ? ' dir="rtl"' : '', '>
@@ -2797,8 +2793,8 @@ function template_upgrade_above()
 		<meta charset="utf-8">
 		<meta name="robots" content="noindex">
 		<title>', $txt['upgrade_upgrade_utility'], '</title>
-		<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/index.css">
-		<link rel="stylesheet" href="', $theme['default_theme_url'], '/css/install.css">
+		<link rel="stylesheet" href="', $settings['theme_url'], '/css/index.css">
+		<link rel="stylesheet" href="', $settings['theme_url'], '/css/install.css">
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 		<script src="Themes/default/scripts/script.js"></script>
 		<script><!-- // --><![CDATA[
@@ -2996,11 +2992,11 @@ function template_error_message()
 
 function template_welcome_message()
 {
-	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $txt;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $txt;
 
 	echo '
 		<script src="http://wedge.org/files/current-version.js?version=' . WEDGE_VERSION . '"></script>', empty($context['disable_login_hashing']) ? '
-		<script src="' . $theme['default_theme_url'] . '/scripts/sha1.js"></script>' : '', '
+		<script src="' . $settings['theme_url'] . '/scripts/sha1.js"></script>' : '', '
 			<h3>', sprintf($txt['upgrade_ready_proceed'], WEDGE_VERSION), '</h3>
 	<form action="', $upcontext['form_url'], '" method="post" name="upform" id="upform" ', empty($upcontext['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $upcontext['rid'] . '\');"' : '', '>
 		<div id="version_warning">
@@ -3027,7 +3023,7 @@ function template_welcome_message()
 
 	// Paths are incorrect?
 	echo '
-		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #804840; color: black; background-color: #fe5a44; ', (file_exists($theme['default_theme_dir'] . '/scripts/script.js') ? 'display: none;' : ''), '" id="js_script_missing_error">
+		<div style="margin: 2ex; padding: 2ex; border: 2px dashed #804840; color: black; background-color: #fe5a44; ', (file_exists($settings['theme_dir'] . '/scripts/script.js') ? 'display: none;' : ''), '" id="js_script_missing_error">
 			<div style="float: left; width: 2ex; font-size: 2em; color: black">!!</div>
 			<strong style="text-decoration: underline">', $txt['upgrade_critical_error'], '</strong><br>
 			<div style="padding-left: 6ex">
@@ -3162,7 +3158,7 @@ function template_welcome_message()
 
 function template_upgrade_options()
 {
-	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $mmessage, $mtitle;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $boarddir, $db_prefix, $mmessage, $mtitle;
 
 	echo '
 			<h3>Before the upgrade gets underway please review the options below - and hit continue when you\'re ready to begin.</h3>
@@ -3229,7 +3225,7 @@ function template_upgrade_options()
 // Template for the database backup tool/
 function template_backup_database()
 {
-	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $support_js, $is_debug;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $support_js, $is_debug;
 
 	echo '
 			<h3>Please wait while a backup is created. For large forums this may take some time!</h3>';
@@ -3304,7 +3300,7 @@ function template_backup_database()
 
 function template_backup_xml()
 {
-	global $upcontext, $theme, $options, $txt;
+	global $upcontext, $txt;
 
 	echo '
 	<table num="', $upcontext['cur_table_num'], '">', $upcontext['cur_table_name'], '</table>';
@@ -3313,7 +3309,7 @@ function template_backup_xml()
 // Here is the actual "make the changes" template!
 function template_database_changes()
 {
-	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $support_js, $is_debug, $timeLimitThreshold;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $support_js, $is_debug, $timeLimitThreshold;
 
 	echo '
 		<h3>Executing database changes</h3>
@@ -3629,7 +3625,7 @@ function template_database_changes()
 
 function template_database_xml()
 {
-	global $upcontext, $theme, $options, $txt;
+	global $upcontext, $txt;
 
 	echo '
 	<file num="', $upcontext['cur_file_num'], '" items="', $upcontext['total_items'], '" debug_items="', $upcontext['debug_items'], '">', $upcontext['cur_file_name'], '</file>
@@ -3643,7 +3639,7 @@ function template_database_xml()
 
 function template_upgrade_complete()
 {
-	global $upcontext, $settings, $upgradeurl, $disable_security, $theme, $boarddir, $db_prefix, $boardurl;
+	global $upcontext, $settings, $upgradeurl, $disable_security, $boarddir, $db_prefix, $boardurl;
 
 	echo '
 	<h3>That wasn\'t so hard, was it? Now you are ready to use <a href="', $boardurl, '/index.php">your installation of Wedge</a>. Hope you like it!</h3>

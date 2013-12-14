@@ -444,7 +444,7 @@ function template_sphinx_config_above($title)
 </head>
 <body>
 	<div id="header">
-		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', $theme['default_images_url'], '/wedgelogo.png" alt="Wedge"></a>
+		<a href="http://wedge.org/" target="_blank"><img id="wedgelogo" src="', ASSETS, '/wedgelogo.png" alt="Wedge"></a>
 		<div title="A wedge is like a pyramid...">Wedge Sphinx Configuration Utility</div>
 	</div>
 	<div id="content">

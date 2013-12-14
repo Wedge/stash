@@ -272,14 +272,14 @@ function action_test()
 
 function show_header()
 {
-	global $start_time, $theme;
+	global $start_time;
 	$start_time = time();
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
 		<title>BBC Testcases</title>
-		<script type="text/javascript" src="', $theme['default_theme_url'], '/scripts/script.js"></script>
+		<script type="text/javascript" src="', TEMPLATES, '/scripts/script.js"></script>
 		<style type="text/css">
 			body
 			{

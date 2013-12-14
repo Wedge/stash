@@ -10,6 +10,5 @@ function img_blankGif()
 	// !!! Alternatively, the shorter non-standard 42-byte version, but it compresses slightly worse.
 	//	return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAEALAAAAAABAAEAAAIBTAA7';
 
-	global $theme;
-	return $theme['images_url'] . '/blank.gif';
+	return ASSETS . '/blank.gif';
 }

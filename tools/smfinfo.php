@@ -1289,8 +1289,8 @@ function get_php_setting($val, $rec = '')
 
 function get_wedge_setting($val, $rec = '')
 {
-	global $txt;
-	global $settings, $theme;
+	global $txt, $settings, $settings;
+
 	$r = (!empty($GLOBALS[$val]) ? $txt['on'] : (!empty($settings[$val]) ? $txt['on'] : (!empty($theme[$val]) ? $txt['on'] : $txt['off'])));
 	if (!empty($rec) && strcmp($r, $txt[$rec]) != 0)
 		$r .= '&nbsp;<strong>(' . $txt['recommended'] . ': ' . $txt[$rec] . ')</strong>';
@@ -2101,7 +2101,7 @@ function get_error_log()
 				'error_id' => $row['ID_ERROR'],
 				'member_id' => $row['ID_MEMBER'],
 				'time' => timeformat($row['logTime']),
-				'url_html' => htmlspecialchars($scripturl . $row['url']),
+				'url_html' => htmlspecialchars(SCRIPT . $row['url']),
 				'message_html' => $show_message,
 			);
 		}
@@ -2140,7 +2140,7 @@ function get_error_log()
 				'error_id' => $row['id_error'],
 				'member_id' => $row['id_member'],
 				'time' => timeformat($row['log_time']),
-				'url_html' => htmlspecialchars($scripturl . $row['url']),
+				'url_html' => htmlspecialchars(SCRIPT . $row['url']),
 				'message_html' => $show_message,
 				'type' => $row['error_type'],
 				'file' => $row['file'],
