@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /?msg=*
+Disallow: /index.php?msg=*
+
+User-agent: AhrefsBot
+disallow: /
+
+User-agent: Spider - Panopta
+Disallow: /
+User-agent: panopta
+Disallow: /
