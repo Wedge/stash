@@ -1,0 +1,197 @@
+16923540c14eae607d667a4a2ba3860a5b84de7f
+ Themes/default/skins/common.css    | 13 +++++++------
+ Themes/default/skins/extra.rtl.css |  3 ++-
+ Themes/default/skins/index.css     | 21 +++++++++------------
+ Themes/default/skins/mana.css      |  7 ++++++-
+ Themes/default/skins/sections.css  | 11 ++++++-----
+ 5 files changed, 30 insertions(+), 25 deletions(-)
+
+diff --git a/Themes/default/skins/common.css b/Themes/default/skins/common.css
+index 1814f70..b679280 100644
+--- a/Themes/default/skins/common.css
++++ b/Themes/default/skins/common.css
+@@ -114,10 +114,11 @@
+ $main_font = Arial, sans-serif
+ $main_font_size = 88%/130%
+ $menu_font = $main_font
+-$big_font = "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif
+-$head_font = "Franklin Gothic Medium", "Franklin Gothic", $big_font
+-$mono_font = Consolas, "Dejavu Sans Mono", Menlo, "Lucida Console", "Courier New", monospace
++$big_font = "Franklin Gothic Medium", "Franklin Gothic", "Segoe UI", Helvetica, Arial, sans-serif
++$head_font = "Franklin Gothic Medium", "Franklin Gothic", "Segoe UI", Helvetica, Arial, sans-serif
+ $subject_font = "Franklin Gothic Medium", "Franklin Gothic", "Segoe UI", Arial, sans-serif
++$mono_font = Consolas, "Dejavu Sans Mono", Menlo, "Lucida Console", "Courier New", monospace
++$serif_font = Georgia, serif
+ 
+ $post_font_size = 100%/133%
+ $post_font = $main_font
+@@ -160,10 +161,10 @@ $responsive_max_width = 1000px
+ $responsive = "all and (max-width: $responsive_max_width)"
+ 
+ /* List of browsers that support the STANDARD flexbox model, i.e. display: flex.
+-	I added IE 10 support by changing the properties on the fly, so you should be fine with it, if your code isn't too complex.
+-	Chrome supports flexbox, earlier with a prefix. Opera 12.1 supports it, but in a broken way. Not worth bothering, though...
++	IE10 supports an older model, but Wess automatically rewrites your CSS for it.
++	Opera 12.1 and Safari Mobile 7 normally support it, which their implementations are flawed, at least in Wedge.
+ 	For reference, browsers supporting the OLD, useless model were: (firefox[2-], chrome[4-], safari[3.1-] && !ios, ios[3.2-]) */
+-$can_flex = @is ("firefox[22-], chrome[26-], opera[12.1-], ie[10-], safari[7-], ios[7-]")
++$can_flex = @is ("firefox[22-], chrome[27-], ie[10-], safari[7-] && !ios")
+ 
+ /* List browsers that support CSS3 animations (Wedge adds prefixes automatically.) */
+ $can_animate = @is ("chrome, firefox[5-], opera[12-], ie[10-], safari[4-], ios[3.2-], android[2.1-]")
+diff --git a/Themes/default/skins/extra.rtl.css b/Themes/default/skins/extra.rtl.css
+index 5788c27..fa34e2d 100644
+--- a/Themes/default/skins/extra.rtl.css
++++ b/Themes/default/skins/extra.rtl.css
+@@ -243,8 +243,9 @@ span.percent
+ 	margin: 0 0 0 1em
+ 
+ #forumposts
+-	.modified
++	ins
+ 		float: right
++		padding: 0 8px 0 0
+ 	.reportlinks
+ 		margin-left: 1.5em
+ 		text-align: left
+diff --git a/Themes/default/skins/index.css b/Themes/default/skins/index.css
+index 71fe7db..442bc88 100644
+--- a/Themes/default/skins/index.css
++++ b/Themes/default/skins/index.css
+@@ -253,10 +253,11 @@ ul#noava
+ #header h1
+ 	margin: 42px 0 0 30px
+ 	float: left
++	letter-spacing: -2px
+ 	font: 100 2.5em/1em $big_font
++	text-shadow: 0 1px #fff
+ 	a
+ 		color: #766
+-		letter-spacing: -1px
+ 
+ // The search box, with a few hacks to allow for a drop-down menu...
+ #search_form
+@@ -1262,7 +1263,7 @@ table
+ 			content: "\201c"
+ 			color: #999
+ 			height: 1px
+-			font: 3.6em/1 Cochin, Georgia, serif
++			font: 3.6em/1 $serif
+ 	> div
+ 		font-size: 92%
+ 		line-height: 1.4em
+@@ -1399,7 +1400,7 @@ td.footnum a:target, a.fnotel:target
+ 	color: gray
+ 
+ .post .headline
+-	font: italic 120% Georgia, serif
++	font: italic 120% $serif
+ 	padding-bottom: 8px
+ 
+ // Merged double posts
+@@ -1589,7 +1590,7 @@ dl#feed
+ 	padding: 5px 10px 5px
+ 	margin: 4px 0
+ 	border: 1px solid rgba(0,0,0, .15)
+-	font: @ifnull ($head_font_style, 100) @ifnull ($head_font_size, 1.5em/1.3em) $head_font
++	font: @ifnull ($head_font_style, 100) @ifnull ($head_font_size, 1.5em/1.3em) @ifnull ($cat_font, $head_font)
+ 	img
+ 		padding-right: 2px
+ 
+@@ -1613,14 +1614,17 @@ dl#feed
+ 		margin: -5px
+ 
+ .title extends .cat
++	position: relative
++	font-size: @ifnull ($title_font_size, 1.4em)
+ 	padding: 4px 8px
+ 	border, margin: 0
+ 	color: #777
+ 
++// Customize sidebar section headers; 'final' because no .title2 needed in there.
+ #sidebar .title final
++	font-size: @ifnull ($sidebar_title_font_size, 1.5em)
+ 	margin: 0 0 15px
+ 	padding: 4px 0 0
+-	font-size: @ifnull ($sidebar_title_font_size, 1.6em)
+ 
+ .title2 extends .title
+ 	background: none
+@@ -1629,13 +1633,6 @@ dl#feed
+ 	&, a
+ 		color: #777
+ 
+-.cat final, .title final
+-	font: @ifnull ($head_font_style, 100) @ifnull ($head_font_size, 1.5em/1.3em) @ifnull ($cat_font, $head_font)
+-
+-.title final
+-	font-size: @ifnull ($title_font_size, 1.4em)
+-	position: relative
+-
+ // A general table class
+ .table_grid
+ 	border-collapse: separate
+diff --git a/Themes/default/skins/mana.css b/Themes/default/skins/mana.css
+index 114bf4c..d9be5c7 100644
+--- a/Themes/default/skins/mana.css
++++ b/Themes/default/skins/mana.css
+@@ -44,8 +44,13 @@ input, textarea
+ 	max-height: 15em
+ 	margin: 1em 0
+ 	dt
+-		padding-bottom: 5px
++		padding: 5px 0
+ 		border-bottom: 1px dotted #666
++		:first-child
++			padding: 0 0 5px
++		:last-child
++			padding: 5px 0 0
++			border-bottom: 0
+ 	dd
+ 		font-size: 8pt
+ 		line-height: 1.25
+diff --git a/Themes/default/skins/sections.css b/Themes/default/skins/sections.css
+index b68979d..010fe3a 100644
+--- a/Themes/default/skins/sections.css
++++ b/Themes/default/skins/sections.css
+@@ -296,6 +296,7 @@ hr.sep
+ 	h5 + div
+ 		font-size: .9em
+ 	ins
++		padding-left: 8px
+ 		text-decoration: none
+ 		font-style: italic
+ 		color: #a0aaa0
+@@ -1032,11 +1033,11 @@ tr.windowbg td
+ 	#basicinfo
+ 		.username
+ 			float: left
++		img.avatar
++			float: right
++			vertical-align: top
+ 	#position
+ 		float: right
+-	img.avatar
+-		float: right
+-		vertical-align: top
+ 	#basicinfo ul, #userstatus
+ 		clear: left
+ 	#infolinks
+@@ -1274,7 +1275,7 @@ tr.windowbg td
+ 
+ @if !ie6
+ 	.my.thought
+-		font: italic 12px Georgia, "Trebuchet MS", Arial, sans-serif
++		font: italic 12px $serif
+ @endif
+ 
+ /* Styles for the statistics center.
+@@ -1568,7 +1569,7 @@ body.waiting *
+ 				@endif
+ 			#header h1
+ 				margin-top: 8px
+-				font-size: 75% // of 3em (see below.)
++				font-size: 2.2em
+ 			#upper_section
+ 				height: 60px
+ 			#slogan
