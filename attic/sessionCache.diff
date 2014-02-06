@@ -1,0 +1,382 @@
+diff --git a/core/app/Class-Notification.php b/core/app/Class-Notification.php
+index 196f936..72113e5 100644
+--- a/core/app/Class-Notification.php
++++ b/core/app/Class-Notification.php
+@@ -135,7 +135,7 @@ class Notification
+ 			);
+ 
+ 			// Flush the cache
+-			cache_put_data('quick_notification_' . $id_member, null, 86400);
++			cache_put_data('quick_notification', null, 86400, $id_member);
+ 		}
+ 	}
+ 
+@@ -270,7 +270,7 @@ class Notification
+ 				}
+ 
+ 				// Flush the cache
+-				cache_put_data('quick_notification_' . $id_member, null, 86400);
++				cache_put_data('quick_notification', null, 86400, $id_member);
+ 			}
+ 			else
+ 				throw new Exception('Unable to create notification');
+@@ -341,7 +341,7 @@ class Notification
+ 		);
+ 
+ 		// Flush the cache
+-		cache_put_data('quick_notification_' . $this->getMember(), null, 86400);
++		cache_put_data('quick_notification', null, 86400, $this->getMember());
+ 	}
+ 
+ 	/**
+diff --git a/core/app/Class-System.php b/core/app/Class-System.php
+index c03bc47..75c0d97 100644
+--- a/core/app/Class-System.php
++++ b/core/app/Class-System.php
+@@ -95,7 +95,7 @@ class we
+ 		if ($id_member != 0)
+ 		{
+ 			// Is the member data cached?
+-			if (empty($settings['cache_enable']) || $settings['cache_enable'] < 2 || ($user_settings = cache_get_data('user_settings-' . $id_member, 60)) === null)
++			if (empty($settings['cache_enable']) || $settings['cache_enable'] < 2 || ($user_settings = cache_get_data('user_settings', 60, $id_member)) === null)
+ 			{
+ 				$request = wesql::query('
+ 					SELECT
+@@ -116,6 +116,13 @@ class we
+ 					cache_put_data('user_settings-' . $id_member, $user_settings, 60);
+ 			}
+ 
++			// Did a previous page ask us to empty our cache?
++			if (!empty($user_settings['clean_cache']))
++			{
++				$_SESSION['cache'] = array();
++				updateMemberData($id_member, array('clean_cache' => 0));
++			}
++
+ 			// Did we find 'im? If not, junk it.
+ 			if (!empty($user_settings))
+ 			{
+@@ -150,7 +157,7 @@ class we
+ 			// 1. Pages called by SSI, XML feeds and Ajax requests don't count as visiting the forum.
+ 			// 2. If it was set within this session, no need to set it again.
+ 			// 3. New session, yet updated less than 5 hours ago? Maybe cache can help.
+-			if (WEDGE != 'SSI' && !AJAX && ($context['action'] !== 'feed') && empty($_SESSION['id_msg_last_visit']) && (empty($settings['cache_enable']) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit-' . $id_member, 18000)) === null))
++			if (WEDGE != 'SSI' && !AJAX && ($context['action'] !== 'feed') && empty($_SESSION['id_msg_last_visit']) && (empty($settings['cache_enable']) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit', 18000, $id_member)) === null))
+ 			{
+ 				// Do a quick query to make sure this isn't a mistake.
+ 				$result = wesql::query('
+@@ -304,7 +311,7 @@ class we
+ 
+ 		if ($id_member)
+ 		{
+-			$cached = cache_get_data('contacts_' . $id_member, 3000);
++			$cached = cache_get_data('contacts', 3000, $id_member);
+ 			if ($cached === null)
+ 			{
+ 				// Get the member IDs in each of your contact lists.
+diff --git a/core/app/Feed.php b/core/app/Feed.php
+index 6171380..77c48fd 100644
+--- a/core/app/Feed.php
++++ b/core/app/Feed.php
+@@ -257,7 +257,7 @@ function Feed()
+ 
+ 	// Get the associative array representing the xml.
+ 	if (!empty($settings['cache_enable']) && (we::$is_member || $settings['cache_enable'] >= 3))
+-		$xml = cache_get_data('xmlfeed-' . $xml_format . ':' . (we::$is_guest ? '' : MID . '-') . $cachekey, 240);
++		$xml = cache_get_data($xml_format . 'feed-' . $cachekey, 240, MID);
+ 	if (empty($xml))
+ 	{
+ 		if ($xml_format == 'atom')
+@@ -271,9 +271,8 @@ function Feed()
+ 		}
+ 		$xml = $subActions[$_GET['sa']]($xml_format);
+ 
+-		if (!empty($settings['cache_enable']) && ((we::$is_guest && $settings['cache_enable'] >= 3)
+-		|| (we::$is_member && microtime(true) - $cache_t > 0.2)))
+-			cache_put_data('xmlfeed-' . $xml_format . ':' . (we::$is_guest ? '' : MID . '-') . $cachekey, $xml, 240);
++		if (!empty($settings['cache_enable']) && ((we::$is_guest && $settings['cache_enable'] >= 3) || (we::$is_member && microtime(true) - $cache_t > 0.2)))
++			cache_put_data($xml_format . 'feed-' . $cachekey, $xml, 240, MID);
+ 	}
+ 
+ 	$feed_title = westr::safe(strip_tags($context['forum_name'])) . (isset($feed_title) ? $feed_title : '');
+diff --git a/core/app/Load.php b/core/app/Load.php
+index 1c4abf1..5ab4fba 100644
+--- a/core/app/Load.php
++++ b/core/app/Load.php
+@@ -1309,7 +1309,7 @@ function loadTheme($skin = '', $initialize = true)
+ 
+ 	$member = MID ? MID : -1;
+ 
+-	if (!empty($settings['cache_enable']) && $settings['cache_enable'] >= 2 && ($temp = cache_get_data('theme_settings:' . $member, 60)) !== null && time() - 60 > $settings['settings_updated'])
++	if (!empty($settings['cache_enable']) && $settings['cache_enable'] >= 2 && ($temp = cache_get_data('theme_settings', 60, MID)) !== null && time() - 60 > $settings['settings_updated'])
+ 	{
+ 		$themeData = $temp;
+ 		$flag = true;
+@@ -1341,7 +1341,7 @@ function loadTheme($skin = '', $initialize = true)
+ 					$themeData[$member][$k] = $v;
+ 
+ 		if (!empty($settings['cache_enable']) && $settings['cache_enable'] >= 2)
+-			cache_put_data('theme_settings:' . $member, $themeData, 60);
++			cache_put_data('theme_settings', $themeData, 60, $member);
+ 		// Only if we didn't already load that part of the cache...
+ 		elseif (!isset($temp))
+ 			cache_put_data('theme_settings', array(-1 => $themeData[-1], 0 => $themeData[0]), 90);
+@@ -2135,7 +2135,11 @@ function sessionRead($session_id)
+ 		while ($row = wesql::fetch_assoc($result))
+ 		{
+ 			if ($row['session_id'] === 'cache')
++			{
+ 				$session_cache = unserialize($row['data']);
++				if ($session_cache === false)
++					$session_cache = array();
++			}
+ 			else
+ 				$sess_data = $row['data'];
+ 		}
+diff --git a/core/app/ModerationCenter.php b/core/app/ModerationCenter.php
+index a7a7318..1256067 100644
+--- a/core/app/ModerationCenter.php
++++ b/core/app/ModerationCenter.php
+@@ -348,7 +348,7 @@ function ModBlockReportedPosts()
+ 	if (we::$user['mod_cache']['bq'] == '0=1')
+ 		return 'reported_posts_block';
+ 
+-	if (($reported_posts = cache_get_data('reported_posts_' . $cachekey, 90)) === null)
++	if (($reported_posts = cache_get_data('reported_posts_' . $cachekey, 90, MID)) === null)
+ 	{
+ 		// By Jove, that means we're in a position to get the reports, jolly good.
+ 		$request = wesql::query('
+@@ -373,7 +373,7 @@ function ModBlockReportedPosts()
+ 		wesql::free_result($request);
+ 
+ 		// Cache it.
+-		cache_put_data('reported_posts_' . $cachekey, $reported_posts, 90);
++		cache_put_data('reported_posts_' . $cachekey, $reported_posts, 90, MID);
+ 	}
+ 
+ 	$context['reported_posts'] = array();
+diff --git a/core/app/Notifications.php b/core/app/Notifications.php
+index 5b7ee9b..42b3fb7 100644
+--- a/core/app/Notifications.php
++++ b/core/app/Notifications.php
+@@ -132,13 +132,13 @@ class weNotif
+ 	 */
+ 	protected static function get_quick_notifications()
+ 	{
+-		$notifications = cache_get_data('quick_notification_' . MID, 86400);
++		$notifications = cache_get_data('quick_notification', 86400, MID);
+ 
+ 		// Nothing in cache? Build it.
+ 		if ($notifications === null)
+ 		{
+ 			$notifications = Notification::get(null, MID, self::$quick_count);
+-			cache_put_data('quick_notification_' . MID, $notifications, 86400);
++			cache_put_data('quick_notification', $notifications, 86400, MID);
+ 		}
+ 
+ 		$notifs = $notification_members = array();
+diff --git a/core/app/PersonalMessage.php b/core/app/PersonalMessage.php
+index fbc1d84..22f4dd4 100644
+--- a/core/app/PersonalMessage.php
++++ b/core/app/PersonalMessage.php
+@@ -242,7 +242,7 @@ function PersonalMessage()
+ 				wesql::free_result($request);
+ 				updateMemberData(MID, array('unread_messages' => $count));
+ 				// And next time we actually enter the inbox certain things need to be recalculated.
+-				cache_put_data('labelCounts:' . MID, null);
++				cache_put_data('labelCounts', null, 720, MID);
+ 			*/
+ 
+ 			return_raw($context['header'] . parse_bbc($body, 'pm', array('cache' => 'pm' . $pmsg)));
+@@ -252,7 +252,7 @@ function PersonalMessage()
+ 	// Load up the members maximum message capacity.
+ 	if (we::$is_admin)
+ 		$context['message_limit'] = 0;
+-	elseif (($context['message_limit'] = cache_get_data('msgLimit:' . MID, 360)) === null)
++	elseif (($context['message_limit'] = cache_get_data('msgLimit', 360, MID)) === null)
+ 	{
+ 		// !!! Why do we do this? It seems like if they have any limit we should use it.
+ 		$request = wesql::query('
+@@ -269,7 +269,7 @@ function PersonalMessage()
+ 		$context['message_limit'] = $minMessage == 0 ? 0 : $maxMessage;
+ 
+ 		// Save us doing it again!
+-		cache_put_data('msgLimit:' . MID, $context['message_limit'], 360);
++		cache_put_data('msgLimit', $context['message_limit'], 360, MID);
+ 	}
+ 
+ 	// Prepare the context for the capacity bar.
+@@ -326,7 +326,7 @@ function PersonalMessage()
+ 	}
+ 
+ 	// Load the label data.
+-	if ($user_settings['new_pm'] || ($context['labels'] = cache_get_data('labelCounts:' . MID, 720)) === null)
++	if ($user_settings['new_pm'] || ($context['labels'] = cache_get_data('labelCounts', 720, MID)) === null)
+ 	{
+ 		$context['labels'] = $user_settings['message_labels'] == '' ? array() : explode(',', $user_settings['message_labels']);
+ 		foreach ($context['labels'] as $id_label => $label_name)
+@@ -368,7 +368,7 @@ function PersonalMessage()
+ 		wesql::free_result($result);
+ 
+ 		// Store it please!
+-		cache_put_data('labelCounts:' . MID, $context['labels'], 720);
++		cache_put_data('labelCounts', $context['labels'], 720, MID);
+ 	}
+ 
+ 	// This determines if we have more labels than just the standard inbox.
+@@ -2879,7 +2879,7 @@ function deleteMessages($personal_messages, $folder = null, $owner = null)
+ 	}
+ 
+ 	// Any cached numbers may be wrong now.
+-	cache_put_data('labelCounts:' . MID, null, 720);
++	cache_put_data('labelCounts', null, 720, MID);
+ }
+ 
+ // Mark personal messages read.
+@@ -2942,7 +2942,7 @@ function recalculateUnread($owner)
+ 	wesql::free_result($result);
+ 
+ 	// Need to store all this.
+-	cache_put_data('labelCounts:' . $owner, $context['labels'], 720);
++	cache_put_data('labelCounts', $context['labels'], 720, $owner);
+ 	updateMemberData($owner, array('unread_messages' => $total_unread));
+ 
+ 	// If it was for the current member, reflect this in the we::$user array too.
+@@ -3151,7 +3151,7 @@ function ManageLabels()
+ 		}
+ 
+ 		// Make sure we're not caching this!
+-		cache_put_data('labelCounts:' . MID, null, 720);
++		cache_put_data('labelCounts', null, 720, MID);
+ 
+ 		// To make the changes appear right away, redirect.
+ 		redirectexit('action=pm;sa=manlabels');
+diff --git a/core/app/Recent.php b/core/app/Recent.php
+index 977cd72..df9553f 100644
+--- a/core/app/Recent.php
++++ b/core/app/Recent.php
+@@ -166,8 +166,8 @@ function Recent()
+ 
+ 	add_linktree($context['page_title'], '<URL>?action=recent' . (empty($board) ? (empty($_REQUEST['c']) ? '' : ';c=' . (int) $_REQUEST['c']) : ';board=' . $board . '.0'));
+ 
+-	$key = 'recent-' . MID . '-' . md5(serialize(array_diff_key($query_parameters, array('max_id_msg' => 0)))) . '-' . (int) $_REQUEST['start'];
+-	if (empty($settings['cache_enable']) || ($messages = cache_get_data($key, 120)) === null)
++	$key = 'recent-' . md5(serialize(array_diff_key($query_parameters, array('max_id_msg' => 0)))) . '-' . (int) $_REQUEST['start'];
++	if (empty($settings['cache_enable']) || ($messages = cache_get_data($key, 120, MID)) === null)
+ 	{
+ 		$done = false;
+ 		while (!$done)
+@@ -204,7 +204,7 @@ function Recent()
+ 			$messages[] = $row['id_msg'];
+ 		wesql::free_result($request);
+ 		if (!empty($cache_results))
+-			cache_put_data($key, $messages, 120);
++			cache_put_data($key, $messages, 120, MID);
+ 	}
+ 
+ 	// Nothing here... Or at least, nothing you can see...
+diff --git a/core/app/Subs-Cache.php b/core/app/Subs-Cache.php
+index fc85413..1b95224 100644
+--- a/core/app/Subs-Cache.php
++++ b/core/app/Subs-Cache.php
+@@ -1694,6 +1694,7 @@ function clean_cache($extensions = 'php', $filter = '', $force_folder = '', $rem
+ 		{
+ 			$session_cache = array();
+ 			$cache_updated = true;
++			wesql::query('UPDATE {db_prefix}members SET clean_cache = 1');
+ 		}
+ 
+ 		// Also get the source and language caches!
+@@ -1790,9 +1791,10 @@ function cache_quick_get($key, $file, $function, $params, $level = 1)
+  * @param string $key A string that denotes the identity of the data being saved, and for later retrieval.
+  * @param mixed $val The raw data to be cached. This may be any data type but it will be serialized prior to being stored in the cache.
+  * @param int $ttl The time the cache is valid for, in seconds. If a request to retrieve is received after this time, the item will not be retrieved.
++ * @param bool $user_cache Set to true if this is caching specific to the current member.
+  * @todo Remove cache types that are obsolete and no longer maintained.
+  */
+-function cache_put_data($key, $val, $ttl = 120)
++function cache_put_data($key, $val, $ttl = 120, $user_cache = false)
+ {
+ 	global $cache_system, $cache_hits, $cache_count, $session_cache, $cache_updated;
+ 	global $settings, $db_show_debug, $cachedir;
+@@ -1801,7 +1803,7 @@ function cache_put_data($key, $val, $ttl = 120)
+ 		return;
+ 
+ 	$st = microtime(true);
+-	$key = cache_prepare_key($key, $val, 'put');
++	$key = cache_prepare_key($key, $user_cache, $val, 'put');
+ 	if ($ttl === 'forever')
+ 		$ttl = PHP_INT_MAX;
+ 
+@@ -1832,12 +1834,30 @@ function cache_put_data($key, $val, $ttl = 120)
+ 		else
+ 			xcache_set($key, $val, $ttl);
+ 	}
++	elseif ($cache_system === 'session' && $user_cache !== false)
++	{
++		// If we're trying to change a user cache session that's not ours (only happens in PM's labelCount), mark it as dirty.
++		// It'll only stay dirty between the moment they load the next page and the moment their settings are loaded.
++		if (defined('MID') && $user_cache !== MID)
++			wesql::query('UPDATE {db_prefix}members SET clean_cache = 1 WHERE id_member = {int:mid}', array('mid' => $user_cache));
++
++		if ($val === null)
++			unset($_SESSION['cache'][$key]);
++		else
++			$_SESSION['cache'][$key] = array(
++				'ttl' => min(PHP_INT_MAX, time() + $ttl),
++				'data' => $val,
++			);
++	}
+ 	elseif ($cache_system === 'session' && isset($session_cache))
+ 	{
+-		$session_cache[$key] = array(
+-			'ttl' => min(PHP_INT_MAX, time() + $ttl),
+-			'data' => $val,
+-		);
++		if ($val === null)
++			unset($session_cache[$key]);
++		else
++			$session_cache[$key] = array(
++				'ttl' => min(PHP_INT_MAX, time() + $ttl),
++				'data' => $val,
++			);
+ 		$cache_updated = true;
+ 	}
+ 	// Otherwise file cache?
+@@ -1866,9 +1886,11 @@ function cache_put_data($key, $val, $ttl = 120)
+  *
+  * @param string $key A string denoting the identity of the key to be retrieved.
+  * @param int $ttl Expiration date for the data, in seconds; after that delay, no data will be returned even if it is in cache.
++ * @param callback $put_callback Set to a valid function to call if the cache is dirty and needs to call a function to fill it again.
++ * @param bool $user_cache Set to true if this is caching specific to the current member.
+  * @return mixed If retrieving from cache was not possible, null will be returned, otherwise the item will be unserialized and passed back.
+  */
+-function cache_get_data($orig_key, $ttl = 120, $put_callback = null)
++function cache_get_data($orig_key, $ttl = 120, $user_cache = false, $put_callback = null)
+ {
+ 	global $cache_system, $cache_hits, $cache_count, $session_cache;
+ 	global $settings, $db_show_debug, $cachedir;
+@@ -1877,7 +1899,7 @@ function cache_get_data($orig_key, $ttl = 120, $put_callback = null)
+ 		return;
+ 
+ 	$st = microtime(true);
+-	$key = cache_prepare_key($orig_key);
++	$key = cache_prepare_key($orig_key, $user_cache);
+ 	if ($ttl === 'forever')
+ 		$ttl = PHP_INT_MAX;
+ 
+@@ -1920,18 +1942,18 @@ function cache_get_data($orig_key, $ttl = 120, $put_callback = null)
+ 	return $new_cache;
+ }
+ 
+-function cache_prepare_key($key, $val = '', $type = 'get')
++function cache_prepare_key($key, $user_cache = false, $val = '', $type = 'get')
+ {
+-	global $boardurl, $settings, $cache_hits, $cache_count, $db_show_debug, $cachedir;
++	global $boardurl, $settings, $cache_hits, $cache_count, $db_show_debug, $cachedir, $cache_system;
++
++	if ($user_cache !== false && $cache_system !== 'session')
++		$key .= '~' . $user_cache;
+ 
+ 	$cache_count = isset($cache_count) ? $cache_count + 1 : 1;
+ 	if (!empty($db_show_debug))
