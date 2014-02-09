@@ -1,0 +1,72 @@
+ core/app/Class-DBPackages.php | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/core/app/Class-DBPackages.php b/core/app/Class-DBPackages.php
+index 6f5d44b..8c61909 100644
+--- a/core/app/Class-DBPackages.php
++++ b/core/app/Class-DBPackages.php
+@@ -161,12 +161,14 @@ class wedbPackages
+ 				{
+ 					$default = 'auto_increment';
+ 				}
++				elseif (isset($column['default']) && $column['type'] == 'timestamp' && strtolower($column['default']) == 'current_timestamp')
++					$default = 'default current_timestamp';
+ 				elseif (isset($column['default']) && $column['default'] !== null && $column['type'] != 'text' && $column['type'] != 'mediumtext')
+ 					$default = 'default \'' . wesql::escape_string($column['default']) . '\'';
+ 				else
+ 					$default = '';
+ 
+-				// Sort out the size... and stuff...
++				// Sort out the size... And stuff...
+ 				$column['size'] = isset($column['size']) && is_numeric($column['size']) ? $column['size'] : null;
+ 
+ 				// Allow unsigned integers
+@@ -233,7 +235,8 @@ class wedbPackages
+ 						$type .= '(' . $column['values'] . ')';
+ 
+ 					$changes[] = 'ADD `' . $column['name'] . '` ' . $type . ' ' . (!empty($unsigned) ? $unsigned : '') . (empty($column['null']) ? 'NOT NULL' : '') . ' ' .
+-						(!isset($column['default']) || $column['type'] == 'text' || $column['type'] == 'mediumtext' ? '' : 'default \'' . wesql::escape_string($column['default']) . '\'') . ' ' .
++						(isset($column['default']) && $column['type'] == 'timestamp' && strtolower($column['default']) == 'current_timestamp' ? 'default current_timestamp' :
++						(!isset($column['default']) || $column['type'] == 'text' || $column['type'] == 'mediumtext' ? '' : 'default \'' . wesql::escape_string($column['default']) . '\'')) . ' ' .
+ 						(empty($column['auto']) ? '' : 'auto_increment primary key');
+ 				}
+ 				else
+@@ -290,7 +293,8 @@ class wedbPackages
+ 							$type .= '(' . $column['values'] . ')';
+ 
+ 						$changes[] = 'MODIFY `' . $column['name'] . '` ' . $type . ' ' . (!empty($unsigned) ? $unsigned : '') . (empty($column['null']) ? 'NOT NULL' : '') . ' ' .
+-							(!isset($column['default']) || $column['type'] == 'text' || $column['type'] == 'mediumtext' ? '' : 'default \'' . wesql::escape_string($column['default']) . '\'') . ' ' .
++							(isset($column['default']) && $column['type'] == 'timestamp' && strtolower($column['default']) == 'current_timestamp' ? 'default current_timestamp' :
++							(!isset($column['default']) || $column['type'] == 'text' || $column['type'] == 'mediumtext' ? '' : 'default \'' . wesql::escape_string($column['default']) . '\'')) . ' ' .
+ 							(empty($column['auto']) ? '' : 'auto_increment primary key');
+ 					}
+ 				}
+@@ -416,7 +420,8 @@ class wedbPackages
+ 		$query = '
+ 			ALTER TABLE ' . $table_name . '
+ 			ADD `' . $column_info['name'] . '` ' . $type . ' ' . (!empty($unsigned) ? $unsigned : '') . (empty($column_info['null']) ? 'NOT NULL' : '') . ' ' .
+-				(!isset($column_info['default']) ? '' : 'default \'' . wesql::escape_string($column_info['default']) . '\'') . ' ' .
++				(isset($column_info['default']) && $column_info['type'] == 'timestamp' && strtolower($column_info['default']) == 'current_timestamp' ? 'default current_timestamp' :
++				(!isset($column_info['default']) ? '' : 'default \'' . wesql::escape_string($column_info['default']) . '\'')) . ' ' .
+ 				(empty($column_info['auto']) ? '' : 'auto_increment primary key') . ' ';
+ 		wesql::query($query,
+ 			array(
+@@ -501,7 +506,8 @@ class wedbPackages
+ 		wesql::query('
+ 			ALTER TABLE ' . $table_name . '
+ 			CHANGE COLUMN `' . $old_column . '` `' . $column_info['name'] . '` ' . $type . ' ' . (!empty($unsigned) ? $unsigned : '') . (empty($column_info['null']) ? 'NOT NULL' : '') . ' ' .
+-				(!isset($column_info['default']) ? '' : 'default \'' . wesql::escape_string($column_info['default']) . '\'') . ' ' .
++				(isset($column_info['default']) && $column_info['type'] == 'timestamp' && strtolower($column_info['default']) == 'current_timestamp' ? 'default current_timestamp' :
++				(!isset($column_info['default']) ? '' : 'default \'' . wesql::escape_string($column_info['default']) . '\'')) . ' ' .
+ 				(empty($column_info['auto']) ? '' : 'auto_increment') . ' ',
+ 			array(
+ 				'security_override' => true,
+@@ -646,7 +652,7 @@ class wedbPackages
+ 		}
+ 
+ 		// In case something stupid like text(255) was specified, deal with it.
+-		if (in_array($type_name, array('text', 'mediumtext', 'set', 'enum', 'date', 'datetime')))
++		if (in_array($type_name, array('text', 'mediumtext', 'set', 'enum', 'date', 'datetime', 'timestamp')))
+ 			$type_size = null;
+ 
+ 		return array($type_name, $type_size);
