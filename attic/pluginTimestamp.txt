@@ -1,0 +1,26 @@
+
+In addition to tableTimestamp.diff, if you want to add timestamp support to plugins, you need to...
+
+Add to core/app/ManagePlugins.php, around line 577:
+
+					elseif ($this_col['type'] == 'timestamp')
+					{
+						// Timestamp columns can have a default, usually special case 'current_timestamp'.
+						unset($this_col['auto'], $this_col['unsigned']);
+						// Check the date is meaningful.
+						$this_col['default'] = strtolower($this_col['default']);
+						if ($this_col['default'] !== 'current_timestamp' && !preg_match('~^\d+$~', $this_col['default']))
+							unset($this_col['default']);
+					}
+
+And the same thing around line 686:
+
+				elseif ($this_col['type'] == 'timestamp')
+				{
+					// Timestamp columns can have a default, usually special case 'current_timestamp'.
+					unset($this_col['auto'], $this_col['unsigned']);
+					// Check the date is meaningful.
+					$this_col['default'] = strtolower($this_col['default']);
+					if ($this_col['default'] !== 'current_timestamp' && !preg_match('~^\d+$~', $this_col['default']))
+						unset($this_col['default']);
+				}
