@@ -71,6 +71,7 @@ class authorize_display
 		$return_data['hidden']['x_type'] = 'AUTH_CAPTURE';
 		$return_data['hidden']['x_cust_id'] = we::$user['name'];
 		$return_data['hidden']['x_relay_url'] = $boardurl . '/subscriptions.php';
+		$return_data['hidden']['x_receipt_link_url'] = $return_url;
 
 		return $return_data;
 	}
@@ -102,7 +103,7 @@ class authorize_payment
 			return false;
 		if (empty($_POST['x_response_code']))
 			return false;
-log_error(print_r($_POST, true));
+
 		return true;
 	}
 
