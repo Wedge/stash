@@ -1,0 +1,94 @@
+ core/html/Who.template.php    |   2 +-
+ core/skins/index.css          |  24 +++++----
+ 2 files changed, 26 insertions(+), 13 deletions(-)
+
+diff --git a/core/html/Who.template.php b/core/html/Who.template.php
+index 6c7597e..b17e422 100644
+--- a/core/html/Who.template.php
++++ b/core/html/Who.template.php
+@@ -183,7 +183,7 @@ function template_credits()
+ 		echo '
+ 			<section>
+ 				<h6>', $group['title'], '</h6>
+-				<ul', $i === $max ? ' class="last"' : '', '>
++				<ul class="list', $i === $max ? ' last' : '', '">
+ 					<li', $i++ == 2 ? ' style="list-style-type: none"' : '', '>', implode('</li>
+ 					<li>', $group['members']), '</li>
+ 				</ul>
+diff --git a/core/skins/index.css b/core/skins/index.css
+index 4c174eb..7265def 100644
+--- a/core/skins/index.css
++++ b/core/skins/index.css
+@@ -219,7 +219,6 @@ h1, h2, h3, h4, h5, h6
+ 		margin: 0
+ 	ul
+ 		margin: 0 0 4px 2px
+-		padding: 0
+ 		list-style: disc inside
+ 
+ img.opaque
+@@ -309,7 +308,6 @@ h1
+ 	ul
+ 		padding: 7px
+ 		margin: 0
+-		list-style: none
+ 		overflow: hidden
+ 		border: 1px dotted #999
+ 		border-width: 0 0 1px 0
+@@ -365,6 +363,17 @@ $view_junk = "$settings['db_show_debug_who_log']"
+ /* Styles for the general looks for the default theme.
+ ------------------------------------------------------- */
+ 
++// A quick reset list class.
++ul, li
++	margin, padding: 0
++	list-style: none
++
++ul.list
++	margin: 1em 0
++	padding: 0 0 0 40px
++	li
++		list-style-type: disc
++
+ // Normal, standard links.
+ a
+ 	color: #47a// #de874d, b96f17, c06002
+@@ -611,7 +620,6 @@ select.sb
+ 		display: inline
+ 		padding: 2px
+ 		margin: 0
+-		list-style: none
+ 		overflow: hidden
+ 		position: absolute
+ 		z-index: 999
+@@ -1192,11 +1200,6 @@ li.sep
+ .main_section
+ 	padding-bottom: .5em
+ 
+-// A quick reset list class.
+-ul.reset, ul.reset li
+-	margin, padding: 0
+-	list-style: none
+-
+ /* HTML5 overrides for deprecated alignment/width params.
+ --------------------------------------------------------- */
+ 
+@@ -1474,7 +1477,9 @@ section.block extends .wrc
+ tr.catbg
+ 	td extends .wehead, th extends .wehead
+ tr.titlebg
+-	td extends .wefoot, th extends .wefoot
++	td extends .wefoot
++		padding-left: .7em
++	th extends .wefoot
+ 
+ // The page navigation area
+ .pagesection extends .clearfix
+@@ -1837,7 +1842,6 @@ h6
+ 	display: inline
+ 	padding: 2px
+ 	font-size: 90%
+-	list-style: none
+ 	overflow: hidden
+ 	position: absolute
+ 	text-align: left
