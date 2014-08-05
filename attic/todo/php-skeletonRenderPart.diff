@@ -12,17 +12,10 @@ index bab6411..fb5c92b 100644
 +	 *
 +	 * @param string $from A starting layer. Leave empty to render the entire skeleton, as expected.
  	 */
--	function render()
-+	function render($from = null)
+ 	function render($from = null)
  	{
 +		if (!empty($this->layers['html']) || !empty($this->layers['body']))
 +			loadTemplate('index');
  		if ($this->id === 'main' && empty($this->layers['default']))
  			fatal_lang_error('default_layer_missing');
--		$here = reset($this->skeleton);
--		$key = key($this->skeleton);
-+		$here = $from ? $this->layers[$from] : reset($this->skeleton);
-+		$key = $from ? $from : key($this->skeleton);
- 		$this->render_recursive($here, $key);
- 		$this->skip = array();
- 	}
+ 		$here = $from ? $this->layers[$from] : reset($this->skeleton);
