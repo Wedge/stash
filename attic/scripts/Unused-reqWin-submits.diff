@@ -1,0 +1,40 @@
+ core/javascript/script.js | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/core/javascript/script.js b/core/javascript/script.js
+index d17d229..c474d90 100644
+--- a/core/javascript/script.js
++++ b/core/javascript/script.js
+@@ -122,19 +122,19 @@ function reqWin(from, desired_width, string, is_modal, callback, e)
+ 		viewport_width = Math.min(window.innerWidth || $(window).width(), $(window).width()),
+ 		viewport_height = Math.min(window.innerHeight || $(window).height(), $(window).height()),
+ 		previous_target = $('#helf').data('src'),
+-		close_window = function (is_ok)
++		close_window = function (is_ok, is_submit)
+ 		{
+ 			$('#popup,#helf').removeClass('show');
+ 			setTimeout(function () {
+ 				if (/^[.#]/.test(string + ''))
+ 					$(string).append($('#helf').contents());
+ 
+-				$('#popup').remove();
+-
+ 				// Run the callback function, if any. It may ask for the trigger to be cancelled.
+-				if ((callback && callback.call(e ? e.target : this, is_ok) === false) || !e || !is_ok)
++				// If we submitted a form, it'll be done manually, we should skip the rest.
++				if ((callback && callback.call(e ? e.target : this, is_ok) === false) || !e || !is_ok || is_submit)
+ 					return;
+ 
++				$('#popup').remove();
+ 				_modalDone = true;
+ 
+ 				// The location trick is required by non-HTML5 browsers.
+@@ -170,7 +170,7 @@ function reqWin(from, desired_width, string, is_modal, callback, e)
+ 			$this
+ 				.find('.submit,.delete') // Find OK and Cancel buttons, give them proper labels and associate with a close_window call.
+ 				.click(function () {
+-					close_window($(this).hasClass('submit'));
++					close_window($(this).hasClass('submit'), $(this).is('[type=submit]'));
+ 				})
+ 				.each(function () {
+ 					if ($(this).val() == '')
